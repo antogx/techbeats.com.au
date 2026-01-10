@@ -79,6 +79,18 @@ header{
   box-shadow: 0 6px 18px rgba(47,111,236,.35);
 }
 
+.logo{
+  height: 36px;          /* desktop size */
+  width: auto;
+  display: block;
+}
+
+@media (max-width: 768px){
+  .logo{
+    height: 30px;        /* mobile size */
+  }
+}
+
 .navlinks{
   display:flex;
   align-items:center;
