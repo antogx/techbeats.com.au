@@ -72,17 +72,23 @@ header{
   letter-spacing: .2px;
 }
 
+/* Header logo – force small size */
 .logo{
-  height: 36px;          /* desktop size */
+  height: 28px;          /* strict small size */
+  max-height: 28px;
   width: auto;
+  object-fit: contain;
   display: block;
 }
 
+/* Mobile */
 @media (max-width: 768px){
   .logo{
-    height: 30px;        /* mobile size */
+    height: 24px;
+    max-height: 24px;
   }
 }
+
 
 .brand .dot{
   width: 14px; height: 14px;
