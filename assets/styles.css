@@ -72,13 +72,6 @@ header{
   letter-spacing: .2px;
 }
 
-.brand .dot{
-  width: 14px; height: 14px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, var(--blue), var(--green));
-  box-shadow: 0 6px 18px rgba(47,111,236,.35);
-}
-
 .logo{
   height: 36px;          /* desktop size */
   width: auto;
@@ -90,6 +83,14 @@ header{
     height: 30px;        /* mobile size */
   }
 }
+
+.brand .dot{
+  width: 14px; height: 14px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  box-shadow: 0 6px 18px rgba(47,111,236,.35);
+}
+
 
 .navlinks{
   display:flex;
