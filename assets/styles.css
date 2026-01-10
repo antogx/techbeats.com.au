@@ -83,7 +83,7 @@ header{
 
 /* FORCE PNG logo to appear large */
 .logo{
-  width: 160px;          /* THIS is what makes it big */
+  width: 220px;          /* THIS is what makes it big */
   height: auto;
   max-height: none;
   object-fit: contain;
