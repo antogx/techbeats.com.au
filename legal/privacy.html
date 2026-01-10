@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Privacy Policy — Techbeats</title>
+  <meta name="description" content="Privacy policy for Techbeats." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <h1 style="margin:0 0 10px;">Privacy Policy</h1>
+        <p class="small">
+          We only collect information you choose to provide (for example via contact forms or email) to respond to your enquiry and deliver services.
+        </p>
+
+        <h2 style="margin:18px 0 8px;">What we may collect</h2>
+        <ul class="list">
+          <li>Name, email address, and message content</li>
+          <li>Project or property details you share for analysis</li>
+        </ul>
+
+        <h2 style="margin:18px 0 8px;">How we use it</h2>
+        <ul class="list">
+          <li>To respond to enquiries and deliver requested services</li>
+          <li>To improve our service delivery and documentation</li>
+        </ul>
+
+        <h2 style="margin:18px 0 8px;">Data retention</h2>
+        <p class="small">
+          We keep information only as long as needed for service delivery and record-keeping.
+        </p>
+
+        <h2 style="margin:18px 0 8px;">Contact</h2>
+        <p class="small">
+          If you want your information updated or deleted, contact us via the <a href="/contact/">contact page</a>.
+        </p>
+
+        <div style="margin-top:12px;">
+          <a class="btn" href="/">Back to home</a>
+          <a class="btn primary" href="/contact/">Contact</a>
+        </div>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/legal/disclaimer.html">Disclaimer</a></div>
+          <div class="small"><a href="/services/">Services</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

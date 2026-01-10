@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Software Development — Techbeats</title>
+  <meta name="description" content="Software development for real estate businesses: workflow tools, calculators, automation and reporting apps." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Start a project</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Software</span>
+          <span class="pill">Real estate workflows</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">Software Development</h1>
+        <p class="lead" style="margin:0;">
+          Build tools that reduce manual work and deliver consistent outputs for your clients and team.
+        </p>
+      </div>
+
+      <div class="section split">
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">What we build</h2>
+          <ul class="list">
+            <li>Property analysis tools (calculators, comparators, report generators)</li>
+            <li>Workflow systems (lead tracking, property pipeline, client portals)</li>
+            <li>Automation utilities (data pipelines, scheduled jobs)</li>
+            <li>Simple web apps for internal teams and clients</li>
+          </ul>
+        </div>
+
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Typical outcomes</h2>
+          <ul class="list">
+            <li>Less manual work and fewer errors</li>
+            <li>Faster turnaround for client reports</li>
+            <li>Repeatable analysis methodology</li>
+          </ul>
+          <div style="margin-top:12px;">
+            <a class="btn primary" href="/contact/">Discuss your tool idea</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/">All services</a></div>
+          <div class="small"><a href="/contact/">Contact</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

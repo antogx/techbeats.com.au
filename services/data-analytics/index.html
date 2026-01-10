@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Data Analytics & BI — Techbeats</title>
+  <meta name="description" content="Business intelligence dashboards, KPI reporting, and data automation for businesses." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Talk to us</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Data</span>
+          <span class="pill">Business Intelligence</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">Data Analytics & Business Intelligence</h1>
+        <p class="lead" style="margin:0;">
+          Turn data into clear decisions with dashboards, automated reporting, and KPI tracking.
+        </p>
+      </div>
+
+      <div class="section split">
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Services</h2>
+          <ul class="list">
+            <li>BI dashboards & KPI reporting</li>
+            <li>Data cleaning and transformation (CSV/Excel/DB)</li>
+            <li>Automated reporting (scheduled reports, alerts)</li>
+            <li>Operations and financial analytics</li>
+            <li>Data integration (multiple sources → one view)</li>
+          </ul>
+        </div>
+
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Deliverables</h2>
+          <ul class="list">
+            <li>Executive dashboard</li>
+            <li>Operational dashboard</li>
+            <li>Automated reporting pipeline</li>
+            <li>Documentation and handover</li>
+          </ul>
+          <div style="margin-top:12px;">
+            <a class="btn primary" href="/contact/">Request a dashboard</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/">All services</a></div>
+          <div class="small"><a href="/contact/">Contact</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

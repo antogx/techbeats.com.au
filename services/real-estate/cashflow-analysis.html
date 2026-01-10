@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Cashflow & Capital Growth Modelling — Techbeats</title>
+  <meta name="description" content="Scenario-based cashflow modelling: rent, expenses, interest rate sensitivity and forward projections." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/services/real-estate/">Real estate</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Book a discovery call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Real Estate</span>
+          <span class="pill">Cashflow</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">Cashflow & Capital Growth Modelling</h1>
+        <p class="lead" style="margin:0;">
+          Clear scenario modelling to understand income, expenses, borrowing sensitivity, and what needs to be true for a deal to work.
+        </p>
+      </div>
+
+      <div class="section split">
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">What it includes</h2>
+          <ul class="list">
+            <li>Purchase price and loan assumptions (LVR, interest-rate scenarios)</li>
+            <li>Rental income (weekly rent) and vacancy allowance (scenario-based)</li>
+            <li>Ongoing expenses: council rates, insurance, PM fees, maintenance, land tax (where applicable)</li>
+            <li>Depreciation assumptions (optional inputs)</li>
+            <li>Tax impact estimate (simple, based on your provided tax rate)</li>
+            <li>Forward projection summary (e.g., 5–10 years)</li>
+          </ul>
+        </div>
+
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Outputs</h2>
+          <ul class="list">
+            <li>Net cashflow estimate (monthly & annual)</li>
+            <li>Sensitivity checks (rate up/down, rent up/down, vacancy stress)</li>
+            <li>Simple interpretation and next-step actions</li>
+          </ul>
+
+          <div class="feature" style="margin-top:12px;">
+            <h3>Note</h3>
+            <p>Modelling depends on inputs and real-world conditions. This is not financial or tax advice.</p>
+          </div>
+
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="/contact/">Request a cashflow model</a>
+            <a class="btn" href="/legal/disclaimer.html">Read disclaimer</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/real-estate/">Back to Real estate</a></div>
+          <div class="small"><a href="/services/">All services</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

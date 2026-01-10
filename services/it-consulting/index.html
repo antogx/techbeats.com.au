@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IT Consulting & Infrastructure Automation — Techbeats</title>
+  <meta name="description" content="Linux and Windows infrastructure automation, CI/CD pipelines, software development, and practical IT security services." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Engage Techbeats</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">IT Consulting</span>
+          <span class="pill">Automation-first</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">IT Consulting & Infrastructure Automation</h1>
+        <p class="lead" style="margin:0;">
+          Reliable, secure operations for small and growing businesses — across Linux and Windows environments.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="grid cols-2">
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">Linux & Windows infrastructure automation</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Automate repeatable tasks such as provisioning, configuration, patching routines, backups, and monitoring setup across dev/test/prod.
+            </p>
+            <ul class="list">
+              <li>Consistent server builds and configuration</li>
+              <li>Automated backups and health checks</li>
+              <li>Standardised environments and documentation</li>
+            </ul>
+          </div>
+
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">CI/CD pipelines</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Build, test, and deploy safely using Git-based workflows and repeatable releases.
+            </p>
+            <ul class="list">
+              <li>Automated builds and tests</li>
+              <li>Staging → production promotion</li>
+              <li>Rollback strategies and release notes</li>
+            </ul>
+          </div>
+
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">Software development</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Build or modernise internal tools, scripts, APIs, and automation utilities with clear handover.
+            </p>
+            <ul class="list">
+              <li>Maintainable code & documentation</li>
+              <li>Automation scripts and web utilities</li>
+              <li>Integrations between systems</li>
+            </ul>
+          </div>
+
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">IT security (practical security)</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Reduce risk with security hygiene: access control, patch strategy, secrets handling, and monitoring basics.
+            </p>
+            <ul class="list">
+              <li>Hardening and access control guidance</li>
+              <li>MFA and secrets best practices</li>
+              <li>Logging/monitoring readiness and incident basics</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2 style="margin:0 0 8px;">Want ongoing support?</h2>
+        <p class="small" style="margin:0 0 12px;">
+          We can support monitoring, patch coordination, and continuous improvements as a monthly engagement.
+        </p>
+        <a class="btn primary" href="/contact/">Discuss IT support</a>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/">All services</a></div>
+          <div class="small"><a href="/contact/">Contact</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

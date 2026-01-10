@@ -1,0 +1,1398 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cashflow and Capital Growth Calculator</title>
+  <style>
+    :root{
+      --bg: #fbf7ef;
+      --text: #1f2937;
+      --muted: #6b7280;
+
+      --blue: #1f6feb;
+      --green:#1f9d55;
+      --brown:#7a4b2a;
+      --gold:#c9a227;
+      --grey:#8a9099;
+
+      --border: rgba(201,162,39,.95);
+      --border2: rgba(201,162,39,.55);
+
+      --shadow: 0 14px 34px rgba(31,41,55,.12);
+      --shadow2: 0 8px 18px rgba(31,41,55,.10);
+
+      --radius: 18px;
+      --radius2: 12px;
+
+      --focus: rgba(31,111,235,.28);
+
+      --danger: #b42318;
+      --ok: #067647;
+
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    [data-theme="dark"]{
+      --bg: #0b1220;
+      --text: #f2f4f7;
+      --muted: #a6b0c3;
+
+      --blue: #79c0ff;
+      --green:#7ee787;
+      --brown:#d2a07a;
+      --gold:#ffd36a;
+      --grey:#cbd5e1;
+
+      --border: rgba(255,211,106,.95);
+      --border2: rgba(255,211,106,.55);
+
+      --shadow: 0 14px 34px rgba(0,0,0,.35);
+      --shadow2: 0 8px 18px rgba(0,0,0,.28);
+
+      --focus: rgba(121,192,255,.25);
+      --danger: #ff8b8b;
+      --ok: #8ef0b0;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      font-size: 18px;
+      color: var(--text);
+      -webkit-text-size-adjust: 100%;
+      overflow-x: hidden;
+
+      background:
+        radial-gradient(900px 520px at 12% 8%, rgba(31,111,235,.22), transparent 60%),
+        radial-gradient(900px 520px at 88% 10%, rgba(31,157,85,.18), transparent 60%),
+        radial-gradient(900px 620px at 88% 92%, rgba(122,75,42,.18), transparent 62%),
+        radial-gradient(900px 520px at 12% 92%, rgba(201,162,39,.10), transparent 62%),
+        var(--bg);
+    }
+
+    header{
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(10px);
+      background: rgba(251,247,239,.78);
+      border-bottom: 2px solid var(--border2);
+    }
+    [data-theme="dark"] header{ background: rgba(11,18,32,.78); }
+
+    .header-inner{
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 14px 14px;
+      display:flex;
+      align-items:flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    h1{
+      margin:0;
+      font-size: clamp(24px, 2.8vw, 36px);
+      line-height: 1.1;
+      letter-spacing: .2px;
+    }
+
+    .header-right{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      justify-content:flex-end;
+    }
+
+    .icon-btn{
+      appearance:none;
+      border: 2px solid var(--border);
+      background: rgba(255,250,240,.88);
+      color: var(--text);
+      border-radius: 999px;
+      padding: 11px 14px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+      cursor:pointer;
+      box-shadow: var(--shadow2);
+      touch-action: manipulation;
+      user-select:none;
+      min-height: 50px;
+      font-weight: 900;
+      font-size: 16px;
+    }
+    [data-theme="dark"] .icon-btn{ background: rgba(15,26,46,.88); }
+    .icon-btn:active{transform: translateY(1px)}
+    .icon{width: 18px; height: 18px; display:inline-block}
+    .icon svg{width:100%; height:100%}
+
+    .logo-preview{
+      width: 150px;
+      height: 150px;
+      border-radius: 18px;
+      border: 3px solid var(--border);
+      background: rgba(255,250,240,.90);
+      overflow:hidden;
+      box-shadow: var(--shadow2);
+      display:grid;
+      place-items:center;
+      flex: 0 0 auto;
+    }
+    [data-theme="dark"] .logo-preview{ background: rgba(15,26,46,.90); }
+    .logo-preview img{width:100%; height:100%; object-fit:contain; display:block;}
+
+    .container{
+      max-width: 1250px;
+      margin: 0 auto;
+      padding: 18px 14px 44px;
+    }
+
+    .stack{display:flex; flex-direction:column; gap: 14px; margin-top: 16px;}
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .card{
+      border-radius: 18px;
+      border: 3px solid var(--border);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      min-width: 0;
+      background: rgba(255,250,240,.92);
+    }
+    [data-theme="dark"] .card{ background: rgba(15,26,46,.92); }
+
+    .tint-details{
+      border-width: 4px;
+      box-shadow: 0 16px 44px rgba(31,111,235,.18), var(--shadow);
+      background:
+        linear-gradient(180deg, rgba(31,111,235,.10), transparent 55%),
+        rgba(255,250,240,.92);
+    }
+    [data-theme="dark"] .tint-details{
+      background:
+        linear-gradient(180deg, rgba(121,192,255,.14), transparent 55%),
+        rgba(15,26,46,.92);
+    }
+
+    .tint-inputs{
+      background:
+        linear-gradient(180deg, rgba(31,157,85,.10), transparent 55%),
+        rgba(255,250,240,.92);
+    }
+    [data-theme="dark"] .tint-inputs{
+      background:
+        linear-gradient(180deg, rgba(126,231,135,.12), transparent 55%),
+        rgba(15,26,46,.92);
+    }
+
+    .tint-summary{
+      background:
+        linear-gradient(180deg, rgba(122,75,42,.10), transparent 55%),
+        rgba(255,250,240,.92);
+    }
+    [data-theme="dark"] .tint-summary{
+      background:
+        linear-gradient(180deg, rgba(210,160,122,.12), transparent 55%),
+        rgba(15,26,46,.92);
+    }
+
+    .tint-forecast{
+      background:
+        linear-gradient(180deg, rgba(201,162,39,.12), transparent 60%),
+        rgba(255,250,240,.92);
+    }
+    [data-theme="dark"] .tint-forecast{
+      background:
+        linear-gradient(180deg, rgba(255,211,106,.10), transparent 60%),
+        rgba(15,26,46,.92);
+    }
+
+    .card h2{
+      margin:0 0 10px;
+      font-size: 20px;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .pill{
+      font-size: 12px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: rgba(255,250,240,.75);
+    }
+    [data-theme="dark"] .pill{ background: rgba(15,26,46,.75); }
+
+    .form-grid{display:grid; grid-template-columns: 1fr 1fr; gap: 12px;}
+    label{display:block; font-size: 14px; color: var(--muted); margin-bottom: 7px;}
+    .field{display:flex; flex-direction: column; gap: 4px; min-width: 0;}
+
+    input, select{
+      width:100%;
+      padding: 13px 13px;
+      border-radius: 13px;
+      border: 3px solid var(--border);
+      background: rgba(255,250,240,.88);
+      color: var(--text);
+      outline:none;
+      font-size: 18px;
+      min-height: 52px;
+      min-width: 0;
+    }
+    [data-theme="dark"] input, [data-theme="dark"] select{ background: rgba(15,26,46,.88); }
+    input:focus, select:focus{box-shadow: 0 0 0 4px var(--focus);}
+    input[disabled]{opacity: .98; cursor: not-allowed;}
+
+    .static-strong input[disabled]{
+      font-weight: 950;
+      letter-spacing: .3px;
+    }
+
+    /* Summary spacing tighter */
+    .kv{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 6px 8px;               /* tighter */
+      margin-top: 6px;
+      font-size: 16px;
+      min-width: 0;
+    }
+    .kv .k{color: var(--muted); min-width:0;}
+    .kv .v{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      white-space: nowrap;        /* keep on one line where possible */
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+      min-width: 0;
+      font-size: 16px;
+    }
+
+    .tint-summary .kv{ font-size: 18px; }
+    .tint-summary .kv .k{
+      color:#000;
+      opacity:.78;
+      font-weight:600;
+    }
+    .tint-summary .kv .v{
+      font-size: 18px;
+      color:#000;
+      font-weight:650;
+    }
+    [data-theme="dark"] .tint-summary .kv .k,
+    [data-theme="dark"] .tint-summary .kv .v{
+      color: var(--text);
+      opacity: 1;
+    }
+
+    .kv .v.good{color: var(--ok); font-weight: 950}
+    .kv .v.bad{color: var(--danger); font-weight: 950}
+    .divider{height:1px; background: var(--border2); margin: 12px 0;}
+
+    .tag{
+      display:inline-flex; gap: 8px; align-items:center;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 2px solid var(--border2);
+      background: rgba(255,250,240,.70);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    [data-theme="dark"] .tag{ background: rgba(15,26,46,.70); }
+
+    .row{display:flex; align-items:center; justify-content: space-between; gap: 10px; flex-wrap: wrap;}
+
+    .btn{
+      appearance:none;
+      border: 3px solid var(--border);
+      background: rgba(255,250,240,.86);
+      color: var(--text);
+      border-radius: 14px;
+      padding: 12px 16px;
+      cursor:pointer;
+      font-weight: 950;
+      box-shadow: var(--shadow2);
+      min-height: 52px;
+      touch-action: manipulation;
+      user-select:none;
+      font-size: 18px;
+    }
+    [data-theme="dark"] .btn{ background: rgba(15,26,46,.86); }
+    .btn:active{transform: translateY(1px)}
+
+    .btn.secondary{
+      border-color: rgba(201,162,39,.55);
+      font-weight: 850;
+    }
+
+    .save-note{
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 8px;
+      line-height: 1.35;
+    }
+
+    .error-box{
+      display:none;
+      margin-top: 12px;
+      padding: 10px 12px;
+      border-radius: 12px;
+      border: 3px solid rgba(180,35,24,.9);
+      background: rgba(180,35,24,.10);
+      color: var(--text);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-size: 13px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+    }
+    .error-box.show{display:block;}
+
+    table{
+      width:100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      overflow:hidden;
+      border-radius: 12px;
+      border: 3px solid var(--border);
+      background: rgba(255,250,240,.88);
+      box-shadow: var(--shadow2);
+    }
+    [data-theme="dark"] table{ background: rgba(15,26,46,.88); }
+
+    th, td{
+      padding: 10px 10px;          /* tighter columns */
+      text-align:left;
+      font-size: 14px;
+      border-bottom: 1px solid var(--border2);
+      vertical-align: middle;
+    }
+    th{
+      font-size: 12px;
+      color: var(--muted);
+      background: rgba(255,250,240,.65);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      white-space: nowrap;
+    }
+    [data-theme="dark"] th{ background: rgba(15,26,46,.65); }
+
+    tr:last-child td{border-bottom:none;}
+    td.num{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; white-space: nowrap;}
+    .table-wrap{overflow:auto; border-radius: 12px;}
+
+    tr.keyyear td{
+      background: rgba(31,111,235,.10);
+      border-bottom-color: rgba(31,111,235,.22);
+      font-weight: 800;
+    }
+    [data-theme="dark"] tr.keyyear td{
+      background: rgba(121,192,255,.12);
+      border-bottom-color: rgba(121,192,255,.22);
+    }
+
+    @media (max-width: 980px){
+      .two-col{grid-template-columns: 1fr;}
+      .form-grid{grid-template-columns: 1fr;}
+    }
+    @media (max-width: 560px){
+      input, select{font-size: 18px; min-height: 54px;}
+      .logo-preview{width: 125px; height: 125px;}
+      .kv{grid-template-columns: 1fr auto;} /* keep two cols but tighter */
+      .kv .v{text-align: right;}
+      th, td{padding: 8px 8px; font-size: 13px;}
+      th{font-size: 11px;}
+    }
+  </style>
+</head>
+
+<body data-theme="light">
+  <header>
+    <div class="header-inner">
+      <div>
+        <h1>Cashflow and Capital growth calculator</h1>
+      </div>
+
+      <div class="header-right">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Toggle theme">
+          <span class="icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="4"></circle>
+              <path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"></path>
+            </svg>
+          </span>
+        </button>
+
+        <div class="logo-preview" title="Logo">
+          <img alt="Logo" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCACBAu0DASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD9U6KK+Mv+Ctd/c6b+x9qFxaXEtrOus2IWWFyjDLsDgjmgD7Nor+dH9jnxXrd7+1b8I4LjWL+eB/FGnh45bp2Vh56cEE4NdJ/wUF8Uazp/7ZXxSt7XV762t01JNsUNy6KuYIycAHA5JoA/oKor4P8A+CNWpXeq/steIJr26nvJv+Euu18y4kLtj7JZ8ZJ6V94UAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFfzPfGDxfr1v8W/G0UWt6jHEmuXyoiXcgVQLhwABngUAf0w0V+K/x817U7f8A4Ja/s73sWo3cV5Lrl8slwk7CRx517wWByeg/IVwP/BL7xPrGpftvfD23vNVvrqBk1LMU9y7qcadckcE4oA/eaiiigAooooAKKKKACiivy3/4Le61qOj/APCl/sF/dWPmf21v+zTNHux9gxnBGcZP50AfqRRX4pf8Ee/EGq6v+1hexX2p3l5Enhm8cR3E7yKG863GcE9eT+dfEV3408QC6m267qQXecAXkmAM/WgD+oqivDv2H5pbn9kb4TzTSPLNJoFu7ySMWZiRkkk9TXuNABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUV+H/APwVu8RarpX7X97DZaneWcJ0WxYx29w6KTtbnAPXgVr/ALEevanffsX/ALW9xc6jd3FxBo1oYpZZ2Z4z5d0cqScjnnigD9qaK/lzi8aeITKgOu6mRuH/AC+Sf41/UZQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAV8V/8FeP+TNdS/7DNh/6G1falfFf/BXj/kzXUv8AsM2H/obUAfkj+xh/ydp8IP8AsadP/wDR6V0v/BRH/k9P4q/9hJP/AEnirmv2MP8Ak7T4Qf8AY06f/wCj0rpf+CiP/J6fxV/7CSf+k8VAH6Sf8EW/+TU/EP8A2N93/wCklnX3zXwN/wAEW/8Ak1PxD/2N93/6SWdffNABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABX8xHxm/5LB46/wCw7ff+lD1/TvX8xHxm/wCSweOv+w7ff+lD0AfYH7Qf/KKf9nL/ALDt9/6Nvq88/wCCWZx+3R8OPdNT/wDTbdV6H+0H/wAop/2cv+w7ff8Ao2+rzr/glscft1fDX3Gp/wDpsuqAP38ooooAKKKKACiiigAr8q/+C53/ADRP/uN/+2FfqpX5V/8ABc7/AJon/wBxv/2woA8Z/wCCM4z+1pqft4WvP/R9tXwkzFmJPUnNfd//AARlH/GWWq/9iref+lFrXwfQB/Rt+w4Mfsg/CP8A7F21/wDQK9yrxH9iNdv7IvwiH/Ut2Z/8hivbqACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigD8L/+Cvv/ACeNef8AYDsf5PWz+wz/AMmTfte/9gW1/wDRV3WN/wAFff8Ak8a8/wCwHY/yetn9hn/kyb9r3/sC2v8A6Ku6APhGH/XR/wC8K/qlr+VqH/XR/wC8K/qloAKKKKACiiigAooooAKKKKACiiigAooooAK+K/8Agrx/yZrqX/YZsP8A0Nq+GvjN/wAFO/2hPBvxg8deH9L8WWUOmaVr1/Y2sb6NaOUiiuHRAWMeSQqjk9a8T+NP7ePxl/aB8Dy+EfG3iG01LQpZ47loIdMt4GLocqdyID36ZoAwv2MP+TtPhB/2NOn/APo9K6X/AIKI/wDJ6fxV/wCwkn/pPFXNfsYf8nafCD/sadP/APR6V0v/AAUR/wCT0/ir/wBhJP8A0nioA/ST/gi3/wAmp+If+xvu/wD0ks6++a/nQ+BX7b/xc/Zv8HXHhfwHr1rpWj3F6+oSQzadBcM0zoiM26RSR8saDA449zXov/D1/wDaS/6HCw/8Eln/APG6AP3qor5x/wCCfvxk8V/Hr9mXQ/GXjS/j1LX7u8vIpZ4reOBSsczIgCIABgAdq+jqACiiq9/qFrpVjcXt7cw2dnbxtLNcXEgSOJFGWZmPAAAySaALFFfnv+0Z/wAFhfAHw8nn0j4ZaY3xC1dCUbUpXa20yI/7LY3zc5+6FU9Q5r4H+JH/AAU4/aG+I1zOf+E3bwvZSZ22Phu2S0WP/dlw035yGgD+gCiv5m779o/4tam4e8+KPjS7cHO6fxBduc/jJW54Y/bD+OPg+5E+mfFjxcpGP3d1q81zF/37lZl/SgD+kiivxT+EP/BZH4ueDpra38b6ZpHj3TVIEsxiFhfEezxDy/zi59RX6Pfs1/t8/CX9pwxWGhaw+ieKGUFvD2thYLlj38o5KTDOfuMWwMlVoA+jqKKKACiiigAoorL8T+J9I8F6Bfa5r2p2uj6PYxGa6vr2VYoYUHdmPA9PqaANSivza/aC/wCCzPhXwrdT6V8J/Dx8YXUZKnWtW321iCM8pEMSyD6mP2zXw18Q/wDgpV+0P8RJ5/N+IFz4ftJCdtp4egjsVjHosiDzfzcmgD+gqiv5mrz9oz4sajIJLv4n+M7qQHIebxBduc/UyV0Hhb9sj45+DZ0k0v4seLVCHKxXeqy3UQ/7Zyll/SgD+kWivxc+Dn/BZb4peEZ4Lbx/o2l+PNOBAkuYUGn32O7Box5R9ceWM+or9L/2bv20Phd+1HYf8Ujrf2fXY033Hh7UwIL+IYySEyRIo7vGWA7kHigD3SiiigAr+Yj4zf8AJYPHX/Ydvv8A0oev6d6/mI+M3/JYPHX/AGHb7/0oegD7A/aD/wCUU/7OX/Ydvv8A0bfV5x/wS4/5Pr+Gf/cT/wDTZd16P+0H/wAop/2cv+w7ff8Ao2+r5o/ZR+ONv+zd8evDXxGudJk12PRY70jTopxCZ3ls54EHmFW2jdKpJ2nABwCeKAP6TqK/BH4v/wDBUr49fFG/l/s/xHH4F0ok+XYeHIhEwXtunbdKWx1IZRnkKO3hN7+0d8WdSn867+KHjO5mznfL4gu2OfqZKAP6ZKK/m98KftnfHXwXPHLpfxY8WDYcrFe6pJeRD/tnMXX9K+rfgr/wWc+Inhi5t7T4laBp3jTTOBJfaegsb8erYX9y/wDuhE/3qAP2Vory/wCAX7Snw/8A2l/Cn9u+BNbTUEjIW6sJh5V5Zuf4ZYicr7MMq2DtY4r1CgAr8q/+C53/ADRP/uN/+2FfqpX5V/8ABc7/AJon/wBxv/2woA8c/wCCMg/4yx1f/sVLz/0pta+Dq+8/+CMQz+1hrP8A2Kd5/wClNpXwZQB/R/8AsWLt/ZJ+EA/6liwP/kFa9pr84PD3/BSz4Zfs0/ss/Crw/ZFvHPje38Laek2jaXMEitH+zr8txcYKowIwUUO4/iUcV8cfFn/gqt8e/iVezjS9ft/AulM3yWOgWyq4HQbp5A0hPqVZQT2HGAD95qK/mg1T9pj4va3OZr/4peM7uQ95dfuiB9B5mB+FaPh/9rn42+F7mOfTviz4yjKdI5tbuJovxjkdkP4igD+k6ivxA+E//BYP41+B5Y4vFkek/EHTx977bbLZ3WPRZYAq/i0bGv0m/Zh/4KDfCr9p5oNL0zUH8N+L3XJ8O6yVjmkPfyJPuTdzhTvxyVFAH0zRRRQAUUUUAFFFZniXxNpPg3Qb7W9d1K10fR7GIzXV9eyrFDCg6szMcAUAadFfmz+0L/wWY8L+FLufSfhN4f8A+EwuoyVOt6tvt7EEZ/1cQxJKPcmP2z1r4V+If/BSD9ob4izT+f8AES90K1kJ22vh6NLBYh6LJGBL+LOT70Af0IUV/M1dftF/Fe+mEtz8T/GVxKDkPL4gu2YH6mSum8J/tp/HfwTOJdL+LHio4ORHf6lJex/98Tl1/SgD+j+ivxo+Dn/BZ74keGbm3tfiJ4d0vxppowJLyxX7Bfe7fLmJsddoRM+o7fpJ+zj+2h8LP2obPHg/XfJ1tE3zeH9UC29/EMZJEeSJFHdoyyjuRQB7nRRRQAUUUUAFFFYHjrx94c+GXhi88ReK9astA0S0XdNe30ojjX0Az1Y9AoySeACaAN+ivzA+Pv8AwWk0zSru40z4Q+FhrezKjXvEIeKBj2MdspDsvu7IePu18S+Pv+Cin7Q3xDlm+1/EvVNIt3J22+gBNOWMegeFVc/VmJ96AP6GaK/mZn/aL+K9zcCeb4neMpZx0kfX7tmH4mTNdf4P/bi+PvgacS6Z8WfE8pByE1S+bUIx/wAAuPMXHtigD+jeivx9+Cf/AAWl8Y6HPa2XxQ8K2XifTwQsuqaIPsl6q92MRJikPsPKHvX6Z/Aj9pX4d/tJeHW1fwF4ig1VYcC6sZAYru0J7SwthlHYNypwcE0Aen0UUUAFFfPf7e/xe8UfAr9l3xV408HX0eneILCaySC4lgSdVEl1FG+UcFTlXYdK/Jn/AIev/tJf9DhYf+CSz/8AjdAG1/wV9/5PGvP+wHY/yetn9hn/AJMm/a9/7Atr/wCiruvkr41/HDxd+0H43fxb43v4tS1x7eO1aeG2jgXy0ztG1AB3POK+tf2Gf+TJv2vf+wLa/wDoq7oA+EYf9dH/ALwr+qWv5WFYowYdQc19e/8AD1/9pL/ocLD/AMEln/8AG6AP3qor8PPhb/wVB/aH8VfE3wjouoeLrKSw1LWLOzuETRrRS0ckyIwBEeQcMea/cOgAoorzD48/tJ/D79mzwv8A234716LTUk4trGL97eXbekUI+ZvduFHcigD0+ivx8+Nn/BaTxlrs9xZfC/wtZeF9P3Yj1PWsXd64/vCMERRn2PmfWvk/xf8At0/H/wAcTSyal8WPEsPmH5o9Luzp6fTbbiMY9sUAf0Z0V/Mq37QfxSabzT8SvF5l/vnXrrd+fmV2PhX9t74+eDJUk074teKZNmNqajqDXyD22T71x7YoA/o5or8cPgp/wWf8feHLmC0+JnhzT/GGm5xJqGmILK+Ueu0fun/3Qqf71fp58Av2m/h3+0v4bOr+BNfi1BogPtWmzjyr2zJ7SwnkD0YZU84Y0Aep0UUUAfjx8XPhD+w1f/Ffxpc+JPjj4z03xDNrd7JqVlb6ZO0dvdGdzLGpGnMCquWAIY8Dqetcn/wpf9gD/ov3jj/wVT//ACtrxv4/fswfGTWfjt8R9Q0/4S+Ob6wu/EmpT291beG7ySKaNrqRldGERDKQQQRwQa8o8X/AX4mfD7Rm1fxT8OvFnhrSVdY2v9Y0O6tIA7fdUySIFyewzzQB9+fs9/Cb9ifSvjn4CvPBfxr8Yaz4tg1q1k0rTrzTZkhubkSqY43Y6egClsAksv1FbH7V/wALP2NNc/aH8bX3xE+Mni3w740nvFbU9LsNPmkgt5fKQBUZbCQEbQp4duvWvhr9itd37W/whH/Uz2B/8jLXRf8ABRH/AJPT+Kv/AGEk/wDSeKgD2r/hS/7AH/RfvHH/AIKp/wD5W0f8KX/YA/6L944/8FU//wAra+QPBfwP+I/xJ0mTVPCPw/8AFPinTI5jbve6Lo1zeQrKArFC8aMAwDKSM5ww9a3/APhk743/APRG/iB/4S99/wDGqAP3W/Yb0H4a+G/2ddFsPhL4k1HxZ4KS6u2ttU1SFop5JDMxkBVooiAGyB8g6dTXvtfKf/BMbwZ4g8A/sh+HNG8T6FqXhzV4r6+eTT9Ws5LW4RWuHKkxyAMAQQRxyK+rKAOf8fePNC+GHgzV/FfibUItL0LSrdrm7upTwijsB1LEkKFHJJAHJr8KP22v+CgHiv8Aar1ybSNNkufDfw3tpP8ARdFSTa95g8TXRU4duhCcqnGMnLHvf+Cp/wC2DP8AGj4oz/Dnw3fyDwP4VuGhuPKf93qOoKSskhx95I+UTtkOw4YY8U/Y2/ZC1v8Aav8AH0toJ20PwVpAFxr3iBwAlrFyfLQt8plYA4zwoBY8DBAPP/gp+z94/wD2hvEx0LwF4cudcu4wrXEy4jt7VCcbpZWIVB16nJwcAmvsWT/gn18FP2f7WCb9oj47Wum6xtWSTw14VXzLlMjIGSkkrAkj5vJUYB57ij+0T+3zpnw08Ov8G/2Y7ePwf4G00NbXXiizGL3U5Bw8kUv3gGxzMfnbggoAM/DWnaZrfjjXxbWFpqHiDW76QsIbeN7m5uJCck4ALMxPPc0Afdq+Lf8Agnj4fY2x8FePfEoX5ftZmnTd/tY+1Rf+gj6VJFoX/BPb4ksLW31rxv8ADW4c7Y5Z/OdNx6biyXCgfUj6jrXhHh//AIJz/tH+JrcTWfwr1SFCobGoXNtZNjn+GeVDnjpjNcp8Sv2OPjX8IrGS+8VfDfXNP0+Ibpb2CEXdvEPV5YS6KPqRQB9G+PP+CVer6z4al8VfAr4haD8YNAGT9ntLiKK7XjOwMHaJ2HcFkbPG3NfEeuaFrXgXxJc6Xq1je6Drumz7JrW6jaC4tpVOeVOGVhwfyrY+GPxb8ZfBnxND4g8E+I7/AMOatER+/spcCQD+GRDlZF/2XBHtX6LeC/iX8Nv+Cpng9PAnxDs7LwV8eLC1Y6N4ks4wkeolRnaB1YcZeAk8bmjI+YKAa3/BPn/gp9cajf6f8NvjPqwllmKwaR4uu2ALMeFhvG6HPAWY9+HzndX6n1/ML8WfhR4l+CXxA1fwZ4u09tO1zTJfLljzuR1IykkbfxIykMp7g9jxX68f8Eov2xrj4x+CJ/hh4tvjceLfDNsr6feXEmZL/TwQoBzyzwnapPdWQ8kMaAP0CooqK6uobK2muLiaO3t4UMkksrBURQMlmJ4AA5JNAHCfHb44+Fv2dvhrqnjbxddm30yzAWOGLBmu5jnZDEpI3O2D7AAkkAEj8F/2tv2z/HH7Wfi6S61i4k0nwrbuf7N8NWszG2t17O/TzZSOrkdyFCjitr9vj9rm+/ar+MNzcWNzPH4E0V2tdCsXJVWUHD3LL/flIzzyFCL2OdP9ij9jSD46f2p8QPiFqB8LfBrwyGm1XVpW8o3jINzQRN2AGN7jJGQq/MwwAeXfs+/spfEv9pvV5LTwJ4ekvbS3kEd3q103k2VqSM4eU98c7VDNj+GvrC5/Yc/Zt/Z6Ji+Ovx6+3eIIj+98P+Eo8yQuP4JAqTSfiyxVw/7Tf/BRLU/FOlH4cfBO0Pwx+FGnD7NbJpSm1vb+MDBaRlOY0bk7AdzZJdmyQPkXwr4N8RfEHWk0vw3ompeI9Wl+ZbPTLWS5nbkAnagJ6kc+9AH3V/wm3/BPDS823/CAePNX/h+1/aLhf+BY+2J/6D+FJF4E/YC+Kx+y6V408Y/C/UGOITqSu8DE/wB9njlUD6yJ9a8R0X/gm7+0lr1oLm2+FuoRRkE7b29tLV+Dj7ksyt+lcN8T/wBkj4x/BqylvvGHw71zSdOiz5moLb/aLWP/AHpoiyL+LUAe6/GX/gl7468J+GpvGHwx17SvjJ4LAMiXXhxw955Y53CFWZZcAj/VO7HrtAr5C0bWtZ8EeIrbUtLvbzQ9c02ffDc20jQXFtKp6hhhlYGu3+Bf7R3xB/Zx8TLrXgTxDcaU7MDc2THzLS7UfwzQn5W44zwwz8pB5r7t17wd8Nf+CpXw/wBY8VeCdNtfAv7RGj24n1HRxKFg1lQAN2eNwb7qynDIdqyZUq1AHt//AATy/wCCkMHx1Fl8O/iTcw2XxBRNlhqmBHDrIA+6QOEnwM4GA/JUA/LX6A1/LRdWuq+DfEU1vOl1o+uaVdGN0O6Ke1uInwR2KurL9QRX77f8E+P2sl/ap+CkVzqksY8beHylhrcScea20+VcgdhKFYkDo6OAAAKAPqGv5iPjN/yWDx1/2Hb7/wBKHr+nev5iPjN/yWDx1/2Hb7/0oegD6+/aDbH/AASr/ZxX11y/P/ka9/xr53/Zo/ZI+If7VfiSTTvBumqmnWrAX+uX5MdlZg9AzgEs5HRFBY9cAZI+zIPgnqn7RX7Df7I/w+0mVbabVvEOpefduMrbW8cl7JNKfUrGrYHdtq964f8Abj/aj074X6d/wzh8CpV8O+AfDy/ZNa1LTZSLjU7r/ltG0owSA3EjA5dtw+4oBAL978Cf2L/2aWNj8SfiFrPxb8VwgC60vwtlbaNwPmXdEwAOeCGnzxyo5qoP2nP2ItOYwWP7N2tXFr08y8u8y49ebpzn/gVfDHhLwbr/AI+1yDRvDOiah4g1efPlWOmWr3EzgdSEQE4Hc44r3+w/4JsftJ6lZC6h+Ft8kRUNtuNQs4ZMH/YeYNn2xmgD3CDW/wDgn78YnFnNoHjH4P38/wAv28SSyQq56HAkuVAzjqij1wOa4D9ob/gm94h+Hng7/hYPwv8AEVp8Xfhw6GY6ho217q1iAyXdEZg6DuyEkYJZVAr56+Kn7PHxL+CMiDx14J1nw3DI3lx3V3bH7NI3Xaky5jY+wYmu0/ZK/a+8Zfsm+OotT0S5lvvDV1Kv9r+HpZP3F5H0LAHhJQPuyDkdDlSQQDzr4RfF7xX8DPHmneMPBuqy6TrVk3yuvMcyH70UqdHjbGCp+vBAI/oK/ZF/af0T9q74Q2Pi3TUSx1WJvsur6Vv3NZ3QALAdyjA7kY9QfUED8ov+Ci/7O3hjS4PDPx6+FaRN8NPHqrLJb2sWyOwvWUvjaOEEmHyn8DxyLwCoHM/8Ewv2gJfgj+07o2nXVz5XhzxgU0S/R2wiyu3+jS/VZSFyeiyvQB+99flX/wAFzv8Amif/AHG//bCv1Ur8q/8Agud/zRP/ALjf/thQB4//AMEYR/xlfrf/AGKV3/6VWlfBdfev/BF8f8ZXa5/2KV3/AOlVpXhH7Hv7JGs/tU+Obm3+1jQPBWioLrxB4inwsdnBydqlvl8xgrYzwArMeBggHn/wa+A3jz9oDxONB8B+HLvXr1dpnkiULBaqTgPNK2EjXryxGcHGTX1w/wCw58Cf2fYM/tCfHCIeIVAMnhTwQonuYm/uu5jkbnn70cY44asn9on9ubTPB3h2T4P/ALNVt/wg/wAOLINb3evWalNQ1qTo8vm/fVWx98newxyq/JXxfpWkar4s1mKx0yyvNZ1a7c+XbWkTzzzPyThVBZj1NAH3AvxQ/YC8Ov8AZ4fhD8QPE5j+X7Zd37xCT/aAW9T9UH0p6+Iv+Cffj/8A0R/C3xE+GjMcfbo53uFXPfma5PH+5XjXh7/gnV+0d4ns4rqz+FeqwxyLuC6hPbWTge6TyowPsQDXN/EH9iv45fC+wa+8RfDHX7axTJkurSAXkUYHd3gLhR7sQKAPfPFf/BNSz8e+HbvxN+zr8T9G+LmmQDfLorSx22pwLjIUgtgt7OIic8A18X63omt+AvE1zpmq2V7oGv6ZPsmtrlGguLaVTnkHDKwOCPwNS+DfG2v/AA78RWmveGNZvdB1m0YPDe2EzRSIQc4yOoOOQeD0INfoN4D+KHgX/gpr4Zi+HvxSi0/wl8d7WFh4e8Z2kCxR6oVGRBMo6k4yY+h5aPacoQDuf+Cef/BTm61XUdM+GPxj1Rrm4uHFvpHi27f5mc8LBdsepJ4WU85ID9d1fqdX8wHxQ+GPiP4N+PdY8HeLNOfTNe0qYw3EDcg8ZV0boyMpDKw4IINfsV/wSr/bFl+N3w+k+HHiq9a48a+FrZWt7qeQtJqOnghVdieS8RZUY9w0Z5JY0AfetFFNkkWJGd2CIoJZmOAB6mgDi/jJ8YvC3wG+Hmq+NPGGoDT9G09MnaA0s8h+5DEuRvkY8AfUkgAkfgr+19+2v41/az8XTS6hcTaN4NtpD/ZnhqCY+TEo6SS4wJZT3YjjJCgDr03/AAUR/a8uP2oPjHcWuj3sh+H3h6R7TSIFc+XcuCRJeEdy54XPRAvQls1/2If2Nf8AhorVNU8W+Mb8+GfhH4YBm1rWZHEXnFF3tBG54B2/M7/wKR3ZaAPM/wBn/wDZX+JX7TWsSWXgTw9Jf21u4S71W4bybK0JGf3kp4zjnauWI6A19Y3X7D37Nv7O4MPx3+O5vvEcZ/e+HvCMYMkLf3JAEmk/Flirkv2m/wDgopdaxow+GfwFs/8AhWnws09Taxy6Yn2a91FBwWLD5okbrgHzGyS7EsVHx34W8IeIfiFr0eleHdH1HxFrFwcraadbPczyHPJ2qCTyeTQB90J42/4J46Xm2PgDx7rH8P2s3E6/8CwLxP8A0H8Klh8Ef8E/viowtdN8YeMfhjfy/LD9vEjQhuxdnjmUD6yL9RXh2kf8E2v2k9bs1ubf4W30cbLuC3l/Z2z490lmVgfbFeffFH9lX4u/Be2e68Z/D7XNFsE+/ftbedar7GePdGD9WoA+i/in/wAErPGmneGz4r+EPinR/jP4VdWdJdFlRLoqOflQO6S4HZHLE9E7V8Ywz6x4L8QrJFJfaFrmmz5V0L29zazIfXhkdSPYg12HwY+P/j/9n7xKmt+BPEl5odzuBmt433W10oP3ZoTlJB9RkdiDzX6BQn4b/wDBWDwHeH7HY+Af2kNEst6mJttvq0a9M9S8fQHOXhLDll+8Aem/8E9v+Cl6fFqew+G/xVvILXxkwWHS9ebEceqnoIpeyznsRgP0wGwG/Rev5cvFPhfXfhv4v1HQtbs7jRfEOj3TQXFtJ8ssEyHsR7jIYHBGCCQQa/cn/gmn+1/P+018JJtI8S3iz+PvC+y3v5GID31uRiK6x3Y7Sr4/iAPG8CgD7EoorL8U+JtM8F+GtV1/WryPT9I0u1kvLy6lPyxRRqWdj9ADQB5z+0z+0t4S/ZZ+Gt14t8UzGVyTDp2lQMBcahcYyI0B6AdWc8KOeTgH8Ef2lP2p/Hn7UnjObW/F2pyCwSRm0/Q7eRhZaeh4CxpnBbHVz8zdzjAGh+2F+0/rH7Vnxk1HxVeGa10OAm10XS3clbS1B446eY/33I6k46KuPWv2P/2T/C1z4Fvvjz8c7h9I+EeisTZ2Bys2v3CtgRIMgtHuGzC4LtkZAViADzD9m79iX4oftPP9s8NaSmneF43KXHiXV3MFjFt++FbBMjDuEBx3Ir3+X9nn9jb4DHyPiN8ZNW+JniKE4l03wZEBahh95C6BxkHjmdT1+UdvH/2pP27vGf7Qhbw5pCr4F+GFoTFp3hPRgIIvJAwouCmBIcfwcIvZc8nwnwL8NfFnxP1X+zPCHhrVvE9+MbrfSbKS5ZAehYIDtHB5OBwaAPs4/Gb9gS2zDF8B/HN1ETgzzanKr/UAajj+VNi8OfsF/F/FvpmveOvg9qUpKwtqqfaLVWPTef3/AMv1kTtk15Taf8E1P2lb21NxH8LrxYwM4m1Kyjf/AL4acN+leYfFH9mj4qfBWMzeNvAet6BZjA+3T2pa1ySAB56ZjzkjjdnmgD2740f8E3fHXgXww3jP4e6xpvxk8AbDKNZ8LsJJo0GSWeBWfIA5JjZ8c5xXzV8O/iT4n+E3iyz8TeD9cvPD+uWh/dXllJtbB6qw6Mp6FWBBHBBrp/gV+0d8Qf2cPFCa54F8QT6XISPtFi58yzu1/uzQn5W+vDD+Eg819hfED4YeB/8Agoh8M9V+J/wk0eDwv8atDhE3ifwRagCPVFxzcWyjGWODggZY/Kw3FWYA+4P2C/299H/ax8PtoetpBovxJ0yAPeWEZxFfRjg3FuCc4zjcnJUkckHNfXdfy8+AvHWvfCrxxpHinw7eS6Xr+j3S3FtOuQUdTyrDupGVZTwQSDwa/ot/Zb/aD0n9pz4LaF460tFtprlTb6jYqSfsd4gHmxZPUAkMp7qynvQBh/tt6H8OvEf7N/iaw+K3iK/8K+B5ZbQ3uq6ZC0s8LC5iMQVVilJ3SBFPyHgnp1r8wf8AhS/7AH/RfvHH/gqn/wDlbX6J/wDBSvwfr3jv9jrxnovhrRNR8RazcT6eYdO0q0kuriQLewsxWOMFjhQScDgAmvxM/wCGTvjf/wBEb+IH/hL33/xqgD6g/wCFL/sAf9F+8cf+Cqf/AOVtfTX7Nfw8/Za0f9nT482Hgb4o+Jdd8EX+nQp4q1S8sZY59NhCT7GhU2aFiQZDgJJ90cDPP5F+MPA/iP4e6y2keKvD+qeGtWVFlNhrFlJaThG+63lyKGwcHBxzX2z+w0v/ABhB+123ro9sP/IN1QAv/Cl/2AP+i/eOP/BVP/8AK2j/AIUv+wB/0X7xx/4Kp/8A5W18FAEkADJPavVf+GTvjf8A9Eb+IH/hL33/AMaoA+xPhp8H/wBhSz+I/hS40P45+NL/AFuLVrSSxtZtMnVJrgTKY0YnTlABbaCcjr1HWv2Pr+d34M/su/GbS/jB4Fvb34R+O7SzttdsZprifw1epHEi3CFmZjFgKACSTwAK/oioA8F/bL/au0b9kj4TS+JLuFNS1++c2mi6SzY+03G3JZ8ciJB8zEf7KggsK/AD4p/FbxZ8cPHV/wCK/GGrXGua9fv80snRFz8sUaDhEXOAqgAfjX0//wAFZPi3dfEX9rLVdBEzNpPhC2h0u1i6KJWRZZ3x6l32E9xGta//AATl+FXhXw/4f8e/tHfEKzXUPDPw7j/4lti4yLnUtoZeCCCy74VTPAeZW42igCP4Lf8ABNvZ4Hh+I37QPjCH4Q+BXVZIrS4Krqd0p6Da4IhJHKqVdz/zzHWupn/aO/Yp+Cf+h+Bfgdd/E+6hGG1TxQR5Nwf7wFx5mPoIEHtXyR+0b+0j4z/ae+IV14q8X3zPyyWGmRMfsunwk8RRL26DLdWIySa9k/Zu/wCCZXxc/aJ0Gz8SCKy8GeFbtRJb6jrhdZbqM9HhgVSzKeCGbYrDlSaAPSW/4Kc/DiQmJ/2TvAD2J/5dybb+f2LH6Vas/wBqD9jH4xOtn4//AGfpPh3LMNo1Hws48q3b+8Rb+SSB/wBcn/3TXoDf8ENbwWe5fjLAbvH+qPhpgmfTf9qz+O2vmz9of/gmN8Y/gDpV1rqWVr428M2wLzah4fLyS26f3pYGUOoHJLLvUAZLCgDt/i5/wTasPEfgaX4i/s2+Mo/it4SUF5dI3qdTtwMkgABd7AdY2RJPRWJr5B+F3xS8WfAzx/YeKvCepT6H4g02U4YZAYZ+eKVDwyNjDI3Brov2cv2jvGH7MXxGs/FnhK9ZCCqX+myMfs+oQZy0Mq+h5w3VTyOa+mP+Clfwt8M65YeAv2ifAVoLPw18RrZZNQtl48nUCm8kgDAdgJA+Dy8Ln+IkgH6o/shftO6P+1d8HLDxfYRJYarE5s9X0sPuNpdqAWA7lGBDKT2bB5BA9tr8Tf8Agjl8Wrrwh+0pe+CXnb+zPF+myr5GePtVsrTRv+EYuB/wL2r9sqACviv/AIK8f8ma6l/2GbD/ANDavtSviz/gruM/sa6ofTWbA/8Aj5oA/Jf9iRd37XXwiH/Uy2Z/8iCt7/goj/yen8Vf+wkn/pPFWJ+w9/yd78I/+xjtP/QxW5/wUTG39tT4qj/qJRn/AMl4qAP0m/4Ivrt/ZR1w/wB7xbdn/wAlbSvvavg7/gjKu39k3VT6+Krw/wDkva1940AFeFftu/G+X9nz9mbxn4tspxBrf2cWGlt/ELqdhGjL7oGaT/tma91r8xv+C3/jd7TwV8MPCEcjbL/ULvVZkB4zBGkUZP8A4EyY+hoA/J3S9Mv/ABLrVpp1jDLf6nqFwlvBCvzPNNIwVVHqSxA/Gv0P/bL8VWX7GH7NnhX9mbwXPFF4j1uyXVPG+pW4+eYyYBj3Z/5aMhXHURRIOQ5rxL/gl58OIfiL+2T4PN1D59noMc+uSLjo0KYhb8JnhP4V5T+1l8TZ/jD+0h8RPFc0zTxXmsTx2hY522sTeVAv4RIgoAq/s4/s9+J/2m/inpvgnwvGqTzgzXd9MCYbG2UjfNJjsMgAfxMyqOtfvx+zd+yr4A/Zd8Iw6P4Q0mIag8QS/wBduI1a+v26kySYyFzyEGFXsM5J/Dv9lb9tfxh+yFB4gHg3w74X1K61tojdXuuWtxNMqRhtsaGOeMKuXYkYySRk8DHvn/D6v43/APQrfD//AMF19/8AJlAH7U0V+K3/AA+r+N//AEK3w/8A/Bdff/JlH/D6v43/APQrfD//AMF19/8AJlAH1z+3H/wTL8LfGrRdT8X/AA40628M/EKGNpjZ2iLDZ6uRyVdAMJMecSDGT9/Ody/i5YX+s+BfFEF5ayXWia/pF2JI3GYp7W4ifI68qysvQ9CK+6v+H1fxv/6Fb4f/APguvv8A5Mr44+Nvxb1D46/E/XPHWraVpWjarrMiz3VtosUkVsZAiqzhZJHYFtu5vm5Yk8ZoA+8f2nksv25P2H9A+Plja26fEbwQRpfihLaMKZogVEhwD90GSOdR/Csko7V8Pfs4/GC8+Avxw8HeOrR5AukX8cl1HGTma1b5J4/+BRM4+pFfX3/BIfX4vE/in4rfCDVn8zQvGPhqWR4JBuTeh8lsA9zHcuT6+WM9BXwFqenzaTqN1Y3AC3FtK8MgHZlJB/UUAf1MWV5BqNnBd20qzW08ayxSL0dWGQR7EEV8b/8ABV346XHwh/ZhutF0y5NvrXjO4/sZGQ4dbXaWumHsUAiP/Xb8R7D+xJ4vn8c/slfCrVrl/NuG0K3tZJO7tADAWPufKyffNfmv/wAFrfGz6t8efBfhdWJt9F0E3ZB6CW5mcNj/AIDBFQB8O/B/4Yat8afif4Z8D6GudT1y9jtI3IysSk5eVh/dRAzn2U19h/8ABST4xaX4Ig0L9mT4cgaf4E8Eww/2n5LndfXxXftkI4bZv3t6yu2RlBSf8Ej/AA9YaZ8TPiN8UdUhEtj4D8MT3asTjy5JAxLZ7fuYbhf+BGviLxb4o1Dxv4q1nxFq032jVdXvJr+7l/vzSuXc/izGgD2v9jH9kPXv2vPiY2i2cr6X4Z0wJPretBN32aJidiIDwZZCrBQf7rMchSD+9HwX+AvgX9n3wnD4e8DeH7XRrNVUTzogNxduBjzJ5cbpHPqenQADivJ/+CdfwUs/gp+yn4OgW18jWPEFsmvanIwG95bhQ6K3psi8tMdtp7k19MUAFNkjSaNo5FDowKsrDIIPUEU6igD83f8AgoL/AMEzdC8WeG9W+I3wl0iLRvFFlHJeal4fsk22+pRgFneGMcJMBk7VwHxjG45b8qfhD8VvEHwR+JGheNvC92bTWNIuBNGc/JKvR4nHdHUsrD0Y1/TxVf8As+1/59of+/YoA/FP/gpH4G8O/E3wl8Pv2nPAlp9n0PxzAtrrUCYxbagikDdgD5/3c0TnoWgBGd2T5v8A8EzvjpL8FP2qvDcM85j0PxUw8P36FsLmZgIJD2G2YR/N2Vn55NfvubWFohGYYzGDkIVGB+FNWwtkYMtvErA5BCDIoAnr+Yj4zf8AJYPHX/Ydvv8A0oev6d6/mI+M3/JYPHX/AGHb7/0oegD9dPgT8V1+BP8AwSU0nx7AiDV9M0XULfTpiBvS4uNSlhiweu0SNExA6hPavxp0jS7/AMU69ZabZRve6nqNylvDHnLyzSMFUZ7ksR+dfoR8Z9em0n/gjd8GbKGTauqeImtpl/vRrcajLj/vuOM187/8E6PCsXjD9tT4WWU6ho4NQl1HkZAa2t5bhD/31EtAH7U/slfsreGP2Vvhfp2gaVZ203iGWFH1rW1T97fXOBvO48iMHhE6ADOMkk+4UUUAZXijwtpHjbw9qGg6/pttq+jahC0F1Y3kYkimQ9Qyn/I61/Pl+3b+zMv7LPx/1Pwzp/mv4Yv4l1TRZJWLMLaRmHlsx6tG6OmeSQFY/er+iKvy/wD+C4PhaCbwt8K/EgULc295e6czAcusiRSKCfYxNj/eNAHln7B15/w0J+xt8dPgPqC/arvT7Ntf0HcAxSUjeEXuAJ4Yzx/z3f1xX54WV7Pp15Bd20rQXMEiyxSocFHU5BHuCBX21/wR68QTaR+18tjHIVi1XQL21kTswUxzD8QYv518ifE/QI/CvxK8WaJEoSLTdXu7NFHQCOZ0A/8AHaAP6WfhR41j+JPwv8IeLItuzXNItNSAToPOhWQj8C2Pwr81P+C53X4J/wDcb/8AbCvsz/gnpqj6x+xf8KZ3OSmltb/hFNJGP0QV8Zf8Fzj8/wAFB7a1/wC2FAHkf/BF4f8AGVuvf9ijd/8ApXZ1f/bH8RL+yD+zb4L/AGY/Dc1vF4h1SzXW/HWo2THdNLI2Rb7xjcpZSOcExwxZGHIql/wRcH/GVniD/sULv/0rs6+Zf2vPiTP8Wv2mviR4nlm8+K51qeC1bOf9GhbyYB/37jSgDO/Zz/Z98T/tMfFPTPBPheIC4uP3t3fSKTDY2ykeZPJ7DIAHVmKqOTX76/s1fsm/D79lvwnBpfhPSYn1Zogl/wCILmJTfXzdSXfGVXPSNcKPc5J+Z/8Agjj8GLTwd+z5qHj+e1xrPi6/kWO4cciyt2MSKvcZlE5Pr8n90V9/UAFFFFAHxD+3F/wTa8K/H3QNQ8T+BNOtPDPxJgRp1+yosNtq5Az5cyjAWQ9peOT82Ryv4jzw6t4L8SSRSLdaNruk3ZVlO6Ke1uInwR2Kurr9QRX9S1fid/wWI+Cdt8Pf2gtL8aabbfZ7HxpZNPcBRhTewFUmI7DcjQMfVix70AbX7R0Nr+29+xdofx7sraBfiZ4GYaP4vS2UK1zbgjExXPQb0lHGAJJhyEFfH37Mvxpvv2fPjp4Q8c2crpDpt6gvokz+/s3+S4jIHXMbNj0YKe1fU/8AwSN1y28Q/EP4lfCXWW8zw7448LzxzQNyHljOzgH/AKZTzn/gIr4W17Rrnw5rmo6TeLsvLC5ktZl9HRirD8waAP6k7K9g1Kyt7u1lS4triNZYpYzlXRhlWB7ggg18o/8ABT345T/BT9lXW49Mufs2u+KJV0G0dSQ6JKrG4cY5GIUkUN2Z1PpXb/sD+NH8e/sdfCrVZHMkkejrpzM3JJtXe1yff9zXwJ/wW88bPd/Ej4a+EA7CPT9JuNWdB0JuJvKUn1x9lbHpk+tAH55/DfwDq3xU8feH/CGhQ+fq+t3sVjbKeFDOwG5j2UAkk9gCa+4v+CivxS0v4KeDfDX7K/w3nFt4b8PWkM/iW4iAWS/u2xIqSEHk5PnOOm50HGzFc/8A8Eh/BdhqX7Rmt+NNWjzp/gvw9dakJSM+XM+2IHH/AFya4P1Ar4++JXjm/wDib8QvEni3VJGk1DW9Qn1CYuc4aRy20ewzgDoAABQB6h+x7+ylr/7W3xUi8NabKdN0SzVbrWdYZNy2lvuxhR0aRzkIvcgk8KSP3w+CH7P/AIE/Z38IQ+HfA2g2+k2oVftF1tDXV44GPMnlxl2PPXgZwABxX4a/sv8A7f8A47/ZL8G6j4d8G+GvCN5DqN6b66vtYs7mW5kfYqKpaO4QbFC8DbwWY969l/4fV/G//oVvh/8A+C6+/wDkygD9qaZNDHcQvFKiyxSKVdHGVYHggg9RX4s/8Pq/jf8A9Ct8P/8AwXX3/wAmUf8AD6v43/8AQrfD/wD8F19/8mUAfQP7fn/BMHRfFGh6p8Q/g/pcOjeIbSOS61HwzZx7bfUUAyzW6DiOUAMdija/YK33vyf+H3j3XPhd410bxZ4avn07XNIuVurS5T+F17Ed1IypU8EEg8Gvt/8A4fV/G/8A6Fb4f/8Aguvv/kyviD4heMpfiJ4517xRPpun6Pc6zey381jpSPHaxSSMXcRK7uVXcSQu4gZwMAAUAfe//BQLw5on7S37O/w//am8KWkVrf3McekeKrWEH93KD5asf+ucqtFuPLJJD2FfNP7Bnxrf4EftS+CteklMelXtyNH1MZ4NtcERlm9kcxyfWMV9Hf8ABOm/PxT/AGW/2kvg5fN58UmjPrWmRSfMsdwYnUtjtiWG1b6g9K/PFHaN1dGKspyGBwQfWgD+qevzw/4LK/HS48FfB3QPh1pl15N54tuWmvwhIb7FblTsOOgeVo/qI3Hc19v/AAd8Vy+PPhF4H8TTsHm1rQ7HUXYdC01ukhP5tX4s/wDBXTxu/ir9sbVNLLsYvDmk2Wmov8ILx/amI/G5x+HtQB4P+yr8CLz9pH47+FvAtuXitL2483UbmPrBZx/PM499oIX/AGmUd69f/wCCjPx/s/iH8U4fhv4PSHTvhl8OwdF0iwsmIgkmjASabGcNgqY1PPyruB+ds+j/APBNpB8KPgd+0X8bwix6noWg/wBlaRcMOFndGkI/7+C0r4CZpLmYsxaWWRsknJZmJ/UmgD6q/YH/AGHdQ/a58Z3N7qs1xpPw90WRRqeoQgCS5lOCLWEngOVOWbB2KQcZZQf3Q+Gnwq8I/B3wvb+HfBfh+x8O6PABi3sogu8/33b7zue7MST3Ncj+yp8FrL9n/wCAHg3wXa2wt7q0sY5tRb+KW9kAe4cnv+8ZgM9FCjtXrNABUF9YW2qWU9ne28V3aToY5bedA8cikYKsp4II7Gp6KAPyY/4KQ/8ABNzTfB+h6j8V/hNpi2Ol2i+drnhm1T91bxj71zbqPuoOrxjhRlhgAgfn98BfjXr/AOz18V9A8d+HZP8ATtMmDSWzOVju4DxLBJj+F1yPY4I5Ar+mK7tIL+0mtbmGO4tp0aOWGVQyOhGCrA8EEEgiv5tv2sPhFH8Cf2i/Hvgi2jeLT9M1JzYLIcsLSUCWAE9yI5EBPcg0Ae6/8FJfgxoOkeK/C/xn8BQoPAHxNs11SNYVAW3vmUPKhA+6XDB8dn80cbcV3v8AwRs+Oc/hD42av8Nb25xo/iu0e5tInPC38Clxt9N0IlB9TGnpUPw7b/hd/wDwSU8eaHeD7Vqnw115dQ03PJit2ZJGOeo+W4vR9AK+Qv2a/Gj/AA7/AGg/hx4kViiadr9lNLjvF5yiRfxQsPxoA/pgooooA/C//gr7/wAnjXn/AGA7H+T10H7Di4/YY/a4b10mAf8AkG4rA/4K/DH7Y1376HY/yeuj/YbXP7Cf7W3/AGC4v/RE9AHwTYrvvbdfWRR+tf1RV/LFo679Wsl9Z0H/AI8K/qdoAKKKKAP52P2/9Pm0z9sv4sQzhg7aw0w3jnbJGjr+G1hj2xX0L8Do28Y/8EiPjdounDdqOkeI49QnhTq0CvYSl29gsUp/7Z1t/wDBZX9nzUNB+J+k/FvTrOWbQ9dto9P1SdFytveQrtjLkdBJEFAz3ibnkCvnr9hH9rO1/Zk8farZeJ7FtY+HPiy2Gna/Yqu8qnzBZlTOG2h3Vl7o7Ac4oA8B+H91o1j488N3PiKE3Hh+HUraTUYQu4vbCVTKuO+UDDFf04+DvEuheL/DGm6x4Zv7PU9Bu4Fks7rT3V4Xjx8u0rwABxjt0r8U/wBoX/gmvrMVr/wn/wAAbmP4p/DPVCbm0g0mYT31kh58srnMwBO0bcyDGHQEEn5f8IfE/wCKP7POuXFv4f8AEHiTwHqStm4sopprTcf+msJwG6dGU9KAP6ZaQgEEEZBr8K/A/wDwV1/aD8JrEmpaloXi6NOD/bOlKjEf71uYufc5981794F/4LgPvji8ZfC5SnG+70LU8EfSGVOf+/lAGv8AFj/gjFJ42+JfibxB4e8f6d4b0XVL+a8tdIGkPILRHYt5YYSgYBJxgAAYHavX9Y/4J1avrX7E+ifAa48cWUl1pOtNqltrbac+xEMkzlBF5mc5ncZ3dzXS/DT/AIKp/s+fEWSGC58SXng68kxiHxJZNCoPoZYy8Q+rOK+q9A8R6T4s0qDVNE1Sy1nTJxuivdPuEnhkHqroSD+BoA/PL9mf/gk9rn7P3xz8J/EGT4lWWqx6JcSTPZQ6S8TTK0TxlQ5lOOHPY1+j1FFABXxh/wAFckLfsY60cZ26tYH/AMi4/rX2fXyX/wAFUNKbU/2IPHkiDc1nNp9zj2F9Ap/IOT+FAH48/sRSCP8Aa7+ERPfxJZj85AP610f/AAUcjMX7bHxTU97+BvztYT/WvM/2cPESeEf2hfhlrcrBIdP8TabcyknA2LdRlv0Br3f/AIKt+G30H9tnxhcspWPVrTT76MY4x9ljhJ/76hagD7+/4I0EH9krUcHkeKbzP/fi2r7ur86/+CJviiG9+Anjnw8GBudO8SfbWGeRHPbRKvH1t5K/RSgAr8iP+C4Bm/4WJ8Lg3/HuNKvCn+95ybv021+u9fmF/wAFwPBT3PhL4XeLkU+XZ315pUzdiZo0lj/9J5PzoA8V/wCCKohP7UPiov8A64eD7ny8+n22zz+PT9a0m8S/8E6Sxz4U8Y575lvv/kivHv8Aglz8SIvh1+2T4RS6m8iz8QRT6FKxPVpk3Qr+M0cI/GvIP2pvhhP8Gv2iPiD4QmgaCLT9XnNorDG61kbzLdvxieM/jQB9gf8ACSf8E6P+hU8Y/wDf2+/+SKP+Ek/4J0f9Cr4w/wC/t9/8kV4J+yV+wp4l/bA0PxBf+GPFWg6RNolzHBdWWqGYS7ZFLRyDYjDaSsg+qGvfP+HJfxU/6Hrwf/31df8AxmgBP+Ek/wCCdH/Qq+MP+/t9/wDJFH/CSf8ABOj/AKFXxh/39vv/AJIpf+HJfxT/AOh68H/99XX/AMZpf+HJfxS/6Hvwh+d1/wDGaAG/8JJ/wTo/6FXxh/39vv8A5Ipf+Ek/4J0f9Cr4w/7+33/yRTv+HJXxR/6Hzwj/AOTX/wAapf8AhyV8T/8AofPCP5XX/wAaoA7b4M/tH/sLfADxxD4u8EaP4t0rXYoZLdZ5Eup18txhgUkmKnt27V+aXxE1my8RfEDxNqunBl0+/wBUurq2DrtYRPKzJkdjgjivvj/hyV8Tv+h98Jfldf8Axql/4ck/E3/ofvCf/fN1/wDG6APur/gmEXP7DHwx8xizbNQwT6f2jdY/TFfmj/wV687/AIbI1Dzfuf2LYeV/u7W/9m3V+wP7L/wgufgJ8BPBvgG9ure+vNEtGhnubXd5UkjSPIzLuAOCXPUV+XX/AAWt8EvpPx68GeKFUi31rQPspJ6GW3mfdj/gE8VAFL/gnZj/AIZE/bH8j/j7/wCEUG//AHPsWo4/9nr8+6+8f+CSHiGx1P4mfEb4X6pMIrLx54XntFU8iSWMMNuO/wC6muG/4Ca+I/FvhfUfBHirWfDurw/ZtV0i8msLuE/wTROUcfgymgD+m/4a/Zv+Fc+Ffsf/AB6f2Va+T/ueSu39MV0lfNH/AATs+Ndn8a/2U/Btwt0J9Y0C1TQdTjYjektuoRGb/fi8t899x7g19L0AFFFFABRRRQAUUUUAFfzEfGb/AJLB46/7Dt9/6UPX9O9fzEfGb/ksHjr/ALDt9/6UPQB9i/tAsR/wSe/Z2XPB8QXhI/7a6hXCf8EpAD+294KyASLXUSPb/Qpq7r9oH/lFB+zr/wBh+8/9G39cH/wSmOP23/BHvbal/wCkU1AH730UUUAFfnP/AMFtVH/CifARxyPEhGf+3Wav0Yr86P8Agtr/AMkH8B/9jL/7azUAfE//AASmcr+2/wCCADgNbakD7/6FMf6V4X+0iAv7RPxSAGAPFWq4H/b3LXuP/BKo4/bi8Ce8Gpf+kE9eH/tJf8nFfFP/ALGrVf8A0rloA/cP/gmaxb9h34XknP7i9H/k/c18mf8ABcy2cxfBe4A/dq2soT6E/YSP5H8q+sf+CZBz+w38MP8Arlff+nC5rxD/AILV+CX1j4CeDvE8Sl20XXvs8mP4YriFssf+Bwxj/gVAHy3/AMEYblIP2sNaRj803hO8jT6/abRv5Ka+Gtf83+3dS8//AF32mTf/AL245/WvpL/gmj8Rofhv+2V4Dnu5xBY6vJLokzE4Ba4jZIR+M3k155+158Np/hJ+018SPDEsPkRW2tTz2q4x/o0zedAf+/ciUAft9/wTt+zf8MWfCr7L/qv7Nkz/AL/2iXf/AOP7q+jK+Af+COPxntPGP7PmoeAJ7rOs+Eb+Ro7dzybK4Yyoy9ziUzg+nyf3hX39QAUUUUAFfmN/wXD+zf8ACFfCjd/x+f2hf+X/ALnlw7/12V+nNfid/wAFiPjZbfEL9oLS/Bem3P2ix8F2TQ3BVsqL2cq8wHY7UWBT6MGHagDhv+CUHnf8Nt+D/K+59j1Hzf8Ad+yS/wDs22vAv2ifJ/4aB+Jv2f8A49/+En1Py/8Ad+1y4/Svrb/gkbodt4e+IfxK+LWsr5fh3wP4XnkmnbjZLId/BP8A0ygnH/AhXwtr2s3PiPXNR1a8bfeX9zJdTN6u7FmP5k0Afu9/wSk8/wD4Yh8Feb/q/tWo+T/ufbZs/wDj26vgT/gs2Zj+1lpIl+4PClmIv937Rdf+zbq/Tn9gfwW/gL9jr4VaVIhjkk0ddRZW4IN073WD7/vq+AP+C3fgp7P4n/DfxcFJi1HR59KLDoDbzeaAfTIuz9cH0oAy/wDgkfLoFt4T/aOn8SR3M2jR+G4Gv4rMsJ3sxHeGcRlSDvKjjBBzjkVH/wAJL/wTo/6FTxj/AN/b7/5IrkP+CRfjCwtP2g/EPgXWJMaZ438O3Wm+Vux5kyYkAz/1yFwPxr47+IfgnUPht488Q+FNWjaLUtEv59PuFYYy8blCR7HGQe4IoA+8/wDhJP8AgnR/0KnjH/v7ff8AyRR/wkn/AATo/wChV8Yf9/b7/wCSK8d/ZZ/4J2eLf2svh3c+LvDHi/w7p0FrfyadcWWpGcTxSKqPkhI2G0rIpBz6jtXsf/Dkv4qf9D14P/76uv8A4zQAn/CSf8E6P+hV8Yf9/b7/AOSKP+Ek/wCCdH/Qq+MP+/t9/wDJFL/w5L+Kf/Q9eD/++rr/AOM0v/Dkv4pf9D34Q/O6/wDjNADf+Ek/4J0f9Cr4w/7+33/yRS/8JJ/wTo/6FXxh/wB/b7/5Ip3/AA5K+KP/AEPnhH/ya/8AjVL/AMOSvif/AND74R/K6/8AjVAHefB/9qP9iP8AZ81DW9U8AaT4r0vUtV02TTLhp4rm4SSJirbdskzAfMi8gZ6+tflZX6Mf8OSvid/0PvhL8rr/AONUv/Dkn4m/9D94T/75uv8A43QB+lX7GZc/smfB/exZv+EV07k+n2dMfpivxR/4KR+d/wANt/FLz/v/AGy2x/u/Y4Nv/juK/eb4ReCn+Gvwo8F+EZJY5pdA0Wy0t5Yc7HaCBIyy5AOCVzyK/FX/AIK5+CH8K/tj6rqhRhF4j0qx1NG7ErH9lYD8bbP4+9AHZfs8Y/4dJftCeR/x9f8ACRQ+Z/1zzpv9N9fDHgT7N/wnHh77Z/x5/wBo2/nf7nmru/TNfcX/AATYWP4q/BP9o34KrsfV9f0D+09JhbGXmjV4zn1xI1r+tfAjLJbTEENFLG2CDwykfyNAH9UtFeT/ALK3xosvj/8AAHwb40tLkXFzeWEcWoL/ABRXsYCXCEdv3isRnqpU969YoAKKKKACvwa/4Ky+R/w2v4p8n/WfYNO87/f+zJj/AMd21+8F1dQ2NrNc3M0dvbwoZJZpWCoigZLMTwAAMkmv5tv2svi7F8dv2jfHvje2keXTtS1J1sGkGGNpEBFASOxMcaEjsSaAPqv/AIJ/2z3X7FX7XySjNqPD+9P99bO8Y/ySvz/tLp7K7huIjiWF1kU+hByK/Vj9i/4bzeEf+CWPxv8AEd3D5c3inStcuoGIwWtobJoE/wDIiTn6EV+UVAH9U6ncoPqM0tNj/wBWv0FOoA/DT/gsGhX9sKYkY3aBYkf+RB/Sui/YRHnfsN/tcxD7y6PG5+n2a5P/ALKag/4LQaS1l+1RoV3j93e+FbVwf9pbm6Qj8gv51a/4Jfr/AMJV8J/2o/AifNda54Q3W6dTlYbyIkD/AHriP8hQB8F6CQNd04ngC5jzn/eFf1NV/KwjmN1ZThlOQfQ1/Ud4L8SweNPB2g+IbUg2urWEF/EVOQUljV1wfowoA2aKKKAMHx14F0D4meEtT8MeKNLt9Z0HUoTBdWVyuUkXqPcEEAhhgggEEEA1+NP7Wn/BKLx58JtRvdd+GNtdePvBrOXSyt18zVbJeu1olH78DoGjBY90GMn9tKKAP5n/AIa/Gz4ofs4+Ibo+EfEus+DdRSTF1YglUZx2mt5AUYj/AG1NfT2l/wDBWHxnr+nR6Z8U/hx4G+KWmqMEanpwimb1yTviH4RCv2P+IfwY8BfFq18jxn4O0TxOgXar6nYRzSRj/YdhuQ+6kV8x+O/+CSH7PfjBpJNO0nWvCEr5O7RNUcrn/duBKAPYYH0oA+C5Pj9+xf8AEli3iv4A+IPAt5L1uvCOqebHET6IZIkx/wBsz9Kgl/Zx/ZD+JuR4E/aI1HwXfPytj450w+Wp9DPthQD33Njvmve/G/8AwQ+gYSS+D/inJGRnZaa5pQbPpmaKQY/79mvmP4of8ErP2gfhtBPdWvh2z8Z2MWSZvDV2J5MD0hcJKx9lVqAK3xG/4JmfFzwp4dfxL4SbRPit4YAZ11DwVfC8coO/lYDOfaPfXjHwY/aD+I/7NXixtR8Ga/e6DdRy7bzTZcm2uCpwUngb5W6EcgMOcEHmqvws+NPxD/Zz8Z/2j4S13U/DGrWdxturEsyRSshw0VxA3yuMggq44I7EAj7Q+PeheFf26/2VdU/aD8N6JaeGvin4RlEXjDTrBSIr+IBczAE54RhIrnnakiEsVU0AffP7Ef7cPh39r7wrcR/Z00LxzpUSvqmi7iyFScCeAnloicAg8oSAc5Vm+nK/mh/Zw+M2o/AD42eE/HOnyug0y9Q3cSEgT2rHbPEQOoaMsPY4Pav6Wba5ivLaK4gkWWCVBJHIhyGUjIIPoRQBLXl37UXw9k+K37OvxG8KW8fnXmpaHdR2seM7rhULwj/v4qV6jRQB/KwjtG6ujFHU5DKcEH1r9Av+Cl9p/wALk+FHwI/aD09fPt9e0JNG1WVB8sN2m6QIccZ8w3i/9sq8N/4KCfs+XH7PX7S/iXTobYw+HNbmfWdGkVSI/Imcs0S9v3T70x1wqk/eFeyfsC/Fbwh8Vvhf4n/Za+KF4LHRfE0jXPhrVpCv+hXxw3lqW4DF1V0HAZvMQ/6wAgHmP/BOz9q21/ZY+N5uteZl8GeIIBp+ruisxtsNuiuAo5bY2QRz8sj4BOBX74eHfEeleLtDstZ0TUbXV9JvYxNbX1lMssMyHoyupII+lfziftHfsu+Pf2X/ABnPofjDSpUs2kZbDWoI2Nlfp2aKTGM45KHDL3Hrznw5+OnxE+ERf/hC/G2u+GY3JZ4NNv5IoXJ7tGDtY9OSD0oA/pvrwb9uP4HS/tCfsyeMvCtjbi41xIBqOlKB8xuoD5iIvu4DR/8AbQ9Otc1/wTe+Jfif4t/soeHPEfjDWbjX9cmvL2KS+usGR1S4dUBIAzgACvp6gD+WXSdVv/DOt2WpWE0ljqmn3CXFvMvDwzRsGVhnoQwB/Cv0K/bT8J2X7Y37O/hX9p3wTDFLrmlWSaX430y2yXt3jxmTb6Rs5yepikjbgIa5b/gqf+x7P8FvifN8R/DdjIfBHiq4ea58qP8Ad6dqDEtJGcfdSTl09969FGfEf2OP2vNc/ZR8ey3S251zwXq4Fvr3h6QgpdQ8jegb5RKoY4zwwJU8HIAKH7Hf7Uer/sm/GG08WWcL6jo1zH9i1jS1fb9qtWYE7ewkQgMpPcEHhjX78fBf47eB/wBoHwhD4k8Da9ba1YMFE8UbAT2jkZ8ueP70bj0PXqMjmvyT+P8A+wJo/wAWfDknxg/Zfu4fF3g7UM3F14Rtm/07TZTy8cUZ5IH/ADxOHXjbvBGPiTQfE3i34T+J3utH1PWPCHiGzcxvJaTS2dzEwPKtgqw56g0Af1C0V/Pfov8AwUn/AGk9BtVt7b4o3ssajaDe6fZ3T/8AfcsLMT75rlPiH+2z8dPipps2neJPibrl1p84KzWlpKtnFKp6q6QKgYexBFAH7H/Hn/gph8FPgD4p/wCEc1DUdR8U6xGCbqDwvDFdLaHsskjyogbr8qsSMfMBkZ4Dwv8A8Fg/hN418SaboGg+B/iNqus6lcJa2lnbaZYs80jHCqB9s9fXp3r8dvhP8GvGnxx8V2/hzwP4evPEGqSsAy2yfu4FP8cshwkacH5nIFfoZoGg/DX/AIJS+DZNb8QXVh4+/aN1WyK2el27brfR1depP3kTn5pDh5ANqBV3tQB9p/tGf8FAvhb+zB4k03w94vGsXGvXlmL2TT9It4riS0RjhRMTKqqxw2ACeFz0Kk8z8Ef+Cm3wz/aC+JukeBfB/hnxrc6xqJcia4sLZLe3jRSzyyv9pJVFA64JJIABJAP4ZfEDx7rvxR8aav4r8TahJquvatObm7u5erseAAOgUABQo4AAA4FftB/wS1/Y6n+AXw6n8eeKbUQ+N/FltHst5ExJp1gSHSE55DyEK7jttjHBU0AfdFfGH/BVz4FT/F/9mG61rTLY3GteDLj+2UVBl3tdpW6UcdAhEp/64/hX2fUVzbQ3ttLb3EST28yGOSKVQyOpGCpB4II4waAP5jfg78UNW+CvxR8M+ONEb/iZaHex3aRk4WZQcPEx/uuhZD7Ma+w/+ClHwd0vxpDoH7TXw6P9oeBPG8EJ1MwxnNlfBdm6QDhN+zY3pLG2TlxXkv7fH7I97+yr8Y7q2sbad/AmtO13oV84LKqE5e2Zv78ROOeSpRu5xrfsTftmW/wM/tT4ffEOwPin4NeJg0OqaVKnmmzZwFaeJe4IxvQYJwGX5lwwByX7GH7YXiD9kT4jnVbSOXVfCupbYda0MSbRcRjO2RM8LKmSVPcFlOA2R+8nwW+PngT9oLwpD4g8DeILXWbRlUz26OBc2jkZ8ueL70bD0PBxkEjmvxs/ab/4J16t4W01viN8E7n/AIWb8KNQX7VbPpLfar2xjIyVdVGZEXkb1G5cHeq4JPyJ4W8YeIPAOtJqvhzWtS8O6tDlVvNMupLadOQSN6EEcgcZ7UAf1H0yWVIInkkdY40BZnY4CgdSTX89+h/8FIv2kvD1n9ltfilqEseCN19ZWl2/Jz9+aFm/WuB+J/7V/wAYPjLZyWXjH4h65rGnyf6zTzc+Tav/AL0Me2M/ivFAH6T/APBQb/gppo3hvw9qnw4+EOsLqfiS7VrXUvEthLmDTozw6W8in55jyN68IOhLfd/PD4ReK/jn8cPiPofgvwv4+8YXutatOIowddu9sS9Xlc7+ERQWY+gNc78Cv2bPiH+0f4kXR/Anh241Ta4W51Bx5dnZg4+aaY/KvBzt5Y4+VSeK+7Nf8YfDP/glt4A1Xwv4J1Cy8d/tE6rAINQ1nyg8OjKwBK4OQoXgrEfmc7WkwoVaAMj/AIKP/tD33wj0/wAB/AX4eeOdbefwjbLP4h12HU5he3V4yYVJZg+4th5JHTJUGVBgbMDz3/gnBc/FH48/tSeG7a/8e+Lbzw54fP8AbmqLNrV08TpCR5UTgvhg8pjUqeq7+CAa+MLu61Xxj4imuZ3udX1vVbppJHwZZ7q4lfJOByzszfUk1+9//BPH9kpf2WfgsiavDH/wnPiIx32tSAAmDAPlWoPcRhmz/tu+MjFAH1RX8xHxm/5LB46/7Dt9/wClD1/TvX8xHxm/5LB46/7Dt9/6UPQB9iftA/8AKKD9nX/sP3n/AKNv64H/AIJUHH7cPgX3t9S/9IZ6779oH/lFB+zr/wBh+8/9G39ef/8ABKs4/bi8Be8Gpf8ApBcUAfvnRRRQAV+dH/BbX/kg/gP/ALGX/wBtZq/Revzo/wCC2v8AyQfwH/2Mv/trNQB8Rf8ABKw4/bj8A+8Opf8ApvuK8R/aS/5OK+Kf/Y1ar/6Vy17Z/wAErzj9uX4fe8Wpf+m+4rxP9pL/AJOK+Kf/AGNWq/8ApXLQB+33/BMQ5/YZ+GP/AFz1D/043Veo/tRfB1Pj58AfG3gXbGbvVNPcWTS4CpdoRJbsT2AlRMn0zXln/BMA5/YX+GP+5qP/AKcrqvqagD+Wn/iaeDfEfSbS9a0q76EbZbeeJ/0ZWX8xX3p+2ZoVr+2D+zv4R/aY8JRxTa/pFnHonjrTbVSZLeVMbZyo6KrOef8AnnLEeiHGr/wVt/ZAm8C+NJPjL4Zs2bw5r8wXXIolJFnftwJj6JN3PaTP99RXy9+yD+1lrX7K/jye7W2Gu+DNZQWniHw5NgxX1vyMgN8vmKGbBPBDMp4Y0Acl+zn+0F4n/Zn+KemeNvC8oM9v+6u7GViIb62YjzIJPY4BB6qwVhyK/fX9mr9rL4fftSeE4NU8J6tEmrLEHv8Aw/cyqL6xboQ6Zyy56SLlT7HIH5MftC/sP6b418Ov8X/2a5j42+HN8puLzw/aNv1LQ5OrxGH77Iv93l1H95fnPxppWr6r4T1mK+0y9vNG1a0c+Xc2krwTwt0OGUhlPUUAf1MUV/PL4e/4KK/tHeGbOK1s/ipqs0ca7Q2oQW165Hu88TsT7kk1zfxB/bU+OXxQsGsfEXxO1+5sXyJLW0nFnFID2dIAgYezAigD9YP24v8AgpL4V+AWg6h4Y8CajaeJviTOjQL9ldZrbSCRjzJmGQ0g7Rc8j5sDhvxHnm1bxp4kklka61nXdWuyzMd0s91cSvknuWdnb6kmrHg3wTr/AMQ/EVpoPhjRr3XtZu2CQ2VhC0sjnOM4A4AzyTwO5FfoN4B+GPgf/gmZ4Zj+IfxTfT/Ffx3uoW/4R3wXaTrNHpZYYE8zDODzgydByI9xywAKH7R01r+xD+xdofwEsrmBviZ45Yax4ve2YM1tbkjEJbHQ7EiHOCI5jwHFfHv7MvwWvf2g/jp4Q8DWcTvDqV6hvpUyPIs0+e4kJHTEatj1YqOprmfih8TvEfxk8e6x4x8Wag+p69qsxmuJ24A4wqIvRUVQFVRwAAK/Yr/glX+x1L8Efh9J8R/FVk1v408U2yrb2s8ZWTTtPJDKjA8h5Squw7BYxwQwoA+7rKyg02yt7S1iS3treNYoooxhURRhVA7AAAV8nf8ABUH4GT/Gr9lfWJ9MtTda74VmXXbREBLvHGrLcIMcn90ztjuY1FfXFNkjWWNkdQ6MCrKwyCD1BFAH8v3w0+IGrfCn4g+HvGOhyiLVtEvor63LfdZkYHaw7qwypHcE19u/8FGfhVpXxh8L+HP2pfhtGt34W8S2sMPiKGE5ewvVAjVpABwcgROf76KefMBryz/goj+yDcfsvfGCa60e0k/4V/4ike60idUPl2rkkyWZPYp1XPVCvUhsVP2JP2yR+zrqeqeE/GOnf8JP8JPE4MGt6LJGJfK3LsM8aNwTt4ZOA6gd1U0ARfsEftkXP7I3xPmuNRiuNQ8D62qQazY2/Mibc+XcRKSAXTceP4lZh1wR+8Hw1+KPhP4weFLXxL4M16z8Q6Lcj5Lqzk3bW7o6/eRx3VgCO4r8Y/2k/wDgnVLBoY+Jv7Pl9/wsz4YX6m5W106T7RfaevUpt+9Kq9MY8xejrwWPyJ4J+I/jL4Sa7JfeFPEWseE9VQmOWTTbqS2kOMgq4UjI68NQB/UBTZJEhjaSRlRFBZmY4AA6kmv59tN/4KX/ALS2lWn2eH4oXUkYG3dc6ZYzv/328BbPvmuA+J37XXxl+MmnSad4v+Imt6tpkvEtgswt7aX/AH4ogqN+INAH7E/GH/gql8C/g/4tn8Ote6v4wvLYEXE/he3hubeGQHBjMrzRqzDvs3AdCcggZPwy/wCCsHwy+MPjvSPB/hPwJ8Q9V17VZhDb28enWIHqzsftmFRVBZmPAAJPSvx3+B37OnxB/aL8TJongTw7c6tKGAuLwjy7S0XjLTTH5UGDnGdx7AnivvHWfEHw2/4JW+A9R0PwpqNl4+/aL1q28i81PYrwaIhAJXbztUHkRn55CAz7VCrQB9i/H7/gpN8H/wBnT4h3XgrxA+tatrlpDHLdLodpFPHbs4JETs8qYfbtYgZwHXnOQJP2c/8Agoj8Pv2oviJ/wh/grw34wN4lrJeXN9f2VtFa2sSYG6RluGb5mZEAVSSWHQAkfgjquqaz468T3WoX893rev6tdtLNM+ZZ7q4kbJPqzMx/Emv3l/4J2fsi/wDDLHwdL6zGjeOfEnl3usNgZtVC/urQHuIwzFj3d3xkAUAfV1fnh/wWU+BU/jb4O6B8RtLtfOvfCNy0N+UB3fYZyo3nHUJKsf0Ejnsa/Q+svxR4Z0zxp4b1TQNas49Q0jVLWSzvLWUfLLDIpV1P1BIoA/nG/ZT+O93+zd8ePC3jqAPJZ2dx5Oo28fWezk+SZAPXaSy/7Sqe1ev/APBRn9n2z+HPxRh+JHg54dR+GPxEB1nSb+yUmCKaQB5Yc4wuSxkQcfK20D5GrzT9sH9mLWP2VPjLqXhW8E11ocxN1ouqOhC3dqT8vPTen3HA6EZ6MM+ufsf/ALWfhe38DXvwG+OcD6x8ItZYrZ37ZabQLhmJEiHBKx7zvyMlGycEMwIBh/sDftyah+yN4xubHVYbjVvh5rUitqWnwkGW2lGFF1CDwXCjDLkB1A5yqkfub8M/iv4Q+Mnhe38ReC/EFj4i0iYDE9nKGMZ/uSL96Nx3VgCPSvwb/am/YT8Z/s8O3iHSyvjf4Y3Z83TvFmjkTxeSeV88JkRnH8X3G/hbsPCfA/xH8V/DPVf7T8I+JdW8M6hxm40m9ktnYDoGKEbhyeDkcmgD+oaq9/qFrpVlPeXtzDZ2cCGSa4uJAkcagZLMx4AHqa/n6sv+Clv7SthZm2i+KN20ZGN0+m2Mr/8AfbwFv1ry34o/tJ/FL41IYvG3jzW/EFpkH7DcXTLaggggiBcRg5A5254FAH3z/wAFHv8AgpNpni/QtR+FPwl1MX2mXa+Trnia1f8AdXERHzW1s38SN0eQcEZVcgk1+f3wD+Cev/tDfFfQPAnh2M/bdTm2y3LIWjtIBzLPJj+FFyfc4A5Iqx8DP2dfH/7RnilNC8C+H7jVZgR9ovGHl2lov9+aY/Kg9vvHsCeK+yfG/wAV/Av/AATp+GeqfDX4Sata+LPjZrUPkeJvGtvhotK45gtz/eUk4UE7WG5/mCooB9X+IPib4d1D4KftRfCDwUlufB3wq+H0WjW88JDNLdvZX/2nLjg7fJiQ8Z8xZSSc8fh9X31/wT0mkuP2WP20ZZXaSV/CUTO7nLMTaaoSSe5r4FoA/qmj/wBWv0FOpsf+rX6CnUAfll/wW++Hsj2Pwx8dQx/uYpLrRLqTH8TBZoBn/gFxXy7/AMEsvijD8Nf2v/DtreSiLT/FFtP4fmLfdLy7XhGO+6aKJf8Agdfr/wDtpfAc/tG/s4eLvB1tGj600IvtJZ+Nt5Cd8Yz234aMnsJDX86ttc6j4W12KeJp9M1bTrkOjEGOW3mjbI4PKsrD8CKAO9/aU+E1x8Dfjx438ETwtDHpWpypa7gcvasd9u/P96Joz+NfqP8A8Eqf20NA8V/DXSfg94q1SDTfFuiZttGN1JsGpWmcpGjHgyx5KbByUVSM4bHk3xg+Hth/wU7+Buj/ABY+HotovjR4Ysl0/wAS+GgyxvfKoJDJ7k7mjJ4ZWZCdyAD81da0TVPCmtXOmatY3ekatZSeXPaXkTQzwOOzIwDKR6GgD+pmiv57f2d/2vfjTpHxL8C6BD8TvEsujT63ZW0lld373MZiedFZMSbsKQSMDjmv6EqAPxg+JH/BWj49eCfiJ4p8Opb+Fdmkardaevm6XIXxFM0fzfvuvy819D/G79vL4peDf2L/AIOfGPw3Hoc2oeJLiSx1nz7F5LdZh5oGxRICmGt5RyTXxV/wVI+C118Jv2r/ABBqawldG8Xga7ZyhcKZH4uEz/eEoZiPSRfWvSf2EPGXhj9ob4B+MP2VvHGow6Vd6lI2p+ENSnPEd3w5iXpysi+YFBy6yTLkcUAelfsgf8FV/HPxL+Pnh3wp8TpfDemeGdX8y1W8tLNrcx3JUmAM7SkBWcBOnVx061+rVfzIfGX4J+MfgH43vfCnjXRp9J1O3Y7HZSYbqPOBLDJjEiHsR9Dggge//Az/AIKhfG/4JaVa6O+qWfjTQ7ZRHDaeJImmkhQDAVJ1ZZMAAYDFgMcCgD98KK/JS2/4Li66lsFuPhJp0txjl4tckRM/7phJ/WvMPi1/wWG+Mfj3SrjTfDNho/gKCdSjXdgjXF6oPULLIdq8dwgYdQQcUAcz/wAFZpfDMv7Y2s/8I79nNyum2i6wbbGPt2G3bscbvK8gHvkHPOa7/wD4JiKw+BP7WUl2x/sVfCIFyrH5STa6hk+n3Q2fqK+FNB0HxD8TfGNtpelWl94i8S6xdbY4Yw01xdTOSSSTkkk5JY+5J6mv0V+NWk2f/BPr9hF/hNPdw3XxW+JjG41gWzqwtLY7FlTIOSgRfJB6MzzMOBigD8zq/py+B8ss/wAFvAEs/wDr38P6e0n+8baPP61/Nj8NfAmofFD4heG/COkxtJqOt6hBp8IUZw0jhdx9hkknoACa/p50nTINE0qy061XZa2kKW8SnsiKFUfkBQBbooooA8E/bL/ZM0P9rj4Vv4fvZV03xDp7PdaJq5Un7LOVwVcDkxOAAwHorDlRX4CfFn4R+LfgX47v/CfjHSZ9G1uxf7rj5JVz8ssT9HRsZDDj8QRX9O1ec/G79nr4f/tE+GP7D8e+HbbWrdNxtrk5jubRiMb4ZVwyHpwDg4GQRxQB+OfwQ/4Kh+MvBHg+DwR8S/DOlfF/wTHGtuLXXFX7UsQ4CmRldZQB0EiMeANwFdjcfF/9gX4kE3Gs/CfxX4H1F8mQ6U7CAH0VY7kr/wCQlruPjH/wRO1i2uri7+F3jm1vrQndHpnidDDMgz0+0RKyufrGlfM3iX/gmJ+0j4amdT8PH1SEHC3GmalaTK3uF80OPxUUAfsJ+w0nwzT9njR/+FRyaq/gdru7a1Gs/wDHwr+c3mg5Gcb84znjvXv1fL//AATd+G3if4Tfsp6B4a8X6Nc6BrttfXzy2N2AHVXnZlPBIwQQa+oKAOf8feA9C+J/gzV/CvibT4tV0LVbdra7tZRw6nuD1DAgMGHIIBHIr8KP22P+Cfvi39lTWZdW01LnxN8Obhz9m1qOLMlnk8RXYUYRugD8K/bByo/feoL2yt9Ss57S8t4rq0uI2imgnQPHIjDDKyngggkEHrQB/M38Gvjt47/Z/wDFI8QeA/EV1oF+wCTLEQ0NygOQksTArIvswOO2DX2an/BRP4P/AB6sobX9ov4FWWuaksaxP4k8M4S6fAx0LxyoOM4E5HovFfTn7Rf/AAR++HnxHmuNX+G+oN8O9ZkJdrAobjTJD7JnfD3+6So7IK+CviR/wS7/AGhvh5dzrD4Pj8WWMedt94dvI7hX+kTFZvzjoA9Sk8M/8E8fE5+0L4s8e+Ed/wA32RYp5PL/ANnJt5//AEI/WnWuqf8ABPb4aMLyKw8c/EyeM7ktrhZUXI6ZBNspHsc/Q9K+Q9S/Zm+L+juVvvhV41tCDj994eu1H4Ex81e8O/sm/GrxVOsWmfCjxjPuOPMfRLiKIH3kdAo/E0AfTHxJ/wCCqOtWXheXwh8DPAmjfB3w3youLKGN7xhjBZQqLHGx7ttds8hwea+Iby91fxjrz3F3Pe63reozjdLM73FzczOcDJOWdmJ9yTX2z8H/APgj98Z/HdzBN4wk0z4eaUxBka7nW9u9p/uwwsVzjs8iV+ln7Mf7Afwq/ZeEWoaPpj6/4sC4fxHrIWW4X1EKgbIR1HyjcRwWagD5S/4J8/8ABMO58J6pp/xK+MmmxDUoNtxo/hWfD/Z36rPdDpvHBWLnaeW+YbR+n9FFABRRRQB578efgX4V/aL+Gmp+CvF1oZ9OuwHiuIsCe0nGdk8TEHa65PsQSCCCQfwZ/a1/Yv8AHP7Jnix7XWbd9W8LXLn+zfEtrCwtrheyP18qUDqjHsSpYc1/RRWX4o8L6P418P3+ha/plrrGjX8RhurG9iEsMyHsyng9j7EA0Afzj/s+/tWfEv8AZk1iS88C+IJLO0ncSXek3S+dY3RAx+8iPGccblKtjo1fWVx+3F+zR+0HmX45/AT7B4glOZtf8JuA8znrI7K8Mv4M0v417l+0F/wRk8MeKLqfVPhN4iPhG5kJY6JrG+4scnPEcozLGOnDCT8K+G/iB/wTX/aI+H084l+Ht1r1rGTtu/D88d6so9VjRvN/76QH2oA9mbwX/wAE8dWb7SPHvj7RR977GIJ2H+7n7JJ/6F+NSx+PP2AfhQFutJ8FeLvihqKHdENRMiwgj++skkSkH3jf6V8e3n7N3xb06UR3fwt8aWshOAk3h67Qk/Qx1u+Gf2N/jn4vuEi034S+LzvOFlu9ImtYv+/kqqv60Ae4/GX/AIKjePfF/hqXwh8M9C0r4OeDiDGlt4dQJeeWf4RMqosXb/VIjDpuIr4/0nSNY8a+IbfT9NtLzXNb1GfZFb28bT3FzKx6ADLMxP4193/Bz/gjX8VfF9zBcePtW0vwFpuVMkEcg1C+I7gLGfKHHGTIcZ6Gv0u/Zr/Yq+F37LdmH8J6L9q1902T+ItUKzX0gI+ZVfAEanH3YwoPGcnmgD5z/wCCeP8AwTei+B32L4i/Eu1hu/H7Jv0/SiRJFowI+8xGQ9xg4yMhOcEnkfoJRRQAV/MR8Zv+SweOv+w7ff8ApQ9f071+EvxN/wCCaH7SXiH4keK9V0/4cfaLC+1a7ubeX+3NNXfG8zsrYa5BGQQcEA0AdN+0Cf8AjVD+zqP+o/e/+jb+vPv+CVxx+3J8P/eLUv8A033FfVvxi/Yt+Mvir/gn38Fvhrpfg77V418PatdXWqaZ/alkn2eN5Lsq3mtMI2yJY+FYn5vY4479gP8AYN+OnwT/AGrPBvjHxp4G/sbw5p6Xwub3+17GfyzJZzRp8kU7Ocu6jhTjOTxzQB+vNFFFABX5z/8ABbU/8WJ8BD/qZD/6SzV+jFfFf/BUn9nj4g/tGfCrwho3w78P/wDCQ6jYa0bu5h+229t5cXkSJu3TSID8zAYBJ56UAfm1/wAEsTj9uf4de6an/wCm65rxb9pL/k4r4p/9jVqv/pXLX3N+wP8AsGfHX4K/tXeCvGXjPwN/Y3hvTlvhdXv9r2E/l+ZYzxJ8kU7Ocu6DhTjOTwCa8w+Nf/BNr9o3xf8AGXx7ruk/Dr7Xpeqa/f3tpP8A25pqebDJcSOjbWuAwyrA4IBGeQKAP0j/AOCXhz+wr8MvpqX/AKc7qvqivn/9gr4XeJ/gv+yd4G8G+MtM/sbxJpv277XZfaIp/L8y/uJU+eJmQ5SRDwxxnB5BFfQFAGX4o8MaT418O6loOu6fBqujajA9td2Vym6OaNhhlIr8OP25f+CdHib9mrV73xL4TtrzxL8MpC0ovEQyT6SM/wCrucD7ozgS4wejbTjP7t0yeCO5hkhmjWWKRSjxuAVZSMEEHqDQB/Mv8Gvjt46/Z/8AFQ8Q+A/EV1oGoEBJhEQ0NygOdksTArIvswOOowea+uG/bi+BX7QUSr+0H8D4T4gZQJfFvgp/IuZm/vOm+Nv++pJBzwtfYf7Sv/BJH4b/ABbubvW/Adz/AMK48RzMZXgtovN0ydicnMGQYv8AtmQo/uGvz9+Jf/BLX9oT4d3cwtfCkPjDT0ztvvD14kwYf9cnKS5/4B+NAHcx/DD9gLxGzXEPxd+IHhcucizvLB5QnHQFLJ/1c9KkXw7/AME+/AH+lv4p+InxLZTn7DHA9urY7cw2x5/36+VtS/Zm+L+jOyX3wr8a2hBx++8PXag/QmPB/CtDQP2R/jb4muUh0/4S+M5C/SSXQ7iGL8ZHQKPxNAH0Z4r/AOCldn4C8O3fhn9nX4YaN8I9MnGyXWmijudTnXGAxJXAb3cykY4Ir4v1vW9b8e+JrnU9Vvb3X9f1OffNc3LtPcXMrHHJOWZicAfgK+z/AISf8EgPjZ47mjl8VnS/h7pxPzNf3C3d0R6rDAzL+Duhr9Kv2Yf+CfPwq/ZhaDVNM09/Eni9FwfEWshZJoz38iP7kPcZUb8cFjQB8lf8E8/+CY91pWo6Z8TvjHpbW1xbuLjSPCV2nzK45We7U9CDysR5yAX6ba/U6iigAooooA4n4y/Bzwv8evh3q3gvxfYC/wBH1BMErgS28g+5NE2DtkU8g/UEEEg/gt+17+xP42/ZM8WTRahbza14NuJP+Jb4mt4CIJVJ4jmxkRSjupPOMqSOn9D9Z3iLw5pXi/Q73Rdc0211fSL6Iw3NjewrLDMh6qyMCCPrQB/N38Bf2nfiP+zXrz6l4D8RT6YkzA3WnSgTWd3jj97C3yk44DDDDPBFfXU/7eP7PH7Qi7vj78BY0118CXxD4SfbNK395iHhlAH90ySfjXvf7Qn/AARp8I+L7mfVfhTrzeC72Qljo2p77mwJOeEfmSIfXzB6AV8MfEH/AIJo/tEfD64nD+AZ/ENpGflvPD1xHeLIPVY1Il/NAaAPX/8AhEf+CeXiAG5/4Tbx/wCGskn7H5Mz456Z+yy9f97vU9p4u/4J+/Ch1vNP8M+MvijfxfNCl+JFh3dt6u8CEfVG+lfH19+zb8XNLfZefC3xpaNnGJ/D12h/WOtjwx+x/wDG/wAYTrHpfwn8XyBuBLcaPNbxf9/JVVP1oA9++MH/AAVN8beIPDX/AAiPwm8OaZ8GPCMYMaQ6Eq/a9nosioiw9M/u0DD++a+N9I0fWfHPiS307TbS913XdTuNkVvbo09xczOegAyzMSa+7Pgz/wAEbvit4xuYLnx9qmmeANLyDJAsi398R1IVI28semTJx/dNfpn+zZ+xd8Lv2W7AHwlov2nXpI9lx4h1Mia+l4wQHwBGp7rGFB75PNAHzd/wTx/4JuR/A57T4i/E21t7zx6VD6dpORLFowI++xGVe47ZGVTsSTkfoNRRQAUUUUAeSftN/sz+Ev2p/hrc+EvFMLQyKTNp2rQKDcafcYwJEz1B6Mh4YccHBH4JftKfsr+PP2W/Gc2i+LtMc2EkjDT9ct0Y2V+g5DRv2bHVD8y9xjBP9JFc/wCPPh/4b+KHhe88OeLNFs/EGiXa7ZrK+iEiN6MO6sOoYYIPIINAH8+H7OH7bHxQ/Zjb7F4a1ZNR8LyuWufDOroZ7CXd9/C5BjLdyhGe+a9/f9oD9jT47/6R8Rfg9rHwz8RSnM2oeDJg1oxP3nKIUAJPP+pY8n5j39u+Pv8AwRa0/U7u41P4Q+KV0gPlhoPiIvLCp7CO5UFwPZ1c8/er4n8d/wDBOz9of4fyzC7+GeqarAhO2fQSmoiQeqrCzP8AgVB9qAPYX+Dn7At03nRfHfx1ZxA5NvNpcryfQMNPx/OpF139gf4Qslxpuj+OvjDfx/NEuosbe2L9vMyLf5f+2b/Q18n3X7OfxYsZfKufhh4yt5f7kvh+7U/kY66jwj+xP8efHE6R6X8JvFK7yNsuoac9jEc9/Mn2Lj3zQB6d8Zv+CkPjjxt4WPgv4daLpvwa8BKGQaT4WAjnkQ8FXnVU4I6+WqZ53Zr5Gr9IPgl/wRd8b+ILm3vPif4msfCmm5Bk03R2F5fMO6l8eVGf9oGT6VB+15/wS08cW3xL021+Bfw9kv8AwXb6PBFJdTa1aJLNd+ZKZWf7ROjFiCnIUL0AwBgAHPf8E7v+TU/2zv8AsUIf/STVK+B6/WP9jP8AYw+Mnwn/AGfv2m/DXirwd/Zet+MvDkdhoVr/AGpZzfbJxb36FN0czLH808Qy5UfN14OPkb/h1x+07/0TL/yv6X/8k0Afv5H/AKtfoKdTUGEUHqBTqACvy3/4Ka/8E8L/AMRapqnxi+GOnPe3s+bjxFoFspaSVgObuBB95iBmRByT8wBJav1IooA/mF+FvxW8W/BLxvY+KvBusXGha7ZMdk0WCGHRo5EOVdD0KsCDX2/bf8FL/hv8Z9LtrH9ob4FaT4tvIUWP+3dEVFudo67VkKunqdswBPYV91/tM/8ABNf4S/tHXd1rX2SXwX4vnJeTWdEVVW4c/wAU8B+SQ9SWGxznljX5+fEf/gjZ8Z/C88r+FdS0DxrZD/ViO5Njct9Y5fkH/fw0Adb4B1n9grxH8Q/C0/h3QvHfhfXn1a1+wW7PK6Jcecnlbt0sw279ueTxX7DV+CXw1/4J/wD7Qfgr4u+Db/V/hlqcNlYa3ZXFzcQT29wkcaXCMzZjkbIABPGelfvbQB4R+2R+ynov7W3wlm8NXsy6drtk5u9F1Urn7Lc7SMPjkxOPlYD2I5UV+AXxM+GPjL4A/ES68N+KdPuvDviXS5VkUhip4OUmhkX7ykjKup7eor+nSvM/jr+zj8Pv2kPC/wDYfjzw/DqsSc214n7q7tG/vRTL8y+4+6e4IoA/I74bf8FKbTxf4Ni8B/tJ+Brf4teGEAWLVlRE1S36DdklQ7YH31aNz3Zs1sTfs6fsUfGFxdeCfjrqHw4ubgZOmeJ4cw2zf3d0yx5HT/ls/wDvV0/xp/4Ir+LdGubm8+F/i2y8RafndHpmvf6LeKv90SqDHIfciMe3r8n+L/2Df2gfBFxLFqHwo8R3Pl9X0m2/tFCPUNblwaAPoVP+CZ3wvuz5ll+1x4AurUctMBa8D6C+I/Wr1p+w1+yv8Ptt148/an0zX4Ebc9t4Za2EhA/hKxyXLf8AjoNfGU37PXxUt5PLl+GnjCKT+6+g3QP5GOt7w/8AsgfHDxQ6rp/wl8YurdJZ9FngjP8AwORVX9aAPsO//bu+Av7K2h3+j/sy/DkX3iCdDFJ4w8QRuNw5+YeYTNIOh2Hylzzg9D8DfEr4meJ/jD401HxX4v1e41zX9QfdNdTnn0VFUcKijgKoAA4Ar63+Fv8AwSE+OfjiaKTxHFpHgKwbBd9TvFubjb/sxQbxn2dkr9EP2Yf+CZ3wq/ZyvLbW7qKTx34wgO+PV9ZiURWzf3oLcEqh7hmLsD0YUAeD/wDBK/8AYR1T4e3Ufxi+IWmGx1ma3KeHtIuo8TWkbjD3UinlHZCVVTyFZiRlhj9MaKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooA//9k=">
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="stack">
+
+      <section class="card tint-details static-strong">
+        <div class="row">
+          <h2><span style="color:var(--blue)">■</span> Property details </h2>
+        </div>
+
+        <div class="form-grid">
+          <div class="field">
+            <label for="address">Address</label>
+            <input id="address" type="text" value="20 Coast Avenue, Paynesville, Vic 3880" />
+          </div>
+          <div class="field">
+            <label for="purchasePrice">Purchase Price</label>
+            <input id="purchasePrice" type="text" value="$500,000" inputmode="decimal" />
+          </div>
+        </div>
+
+        <div class="save-note" id="templateNote" style="display:none;">
+          Template mode: Address and Price are editable. Saved values persist only in this browser (localStorage).
+        </div>
+      </section>
+
+      <section class="two-col">
+        <div class="card tint-inputs">
+          <h2><span style="color:var(--green)">■</span> Inputs</h2>
+
+          <div class="form-grid">
+            <div class="field">
+              <label for="state">State (auto from Address, editable)</label>
+              <input id="state" type="text" placeholder="e.g. NSW" />
+            </div>
+
+            <div class="field">
+              <label for="lvr">LVR</label>
+              <input id="lvr" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="lmi">LMI</label>
+              <input id="lmi" type="text" inputmode="decimal" />
+              <div style="margin-top:6px;">
+                <label style="display:flex;align-items:center;gap:10px;margin:0;color:var(--muted);font-size:14px;">
+                  <input id="lmiAuto" type="checkbox" checked style="width:auto;min-height:auto;accent-color:var(--gold);" />
+                  Auto-calculate LMI (turn off to override)
+                </label>
+                <span class="tag" id="lmiModeTag" style="margin-top:8px;display:inline-flex;">Auto</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="stampDuty">Stamp duty (Transfer duty)</label>
+              <input id="stampDuty" type="text" inputmode="decimal" />
+              <div style="margin-top:6px;">
+                <label style="display:flex;align-items:center;gap:10px;margin:0;color:var(--muted);font-size:14px;">
+                  <input id="dutyAuto" type="checkbox" checked style="width:auto;min-height:auto;accent-color:var(--gold);" />
+                  Turn off to override
+                </label>
+                <span class="tag" id="dutyModeTag" style="margin-top:8px;display:inline-flex;">Auto</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="interest">Interest</label>
+              <input id="interest" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="rentWeek">Rent/week</label>
+              <input id="rentWeek" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="councilRates">Council Rates</label>
+              <input id="councilRates" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="insurance">Insurance</label>
+              <input id="insurance" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="pmFeePct">Property Management fees %</label>
+              <input id="pmFeePct" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="pmFee">Property Management fees</label>
+              <input id="pmFee" type="text" inputmode="decimal" placeholder="auto = Rental income (Yr) × %"/>
+              <div style="margin-top:6px;">
+                <label style="display:flex;align-items:center;gap:10px;margin:0;color:var(--muted);font-size:14px;">
+                  <input id="pmUseFormula" type="checkbox" checked style="width:auto;min-height:auto;accent-color:var(--gold);" />
+                  Auto-calculate from % (turn off to override)
+                </label>
+                <span class="tag" id="pmModeTag" style="margin-top:8px;display:inline-flex;">Auto</span>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="maintenance">Maintenance</label>
+              <input id="maintenance" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="landTax">Land Tax</label>
+              <input id="landTax" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="depreciation">Depreciation (forced negative)</label>
+              <input id="depreciation" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="taxRate">Tax rate</label>
+              <input id="taxRate" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="capGrowth">Capital Growth Rate</label>
+              <input id="capGrowth" type="text" inputmode="decimal" />
+            </div>
+
+            <div class="field">
+              <label for="rentGrowth">Rent Growth Rate</label>
+              <input id="rentGrowth" type="text" inputmode="decimal" />
+            </div>
+          </div>
+
+          <div class="row" style="margin-top:12px;">
+            <button class="btn" id="recalcBtn" type="button">Recalculate</button>
+            <button class="btn secondary" id="saveBtn" type="button">Save</button>
+            <button class="btn secondary" id="resetBtn" type="button">Reset</button>
+          </div>
+
+          <div class="save-note" id="saveStatus"></div>
+
+          <div id="errorBox" class="error-box"></div>
+        </div>
+
+        <div class="card tint-summary">
+          <h2><span style="color:var(--brown)">■</span> Summary</h2>
+
+          <div class="kv" id="summaryKv">
+            <div class="k">Status</div><div class="v">Loading…</div>
+          </div>
+          <div class="divider"></div>
+          <div class="kv" id="yieldKv">
+            <div class="k">Status</div><div class="v">Loading…</div>
+          </div>
+          <div class="divider"></div>
+          <div class="kv" id="cashflowKv">
+            <div class="k">Status</div><div class="v">Loading…</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card tint-forecast">
+        <div class="row">
+          <h2><span style="color:var(--gold)">■</span> Forecast <span class="pill">Compounding</span></h2>
+
+          <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+            <select id="forecastMode" aria-label="Forecast Mode" style="max-width: 280px;">
+              <option value="key">Key years (1, 5, 10, 15, 20)</option>
+              <option value="all">All years (1–20)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="table-wrap" style="margin-top:12px;">
+          <table>
+            <thead>
+              <tr>
+                <th title="Year: forecast year number">Yr</th>
+                <th title="Rent per year (gross): weekly rent × 52">Rent/yr</th>
+                <th title="Cashflow After Tax per year">Cashflow after Tax/yr</th>
+                <th title="Property Value at start of year (Year 1 = purchase price)">Value</th>
+                <th title="Capital Growth dollars for the year (Value × growth rate)">Cap$/yr</th>
+                <th title="Accumulated Capital Growth dollars from Year 1 to this year">Acc Cap$</th>
+              </tr>
+            </thead>
+            <tbody id="forecastBody">
+              <tr><td class="num">…</td><td colspan="5">Loading…</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <script>
+    const $ = (id) => document.getElementById(id);
+    const STATE_MAP = new Map([["NEW SOUTH WALES","NSW"],["NSW","NSW"],["VICTORIA","VIC"],["VIC","VIC"],["QUEENSLAND","QLD"],["QLD","QLD"],["SOUTH AUSTRALIA","SA"],["SA","SA"],["WESTERN AUSTRALIA","WA"],["WA","WA"],["TASMANIA","TAS"],["TAS","TAS"],["NORTHERN TERRITORY","NT"],["NT","NT"],["AUSTRALIAN CAPITAL TERRITORY","ACT"],["ACT","ACT"]]);
+    const DUTY_PURPOSE = "investment"; // investment/home
+    const IS_TEMPLATE = false;
+
+    const DEFAULTS = {
+      address: "20 Coast Avenue, Paynesville, Vic 3880",
+      purchase: 500000,
+      state: "VIC",
+      lvr: 0.8,
+      interest: 0.057,
+      rentWeek: 500,
+      council: 2500,
+      insurance: 900,
+      pmPct: 8,          // percent number (e.g. 9)
+      maintenance: 1000,
+      landTax: 970,
+      depreciation: -5500,
+      taxRate: 0.37,
+      capGrowth: 0.07,
+      rentGrowth: 0.06,
+      lmi: 0,
+      stampDuty: 25070,
+    };
+
+    const STORAGE_KEY = "cf_calc_v2"; 
+    const KEY_YEARS = new Set([1,5,10,15,20]);
+
+    // --- LMI (Approx AU) ---
+    const LMI_PREMIUM_DUTY = {
+      "NSW": 0.00,"VIC": 0.10,"QLD": 0.09,"SA":  0.11,"WA":  0.10,"ACT": 0.00,"NT":  0.10,"TAS": 0.10,
+    };
+
+    const LOAN_BANDS = [
+      [0, 300000, "UP_TO_300K"],
+      [300000.01, 500000, "300_500"],
+      [500000.01, 600000, "500_600"],
+      [600000.01, 750000, "600_750"],
+      [750000.01, 1000000, "750_1M"],
+    ];
+
+    const LMI_RATE_TABLE = [
+      { lo: 80.01, hi: 81.00, rates: {"UP_TO_300K": 0.00475, "300_500": 0.00568, "500_600": 0.00904, "600_750": 0.00904, "750_1M": 0.00913} },
+      { lo: 81.01, hi: 82.00, rates: {"UP_TO_300K": 0.00485, "300_500": 0.00568, "500_600": 0.00904, "600_750": 0.00904, "750_1M": 0.00913} },
+      { lo: 82.01, hi: 83.00, rates: {"UP_TO_300K": 0.00596, "300_500": 0.00699, "500_600": 0.00932, "600_750": 0.01090, "750_1M": 0.01109} },
+      { lo: 83.01, hi: 84.00, rates: {"UP_TO_300K": 0.00662, "300_500": 0.00829, "500_600": 0.00960, "600_750": 0.01090, "750_1M": 0.01146} },
+      { lo: 84.01, hi: 85.00, rates: {"UP_TO_300K": 0.00727, "300_500": 0.00969, "500_600": 0.01165, "600_750": 0.01333, "750_1M": 0.01407} },
+      { lo: 85.01, hi: 86.00, rates: {"UP_TO_300K": 0.00876, "300_500": 0.01081, "500_600": 0.01258, "600_750": 0.01407, "750_1M": 0.01463} },
+      { lo: 86.01, hi: 87.00, rates: {"UP_TO_300K": 0.00932, "300_500": 0.01146, "500_600": 0.01407, "600_750": 0.01631, "750_1M": 0.01733} },
+      { lo: 87.01, hi: 88.00, rates: {"UP_TO_300K": 0.01062, "300_500": 0.01305, "500_600": 0.01463, "600_750": 0.01631, "750_1M": 0.01752} },
+      { lo: 88.01, hi: 89.00, rates: {"UP_TO_300K": 0.01295, "300_500": 0.01621, "500_600": 0.01948, "600_750": 0.02218, "750_1M": 0.02395} },
+      { lo: 89.01, hi: 90.00, rates: {"UP_TO_300K": 0.01463, "300_500": 0.01873, "500_600": 0.02180, "600_750": 0.02367, "750_1M": 0.02516} },
+      { lo: 90.01, hi: 91.00, rates: {"UP_TO_300K": 0.02013, "300_500": 0.02618, "500_600": 0.03513, "600_750": 0.03783, "750_1M": 0.03820} },
+      { lo: 91.01, hi: 92.00, rates: {"UP_TO_300K": 0.02013, "300_500": 0.02674, "500_600": 0.03569, "600_750": 0.03867, "750_1M": 0.03932} },
+      { lo: 92.01, hi: 93.00, rates: {"UP_TO_300K": 0.02330, "300_500": 0.03028, "500_600": 0.03802, "600_750": 0.04081, "750_1M": 0.04156} },
+      { lo: 93.01, hi: 94.00, rates: {"UP_TO_300K": 0.02376, "300_500": 0.03028, "500_600": 0.03802, "600_750": 0.04286, "750_1M": 0.04324} },
+      { lo: 94.01, hi: 95.00, rates: {"UP_TO_300K": 0.02609, "300_500": 0.03345, "500_600": 0.03998, "600_750": 0.04613, "750_1M": 0.04603} },
+    ];
+
+    function pickLoanBandKey(loanAmount) {
+      for (const [lo, hi, key] of LOAN_BANDS) {
+        if (loanAmount >= lo && loanAmount <= hi) return key;
+      }
+      if (loanAmount > 1000000) return "750_1M";
+      return "UP_TO_300K";
+    }
+
+    function findLvrRates(lvrPct) {
+      for (const row of LMI_RATE_TABLE) {
+        if (lvrPct >= row.lo && lvrPct <= row.hi) return row.rates;
+      }
+      return null;
+    }
+
+    function calcLmiApprox(propertyValue, loanAmount, stateCode) {
+      if (!propertyValue || propertyValue <= 0 || !loanAmount || loanAmount <= 0) return 0;
+      const lvrPct = (loanAmount / propertyValue) * 100.0;
+      if (lvrPct <= 80.0) return 0;
+      if (lvrPct > 95.0) return null;
+
+      const rates = findLvrRates(lvrPct);
+      if (!rates) return 0;
+
+      const loanBandKey = pickLoanBandKey(loanAmount);
+      const rate = rates[loanBandKey];
+      if (!rate) return 0;
+
+      const premium = rate * loanAmount;
+      const dutyRate = LMI_PREMIUM_DUTY[(stateCode || "").toUpperCase()] ?? 0.0;
+      const duty = premium * dutyRate;
+      return premium + duty;
+    }
+
+    // --- Stamp duty ---
+    function calcFromScale(price, scale) {
+      if (price < 0) return 0;
+      for (const b of scale) {
+        if (b.upper === null || price <= b.upper) {
+          return b.base + b.rate * (price - b.lower);
+        }
+      }
+      return 0;
+    }
+
+    function dutyNSW(price) {
+      const scale = [
+        {upper: 14000, base:0.0, rate:0.0125, lower:0},
+        {upper: 30000, base:175.0, rate:0.0150, lower:14000},
+        {upper: 80000, base:415.0, rate:0.0175, lower:30000},
+        {upper: 300000, base:1290.0, rate:0.0350, lower:80000},
+        {upper: 1000000, base:8990.0, rate:0.0450, lower:300000},
+        {upper: 3721000, base:40490.0, rate:0.0550, lower:1000000},
+        {upper: null, base:186667.0, rate:0.0700, lower:3721000},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutyVIC(price) {
+      if (price > 960000 && price <= 2000000) return 0.055 * price;
+      const scale = [
+        {upper: 25000, base:0.0, rate:0.0140, lower:0},
+        {upper: 130000, base:350.0, rate:0.0240, lower:25000},
+        {upper: 960000, base:2870.0, rate:0.0600, lower:130000},
+        {upper: 2000000, base:0.0, rate:0.0550, lower:0},
+        {upper: null, base:110000.0, rate:0.0650, lower:2000000},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutyQLD(price, purpose) {
+      if ((purpose || "investment") === "home") {
+        const scale = [
+          {upper: 350000, base:0.0, rate:0.0100, lower:0},
+          {upper: 540000, base:3500.0, rate:0.0350, lower:350000},
+          {upper: 1000000, base:10150.0, rate:0.0450, lower:540000},
+          {upper: null, base:30850.0, rate:0.0575, lower:1000000},
+        ];
+        return calcFromScale(price, scale);
+      }
+      const scale = [
+        {upper: 5000, base:0.0, rate:0.0, lower:0},
+        {upper: 75000, base:0.0, rate:0.0150, lower:5000},
+        {upper: 540000, base:1050.0, rate:0.0350, lower:75000},
+        {upper: 1000000, base:17325.0, rate:0.0450, lower:540000},
+        {upper: null, base:38225.0, rate:0.0575, lower:1000000},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutySA(price) {
+      const scale = [
+        {upper: 12000, base:0.0, rate:0.0100, lower:0},
+        {upper: 30000, base:120.0, rate:0.0200, lower:12000},
+        {upper: 50000, base:480.0, rate:0.0300, lower:30000},
+        {upper: 100000, base:1080.0, rate:0.0350, lower:50000},
+        {upper: 200000, base:2830.0, rate:0.0400, lower:100000},
+        {upper: 250000, base:6830.0, rate:0.0425, lower:200000},
+        {upper: 300000, base:8955.0, rate:0.0475, lower:250000},
+        {upper: 500000, base:11330.0, rate:0.0500, lower:300000},
+        {upper: null, base:21330.0, rate:0.0550, lower:500000},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutyWA(price) {
+      const scale = [
+        {upper: 120000, base:0.0, rate:0.0190, lower:0},
+        {upper: 150000, base:2280.0, rate:0.0285, lower:120000},
+        {upper: 360000, base:3135.0, rate:0.0380, lower:150000},
+        {upper: 725000, base:11115.0, rate:0.0475, lower:360000},
+        {upper: null, base:28453.0, rate:0.0515, lower:725000},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutyTAS(price) {
+      const scale = [
+        {upper: 3000, base:50.0, rate:0.0, lower:0},
+        {upper: 25000, base:50.0, rate:0.0175, lower:3000},
+        {upper: 75000, base:435.0, rate:0.0225, lower:25000},
+        {upper: 200000, base:1560.0, rate:0.0350, lower:75000},
+        {upper: 375000, base:5935.0, rate:0.0400, lower:200000},
+        {upper: 725000, base:12935.0, rate:0.0425, lower:375000},
+        {upper: null, base:27810.0, rate:0.0450, lower:725000},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutyACT(price, purpose) {
+      purpose = (purpose || "investment");
+      if (purpose === "home") {
+        if (price > 1455000) return 0.0454 * price;
+        const scale = [
+          {upper: 260000, base:0.0, rate:0.0060, lower:0},
+          {upper: 300000, base:1560.0, rate:0.0220, lower:260000},
+          {upper: 500000, base:2440.0, rate:0.0340, lower:300000},
+          {upper: 750000, base:9240.0, rate:0.0432, lower:500000},
+          {upper: 1000000, base:20040.0, rate:0.0590, lower:750000},
+          {upper: 1455000, base:34790.0, rate:0.0640, lower:1000000},
+          {upper: null, base:0.0, rate:0.0454, lower:0},
+        ];
+        return calcFromScale(price, scale);
+      }
+      if (price > 1455000) return 0.0454 * price;
+      const scale = [
+        {upper: 200000, base:0.0, rate:0.0120, lower:0},
+        {upper: 300000, base:2400.0, rate:0.0220, lower:200000},
+        {upper: 500000, base:4600.0, rate:0.0340, lower:300000},
+        {upper: 750000, base:11400.0, rate:0.0432, lower:500000},
+        {upper: 1000000, base:22200.0, rate:0.0590, lower:750000},
+        {upper: 1455000, base:36950.0, rate:0.0640, lower:1000000},
+        {upper: null, base:0.0, rate:0.0454, lower:0},
+      ];
+      return calcFromScale(price, scale);
+    }
+
+    function dutyNT(price) {
+      if (price <= 525000) {
+        const V = price / 1000.0;
+        const D = (0.06571441 * (V ** 2)) + (15.0 * V);
+        return D;
+      }
+      if (price < 3000000) return 0.0495 * price;
+      if (price < 5000000) return 0.0575 * price;
+      return 0.0595 * price;
+    }
+
+    function calcDuty(stateCode, price, purpose) {
+      const st = (stateCode || "").toUpperCase().trim();
+      if (!st || !price || price <= 0) return 0;
+      if (st === "NSW") return dutyNSW(price);
+      if (st === "VIC") return dutyVIC(price);
+      if (st === "QLD") return dutyQLD(price, purpose);
+      if (st === "SA") return dutySA(price);
+      if (st === "WA") return dutyWA(price);
+      if (st === "TAS") return dutyTAS(price);
+      if (st === "ACT") return dutyACT(price, purpose);
+      if (st === "NT") return dutyNT(price);
+      return 0;
+    }
+
+    function clamp(n, min, max) { return Math.min(Math.max(n, min), max); }
+
+    function toNumberLoose(input) {
+      if (input == null) return 0;
+      let s = String(input).trim();
+      if (!s) return 0;
+      s = s.replace(/[\\s,$]/g, "");
+      const last = s.slice(-1).toLowerCase();
+      if (last === "k" || last === "m") {
+        const base = parseFloat(s.slice(0, -1));
+        if (Number.isFinite(base)) return last === "k" ? base * 1000 : base * 1000000;
+      }
+      const n = parseFloat(s);
+      return Number.isFinite(n) ? n : 0;
+    }
+
+    function parsePercent(input, fallback=0) {
+      if (input == null) return fallback;
+      let s = String(input).trim();
+      if (!s) return fallback;
+      s = s.replace(/[%\\s]/g, "");
+      const n = parseFloat(s);
+      if (!Number.isFinite(n)) return fallback;
+      return n / 100;
+    }
+
+    function fmtMoney(n) {
+      const x = Number.isFinite(n) ? n : 0;
+      return x.toLocaleString("en-AU", { style:"currency", currency:"AUD", maximumFractionDigits:0 });
+    }
+
+    function fmtPercent(n, decimals=2) {
+      const x = Number.isFinite(n) ? n : 0;
+      return (x * 100).toFixed(decimals) + "%";
+    }
+
+    function normalizeState() {
+      const el = $("state");
+      const raw = (el.value || "").trim();
+      if (!raw) return;
+      const key = raw.toUpperCase();
+      if (STATE_MAP.has(key)) { el.value = STATE_MAP.get(key); return; }
+      const cleaned = key.replace(/\\(.*?\\)/g, "").trim();
+      if (STATE_MAP.has(cleaned)) el.value = STATE_MAP.get(cleaned);
+    }
+
+    function forceNegative(id) {
+      const el = $(id);
+      let val = toNumberLoose(el.value);
+      if (val > 0) val = -val;
+      el.value = fmtMoney(val);
+    }
+
+    const themeToggle = $("themeToggle");
+    function setTheme(mode) {
+      document.body.setAttribute("data-theme", mode);
+      try { localStorage.setItem("cf_theme", mode); } catch(e) {}
+    }
+    function toggleTheme() {
+      const cur = document.body.getAttribute("data-theme") || "light";
+      setTheme(cur === "light" ? "dark" : "light");
+    }
+    themeToggle.addEventListener("click", toggleTheme, { passive:true });
+
+    function updateLmiModeTag() {
+      const on = $("lmiAuto").checked;
+      $("lmiModeTag").textContent = on ? "Auto" : "Manual";
+      $("lmi").disabled = on;
+    }
+
+    function updateDutyModeTag() {
+      const on = $("dutyAuto").checked;
+      $("dutyModeTag").textContent = on ? "Auto" : "Manual";
+      $("stampDuty").disabled = on;
+    }
+
+    function updatePmModeTag() {
+      const on = $("pmUseFormula").checked;
+      $("pmModeTag").textContent = on ? "Auto" : "Manual";
+      $("pmFee").disabled = on;
+
+      const pmPct = clamp(parsePercent($("pmFeePct").value, (DEFAULTS.pmPct / 100.0)), 0, 1);
+      const pctText = Math.round(pmPct * 100);
+      $("pmFee").setAttribute("placeholder", `auto = Rental income (Yr) × ${pctText}%`);
+    }
+
+    $("pmUseFormula").addEventListener("change", () => { updatePmModeTag(); safeRecalc(); });
+    $("lmiAuto").addEventListener("change", () => { updateLmiModeTag(); safeRecalc(); });
+    $("dutyAuto").addEventListener("change", () => { updateDutyModeTag(); safeRecalc(); });
+
+    function getForecastYears(mode) {
+      if (mode === "key") return [1,5,10,15,20];
+      const years = [];
+      for (let y=1; y<=20; y++) years.push(y);
+      return years;
+    }
+    $("forecastMode").addEventListener("change", () => safeRecalc());
+
+    function getCurrentFormState() {
+      return {
+        address: $("address").value || "",
+        purchasePrice: $("purchasePrice").value || "",
+        state: $("state").value || "",
+        lvr: $("lvr").value || "",
+        lmi: $("lmi").value || "",
+        lmiAuto: $("lmiAuto").checked,
+        stampDuty: $("stampDuty").value || "",
+        dutyAuto: $("dutyAuto").checked,
+        interest: $("interest").value || "",
+        rentWeek: $("rentWeek").value || "",
+        councilRates: $("councilRates").value || "",
+        insurance: $("insurance").value || "",
+        pmFeePct: $("pmFeePct").value || "",
+        pmFee: $("pmFee").value || "",
+        pmUseFormula: $("pmUseFormula").checked,
+        maintenance: $("maintenance").value || "",
+        landTax: $("landTax").value || "",
+        depreciation: $("depreciation").value || "",
+        taxRate: $("taxRate").value || "",
+        capGrowth: $("capGrowth").value || "",
+        rentGrowth: $("rentGrowth").value || "",
+        forecastMode: $("forecastMode").value || "key",
+        theme: document.body.getAttribute("data-theme") || "light",
+      };
+    }
+
+    function setIfNonEmpty(id, val) {
+      if (typeof val !== "string") return;
+      const trimmed = val.trim();
+      if (!trimmed) return;                 // skip empty strings so defaults remain
+      $(id).value = trimmed;
+    }
+
+    function applyFormState(s) {
+      if (!s || typeof s !== "object") return;
+
+      // Allow address to be empty in template mode
+      if (typeof s.address === "string") $("address").value = s.address;
+
+      // Price: allow empty in template mode, otherwise skip blank
+      if (typeof s.purchasePrice === "string") {
+        if (IS_TEMPLATE) $("purchasePrice").value = s.purchasePrice;
+        else if (s.purchasePrice.trim()) $("purchasePrice").value = s.purchasePrice.trim();
+      }
+
+      // Everything else: do NOT overwrite defaults with ""
+      setIfNonEmpty("state", s.state);
+      setIfNonEmpty("lvr", s.lvr);
+
+      if (typeof s.lmiAuto === "boolean") $("lmiAuto").checked = s.lmiAuto;
+      setIfNonEmpty("lmi", s.lmi);
+
+      if (typeof s.dutyAuto === "boolean") $("dutyAuto").checked = s.dutyAuto;
+      setIfNonEmpty("stampDuty", s.stampDuty);
+
+      setIfNonEmpty("interest", s.interest);
+      setIfNonEmpty("rentWeek", s.rentWeek);
+
+      setIfNonEmpty("councilRates", s.councilRates);
+      setIfNonEmpty("insurance", s.insurance);
+      setIfNonEmpty("pmFeePct", s.pmFeePct);
+      if (typeof s.pmUseFormula === "boolean") $("pmUseFormula").checked = s.pmUseFormula;
+      setIfNonEmpty("pmFee", s.pmFee);
+
+      setIfNonEmpty("maintenance", s.maintenance);
+      setIfNonEmpty("landTax", s.landTax);
+      setIfNonEmpty("depreciation", s.depreciation);
+
+      setIfNonEmpty("taxRate", s.taxRate);
+      setIfNonEmpty("capGrowth", s.capGrowth);
+      setIfNonEmpty("rentGrowth", s.rentGrowth);
+
+      if (typeof s.forecastMode === "string" && s.forecastMode.trim()) {
+        $("forecastMode").value = s.forecastMode.trim();
+      }
+
+      if (typeof s.theme === "string" && (s.theme === "light" || s.theme === "dark")) {
+        setTheme(s.theme);
+      }
+    }
+
+
+    function saveToBrowserCache() {
+      const status = $("saveStatus");
+      try {
+        const payload = getCurrentFormState();
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+        status.textContent = "Saved to browser cache.";
+      } catch (e) {
+        status.textContent = "Save failed (browser blocked storage).";
+      }
+      setTimeout(() => { status.textContent = ""; }, 2500);
+    }
+
+    function resetBrowserCache() {
+      const status = $("saveStatus");
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+        status.textContent = "Reset: browser cache cleared.";
+      } catch (e) {
+        status.textContent = "Reset failed.";
+      }
+      setTimeout(() => { status.textContent = ""; }, 2500);
+    }
+
+    $("saveBtn").addEventListener("click", () => { saveToBrowserCache(); safeRecalc(); });
+    $("resetBtn").addEventListener("click", () => { resetBrowserCache(); applyDefaults(); safeRecalc(); });
+
+    function applyDefaults() {
+      $("address").value = (DEFAULTS.address || "");
+      $("purchasePrice").value = fmtMoney(DEFAULTS.purchase);
+
+      $("state").value = (DEFAULTS.state || "");
+      $("lvr").value = fmtPercent(DEFAULTS.lvr, 0);
+      $("interest").value = fmtPercent(DEFAULTS.interest, 2);
+      $("rentWeek").value = fmtMoney(DEFAULTS.rentWeek);
+      $("councilRates").value = fmtMoney(DEFAULTS.council);
+      $("insurance").value = DEFAULTS.insurance ? fmtMoney(DEFAULTS.insurance) : "";
+      $("maintenance").value = fmtMoney(DEFAULTS.maintenance);
+      $("landTax").value = fmtMoney(DEFAULTS.landTax);
+      $("depreciation").value = fmtMoney(DEFAULTS.depreciation);
+      $("taxRate").value = fmtPercent(DEFAULTS.taxRate, 0);
+      $("capGrowth").value = fmtPercent(DEFAULTS.capGrowth, 0);
+      $("rentGrowth").value = fmtPercent(DEFAULTS.rentGrowth, 0);
+
+      $("lmi").value = fmtMoney(Number(DEFAULTS.lmi || 0));
+      $("stampDuty").value = fmtMoney(Number(DEFAULTS.stampDuty || 0));
+
+      $("pmFeePct").value = fmtPercent((DEFAULTS.pmPct / 100.0), 0);
+      $("pmUseFormula").checked = true;
+      $("pmFee").setAttribute("placeholder", `auto = Rental income (Yr) × ${DEFAULTS.pmPct}%`);
+
+      $("lmiAuto").checked = true;
+      $("dutyAuto").checked = true;
+
+      updateLmiModeTag();
+      updateDutyModeTag();
+      updatePmModeTag();
+    }
+
+    function setPropertyFieldsEditable() {
+      const addr = $("address");
+      const price = $("purchasePrice");
+
+      if (IS_TEMPLATE) {
+        addr.disabled = false;
+        price.disabled = false;
+        $("templateNote").style.display = "block";
+      } else {
+        addr.disabled = true;
+        price.disabled = true;
+        $("templateNote").style.display = "none";
+      }
+    }
+
+    function recalc() {
+      // property inputs
+      const address = ($("address").value || "").trim();
+      let purchase = toNumberLoose($("purchasePrice").value);
+      if (!purchase || purchase <= 0) purchase = DEFAULTS.purchase;
+
+      // keep formatted
+      $("purchasePrice").value = fmtMoney(purchase);
+
+      // auto state from Address (whenever address contains a valid ending like "NSW 2440")
+      if (address) {
+        const m = address.match(/,\s*([A-Za-z]{2,3})\s+\d{3,4}\s*$/) || address.match(/\b([A-Za-z]{2,3})\s+\d{3,4}\s*$/);
+        if (m && m[1]) {
+          $("state").value = m[1].toUpperCase();
+        }
+      }
+      normalizeState();
+
+
+      const stateCode = ($("state").value || "").trim().toUpperCase();
+      const lvr = clamp(parsePercent($("lvr").value, DEFAULTS.lvr), 0, 1);
+
+      // Auto Duty
+      let stampDuty = toNumberLoose($("stampDuty").value);
+      if ($("dutyAuto").checked) {
+        stampDuty = calcDuty(stateCode, purchase, DUTY_PURPOSE);
+        $("stampDuty").value = fmtMoney(stampDuty);
+      }
+
+      // Auto LMI
+      let lmi = toNumberLoose($("lmi").value);
+      const loanForLmi = purchase * lvr;
+      if ($("lmiAuto").checked) {
+        const out = calcLmiApprox(purchase, loanForLmi, stateCode);
+        if (out === null) {
+          $("lmi").value = "Not supported >95% LVR";
+          lmi = 0;
+        } else {
+          lmi = out;
+          $("lmi").value = fmtMoney(lmi);
+        }
+      }
+
+      const interest = clamp(parsePercent($("interest").value, DEFAULTS.interest), 0, 1);
+      const rentWeek0 = toNumberLoose($("rentWeek").value);
+
+      const council = toNumberLoose($("councilRates").value);
+      const insurance = toNumberLoose($("insurance").value);
+      const maintenance = toNumberLoose($("maintenance").value);
+      const landTax = toNumberLoose($("landTax").value);
+
+      let depreciation = toNumberLoose($("depreciation").value);
+      if (depreciation > 0) depreciation = -depreciation;
+
+      const taxRate = clamp(parsePercent($("taxRate").value, DEFAULTS.taxRate), 0, 1);
+      const capGrowth = clamp(parsePercent($("capGrowth").value, DEFAULTS.capGrowth), 0, 1);
+      const rentGrowth = clamp(parsePercent($("rentGrowth").value, DEFAULTS.rentGrowth), 0, 1);
+
+      const deposit = purchase - (purchase * lvr);
+      const totalBuyingExpenses = purchase * 5.5 / 100;
+      const totalCostBase = purchase + totalBuyingExpenses;
+      const loan = purchase * lvr;
+
+      const repaymentIO = (loan + lmi) * interest;
+
+      const rentYr0 = rentWeek0 * 52;
+
+      const pmPct = clamp(parsePercent($("pmFeePct").value, (DEFAULTS.pmPct / 100.0)), 0, 1);
+      const pmUseFormula = $("pmUseFormula").checked;
+      const pmFee0 = pmUseFormula ? (rentYr0 * pmPct) : toNumberLoose($("pmFee").value);
+
+      if (pmUseFormula) $("pmFee").value = fmtMoney(pmFee0);
+
+      const runningExpenses0 = council + insurance + pmFee0 + maintenance + landTax;
+      const totalExpense0 = runningExpenses0 + repaymentIO;
+
+      const grossYield = purchase > 0 ? (rentYr0 / purchase) : 0;
+      const netYield = purchase > 0 ? ((rentYr0 - runningExpenses0) / purchase) : 0;
+
+      const cashflowBeforeTax0 = rentYr0 - totalExpense0;
+      const taxable0 = cashflowBeforeTax0 + depreciation;
+      const tax0 = taxable0 * taxRate;
+      const cashflowAfterTax0 = cashflowBeforeTax0 - tax0;
+
+      const annualCapitalGrowthBase = purchase * capGrowth;
+
+      $("summaryKv").innerHTML = `
+        <div class="k">Purchase Price</div><div class="v">${fmtMoney(purchase)}</div>
+        <div class="k">LVR</div><div class="v">${fmtPercent(lvr, 0)}</div>
+        <div class="k">Deposit</div><div class="v">${fmtMoney(deposit)}</div>
+        <div class="k">Loan</div><div class="v">${fmtMoney(loan)}</div>
+        <div class="k">Interest</div><div class="v">${fmtPercent(interest, 2)}</div>
+        <div class="k">Repayment (IO / Yr)</div><div class="v">${fmtMoney(repaymentIO)}</div>
+
+        <div class="k">LMI</div><div class="v">${($("lmi").value.includes("Not supported") ? $("lmi").value : fmtMoney(lmi))}</div>
+        <div class="k">Stamp duty</div><div class="v">${fmtMoney(stampDuty)}</div>
+        <div class="k">Buying exp (5.5%)</div><div class="v">${fmtMoney(totalBuyingExpenses)}</div>
+        <div class="k">Total cost base</div><div class="v">${fmtMoney(totalCostBase)}</div>
+      `;
+
+      // Added fields in relevant area (expenses/yield block)
+      $("yieldKv").innerHTML = `
+        <div class="k">Rent/week</div><div class="v">${fmtMoney(rentWeek0)}</div>
+        <div class="k">Rent (Yr)</div><div class="v">${fmtMoney(rentYr0)}</div>
+
+        <div class="k">Council Rates</div><div class="v">${fmtMoney(council)}</div>
+        <div class="k">Insurance</div><div class="v">${fmtMoney(insurance)}</div>
+        <div class="k">Property Management fees</div><div class="v">${fmtMoney(pmFee0)}</div>
+        <div class="k">Maintenance</div><div class="v">${fmtMoney(maintenance)}</div>
+        <div class="k">Land Tax</div><div class="v">${fmtMoney(landTax)}</div>
+
+        <div class="k">Running Exp</div><div class="v">${fmtMoney(runningExpenses0)}</div>
+        <div class="k">Total Exp</div><div class="v">${fmtMoney(totalExpense0)}</div>
+
+        <div class="k">Gross yield</div><div class="v">${fmtPercent(grossYield, 2)}</div>
+        <div class="k">Net yield</div><div class="v">${fmtPercent(netYield, 2)}</div>
+      `;
+
+      const cfClass = cashflowAfterTax0 >= 0 ? "good" : "bad";
+      $("cashflowKv").innerHTML = `
+        <div class="k">Cashflow Before tax</div><div class="v ${cashflowBeforeTax0>=0 ? "good":"bad"}">${fmtMoney(cashflowBeforeTax0)}</div>
+        <div class="k">Depreciation</div><div class="v">${fmtMoney(depreciation)}</div>
+        <div class="k">Taxable</div><div class="v">${fmtMoney(taxable0)}</div>
+        <div class="k">Tax rate</div><div class="v">${fmtPercent(taxRate, 0)}</div>
+        <div class="k">Tax</div><div class="v">${fmtMoney(tax0)}</div>
+        <div class="k"><b>Cashflow after tax</b></div><div class="v ${cfClass}"><b>${fmtMoney(cashflowAfterTax0)}</b></div>
+        <div class="k">Cap growth (Yr1 base)</div><div class="v">${fmtMoney(annualCapitalGrowthBase)}</div>
+      `;
+
+      // Forecast: Year 1 = current year (no growth applied)
+      const mode = $("forecastMode").value;
+      const yearsToShow = getForecastYears(mode);
+
+      let body = "";
+      let propValue = purchase;
+      let accCap = 0;
+
+      for (let y = 1; y <= 20; y++) {
+        const exponent = (y - 1);
+
+        const rentWeekY = rentWeek0 * Math.pow(1 + rentGrowth, exponent);
+        const rentYrY = rentWeekY * 52;
+
+        const pmFeeY = pmUseFormula ? (rentYrY * pmPct) : pmFee0;
+
+        const runningY = council + insurance + pmFeeY + maintenance + landTax;
+        const totalExpY = runningY + repaymentIO;
+
+        const cfBeforeY = rentYrY - totalExpY;
+        const taxableY = cfBeforeY + depreciation;
+        const taxY = taxableY * taxRate;
+        const cfAfterY = cfBeforeY - taxY;
+
+        const annualCapGrowthY = propValue * capGrowth;
+        accCap += annualCapGrowthY;
+
+        if (yearsToShow.includes(y)) {
+          const rowClass = (mode === "all" && KEY_YEARS.has(y)) ? "keyyear" : "";
+          body += `
+            <tr class="${rowClass}">
+              <td class="num">${y}</td>
+              <td class="num">${fmtMoney(rentYrY)}</td>
+              <td class="num" style="font-weight:950; color:${cfAfterY>=0 ? "var(--ok)" : "var(--danger)"}">
+                ${fmtMoney(cfAfterY)}
+              </td>
+              <td class="num">${fmtMoney(propValue)}</td>
+              <td class="num">${fmtMoney(annualCapGrowthY)}</td>
+              <td class="num">${fmtMoney(accCap)}</td>
+            </tr>
+          `;
+        }
+
+        propValue = propValue + annualCapGrowthY;
+      }
+      $("forecastBody").innerHTML = body;
+
+      $("lvr").value = fmtPercent(lvr, 0);
+      $("interest").value = fmtPercent(interest, 2);
+      $("taxRate").value = fmtPercent(taxRate, 0);
+      $("capGrowth").value = fmtPercent(capGrowth, 0);
+      $("rentGrowth").value = fmtPercent(rentGrowth, 0);
+
+      updatePmModeTag();
+      updateLmiModeTag();
+      updateDutyModeTag();
+    }
+
+    function safeRecalc() {
+      try {
+        const box = $("errorBox");
+        box.textContent = "";
+        box.classList.remove("show");
+        recalc();
+      } catch (e) {
+        const box = $("errorBox");
+        const msg = (e && (e.stack || e.message)) ? (e.stack || e.message) : String(e);
+        box.textContent = "JavaScript error:\\n" + msg;
+        box.classList.add("show");
+      }
+    }
+
+    $("recalcBtn").addEventListener("click", safeRecalc);
+    $("state").addEventListener("blur", () => { normalizeState(); safeRecalc(); });
+    $("depreciation").addEventListener("blur", () => { forceNegative("depreciation"); safeRecalc(); });
+
+    // Recalc on address/price changes too (template mode)
+    $("address").addEventListener("blur", () => safeRecalc());
+    $("purchasePrice").addEventListener("blur", () => safeRecalc());
+
+    let t = null;
+    function debounceRecalc() {
+      if (t) clearTimeout(t);
+      t = setTimeout(() => safeRecalc(), 250);
+    }
+
+    [
+      "address","purchasePrice",
+      "rentWeek","capGrowth","rentGrowth","interest","taxRate",
+      "councilRates","insurance","maintenance","landTax",
+      "lmi","stampDuty","pmFeePct","pmFee","lvr","state"
+    ].forEach(id => $(id).addEventListener("input", debounceRecalc));
+
+    function initRun() {
+      try {
+        const savedTheme = localStorage.getItem("cf_theme");
+        if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
+      } catch(e) {}
+
+      setPropertyFieldsEditable();
+      applyDefaults();
+
+      // load saved values (browser cache only)
+      // IMPORTANT: In non-template mode, do NOT let saved cache override address/price from the generated HTML
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) {
+          const obj = JSON.parse(raw);
+
+          if (!IS_TEMPLATE) {
+            // Keep injected address/price fixed (locked)
+            if (obj && typeof obj === "object") {
+              delete obj.address;
+              delete obj.purchasePrice;
+            }
+          }
+
+          applyFormState(obj);
+        }
+      } catch(e) {}
+
+      // forecast mode default: key on mobile
+      if (!($("forecastMode").value || "").trim()) {
+        $("forecastMode").value = (window.matchMedia("(max-width: 560px)").matches ? "key" : "all");
+      }
+
+      updatePmModeTag();
+      updateLmiModeTag();
+      updateDutyModeTag();
+      safeRecalc();
+    }
+
+    document.addEventListener("DOMContentLoaded", initRun);
+    window.addEventListener("load", initRun);
+    setTimeout(initRun, 150);
+    setTimeout(initRun, 600);
+  </script>
+</body>
+</html>

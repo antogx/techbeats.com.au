@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Services — Techbeats</title>
+  <meta name="description" content="Techbeats services: real estate analysis, cashflow modelling, property finder support, data analytics & BI, software development, and IT consulting." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/solutions/">Solutions</a>
+          <a href="/process/">Process</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Book a discovery call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Services</span>
+          <span class="pill">Practical delivery</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">What Techbeats provides</h1>
+        <p class="lead" style="margin:0;">
+          Outcome-focused services across real estate analysis, data & BI, software development, and IT consulting.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="grid cols-3">
+          <a class="card pad" href="/services/real-estate/" style="text-decoration:none;">
+            <h2 style="margin:0 0 6px;">Real Estate Analysis</h2>
+            <p class="small">Property & suburb insights to support buying decisions.</p>
+            <div class="badges">
+              <div class="badge">Property analysis</div>
+              <div class="badge">Cashflow models</div>
+              <div class="badge">Suburb signals</div>
+            </div>
+          </a>
+
+          <a class="card pad" href="/services/data-analytics/" style="text-decoration:none;">
+            <h2 style="margin:0 0 6px;">Data & Business Intelligence</h2>
+            <p class="small">Dashboards, KPI reporting, and automated reporting pipelines.</p>
+            <div class="badges">
+              <div class="badge">Dashboards</div>
+              <div class="badge">Automation</div>
+              <div class="badge">Reporting</div>
+            </div>
+          </a>
+
+          <a class="card pad" href="/services/software/" style="text-decoration:none;">
+            <h2 style="margin:0 0 6px;">Software Development</h2>
+            <p class="small">Tools for real estate workflows, reporting, and operations.</p>
+            <div class="badges">
+              <div class="badge">Web apps</div>
+              <div class="badge">Integrations</div>
+              <div class="badge">Automation tools</div>
+            </div>
+          </a>
+
+          <a class="card pad" href="/services/it-consulting/" style="text-decoration:none;">
+            <h2 style="margin:0 0 6px;">IT Consulting</h2>
+            <p class="small">Linux/Windows automation, CI/CD pipelines, and practical security.</p>
+            <div class="badges">
+              <div class="badge">Infrastructure automation</div>
+              <div class="badge">CI/CD</div>
+              <div class="badge">Security</div>
+            </div>
+          </a>
+
+          <a class="card pad" href="/services/real-estate/" style="text-decoration:none;">
+            <h2 style="margin:0 0 6px;">Property Finder Support</h2>
+            <p class="small">Structured shortlisting based on strategy and criteria.</p>
+            <div class="badges">
+              <div class="badge">Shortlist</div>
+              <div class="badge">Pros/cons</div>
+              <div class="badge">Next steps</div>
+            </div>
+          </a>
+
+          <a class="card pad" href="/services/real-estate/" style="text-decoration:none;">
+            <h2 style="margin:0 0 6px;">Property Buying Support</h2>
+            <p class="small">Buyer-side support: evaluation, checklists, and coordination prompts.</p>
+            <div class="badges">
+              <div class="badge">Deal review</div>
+              <div class="badge">Due diligence prompts</div>
+              <div class="badge">Negotiation prep</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2 style="margin:0 0 8px;">Not sure what you need?</h2>
+        <p class="small" style="margin:0 0 12px;">
+          Tell us your goal (buying a property, building a dashboard, automating infrastructure, etc.) and we’ll recommend the best starting point.
+        </p>
+        <a class="btn primary" href="/contact/">Contact Techbeats</a>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/legal/disclaimer.html">Disclaimer</a></div>
+          <div class="small"><a href="/legal/privacy.html">Privacy</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

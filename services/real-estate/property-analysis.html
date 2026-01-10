@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Property Analysis — Techbeats</title>
+  <meta name="description" content="Property-level analysis: comparable context, rent signals, days on market, vendor discount trends, and risk prompts." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/services/real-estate/">Real estate</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Book a discovery call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Real Estate</span>
+          <span class="pill">Property</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">Property Analysis</h1>
+        <p class="lead" style="margin:0;">
+          Structured analysis to compare a deal against context and avoid expensive surprises.
+        </p>
+      </div>
+
+      <div class="section split">
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">What we review</h2>
+          <ul class="list">
+            <li>Comparable sales and price context (where available)</li>
+            <li>Rental signals and yield estimate</li>
+            <li>Days on market and vendor discount trends (suburb-level)</li>
+            <li>Demand/supply indicators where available</li>
+            <li>High-level risk prompts (overlays, local factors) — not a legal substitute</li>
+          </ul>
+        </div>
+
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Deliverables</h2>
+          <ul class="list">
+            <li>One-page snapshot summary (shareable)</li>
+            <li>Key strengths/risks and questions to ask the agent</li>
+            <li>Optional add-on: cashflow model</li>
+          </ul>
+
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn primary" href="/contact/">Request property analysis</a>
+            <a class="btn" href="/services/real-estate/cashflow-analysis.html">Add cashflow modelling</a>
+          </div>
+
+          <div class="feature" style="margin-top:12px;">
+            <h3>Important</h3>
+            <p>We provide analysis and modelling, not legal/financial advice. Always use independent professionals for contracts and inspections.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/real-estate/">Back to Real estate</a></div>
+          <div class="small"><a href="/legal/disclaimer.html">Disclaimer</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
