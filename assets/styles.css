@@ -60,10 +60,11 @@ header{
   display:flex;
   align-items:center;
   justify-content: space-between;
-  padding: 14px 0;
+  padding: 12px 0;
   gap: 10px;
-  min-height: 60px;   /* prevents tall header */
+  min-height: 78px;      /* allow bigger logo */
 }
+
 
 .brand{
   display:flex;
@@ -81,23 +82,19 @@ header{
   box-shadow: 0 6px 18px rgba(47,111,236,.35);
 }
 
-/* Header logo – balanced professional size */
+/* Header logo – bigger and clear */
 .logo{
-  height: 42px;          /* desktop size */
-  max-height: 38px;
+  height: 56px;          /* bigger */
+  max-height: none;      /* remove restriction */
   width: auto;
   object-fit: contain;
   display: block;
 }
-
-/* Mobile */
 @media (max-width: 768px){
   .logo{
-    height: 32px;
-    max-height: 32px;
+    height: 44px;        /* bigger on mobile too */
   }
 }
-
 
 .navlinks{
   display:flex;
