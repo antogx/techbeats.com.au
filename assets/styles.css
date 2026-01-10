@@ -60,11 +60,10 @@ header{
   display:flex;
   align-items:center;
   justify-content: space-between;
-  padding: 12px 0;
+  padding: 10px 0;
   gap: 10px;
-  min-height: 78px;      /* allow bigger logo */
+  min-height: 86px;   /* IMPORTANT */
 }
-
 
 .brand{
   display:flex;
@@ -82,19 +81,22 @@ header{
   box-shadow: 0 6px 18px rgba(47,111,236,.35);
 }
 
-/* Header logo – bigger and clear */
+/* FORCE PNG logo to appear large */
 .logo{
-  height: 56px;          /* bigger */
-  max-height: none;      /* remove restriction */
-  width: auto;
+  width: 160px;          /* THIS is what makes it big */
+  height: auto;
+  max-height: none;
   object-fit: contain;
   display: block;
 }
+
+/* Mobile */
 @media (max-width: 768px){
   .logo{
-    height: 44px;        /* bigger on mobile too */
+    width: 130px;
   }
 }
+
 
 .navlinks{
   display:flex;
