@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Solutions — Techbeats</title>
+  <meta name="description" content="Solutions for investors, real estate businesses, and small businesses: analysis, dashboards, software and automation." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/solutions/">Solutions</a>
+          <a href="/process/">Process</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Book a discovery call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Solutions</span>
+          <span class="pill">Practical outcomes</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">Solutions built around your goal</h1>
+        <p class="lead" style="margin:0;">
+          Whether you’re buying property, running a real estate business, or improving IT operations,
+          we deliver clear outputs that help you move faster with less risk.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="grid cols-3">
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">For investors & buyers</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Compare deals with data-backed analysis and scenario-based cashflow modelling.
+            </p>
+            <ul class="list">
+              <li>Property + suburb insights</li>
+              <li>Cashflow model with stress tests</li>
+              <li>Shortlist comparison tables</li>
+              <li>Due diligence prompts</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="btn primary" href="/services/real-estate/">Real estate services</a>
+            </div>
+          </div>
+
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">For real estate businesses</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Reduce manual work and deliver consistent reporting using tools, automation and dashboards.
+            </p>
+            <ul class="list">
+              <li>Report automation & templates</li>
+              <li>Client portals / workflow tools</li>
+              <li>Dashboards & KPI reporting</li>
+              <li>Integrations between systems</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="btn" href="/services/software/">Software development</a>
+            </div>
+          </div>
+
+          <div class="card pad">
+            <h2 style="margin:0 0 8px;">For small businesses</h2>
+            <p class="small" style="margin:0 0 10px;">
+              Improve decision-making and reliability with BI, automation, and secure IT practices.
+            </p>
+            <ul class="list">
+              <li>Dashboards & reporting</li>
+              <li>Data pipelines & automation</li>
+              <li>Infrastructure automation</li>
+              <li>CI/CD and security hygiene</li>
+            </ul>
+            <div style="margin-top:12px;">
+              <a class="btn" href="/services/data-analytics/">Data & BI</a>
+              <a class="btn" href="/services/it-consulting/">IT consulting</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2 style="margin:0 0 8px;">Need a tailored package?</h2>
+        <p class="small" style="margin:0 0 12px;">
+          Share your objective and constraints. We’ll propose the most efficient plan and deliverables.
+        </p>
+        <a class="btn primary" href="/contact/">Contact Techbeats</a>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/">Services</a></div>
+          <div class="small"><a href="/legal/disclaimer.html">Disclaimer</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — Techbeats</title>
+  <meta name="description" content="About Techbeats: real estate analysis, cashflow modelling, data & BI, software development and IT consulting." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/solutions/">Solutions</a>
+          <a href="/process/">Process</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Book a discovery call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">About</span>
+          <span class="pill">Tech + property</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">About Techbeats</h1>
+        <p class="lead" style="margin:0;">
+          Techbeats sits at the intersection of <strong>real estate analysis</strong> and <strong>technology delivery</strong>.
+          We help clients reduce guesswork using practical models, dashboards, automation, and reliable systems.
+        </p>
+      </div>
+
+      <div class="section split">
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">What we believe</h2>
+          <ul class="list">
+            <li><strong>Clarity over complexity</strong> — simple outputs people can act on</li>
+            <li><strong>Data-backed decisions</strong> — assumptions visible, not hidden</li>
+            <li><strong>Automation-first</strong> — reduce manual work and human error</li>
+            <li><strong>Practical security</strong> — protect systems with good hygiene and process</li>
+          </ul>
+        </div>
+
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">What we do</h2>
+          <div class="grid">
+            <div class="feature">
+              <h3>Real estate analysis</h3>
+              <p>Property comparisons, suburb signals, and cashflow modelling to support decisions.</p>
+            </div>
+            <div class="feature">
+              <h3>Data & BI</h3>
+              <p>Dashboards, reporting pipelines, and KPI tracking for business intelligence.</p>
+            </div>
+            <div class="feature">
+              <h3>Software & IT consulting</h3>
+              <p>Real estate tools, Linux/Windows automation, CI/CD pipelines, and security best practices.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2 style="margin:0 0 8px;">Work with Techbeats</h2>
+        <p class="small" style="margin:0 0 12px;">
+          If you want structured analysis, better reporting, or automation-focused IT support, reach out with your goal and timeframe.
+        </p>
+        <a class="btn primary" href="/contact/">Contact Techbeats</a>
+        <a class="btn" href="/services/">View services</a>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/legal/disclaimer.html">Disclaimer</a></div>
+          <div class="small"><a href="/legal/privacy.html">Privacy</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

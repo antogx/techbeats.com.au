@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Process — Techbeats</title>
+  <meta name="description" content="How Techbeats works: real estate analysis process, data & BI delivery process, and IT consulting process." />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <script defer src="/assets/site.js"></script>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <div class="navbar">
+        <a class="brand" href="/"><span class="dot"></span><span>techbeats</span></a>
+
+        <nav class="navlinks" aria-label="Primary">
+          <a href="/services/">Services</a>
+          <a href="/solutions/">Solutions</a>
+          <a href="/process/">Process</a>
+          <a href="/about/">About</a>
+          <a href="/contact/">Contact</a>
+        </nav>
+
+        <div class="actions">
+          <button class="iconbtn" id="themeToggle" type="button" aria-label="Switch theme" title="Toggle theme">☾</button>
+          <a class="btn primary" href="/contact/">Book a discovery call</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="section">
+    <div class="container">
+      <div class="card pad">
+        <div class="kicker">
+          <span class="pill">Process</span>
+          <span class="pill">Clear deliverables</span>
+        </div>
+        <h1 style="margin:12px 0 8px;">How we work</h1>
+        <p class="lead" style="margin:0;">
+          A simple, structured approach that keeps delivery fast, clear, and easy to action.
+        </p>
+      </div>
+
+      <div class="section">
+        <div class="grid cols-3">
+          <div class="feature">
+            <h3>1) Discovery</h3>
+            <p>We clarify goals, inputs, constraints, and what “success” looks like.</p>
+          </div>
+          <div class="feature">
+            <h3>2) Build & validate</h3>
+            <p>We create deliverables and confirm assumptions so outputs are meaningful.</p>
+          </div>
+          <div class="feature">
+            <h3>3) Deliver & handover</h3>
+            <p>You receive clear documentation and next steps for decision-making or implementation.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="section split">
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Real estate analysis process</h2>
+          <ul class="list">
+            <li>Discovery: strategy, budget, goals, and constraints</li>
+            <li>Data pack: suburb signals and property context</li>
+            <li>Cashflow model: base scenario + stress scenarios (optional)</li>
+            <li>Shortlist output: comparison table + key risks/questions</li>
+            <li>Next steps: inspection prompts, due diligence checklist</li>
+          </ul>
+          <div style="margin-top:12px;">
+            <a class="btn" href="/services/real-estate/">Real estate services</a>
+          </div>
+        </div>
+
+        <div class="card pad">
+          <h2 style="margin:0 0 10px;">Data & BI delivery process</h2>
+          <ul class="list">
+            <li>KPI alignment: what to measure and why</li>
+            <li>Data audit: sources, quality checks, and gaps</li>
+            <li>Prototype: first dashboard/report version</li>
+            <li>Automation: scheduling, refresh, alerts (where needed)</li>
+            <li>Handover: documentation and training</li>
+          </ul>
+          <div style="margin-top:12px;">
+            <a class="btn" href="/services/data-analytics/">Data & BI services</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="card pad">
+        <h2 style="margin:0 0 10px;">IT consulting process</h2>
+        <div class="grid cols-3">
+          <div class="feature">
+            <h3>Review</h3>
+            <p>Quick assessment of current state, risks, and priority fixes.</p>
+          </div>
+          <div class="feature">
+            <h3>Stabilise</h3>
+            <p>Automation, patching routines, backups, monitoring, and CI/CD improvements.</p>
+          </div>
+          <div class="feature">
+            <h3>Secure & scale</h3>
+            <p>Hardening, access control, secrets handling, and operational documentation.</p>
+          </div>
+        </div>
+
+        <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+          <a class="btn" href="/services/it-consulting/">IT consulting services</a>
+          <a class="btn primary" href="/contact/">Talk to Techbeats</a>
+        </div>
+      </div>
+
+      <div class="footer container">
+        <div class="footer-grid">
+          <div class="small">© <span id="year"></span> Techbeats</div>
+          <div class="small"><a href="/services/">Services</a></div>
+          <div class="small"><a href="/legal/privacy.html">Privacy</a></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
