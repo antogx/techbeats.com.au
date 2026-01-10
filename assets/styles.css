@@ -62,7 +62,7 @@ header{
   justify-content: space-between;
   padding: 14px 0;
   gap: 10px;
-  min-height: 56px;   /* prevents tall header */
+  min-height: 60px;   /* prevents tall header */
 }
 
 .brand{
@@ -81,17 +81,23 @@ header{
   box-shadow: 0 6px 18px rgba(47,111,236,.35);
 }
 
+/* Header logo – balanced professional size */
 .logo{
-  height: 36px;          /* desktop size */
+  height: 42px;          /* desktop size */
+  max-height: 38px;
   width: auto;
+  object-fit: contain;
   display: block;
 }
 
+/* Mobile */
 @media (max-width: 768px){
   .logo{
-    height: 30px;        /* mobile size */
+    height: 32px;
+    max-height: 32px;
   }
 }
+
 
 .navlinks{
   display:flex;
