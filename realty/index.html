@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Techbeats Realty - Client Portal</title>
+  <style>
+    body { font-family: system-ui, Arial; max-width: 980px; margin: 24px auto; padding: 0 16px; }
+    .card { border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin: 12px 0; }
+    .row { display: grid; grid-template-columns: 220px 1fr; gap: 10px; margin: 8px 0; }
+    label { font-weight: 600; }
+    input, textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 10px; }
+    button { padding: 10px 14px; border: 0; border-radius: 10px; cursor: pointer; }
+    .btn { background: #0b5; color: #fff; }
+    .btn2 { background: #444; color: #fff; }
+    .hint { color: #666; font-size: 13px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <h1>Techbeats Realty</h1>
+  <p class="hint">Client Portal (v1): login → view/edit your profile → saved in Firebase.</p>
+
+  <!-- AUTH -->
+  <div id="authCard" class="card">
+    <h2>Login</h2>
+    <div class="row">
+      <label>Email</label>
+      <input id="email" type="email" placeholder="client@email.com" />
+    </div>
+    <div class="row">
+      <label>Password</label>
+      <input id="password" type="password" placeholder="••••••••" />
+    </div>
+    <button id="loginBtn" class="btn">Login</button>
+    <button id="signupBtn" class="btn2">Create account</button>
+    <p id="authMsg" class="hint"></p>
+  </div>
+
+  <!-- APP -->
+  <div id="appCard" class="card hidden">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;">
+      <h2 style="margin:0;">Your Profile</h2>
+      <button id="logoutBtn" class="btn2">Logout</button>
+    </div>
+    <p id="userMsg" class="hint"></p>
+
+    <div id="form"></div>
+
+    <button id="saveBtn" class="btn">Save</button>
+    <p id="saveMsg" class="hint"></p>
+  </div>
+
+  <script type="module">
+    // Firebase via CDN (simple for GitHub Pages)
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+    import {
+      getAuth, onAuthStateChanged,
+      signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    import {
+      getFirestore, doc, getDoc, setDoc
+    } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+    // 1) PASTE your firebaseConfig here (Firebase Console → Project settings → Web app)
+    const firebaseConfig = {
+      apiKey: "PASTE_ME",
+      authDomain: "PASTE_ME",
+      projectId: "PASTE_ME",
+      storageBucket: "PASTE_ME",
+      messagingSenderId: "PASTE_ME",
+      appId: "PASTE_ME"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const FIELDS = [
+      ["Date", "date"],
+      ["Name", "text"],
+      ["Property", "text"],
+      ["Price", "text"],
+      ["Contract", "text"],
+      ["ContractDate", "date"],
+      ["Rent", "text"],
+      ["Deposit", "text"],
+      ["EngagementFee", "text"],
+      ["B&P", "text"],
+      ["Finance", "text"],
+      ["Insurance", "text"],
+      ["PreSettlementInspection", "text"],
+      ["Settlement", "date"],
+      ["Status", "text"],
+      ["Entity", "text"],
+      ["Notes", "textarea"]
+    ];
+
+    const authCard = document.getElementById("authCard");
+    const appCard  = document.getElementById("appCard");
+    const authMsg  = document.getElementById("authMsg");
+    const userMsg  = document.getElementById("userMsg");
+    const saveMsg  = document.getElementById("saveMsg");
+    const formDiv  = document.getElementById("form");
+
+    function renderForm(data = {}) {
+      formDiv.innerHTML = "";
+      for (const [key, type] of FIELDS) {
+        const row = document.createElement("div");
+        row.className = "row";
+        const label = document.createElement("label");
+        label.textContent = key;
+
+        let input;
+        if (type === "textarea") {
+          input = document.createElement("textarea");
+          input.rows = 4;
+        } else {
+          input = document.createElement("input");
+          input.type = type;
+        }
+
+        input.id = "f_" + key;
+        input.value = data[key] ?? "";
+        row.appendChild(label);
+        row.appendChild(input);
+        formDiv.appendChild(row);
+      }
+    }
+
+    async function loadProfile(uid) {
+      const ref = doc(db, "clients", uid);
+      const snap = await getDoc(ref);
+      if (snap.exists()) return snap.data();
+      return {}; // new user
+    }
+
+    async function saveProfile(uid) {
+      const data = {};
+      for (const [key] of FIELDS) {
+        data[key] = document.getElementById("f_" + key).value.trim();
+      }
+      data.updatedAt = new Date().toISOString();
+      await setDoc(doc(db, "clients", uid), data, { merge: true });
+    }
+
+    document.getElementById("loginBtn").onclick = async () => {
+      authMsg.textContent = "";
+      try {
+        await signInWithEmailAndPassword(
+          auth,
+          document.getElementById("email").value.trim(),
+          document.getElementById("password").value
+        );
+      } catch (e) {
+        authMsg.textContent = e.message;
+      }
+    };
+
+    document.getElementById("signupBtn").onclick = async () => {
+      authMsg.textContent = "";
+      try {
+        await createUserWithEmailAndPassword(
+          auth,
+          document.getElementById("email").value.trim(),
+          document.getElementById("password").value
+        );
+      } catch (e) {
+        authMsg.textContent = e.message;
+      }
+    };
+
+    document.getElementById("logoutBtn").onclick = () => signOut(auth);
+
+    document.getElementById("saveBtn").onclick = async () => {
+      saveMsg.textContent = "";
+      const user = auth.currentUser;
+      if (!user) return;
+      try {
+        await saveProfile(user.uid);
+        saveMsg.textContent = "Saved.";
+      } catch (e) {
+        saveMsg.textContent = e.message;
+      }
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        authCard.classList.remove("hidden");
+        appCard.classList.add("hidden");
+        return;
+      }
+      authCard.classList.add("hidden");
+      appCard.classList.remove("hidden");
+
+      userMsg.textContent = `Logged in as ${user.email}`;
+      const data = await loadProfile(user.uid);
+      renderForm(data);
+    });
+
+    // Note: Using Firebase via CDN is an officially supported alternative setup.
+    // https://firebase.google.com/docs/web/alt-setup
+  </script>
+</body>
+</html>
