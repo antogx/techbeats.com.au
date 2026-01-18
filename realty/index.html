@@ -19,7 +19,7 @@
 </head>
 <body>
   <h1>Techbeats Realty</h1>
-  <p class="hint">Client Portal (v1): login → view/edit your profile → saved in Firebase.</p>
+  <p class="hint">Client Portal (v1): login → view/edit your profile → saved in Firebase → email sent on Save.</p>
 
   <!-- AUTH -->
   <div id="authCard" class="card">
@@ -59,18 +59,23 @@
       signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
     import {
-      getFirestore, doc, getDoc, setDoc
+      getFirestore, doc, getDoc, setDoc, collection, addDoc
     } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-    // 1) PASTE your firebaseConfig here (Firebase Console → Project settings → Web app)
+    // ======= CONFIG =======
     const firebaseConfig = {
-    apiKey: "AIzaSyCKv4PZieifp6vC55ixnZCC_bcPvI65Poc",
-    authDomain: "techbeatsrealty.firebaseapp.com",
-    projectId: "techbeatsrealty",
-    storageBucket: "techbeatsrealty.firebasestorage.app",
-    messagingSenderId: "11824236488",
-    appId: "1:11824236488:web:ea336805df36b759a222fd",
+      apiKey: "AIzaSyCKv4PZieifp6vC55ixnZCC_bcPvI65Poc",
+      authDomain: "techbeatsrealty.firebaseapp.com",
+      projectId: "techbeatsrealty",
+      storageBucket: "techbeatsrealty.firebasestorage.app",
+      messagingSenderId: "11824236488",
+      appId: "1:11824236488:web:ea336805df36b759a222fd"
     };
+
+    // Email recipients: client (logged in user) + agent (fixed)
+    const AGENT_EMAIL = "antogx@gmail.com"; // <-- CHANGE THIS to your agent inbox
+    const MAIL_COLLECTION = "mail";               // must match extension "Email documents collection"
+    // ======================
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
@@ -108,6 +113,7 @@
       for (const [key, type] of FIELDS) {
         const row = document.createElement("div");
         row.className = "row";
+
         const label = document.createElement("label");
         label.textContent = key;
 
@@ -135,13 +141,41 @@
       return {}; // new user
     }
 
-    async function saveProfile(uid) {
+    function readFormData() {
       const data = {};
       for (const [key] of FIELDS) {
         data[key] = document.getElementById("f_" + key).value.trim();
       }
+      return data;
+    }
+
+    async function saveProfile(uid, data) {
       data.updatedAt = new Date().toISOString();
       await setDoc(doc(db, "clients", uid), data, { merge: true });
+    }
+
+    async function queueEmail({ clientEmail, agentEmail, profileData }) {
+      const property = profileData.Property || "-";
+      const status = profileData.Status || "-";
+      const contractDate = profileData.ContractDate || "-";
+      const settlement = profileData.Settlement || "-";
+
+      await addDoc(collection(db, MAIL_COLLECTION), {
+        to: [clientEmail, agentEmail],
+        message: {
+          subject: `Techbeats Realty: Profile updated (${clientEmail})`,
+          html: `
+            <p>The client profile was updated.</p>
+            <p><b>Client:</b> ${clientEmail}</p>
+            <p><b>Property:</b> ${property}</p>
+            <p><b>Status:</b> ${status}</p>
+            <p><b>Contract date:</b> ${contractDate}</p>
+            <p><b>Settlement:</b> ${settlement}</p>
+            <p><b>Time:</b> ${new Date().toLocaleString()}</p>
+            <p>Portal: <a href="https://techbeats.com.au/realty">https://techbeats.com.au/realty</a></p>
+          `
+        }
+      });
     }
 
     document.getElementById("loginBtn").onclick = async () => {
@@ -176,9 +210,27 @@
       saveMsg.textContent = "";
       const user = auth.currentUser;
       if (!user) return;
+
+      // Basic validation: ensure agent email is set
+      if (!AGENT_EMAIL || AGENT_EMAIL.includes("antogx@gmail.com")) {
+        saveMsg.textContent = "Please set AGENT_EMAIL in the code.";
+        return;
+      }
+
       try {
-        await saveProfile(user.uid);
-        saveMsg.textContent = "Saved.";
+        const data = readFormData();
+
+        // 1) Save profile
+        await saveProfile(user.uid, data);
+
+        // 2) Queue email to (client + agent)
+        await queueEmail({
+          clientEmail: user.email,
+          agentEmail: AGENT_EMAIL,
+          profileData: data
+        });
+
+        saveMsg.textContent = "Saved and email queued.";
       } catch (e) {
         saveMsg.textContent = e.message;
       }
@@ -190,6 +242,7 @@
         appCard.classList.add("hidden");
         return;
       }
+
       authCard.classList.add("hidden");
       appCard.classList.remove("hidden");
 
@@ -197,9 +250,6 @@
       const data = await loadProfile(user.uid);
       renderForm(data);
     });
-
-    // Note: Using Firebase via CDN is an officially supported alternative setup.
-    // https://firebase.google.com/docs/web/alt-setup
   </script>
 </body>
 </html>
