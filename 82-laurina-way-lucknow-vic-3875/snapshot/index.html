@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Property Snapshot</title>
+<style>
+:root{--bg:#f7f8fb;--card:#fff;--line:#e6e9f1;--text:#0f172a;--muted:#475569;--good:#16a34a;--goodbg:#ecfdf5;--shadow:0 8px 20px rgba(15,23,42,.08)}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#fff 0%,var(--bg) 100%);color:var(--text)}
+.wrap{max-width:980px;margin:0 auto;padding:12px}
+header{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px}
+.hgrid{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:start}
+.logo{width:140px;height:auto;opacity:.98}
+h1{margin:0;font-size:22px;letter-spacing:-.2px}
+.addr{margin-top:6px;color:var(--muted);font-weight:650;line-height:1.25}
+.badges{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.badge{font-size:12.5px;padding:7px 9px;border:1px solid var(--line);border-radius:999px;color:var(--muted);background:#fff;font-weight:650}
+.badge.good{border-color:rgba(22,163,74,.35);background:var(--goodbg);color:#065f46}
+
+.grid{display:grid;grid-template-columns:1fr;gap:10px;margin-top:10px}
+@media(min-width:860px){.grid{grid-template-columns:1fr 1fr}}
+
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:12px}
+.card h2{margin:0 0 10px;font-size:13px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted)}
+
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media(min-width:860px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.kpi{border:1px solid var(--line);background:#f3f6fb;border-radius:12px;padding:10px;min-height:72px}
+.kpi.good{border-color:rgba(22,163,74,.35);background:var(--goodbg)}
+.kt{font-size:12px;color:var(--muted);font-weight:700}
+.kvv{margin-top:6px;font-size:16px;font-weight:800;letter-spacing:-.2px}
+
+.meters{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.meter{border:1px solid var(--line);background:#f3f6fb;border-radius:12px;padding:10px}
+.meter.good{border-color:rgba(22,163,74,.35);background:var(--goodbg)}
+.mh{display:flex;justify-content:space-between;gap:10px;align-items:baseline}
+.mt{font-weight:800;font-size:13.5px}
+.mv{color:var(--muted);font-weight:700;font-size:12.5px}
+.bar{height:10px;background:rgba(15,23,42,.10);border-radius:999px;overflow:hidden;margin-top:8px}
+.fill{height:100%;background:linear-gradient(90deg,#2563eb,var(--good))}
+
+.list{display:grid;gap:8px}
+.kv{border:1px solid var(--line);border-radius:12px;padding:10px;background:#fff}
+.kv.good{border-color:rgba(22,163,74,.35);background:var(--goodbg)}
+.k{color:var(--muted);font-weight:800;font-size:12.5px}
+.v{font-weight:800;font-size:14px;word-break:break-word}
+
+/* Mobile: Key: Value on ONE line, ellipsis value */
+@media(max-width:859px){
+  .kv{display:flex;gap:8px;align-items:baseline;padding:9px 10px}
+  .k{flex:0 0 auto;white-space:nowrap}
+  .k::after{content:":";margin-left:4px}
+  .v{flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+}
+
+/* Desktop: 2-column */
+@media(min-width:860px){
+  .kv{display:grid;grid-template-columns:42% 58%;gap:10px;align-items:start}
+  .k::after{content:""}
+  .v{white-space:normal}
+}
+
+.muted{color:var(--muted);font-weight:650}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="hgrid">
+        <div>
+          <h1>Property Snapshot</h1>
+          <div class="addr">82 Laurina Way, Lucknow, Vic 3875</div>
+        </div>
+        <div></div>
+      </div>
+      <div class="badges"><span class="badge good">✅ Bush Fire: No</span><span class="badge good">✅ Flood: No</span><span class="badge good">✅ Heritage: No</span></div>
+    </header>
+
+    <div class="grid">
+      <section class="card">
+        <h2>Key specs</h2>
+        <div class="kpis"><div class="kpi "><div class="kt">Listed Price</div><div class="kvv">$525,000</div></div><div class="kpi good"><div class="kt">Insurance (est.)</div><div class="kvv">$900</div></div><div class="kpi good"><div class="kt">Land (m²)</div><div class="kvv">762</div></div><div class="kpi "><div class="kt">Built</div><div class="kvv">2021</div></div></div>
+        <h2 style="margin-top:12px">Suburb health</h2>
+        <div class="meters"><div class="meter good"><div class="mh"><div class="mt">Demand to Supply Ratio</div><div class="mv">54</div></div><div class="bar"><div class="fill" style="width:54%"></div></div></div><div class="meter good"><div class="mh"><div class="mt">Online search interest</div><div class="mv">17</div></div><div class="bar"><div class="fill" style="width:17%"></div></div></div><div class="meter "><div class="mh"><div class="mt">Percent stock on market</div><div class="mv">4.03%</div></div><div class="bar"><div class="fill" style="width:19%"></div></div></div><div class="meter good"><div class="mh"><div class="mt">Vacancy rate</div><div class="mv">2.39%</div></div><div class="bar"><div class="fill" style="width:52%"></div></div></div><div class="meter good"><div class="mh"><div class="mt">Gross rental yield</div><div class="mv">5.31%</div></div><div class="bar"><div class="fill" style="width:53%"></div></div></div></div>
+      </section>
+
+      <section class="card">
+        <h2>Property details</h2>
+        <div class="list"><div class="kv "><div class="k">Built</div><div class="v">2021</div></div><div class="kv "><div class="k">Listed Price</div><div class="v">$525,000</div></div><div class="kv good"><div class="k">Suburb Category</div><div class="v">2</div></div><div class="kv good"><div class="k">Bush Fire</div><div class="v">No</div></div><div class="kv good"><div class="k">Flood</div><div class="v">No</div></div><div class="kv good"><div class="k">Heritage</div><div class="v">No</div></div><div class="kv "><div class="k">LGA</div><div class="v">East Gippsland</div></div><div class="kv good"><div class="k">LGA Population</div><div class="v">49,422</div></div><div class="kv "><div class="k">Suburb Population</div><div class="v">1,439</div></div><div class="kv good"><div class="k">Public Housing</div><div class="v">0%</div></div><div class="kv good"><div class="k">Insurance (est.)</div><div class="v">$900</div></div><div class="kv good"><div class="k">Land (m²)</div><div class="v">762</div></div><div class="kv "><div class="k">DSR</div><div class="v">44</div></div><div class="kv "><div class="k">Median Rent (SQM)</div><div class="v">$524</div></div><div class="kv "><div class="k">12m Rent Growth (SQM)</div><div class="v">9.5%</div></div></div>
+      </section>
+
+      <section class="card" style="grid-column:1/-1">
+        <h2>Suburb analysis</h2>
+        <div class="list"><div class="kv "><div class="k">State</div><div class="v">VIC</div></div><div class="kv "><div class="k">Post Code</div><div class="v">3875</div></div><div class="kv "><div class="k">Suburb</div><div class="v">LUCKNOW</div></div><div class="kv "><div class="k">Avg vendor discount</div><div class="v">2.85%</div></div><div class="kv good"><div class="k">Demand to Supply Ratio</div><div class="v">54</div></div><div class="kv good"><div class="k">Online search interest</div><div class="v">17</div></div><div class="kv "><div class="k">Percent stock on market</div><div class="v">4.03%</div></div><div class="kv good"><div class="k">Vacancy rate</div><div class="v">2.39%</div></div><div class="kv good"><div class="k">Gross rental yield</div><div class="v">5.31%</div></div><div class="kv "><div class="k">Auction clearance rate</div><div class="v">0.0%</div></div><div class="kv "><div class="k">Days on market</div><div class="v">58days</div></div><div class="kv "><div class="k">Median 12 months</div><div class="v">$526,028</div></div><div class="kv "><div class="k">Statistical reliability</div><div class="v">48</div></div><div class="kv "><div class="k">Typical value</div><div class="v">$574,000</div></div></div>
+      </section>
+    </div>
+  </div>
+</body>
+</html>
