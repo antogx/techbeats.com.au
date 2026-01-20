@@ -8,11 +8,7 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:#f6f8fc;color:#0f172a}
 .wrap{max-width:1100px;margin:0 auto;padding:12px}
-
-.header{
-  background:#fff;border:1px solid #e2e8f0;border-radius:12px;
-  padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start
-}
+.header{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .title{font-size:22px;font-weight:900;line-height:1.15}
 .addr{margin-top:6px;font-size:16px;font-weight:800;color:#475569;line-height:1.25}
 .logo{width:140px;height:auto}
@@ -20,36 +16,13 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
 .sec{margin-top:12px}
 .sec-title{font-size:14px;font-weight:950;letter-spacing:.6px;color:#475569;margin:8px 2px}
 
-.rows{
-  /* ✅ keeps order top-to-bottom even when multi-column */
-  column-count:1;
-  column-gap:10px;
-}
-
+.rows{column-count:1;column-gap:10px}
 @media(min-width:720px){.rows{column-count:2}}
 @media(min-width:1020px){.rows{column-count:3}}
 
-.row{
-  break-inside:avoid;
-  background:#fff;border:1px solid #e2e8f0;border-radius:10px;
-  padding:10px 12px;margin:0 0 8px 0;
-  display:flex;gap:10px;align-items:baseline;
-  min-width:0;
-}
-
-.key{
-  flex:0 0 150px;
-  font-size:14px;font-weight:850;color:#475569;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  min-width:0;
-}
-
-.val{
-  flex:1 1 auto;
-  font-size:16px;font-weight:950;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-  min-width:0;
-}
+.row{break-inside:avoid;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin:0 0 8px 0;display:flex;gap:10px;align-items:baseline;min-width:0}
+.key{flex:0 0 150px;font-size:14px;font-weight:850;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.val{flex:1 1 auto;font-size:16px;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
 
 @media(max-width:699px){
   .wrap{padding:10px}
@@ -60,14 +33,14 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
   .val{font-size:18px}
 }
 
-.link{
-  color:#2563eb;text-decoration:underline;font-weight:950;
-  display:inline-block;max-width:100%;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-}
+.link{color:#2563eb;text-decoration:underline;font-weight:950;display:inline-block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .link:visited{color:#1d4ed8}
-
 .empty{color:#64748b;font-weight:800;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px}
+
+/* --------- HIGHLIGHT COLORS --------- */
+.row.green{border-color:#16a34a;background:#ecfdf5}
+.row.red{border-color:#dc2626;background:#fef2f2}
+.row.orange{border-color:#f59e0b;background:#fffbeb}
 </style>
 </head>
 <body>
@@ -87,15 +60,15 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
     <div class="row">  <div class="key" title="Property">Property</div>  <div class="val"><a class="link" href="https://www.realestate.com.au/property-house-vic-lucknow-150027208" target="_blank" rel="noopener noreferrer" title="https://www.realestate.com.au/property-house-vic-lucknow-150027208">https://www.realestate.com.au/property-house-vic-lucknow-150027208</a></div></div>
 <div class="row">  <div class="key" title="Price">Price</div>  <div class="val"><span title="$525,000">$525,000</span></div></div>
 <div class="row">  <div class="key" title="Beds">Beds</div>  <div class="val"><span title="4">4</span></div></div>
-<div class="row">  <div class="key" title="Built">Built</div>  <div class="val"><span title="2021">2021</span></div></div>
-<div class="row">  <div class="key" title="Land">Land</div>  <div class="val"><span title="762">762</span></div></div>
-<div class="row">  <div class="key" title="Bush Fire">Bush Fire</div>  <div class="val"><span title="No">No</span></div></div>
-<div class="row">  <div class="key" title="Flood">Flood</div>  <div class="val"><span title="No">No</span></div></div>
-<div class="row">  <div class="key" title="Heritage">Heritage</div>  <div class="val"><span title="No">No</span></div></div>
-<div class="row">  <div class="key" title="Insurance">Insurance</div>  <div class="val"><span title="900">900</span></div></div>
+<div class="row green">  <div class="key" title="Built">Built</div>  <div class="val"><span title="2021">2021</span></div></div>
+<div class="row green">  <div class="key" title="Land">Land</div>  <div class="val"><span title="762">762</span></div></div>
+<div class="row green">  <div class="key" title="Bush Fire">Bush Fire</div>  <div class="val"><span title="No">No</span></div></div>
+<div class="row green">  <div class="key" title="Flood">Flood</div>  <div class="val"><span title="No">No</span></div></div>
+<div class="row green">  <div class="key" title="Heritage">Heritage</div>  <div class="val"><span title="No">No</span></div></div>
+<div class="row green">  <div class="key" title="Insurance">Insurance</div>  <div class="val"><span title="900">900</span></div></div>
 <div class="row">  <div class="key" title="Public Housing">Public Housing</div>  <div class="val"><span title="0%">0%</span></div></div>
 <div class="row">  <div class="key" title="Rent">Rent</div>  <div class="val"><span title="550">550</span></div></div>
-<div class="row">  <div class="key" title="Gross rental yield">Gross rental yield</div>  <div class="val"><span title="5.45%">5.45%</span></div></div>
+<div class="row green">  <div class="key" title="Gross rental yield">Gross rental yield</div>  <div class="val"><span title="5.45%">5.45%</span></div></div>
   </div>
 </section>
   
@@ -103,13 +76,13 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
   <div class="sec-title">PRICE ANALYSIS</div>
   <div class="rows">
     <div class="row">  <div class="key" title="Price">Price</div>  <div class="val"><span title="$525,000">$525,000</span></div></div>
-<div class="row">  <div class="key" title="Corelogic">Corelogic</div>  <div class="val"><span title="$540,000">$540,000</span></div></div>
-<div class="row">  <div class="key" title="Domain">Domain</div>  <div class="val"><span title="$650,000">$650,000</span></div></div>
-<div class="row">  <div class="key" title="DSR_Typical">DSR_Typical</div>  <div class="val"><span title="$574,000">$574,000</span></div></div>
-<div class="row">  <div class="key" title="OTH">OTH</div>  <div class="val"><span title="$550,101">$550,101</span></div></div>
-<div class="row">  <div class="key" title="Street_CMA">Street_CMA</div>  <div class="val"><span title="$575,000">$575,000</span></div></div>
-<div class="row">  <div class="key" title="Suburb_CMA">Suburb_CMA</div>  <div class="val"><span title="$581,022">$581,022</span></div></div>
-<div class="row">  <div class="key" title="SQM_Ask_All">SQM_Ask_All</div>  <div class="val"><span title="$688,208">$688,208</span></div></div>
+<div class="row orange">  <div class="key" title="Corelogic">Corelogic</div>  <div class="val"><span title="$540,000">$540,000</span></div></div>
+<div class="row orange">  <div class="key" title="Domain">Domain</div>  <div class="val"><span title="$650,000">$650,000</span></div></div>
+<div class="row orange">  <div class="key" title="DSR_Typical">DSR_Typical</div>  <div class="val"><span title="$574,000">$574,000</span></div></div>
+<div class="row orange">  <div class="key" title="OTH">OTH</div>  <div class="val"><span title="$550,101">$550,101</span></div></div>
+<div class="row orange">  <div class="key" title="Street_CMA">Street_CMA</div>  <div class="val"><span title="$575,000">$575,000</span></div></div>
+<div class="row orange">  <div class="key" title="Suburb_CMA">Suburb_CMA</div>  <div class="val"><span title="$581,145">$581,145</span></div></div>
+<div class="row orange">  <div class="key" title="SQM_Ask_All">SQM_Ask_All</div>  <div class="val"><span title="$688,208">$688,208</span></div></div>
   </div>
 </section>
   
@@ -119,18 +92,18 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
     <div class="row">  <div class="key" title="State">State</div>  <div class="val"><span title="VIC">VIC</span></div></div>
 <div class="row">  <div class="key" title="Suburb">Suburb</div>  <div class="val"><span title="LUCKNOW">LUCKNOW</span></div></div>
 <div class="row">  <div class="key" title="Post Code">Post Code</div>  <div class="val"><span title="3875">3875</span></div></div>
-<div class="row">  <div class="key" title="Category">Category</div>  <div class="val"><span title="2">2</span></div></div>
-<div class="row">  <div class="key" title="Demand to Supply Ratio">Demand to Supply Ratio</div>  <div class="val"><span title="54">54</span></div></div>
-<div class="row">  <div class="key" title="Days on market">Days on market</div>  <div class="val"><span title="58days">58days</span></div></div>
+<div class="row green">  <div class="key" title="Category">Category</div>  <div class="val"><span title="2">2</span></div></div>
+<div class="row green">  <div class="key" title="Demand to Supply Ratio">Demand to Supply Ratio</div>  <div class="val"><span title="54">54</span></div></div>
+<div class="row green">  <div class="key" title="Days on market">Days on market</div>  <div class="val"><span title="58days">58days</span></div></div>
 <div class="row">  <div class="key" title="LGA">LGA</div>  <div class="val"><span title="East Gippsland">East Gippsland</span></div></div>
-<div class="row">  <div class="key" title="LGA Population">LGA Population</div>  <div class="val"><span title="49,422">49,422</span></div></div>
+<div class="row green">  <div class="key" title="LGA Population">LGA Population</div>  <div class="val"><span title="49,422">49,422</span></div></div>
 <div class="row">  <div class="key" title="Suburb Population">Suburb Population</div>  <div class="val"><span title="1,439">1,439</span></div></div>
 <div class="row">  <div class="key" title="Median Rent (SQM)">Median Rent (SQM)</div>  <div class="val"><span title="523.75">523.75</span></div></div>
-<div class="row">  <div class="key" title="Online search interest">Online search interest</div>  <div class="val"><span title="17">17</span></div></div>
-<div class="row">  <div class="key" title="12m Rent Growth (SQM)">12m Rent Growth (SQM)</div>  <div class="val"><span title="9.5%">9.5%</span></div></div>
-<div class="row">  <div class="key" title="OTH_3Y_Growth">OTH_3Y_Growth</div>  <div class="val"><span title="5%">5%</span></div></div>
-<div class="row">  <div class="key" title="Percent stock on market">Percent stock on market</div>  <div class="val"><span title="4.03%">4.03%</span></div></div>
-<div class="row">  <div class="key" title="Vacancy rate">Vacancy rate</div>  <div class="val"><span title="2.39%">2.39%</span></div></div>
+<div class="row green">  <div class="key" title="Online search interest">Online search interest</div>  <div class="val"><span title="17">17</span></div></div>
+<div class="row green">  <div class="key" title="12m Rent Growth (SQM)">12m Rent Growth (SQM)</div>  <div class="val"><span title="9.5%">9.5%</span></div></div>
+<div class="row green">  <div class="key" title="OTH_3Y_Growth">OTH_3Y_Growth</div>  <div class="val"><span title="5%">5%</span></div></div>
+<div class="row orange">  <div class="key" title="Percent stock on market">Percent stock on market</div>  <div class="val"><span title="4.03%">4.03%</span></div></div>
+<div class="row green">  <div class="key" title="Vacancy rate">Vacancy rate</div>  <div class="val"><span title="2.39%">2.39%</span></div></div>
 <div class="row">  <div class="key" title="Rent(CoreLogic)">Rent(CoreLogic)</div>  <div class="val"><span title="$564">$564</span></div></div>
   </div>
 </section>
