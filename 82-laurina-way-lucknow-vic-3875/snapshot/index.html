@@ -20,16 +20,48 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
 @media(min-width:720px){.rows{column-count:2}}
 @media(min-width:1020px){.rows{column-count:3}}
 
-.row{break-inside:avoid;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px;margin:0 0 8px 0;display:flex;gap:10px;align-items:baseline;min-width:0}
-.key{flex:0 0 150px;font-size:14px;font-weight:850;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
-.val{flex:1 1 auto;font-size:16px;font-weight:950;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.row{
+  break-inside:avoid;
+  background:#fff;
+  border:1px solid #e2e8f0;
+  border-radius:10px;
+  padding:10px 12px;
+  margin:0 0 8px 0;
+
+  display:flex;
+  align-items:baseline;
+  justify-content:space-between; /* ✅ creates "tab" push */
+  gap:14px;
+  min-width:0;
+}
+.key{
+  flex:0 1 auto;        /* ✅ key can expand as needed */
+  font-size:14px;
+  font-weight:850;
+  color:#475569;
+
+  white-space:nowrap;   /* single line */
+  overflow:visible;     /* ✅ no trimming */
+  text-overflow:clip;
+}
+.val{
+  flex:1 1 0;           /* ✅ takes remaining width */
+  min-width:0;          /* ✅ allow ellipsis */
+  text-align:right;     /* ✅ tab-like alignment */
+  font-size:16px;
+  font-weight:950;
+
+  white-space:nowrap;
+  overflow:hidden;      /* ✅ if tight, trim VALUE not key */
+  text-overflow:ellipsis;
+}
 
 @media(max-width:699px){
   .wrap{padding:10px}
   .title{font-size:24px}
   .addr{font-size:17px}
   .logo{width:120px}
-  .key{flex-basis:135px;font-size:15px}
+  .key{font-size:15px}
   .val{font-size:18px}
 }
 
