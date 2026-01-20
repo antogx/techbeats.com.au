@@ -8,56 +8,53 @@
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;background:#f6f8fc;color:#0f172a}
 .wrap{max-width:1100px;margin:0 auto;padding:12px}
-
-.header{
-  background:#fff;border:1px solid #e2e8f0;border-radius:12px;
-  padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start
-}
+.header{background:#fff;border:1px solid #e2e8f0;border-radius:12px;padding:12px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
 .title{font-size:22px;font-weight:900;line-height:1.15}
 .addr{margin-top:6px;font-size:16px;font-weight:800;color:#475569;line-height:1.25}
 .logo{width:140px;height:auto}
 
 .grid{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
-@media(min-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(min-width:1020px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:720px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1020px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
+/* ✅ NO OVERLAP GUARANTEE:
+   - use flex, not grid
+   - key has fixed basis, value takes the rest
+   - both single line with ellipsis
+*/
 .row{
   background:#fff;border:1px solid #e2e8f0;border-radius:10px;
   padding:10px 12px;
-  display:grid;
-  grid-template-columns: 190px 1fr;   /* tab-like spacing on bigger screens */
-  column-gap:14px;
-  align-items:baseline;
+  display:flex; align-items:baseline; gap:10px;
+  min-width:0;
 }
-
-.key{font-size:14px;font-weight:800;color:#475569;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.val{font-size:16px;font-weight:900;word-break:break-word;min-width:0}
-
-.link{color:#2563eb;text-decoration:underline;font-weight:900;word-break:break-word}
-.link:visited{color:#1d4ed8}
-
-/* ✅ Mobile: stack key on top of value (prevents overlap 100%) */
-@media(max-width:699px){
+.key{
+  flex:0 0 160px;           /* key width */
+  font-size:14px;font-weight:800;color:#475569;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  min-width:0;
+}
+.val{
+  flex:1 1 auto;            /* value uses remaining space */
+  font-size:16px;font-weight:900;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  min-width:0;
+}
+/* Mobile: slightly smaller key column so value has space */
+@media (max-width:699px){
   .wrap{padding:10px}
   .title{font-size:24px}
   .addr{font-size:17px}
   .logo{width:120px}
-
-  .row{
-    grid-template-columns: 1fr;
-    row-gap:6px;
-  }
-  .key{
-    white-space:normal;      /* allow wrapping */
-    overflow:visible;
-    text-overflow:clip;
-    font-size:15px;
-  }
-  .val{
-    font-size:18px;
-    line-height:1.25;
-  }
+  .key{flex-basis:135px;font-size:15px}
+  .val{font-size:18px}
 }
+
+.link{
+  color:#2563eb;text-decoration:underline;font-weight:900;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; display:inline-block; max-width:100%;
+}
+.link:visited{color:#1d4ed8}
 </style>
 </head>
 <body>
@@ -71,43 +68,43 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
   </div>
 
   <div class="grid">
-    <div class="row">  <div class="key">12m Rent Growth (SQM)</div>  <div class="val">9.5%</div></div>
-<div class="row">  <div class="key">Beds</div>  <div class="val">4</div></div>
-<div class="row">  <div class="key">Built</div>  <div class="val">2021</div></div>
-<div class="row">  <div class="key">Bush Fire</div>  <div class="val">No</div></div>
-<div class="row">  <div class="key">Category</div>  <div class="val">2</div></div>
-<div class="row">  <div class="key">Corelogic</div>  <div class="val">$540,000</div></div>
-<div class="row">  <div class="key">Days on market</div>  <div class="val">58days</div></div>
-<div class="row">  <div class="key">Demand to Supply Ratio</div>  <div class="val">54</div></div>
-<div class="row">  <div class="key">Domain</div>  <div class="val">$650,000</div></div>
-<div class="row">  <div class="key">DSR</div>  <div class="val">44</div></div>
-<div class="row">  <div class="key">DSR_Typical</div>  <div class="val">$574,000</div></div>
-<div class="row">  <div class="key">Flood</div>  <div class="val">No</div></div>
-<div class="row">  <div class="key">Gross rental yield</div>  <div class="val">5.31%</div></div>
-<div class="row">  <div class="key">Heritage</div>  <div class="val">No</div></div>
-<div class="row">  <div class="key">Insurance</div>  <div class="val">900</div></div>
-<div class="row">  <div class="key">Land</div>  <div class="val">762</div></div>
-<div class="row">  <div class="key">LGA</div>  <div class="val">East Gippsland</div></div>
-<div class="row">  <div class="key">LGA Population</div>  <div class="val">49,422</div></div>
-<div class="row">  <div class="key">Median Rent (SQM)</div>  <div class="val">523.75</div></div>
-<div class="row">  <div class="key">Online search interest</div>  <div class="val">17</div></div>
-<div class="row">  <div class="key">OTH</div>  <div class="val">$550,101</div></div>
-<div class="row">  <div class="key">OTH_3Y_Growth</div>  <div class="val">5%</div></div>
-<div class="row">  <div class="key">Percent stock on market</div>  <div class="val">4.03%</div></div>
-<div class="row">  <div class="key">Post Code</div>  <div class="val">3875</div></div>
-<div class="row">  <div class="key">Price</div>  <div class="val">$525,000</div></div>
-<div class="row">  <div class="key">Property</div>  <div class="val"><a class="link" href="https://www.realestate.com.au/property-house-vic-lucknow-150027208" target="_blank" rel="noopener noreferrer">https://www.realestate.com.au/property-house-vic-lucknow-150027208</a></div></div>
-<div class="row">  <div class="key">Public Housing</div>  <div class="val">0%</div></div>
-<div class="row">  <div class="key">Rent</div>  <div class="val">550</div></div>
-<div class="row">  <div class="key">Rent RP</div>  <div class="val">$564</div></div>
-<div class="row">  <div class="key">RP Price</div>  <div class="val">540000</div></div>
-<div class="row">  <div class="key">SQM_Ask_All</div>  <div class="val">$688,208</div></div>
-<div class="row">  <div class="key">State</div>  <div class="val">VIC</div></div>
-<div class="row">  <div class="key">Street_CMA</div>  <div class="val">$575,000</div></div>
-<div class="row">  <div class="key">Suburb</div>  <div class="val">LUCKNOW</div></div>
-<div class="row">  <div class="key">Suburb Population</div>  <div class="val">1,439</div></div>
-<div class="row">  <div class="key">Suburb_CMA</div>  <div class="val">$581,022</div></div>
-<div class="row">  <div class="key">Vacancy rate</div>  <div class="val">2.39%</div></div>
+    <div class="row">  <div class="key" title="12m Rent Growth (SQM)">12m Rent Growth (SQM)</div>  <div class="val"><span title="9.5%">9.5%</span></div></div>
+<div class="row">  <div class="key" title="Beds">Beds</div>  <div class="val"><span title="4">4</span></div></div>
+<div class="row">  <div class="key" title="Built">Built</div>  <div class="val"><span title="2021">2021</span></div></div>
+<div class="row">  <div class="key" title="Bush Fire">Bush Fire</div>  <div class="val"><span title="No">No</span></div></div>
+<div class="row">  <div class="key" title="Category">Category</div>  <div class="val"><span title="2">2</span></div></div>
+<div class="row">  <div class="key" title="Corelogic">Corelogic</div>  <div class="val"><span title="$540,000">$540,000</span></div></div>
+<div class="row">  <div class="key" title="Days on market">Days on market</div>  <div class="val"><span title="58days">58days</span></div></div>
+<div class="row">  <div class="key" title="Demand to Supply Ratio">Demand to Supply Ratio</div>  <div class="val"><span title="54">54</span></div></div>
+<div class="row">  <div class="key" title="Domain">Domain</div>  <div class="val"><span title="$650,000">$650,000</span></div></div>
+<div class="row">  <div class="key" title="DSR">DSR</div>  <div class="val"><span title="44">44</span></div></div>
+<div class="row">  <div class="key" title="DSR_Typical">DSR_Typical</div>  <div class="val"><span title="$574,000">$574,000</span></div></div>
+<div class="row">  <div class="key" title="Flood">Flood</div>  <div class="val"><span title="No">No</span></div></div>
+<div class="row">  <div class="key" title="Gross rental yield">Gross rental yield</div>  <div class="val"><span title="5.31%">5.31%</span></div></div>
+<div class="row">  <div class="key" title="Heritage">Heritage</div>  <div class="val"><span title="No">No</span></div></div>
+<div class="row">  <div class="key" title="Insurance">Insurance</div>  <div class="val"><span title="900">900</span></div></div>
+<div class="row">  <div class="key" title="Land">Land</div>  <div class="val"><span title="762">762</span></div></div>
+<div class="row">  <div class="key" title="LGA">LGA</div>  <div class="val"><span title="East Gippsland">East Gippsland</span></div></div>
+<div class="row">  <div class="key" title="LGA Population">LGA Population</div>  <div class="val"><span title="49,422">49,422</span></div></div>
+<div class="row">  <div class="key" title="Median Rent (SQM)">Median Rent (SQM)</div>  <div class="val"><span title="523.75">523.75</span></div></div>
+<div class="row">  <div class="key" title="Online search interest">Online search interest</div>  <div class="val"><span title="17">17</span></div></div>
+<div class="row">  <div class="key" title="OTH">OTH</div>  <div class="val"><span title="$550,101">$550,101</span></div></div>
+<div class="row">  <div class="key" title="OTH_3Y_Growth">OTH_3Y_Growth</div>  <div class="val"><span title="5%">5%</span></div></div>
+<div class="row">  <div class="key" title="Percent stock on market">Percent stock on market</div>  <div class="val"><span title="4.03%">4.03%</span></div></div>
+<div class="row">  <div class="key" title="Post Code">Post Code</div>  <div class="val"><span title="3875">3875</span></div></div>
+<div class="row">  <div class="key" title="Price">Price</div>  <div class="val"><span title="$525,000">$525,000</span></div></div>
+<div class="row">  <div class="key" title="Property">Property</div>  <div class="val"><a class="link" href="https://www.realestate.com.au/property-house-vic-lucknow-150027208" target="_blank" rel="noopener noreferrer" title="https://www.realestate.com.au/property-house-vic-lucknow-150027208">https://www.realestate.com.au/property-house-vic-lucknow-150027208</a></div></div>
+<div class="row">  <div class="key" title="Public Housing">Public Housing</div>  <div class="val"><span title="0%">0%</span></div></div>
+<div class="row">  <div class="key" title="Rent">Rent</div>  <div class="val"><span title="550">550</span></div></div>
+<div class="row">  <div class="key" title="Rent RP">Rent RP</div>  <div class="val"><span title="$564">$564</span></div></div>
+<div class="row">  <div class="key" title="RP Price">RP Price</div>  <div class="val"><span title="540000">540000</span></div></div>
+<div class="row">  <div class="key" title="SQM_Ask_All">SQM_Ask_All</div>  <div class="val"><span title="$688,208">$688,208</span></div></div>
+<div class="row">  <div class="key" title="State">State</div>  <div class="val"><span title="VIC">VIC</span></div></div>
+<div class="row">  <div class="key" title="Street_CMA">Street_CMA</div>  <div class="val"><span title="$575,000">$575,000</span></div></div>
+<div class="row">  <div class="key" title="Suburb">Suburb</div>  <div class="val"><span title="LUCKNOW">LUCKNOW</span></div></div>
+<div class="row">  <div class="key" title="Suburb Population">Suburb Population</div>  <div class="val"><span title="1,439">1,439</span></div></div>
+<div class="row">  <div class="key" title="Suburb_CMA">Suburb_CMA</div>  <div class="val"><span title="$581,022">$581,022</span></div></div>
+<div class="row">  <div class="key" title="Vacancy rate">Vacancy rate</div>  <div class="val"><span title="2.39%">2.39%</span></div></div>
   </div>
 </div>
 </body>
