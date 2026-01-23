@@ -521,14 +521,14 @@
 
             <div class="field">
               <label for="pmFeePct">Property Management fees %</label>
+              <label for="pmFeePct">Property Management fees %</label>
               <input
-              id="pmFeePct"
-              type="number"
-              inputmode="decimal"
-              step="0.01"
-              min="0"
-              max="100"
-              placeholder="e.g., 7.50"
+                id="pmFeePct"
+                type="number"
+                inputmode="decimal"
+                step="0.01"
+                min="0"
+                max="100"
               />
             </div>
 
@@ -1107,7 +1107,7 @@
       $("lmi").value = fmtMoney(Number(DEFAULTS.lmi || 0));
       $("stampDuty").value = fmtMoney(Number(DEFAULTS.stampDuty || 0));
 
-      $("pmFeePct").value = fmtPercent((DEFAULTS.pmPct / 100.0), 0);
+      $("pmFeePct").value = (DEFAULTS.pmPct).toFixed(2);
       $("pmUseFormula").checked = true;
       $("pmFee").setAttribute("placeholder", `auto = Rental income (Yr) × ${DEFAULTS.pmPct}%`);
 
