@@ -30,29 +30,29 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
 
   display:flex;
   align-items:baseline;
-  justify-content:space-between; /* ✅ creates "tab" push */
+  justify-content:space-between; /* tab push */
   gap:14px;
   min-width:0;
 }
 .key{
-  flex:0 1 auto;        /* ✅ key can expand as needed */
+  flex:0 1 auto;
   font-size:14px;
   font-weight:850;
   color:#475569;
 
-  white-space:nowrap;   /* single line */
-  overflow:visible;     /* ✅ no trimming */
+  white-space:nowrap;
+  overflow:visible;
   text-overflow:clip;
 }
 .val{
-  flex:1 1 0;           /* ✅ takes remaining width */
-  min-width:0;          /* ✅ allow ellipsis */
-  text-align:right;     /* ✅ tab-like alignment */
+  flex:1 1 0;
+  min-width:0;
+  text-align:right;
   font-size:16px;
   font-weight:950;
 
   white-space:nowrap;
-  overflow:hidden;      /* ✅ if tight, trim VALUE not key */
+  overflow:hidden;
   text-overflow:ellipsis;
 }
 
@@ -69,7 +69,7 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
 .link:visited{color:#1d4ed8}
 .empty{color:#64748b;font-weight:800;background:#fff;border:1px solid #e2e8f0;border-radius:10px;padding:10px 12px}
 
-/* --------- HIGHLIGHT COLORS --------- */
+/* highlight */
 .row.green{border-color:#16a34a;background:#ecfdf5}
 .row.red{border-color:#dc2626;background:#fef2f2}
 .row.orange{border-color:#f59e0b;background:#fffbeb}
@@ -112,7 +112,7 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
 <div class="row green">  <div class="key" title="Domain">Domain</div>  <div class="val"><span title="$510,000">$510,000</span></div></div>
 <div class="row green">  <div class="key" title="DSR_Typical">DSR_Typical</div>  <div class="val"><span title="$678,000">$678,000</span></div></div>
 <div class="row green">  <div class="key" title="OTH">OTH</div>  <div class="val"><span title="$582,002">$582,002</span></div></div>
-<div class="row green">  <div class="key" title="Street_CMA">Street_CMA</div>  <div class="val"><span title="$545,200">$545,200</span></div></div>
+<div class="row green">  <div class="key" title="Street_CMA">Street_CMA</div>  <div class="val"><span title="$545,208">$545,208</span></div></div>
 <div class="row green">  <div class="key" title="Suburb_CMA">Suburb_CMA</div>  <div class="val"><span title="$534,844">$534,844</span></div></div>
 <div class="row green">  <div class="key" title="SQM_Ask_All">SQM_Ask_All</div>  <div class="val"><span title="$737,966">$737,966</span></div></div>
   </div>
@@ -135,8 +135,6 @@ body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial;backgr
 <div class="row green">  <div class="key" title="Online search interest">Online search interest</div>  <div class="val"><span title="12">12</span></div></div>
 <div class="row green">  <div class="key" title="12m Rent Growth (SQM)">12m Rent Growth (SQM)</div>  <div class="val"><span title="1.3%">1.3%</span></div></div>
 <div class="row green">  <div class="key" title="OTH_1Y_Growth">OTH_1Y_Growth</div>  <div class="val"><span title="0.7%">0.7%</span></div></div>
-<div class="row green">  <div class="key" title="OTH_3Y_Growth">OTH_3Y_Growth</div>  <div class="val"><span title="-4.7%">-4.7%</span></div></div>
-<div class="row orange">  <div class="key" title="Percent stock on market">Percent stock on market</div>  <div class="val"><span title="4.08%">4.08%</span></div></div>
 <div class="row green">  <div class="key" title="Vacancy rate">Vacancy rate</div>  <div class="val"><span title="1.45%">1.45%</span></div></div>
 <div class="row">  <div class="key" title="Rent(CoreLogic)">Rent(CoreLogic)</div>  <div class="val"><span title="511">511</span></div></div>
   </div>
