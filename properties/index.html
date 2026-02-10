@@ -40,7 +40,8 @@ h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
 
 .quick{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
 .q{background:var(--chip);border:1px solid var(--line);border-radius:8px;padding:4px 7px;font-size:12px;font-weight:850}
-.qk{color:var(--fg)}
+.qk{color:#000}
+body.dark .qk{color:var(--fg)}
 .qv{color:var(--ok)}
 .muted{color:var(--muted);font-weight:800;font-size:12px}
 
@@ -80,7 +81,7 @@ h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
 <header>
   <div>
     <h1>Properties</h1>
-    <div class="meta">Updated: 2026-02-10 21:06 • Source: /home/antogx/property_data/properties_today.csv</div>
+    <div class="meta">Updated: 2026-02-10 21:21 • Source: /home/antogx/property_data/properties_today.csv</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button">i</button>
@@ -181,7 +182,7 @@ themeBtn.addEventListener("click", () => {
 });
 setTheme(localStorage.getItem("tb_theme") || "light");
 
-// Details toggle (mobile + desktop)
+// Details toggle (mobile-safe)
 function toggleDetails(btn) {
   const item = btn.closest(".item");
   if (!item) return;
@@ -191,14 +192,12 @@ function toggleDetails(btn) {
   wrap.hidden = isOpen;
   btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
 }
-
 document.addEventListener("click", (e) => {
   const btn = e.target.closest(".js-details");
   if (!btn) return;
   e.preventDefault();
   toggleDetails(btn);
 }, {passive:false});
-
 document.addEventListener("touchstart", (e) => {
   const btn = e.target.closest(".js-details");
   if (!btn) return;
