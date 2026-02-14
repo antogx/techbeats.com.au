@@ -1,0 +1,388 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Properties for Shayan Datta</title>
+<style>
+:root {
+  --bg:#f6f8fc; --fg:#0f172a; --muted:#475569; --line:#e2e8f0;
+  --chip:#eef2ff; --ok:#16a34a; --bad:#dc2626; --blue:#1e3a8a;
+  --btnbg:#ffffff; --btnbd:#e2e8f0;
+  --hold:#f59e0b;
+}
+body.dark {
+  --bg:#0b1220; --fg:#eaf0ff; --muted:rgba(234,240,255,.75); --line:rgba(234,240,255,.16);
+  --chip:rgba(45,212,191,.12); --ok:#22c55e; --bad:#ef4444; --blue:#93c5fd;
+  --btnbg:rgba(234,240,255,.10); --btnbd:rgba(234,240,255,.18);
+  --hold:#fbbf24;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
+.wrap{max-width:1100px;margin:0 auto;padding:12px}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  background:var(--btnbg);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+}
+.lefthead{min-width:0}
+h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
+.right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.logo{width:140px;height:auto;max-width:45vw;display:block}
+@media(max-width:520px){ .logo{width:120px;max-width:52vw} }
+
+.tbtn{
+  width:40px;height:40px;border-radius:12px;
+  border:1px solid var(--btnbd);
+  background:var(--btnbg);
+  color:var(--fg);
+  cursor:pointer;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+}
+.tico{width:18px;height:18px}
+/* show sun in light, moon in dark */
+.moon{display:none}
+body.dark .moon{display:block}
+body.dark .sun{display:none}
+
+.item{padding:10px 2px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ap{display:flex;flex-direction:column;gap:4px;min-width:0}
+.addr{font-size:16px;font-weight:950;line-height:1.25;word-break:break-word}
+.rowline{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.bb{font-size:16px;font-weight:950;line-height:1.25}
+.price{font-size:16px;font-weight:950;line-height:1.25;color:var(--blue)}
+.sep{opacity:.55;font-weight:900}
+
+.st{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:950;border:1px solid var(--line);white-space:nowrap;flex:0 0 auto}
+.st-ok{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.30);color:var(--ok)}
+.st-bad{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.30);color:var(--bad)}
+.st-hold{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.34);color:var(--hold)}
+
+.quick{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.q{background:var(--chip);border:1px solid var(--line);border-radius:8px;padding:4px 7px;font-size:12px;font-weight:850}
+.qk{color:#000}
+body.dark .qk{color:var(--fg)}
+.qv{color:var(--ok)}
+.muted{color:var(--muted);font-weight:800;font-size:12px}
+
+.actions{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;position:relative;z-index:5}
+.btn{
+  min-height:46px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid var(--btnbd);
+  background:var(--btnbg);
+  color:var(--fg);
+  font-weight:950;
+  font-size:15px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.ico{width:18px;height:18px;flex:0 0 18px}
+.btn-list{color:var(--fg)}
+.btn-det{color:var(--blue)}
+
+.details-wrap{margin-top:10px}
+.details{display:grid;gap:8px}
+.drow{background:var(--btnbg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;gap:10px;align-items:flex-start}
+.dk{flex:0 0 46%;color:var(--muted);font-weight:950;font-size:13px;text-align:left}
+.dv{flex:1 1 auto;color:var(--fg);font-weight:900;font-size:14px;text-align:left;word-break:break-word}
+@media(min-width:900px){.details{grid-template-columns:1fr 1fr}}
+
+.divider{margin-top:12px;border-top:2px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="lefthead">
+    <h1>Properties for Shayan Datta</h1>
+  </div>
+  <div class="right">
+    <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme">
+<svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path class="sun" d="M12 18a6 6 0 1 0 0-12a6 6 0 0 0 0 12Z" fill="none" stroke="currentColor" stroke-width="2"/>
+  <path class="sun" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path class="moon" d="M21 12.6A7.5 7.5 0 0 1 11.4 3A6.8 6.8 0 1 0 21 12.6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+</svg>
+</button>
+    
+  </div>
+</header>
+
+<div id="list">
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">34 Ellen Avenue, Seaspray, Vic 3851</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$475,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">716</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,076</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$518,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">15.1%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">46,533</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-seaspray-150275788" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">—</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">—</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">—</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">—</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">—</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">—</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">Yes</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Wellington Shire Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">46,533</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,076</div></div><div class="drow"><div class="dk">Land</div><div class="dv">716</div></div><div class="drow"><div class="dk">Built</div><div class="dv">-</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$475,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$518,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$395,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$325,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$430</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">400</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">15.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">52 Saunders Street, Wynyard, Tas 7325</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$475,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">647</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$603</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">3.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">4.6%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$480,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$534,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$490,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">4.1%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.2%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.5%</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">56</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-tas-wynyard-150284132" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">56</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">23</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">28.8%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.2%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">60</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.5%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Waratah-Wynyard Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">14,695</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$603</div></div><div class="drow"><div class="dk">Land</div><div class="dv">647</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1948</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$475,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$534,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$480,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$490,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$420</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$449</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">3.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">6,796</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">4.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.6%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">6 West Arm Rd, Beauty Point, Tas 7270</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$410,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">529</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$945</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$480,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">5.0%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.4%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">1.5%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">26,131</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">55</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-tas-beauty+point-150283064" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">55</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">47</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">19.2%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.4%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">47</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">1.5%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">West Tamar Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">26,131</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$945</div></div><div class="drow"><div class="dk">Land</div><div class="dv">529</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1977</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$410,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$480,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$375,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$340,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$435</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">1,285</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">5.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Hold">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">10 Schilling St, Kadina, SA 5554</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$470,000</span>
+      </div>
+    </div>
+    <div class="st st-hold">Hold</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">702</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$664</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">9.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">5.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$517,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$490,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">5.1%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.1%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.2%</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">56</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2012</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-sa-kadina-150259588" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">56</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">33</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">29.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.1%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">62</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.2%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Copper Coast Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">16,300</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$664</div></div><div class="drow"><div class="dk">Land</div><div class="dv">702</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2012</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$470,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$517,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$465,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$490,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$450</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$450</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">9.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">2,944</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">5.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">5.0%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Hold">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">33 Stodart Street, Colac, Vic 3250</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$450,000</span>
+      </div>
+    </div>
+    <div class="st st-hold">Hold</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">675</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$660</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">5.2%</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">4.0%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.6%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">22,300</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">53</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-colac-150257336" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">53</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">21</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">31.7%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">2.7%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">70</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.6%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Colac Otway Shire</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">22,300</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$660</div></div><div class="drow"><div class="dk">Land</div><div class="dv">675</div></div><div class="drow"><div class="dk">Built</div><div class="dv">-</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$450,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">-</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">-</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$450</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">-</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">40.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">12,756</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">4.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">5.2%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const themeBtn = document.getElementById("themeBtn");
+function setTheme(t) {
+  document.body.classList.toggle("dark", t === "dark");
+  localStorage.setItem("tb_theme", t);
+}
+themeBtn.addEventListener("click", () => {
+  setTheme(document.body.classList.contains("dark") ? "light" : "dark");
+});
+setTheme(localStorage.getItem("tb_theme") || "light");
+
+// Details toggle (mobile-safe)
+function toggleDetails(btn) {
+  const item = btn.closest(".item");
+  if (!item) return;
+  const wrap = item.querySelector(".details-wrap");
+  if (!wrap) return;
+  const isOpen = !wrap.hidden;
+  wrap.hidden = isOpen;
+  btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+}
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".js-details");
+  if (!btn) return;
+  e.preventDefault();
+  toggleDetails(btn);
+}, {passive:false});
+document.addEventListener("touchstart", (e) => {
+  const btn = e.target.closest(".js-details");
+  if (!btn) return;
+  e.preventDefault();
+  toggleDetails(btn);
+}, {passive:false});
+
+// Sort: Available first (client-side safety too)
+(function sortAvailableFirst() {
+  const list = document.getElementById("list");
+  if (!list) return;
+  const items = Array.from(list.querySelectorAll(".item[data-status]"));
+  const rank = (s) => (s === "Available" ? 0 : (s === "Hold" ? 1 : 2));
+  items.sort((a,b) => {
+    const as = (a.getAttribute("data-status") || "");
+    const bs = (b.getAttribute("data-status") || "");
+    const av = rank(as);
+    const bv = rank(bs);
+    return av - bv;
+  });
+  for (const it of items) list.appendChild(it);
+})();
+</script>
+</body>
+</html>

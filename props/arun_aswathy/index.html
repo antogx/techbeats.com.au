@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Properties for Arun &amp; Aswathy</title>
+<style>
+:root {
+  --bg:#f6f8fc; --fg:#0f172a; --muted:#475569; --line:#e2e8f0;
+  --chip:#eef2ff; --ok:#16a34a; --bad:#dc2626; --blue:#1e3a8a;
+  --btnbg:#ffffff; --btnbd:#e2e8f0;
+  --hold:#f59e0b;
+}
+body.dark {
+  --bg:#0b1220; --fg:#eaf0ff; --muted:rgba(234,240,255,.75); --line:rgba(234,240,255,.16);
+  --chip:rgba(45,212,191,.12); --ok:#22c55e; --bad:#ef4444; --blue:#93c5fd;
+  --btnbg:rgba(234,240,255,.10); --btnbd:rgba(234,240,255,.18);
+  --hold:#fbbf24;
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
+.wrap{max-width:1100px;margin:0 auto;padding:12px}
+
+header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  background:var(--btnbg);
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:12px;
+}
+.lefthead{min-width:0}
+h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
+.right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
+.logo{width:140px;height:auto;max-width:45vw;display:block}
+@media(max-width:520px){ .logo{width:120px;max-width:52vw} }
+
+.tbtn{
+  width:40px;height:40px;border-radius:12px;
+  border:1px solid var(--btnbd);
+  background:var(--btnbg);
+  color:var(--fg);
+  cursor:pointer;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+}
+.tico{width:18px;height:18px}
+/* show sun in light, moon in dark */
+.moon{display:none}
+body.dark .moon{display:block}
+body.dark .sun{display:none}
+
+.item{padding:10px 2px}
+.top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.ap{display:flex;flex-direction:column;gap:4px;min-width:0}
+.addr{font-size:16px;font-weight:950;line-height:1.25;word-break:break-word}
+.rowline{display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+.bb{font-size:16px;font-weight:950;line-height:1.25}
+.price{font-size:16px;font-weight:950;line-height:1.25;color:var(--blue)}
+.sep{opacity:.55;font-weight:900}
+
+.st{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:950;border:1px solid var(--line);white-space:nowrap;flex:0 0 auto}
+.st-ok{background:rgba(34,197,94,.12);border-color:rgba(34,197,94,.30);color:var(--ok)}
+.st-bad{background:rgba(239,68,68,.12);border-color:rgba(239,68,68,.30);color:var(--bad)}
+.st-hold{background:rgba(245,158,11,.14);border-color:rgba(245,158,11,.34);color:var(--hold)}
+
+.quick{margin-top:6px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.q{background:var(--chip);border:1px solid var(--line);border-radius:8px;padding:4px 7px;font-size:12px;font-weight:850}
+.qk{color:#000}
+body.dark .qk{color:var(--fg)}
+.qv{color:var(--ok)}
+.muted{color:var(--muted);font-weight:800;font-size:12px}
+
+.actions{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;position:relative;z-index:5}
+.btn{
+  min-height:46px;
+  padding:10px 14px;
+  border-radius:14px;
+  border:1px solid var(--btnbd);
+  background:var(--btnbg);
+  color:var(--fg);
+  font-weight:950;
+  font-size:15px;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  text-decoration:none;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+}
+.ico{width:18px;height:18px;flex:0 0 18px}
+.btn-list{color:var(--fg)}
+.btn-det{color:var(--blue)}
+
+.details-wrap{margin-top:10px}
+.details{display:grid;gap:8px}
+.drow{background:var(--btnbg);border:1px solid var(--line);border-radius:10px;padding:8px 10px;display:flex;gap:10px;align-items:flex-start}
+.dk{flex:0 0 46%;color:var(--muted);font-weight:950;font-size:13px;text-align:left}
+.dv{flex:1 1 auto;color:var(--fg);font-weight:900;font-size:14px;text-align:left;word-break:break-word}
+@media(min-width:900px){.details{grid-template-columns:1fr 1fr}}
+
+.divider{margin-top:12px;border-top:2px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="lefthead">
+    <h1>Properties for Arun &amp; Aswathy</h1>
+  </div>
+  <div class="right">
+    <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme">
+<svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path class="sun" d="M12 18a6 6 0 1 0 0-12a6 6 0 0 0 0 12Z" fill="none" stroke="currentColor" stroke-width="2"/>
+  <path class="sun" d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path class="moon" d="M21 12.6A7.5 7.5 0 0 1 11.4 3A6.8 6.8 0 1 0 21 12.6Z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+</svg>
+</button>
+    
+  </div>
+</header>
+
+<div id="list">
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">8 Ryan Avenue, Mount Gambier, SA 5290</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$589,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">1,000</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$634</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">2.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$639,000</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.6%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.7%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">28,000</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">58</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">1998</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-sa-mount+gambier-150262500" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">58</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">25</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">34.7%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.6%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">72</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.7%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">City of Mount Gambier</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">28,000</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$634</div></div><div class="drow"><div class="dk">Land</div><div class="dv">1,000</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1998</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$589,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$639,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$550,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$550,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$495</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$446</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">2.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">26,878</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.4%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">1 Leishman Street, Wangaratta, Vic 3677</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$545,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">719</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$932</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$550,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$614,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">6.0%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.4%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.3%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">30,169</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">57</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-wangaratta-150280680" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">57</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">22</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">30.3%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.4%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">72</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.3%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Rural City of Wangaratta</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">30,169</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$932</div></div><div class="drow"><div class="dk">Land</div><div class="dv">719</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1970</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$545,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$614,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$550,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$530,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$491</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">29,808</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">6.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">24 Callistemon Avenue, Yarrawonga, Vic 3730</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 2 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$589,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,183</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">4.6%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$806,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$780,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">9.0%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">1.4%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">30,522</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">51</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2025</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-yarrawonga-150283816" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">51</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">8</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">24.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">6.0%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">64</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">1.4%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">2</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">Yes</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Shire of Moira</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">30,522</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,183</div></div><div class="drow"><div class="dk">Land</div><div class="dv">448</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2025</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$589,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$806,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$560,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$780,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$520</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">-</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">-</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">8,661</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">9.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.6%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">121 Alma Avenue, Laverton, Vic 3028</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$570,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">584</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">1</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,062</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$590,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$652,000</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">91,322</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-laverton-150269292" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">—</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">—</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">—</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">—</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">—</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">—</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">1</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">City of Hobsons Bay</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">91,322</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,062</div></div><div class="drow"><div class="dk">Land</div><div class="dv">584</div></div><div class="drow"><div class="dk">Built</div><div class="dv">-</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$570,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$652,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$590,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$520,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$460</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">4,760</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">-3.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">15 Greenacre Street, Upper Burnie, Tas 7320</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$560,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">730</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$762</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">13.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$624,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">4.0%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.4%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">62</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-tas-upper+burnie-150279780" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">62</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">45</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">40.8%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.4%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">37</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Burnie City Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">19,918</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$762</div></div><div class="drow"><div class="dk">Land</div><div class="dv">730</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1987</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$560,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$624,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$555,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$530,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$446</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">13.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">1,891</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">4.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">189 Morgan Street, Sebastopol, Vic 3356</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 3 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$570,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$664</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">3.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$573,000</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.8%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.5%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">118,000</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">57</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2025</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-sebastopol-150195788" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">57</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">53</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">42.2%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.8%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">72</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.5%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">3</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">Yes</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">City of Ballarat</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">118,000</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$664</div></div><div class="drow"><div class="dk">Land</div><div class="dv">364</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2025</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$570,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$573,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$550,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$490,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$449</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">3.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">10,194</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">1.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">37 Cromarty Circuit, Darley, Vic 3340</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 2 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$610,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Suburb Category:</span> <span class="qv">1</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$735</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$616,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">9.1%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">1.6%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">39,814</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">55</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2017</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-darley-150177892" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">55</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">26</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">17.5%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">2.6%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">74</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">1.6%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">2</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">1</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">Yes</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Shire of Moorabool</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">39,814</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$735</div></div><div class="drow"><div class="dk">Land</div><div class="dv">410</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2017</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$610,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$616,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$580,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$610,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$514</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">9,190</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">9.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Available">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">8 Weigall Avenue, Murray Bridge, SA 5253</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$600,000</span>
+      </div>
+    </div>
+    <div class="st st-ok">Available</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">1,114</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,378</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">6.0%</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">10.4%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.8%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.8%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">23,257</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">51</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-sa-murray+bridge-150255088" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">51</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">26</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">42.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.8%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">72</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.8%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Rural City of Murray Bridge</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">23,257</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,378</div></div><div class="drow"><div class="dk">Land</div><div class="dv">1,114</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1976</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$600,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$584,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$595,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$480</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$511</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">6.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">17,457</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">10.4%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.2%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Hold">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">15 Sutherland Ave, Hayborough, SA 5211</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$610,000</span>
+      </div>
+    </div>
+    <div class="st st-hold">Hold</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">823</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$540</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">4.0%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$745,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$1,030,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$770,000</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.1%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.8%</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">56</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-sa-hayborough-150277168" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">56</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">44</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">23.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.1%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">51</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.8%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">Yes</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">City of Victor Harbor</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">16,139</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$540</div></div><div class="drow"><div class="dk">Land</div><div class="dv">823</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1977</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$610,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$1,030,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$745,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$770,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$500</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">-</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">4.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">2,243</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">-0.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.3%</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+<div class="item" data-status="Hold">
+  <div class="top">
+    <div class="ap">
+      <div class="addr">11 Pendennis Street, Riverside, Tas 7250</div>
+      <div class="rowline">
+        <span class="bb">3 bed • 1 bath</span>
+        <span class="sep">•</span>
+        <span class="price">$545,000</span>
+      </div>
+    </div>
+    <div class="st st-hold">Hold</div>
+  </div>
+
+  <div class="quick">
+    <span class="q"><span class="qk">Land:</span> <span class="qv">664</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$646</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$585,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$797,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$890,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">13.0%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.7%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.2%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">26,131</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">59</span></span>
+  </div>
+
+  <div class="actions">
+    <a class="btn btn-list" href="https://www.realestate.com.au/property-house-tas-riverside-150250588" target="_blank" rel="noopener">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Listing</span></a>
+    <button class="btn btn-det js-details" type="button" aria-expanded="false">
+<svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+  <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+</svg>
+<span>Details</span></button>
+  </div>
+
+  <div class="details-wrap" hidden>
+    <div class="details">
+      <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">59</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">65</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">25.5%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.7%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">68</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.2%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">West Tamar Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">26,131</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$646</div></div><div class="drow"><div class="dk">Land</div><div class="dv">664</div></div><div class="drow"><div class="dk">Built</div><div class="dv">-</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$545,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$797,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$585,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$890,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$658</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">7,326</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">13.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
+    </div>
+  </div>
+
+  <div class="divider" aria-hidden="true"></div>
+</div>
+
+</div>
+
+</div>
+
+<script>
+const themeBtn = document.getElementById("themeBtn");
+function setTheme(t) {
+  document.body.classList.toggle("dark", t === "dark");
+  localStorage.setItem("tb_theme", t);
+}
+themeBtn.addEventListener("click", () => {
+  setTheme(document.body.classList.contains("dark") ? "light" : "dark");
+});
+setTheme(localStorage.getItem("tb_theme") || "light");
+
+// Details toggle (mobile-safe)
+function toggleDetails(btn) {
+  const item = btn.closest(".item");
+  if (!item) return;
+  const wrap = item.querySelector(".details-wrap");
+  if (!wrap) return;
+  const isOpen = !wrap.hidden;
+  wrap.hidden = isOpen;
+  btn.setAttribute("aria-expanded", isOpen ? "false" : "true");
+}
+document.addEventListener("click", (e) => {
+  const btn = e.target.closest(".js-details");
+  if (!btn) return;
+  e.preventDefault();
+  toggleDetails(btn);
+}, {passive:false});
+document.addEventListener("touchstart", (e) => {
+  const btn = e.target.closest(".js-details");
+  if (!btn) return;
+  e.preventDefault();
+  toggleDetails(btn);
+}, {passive:false});
+
+// Sort: Available first (client-side safety too)
+(function sortAvailableFirst() {
+  const list = document.getElementById("list");
+  if (!list) return;
+  const items = Array.from(list.querySelectorAll(".item[data-status]"));
+  const rank = (s) => (s === "Available" ? 0 : (s === "Hold" ? 1 : 2));
+  items.sort((a,b) => {
+    const as = (a.getAttribute("data-status") || "");
+    const bs = (b.getAttribute("data-status") || "");
+    const av = rank(as);
+    const bv = rank(bs);
+    return av - bv;
+  });
+  for (const it of items) list.appendChild(it);
+})();
+</script>
+</body>
+</html>
