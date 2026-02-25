@@ -122,7 +122,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Shayan Datta</h1>
-    <div class="sub">Updated: 2026-02-26 01:36</div>
+    <div class="sub">Updated: 2026-02-26 01:46</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -428,7 +428,7 @@ document.addEventListener("touchstart", (e) => {
           accBtn.classList.add("btn-dis");
           const note = card.querySelector(".hold-note") || el("div", { class: "hold-note" });
           const who = (heldByName && heldByName.trim()) ? heldByName : (st.holdBy || "");
-          note.textContent = "Held by " + who;
+          note.textContent = "Held by another buyer";
           if (!card.querySelector(".hold-note")) card.appendChild(note);
         }
       } catch (e) {
