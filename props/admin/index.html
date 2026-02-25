@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Properties</title>
+<title>Admin</title>
 <style>
 :root {
   --bg:#f6f8fc; --fg:#0f172a; --muted:#475569; --line:#e2e8f0;
@@ -115,7 +115,7 @@ body.dark .qk{color:var(--fg)}
 <div class="wrap">
 <header>
   <div class="lefthead">
-    <h1>Properties</h1>
+    <h1>Admin</h1>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme">
@@ -129,6 +129,11 @@ body.dark .qk{color:var(--fg)}
   </div>
 </header>
 
+
+<div class="item">
+  <div class="addr">Admin — Latest Activity</div>
+  <div id="adminFeed" class="details" style="margin-top:10px"></div>
+</div>
 
 
 <div id="list">
@@ -554,9 +559,9 @@ document.addEventListener("touchstart", (e) => {
   const db = getFirestore(app);
 
   // injected by Python
-  const BUYER_ID = "";
-  const BUYER_NAME = "";
-  const IS_ADMIN = false;
+  const BUYER_ID = "admin";
+  const BUYER_NAME = "Admin";
+  const IS_ADMIN = true;
 
   function el(tag, attrs={}, html="") {
     const e = document.createElement(tag);
