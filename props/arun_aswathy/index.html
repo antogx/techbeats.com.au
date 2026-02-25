@@ -122,7 +122,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Arun &amp; Aswathy</h1>
-    <div class="sub">Updated: 2026-02-26 01:46</div>
+    <div class="sub">Updated: 2026-02-26 01:58</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -329,22 +329,28 @@ document.addEventListener("touchstart", (e) => {
     const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
     for (const card of cards) {
       const accBtn = card.querySelector(".js-acc");
-      if (!accBtn) continue;
+      const note = card.querySelector(".hold-note");
+      if (!accBtn || !note) continue;
+
+      note.hidden = true;
+      note.textContent = "";
+      accBtn.classList.remove("btn-dis");
 
       const propId = card.getAttribute("data-prop") || "";
+      if (!propId) continue;
 
       try {
         const snap = await getDoc(doc(db, "property_states", propId));
-        if (!snap.exists()) continue;
-        const st = snap.data() || {};
-        const heldByName = normBuyerName(st.holdByName || st.holdBy || "");
+       if (!snap.exists()) continue;
 
-        if (st.status === "Hold" && st.holdBy && st.holdBy !== BUYER_ID) {
+        const st = snap.data() || {};
+        const heldBy = (st.holdBy || "").toString().trim();
+
+        if (st.status === "Hold" && heldBy && heldBy !== BUYER_ID) {
+          const heldByName = normBuyerName(st.holdByName || heldBy);
           accBtn.classList.add("btn-dis");
-          const note = card.querySelector(".hold-note") || el("div", { class: "hold-note" });
-          const who = (heldByName && heldByName.trim()) ? heldByName : (st.holdBy || "");
-          note.textContent = "Held by another buyer";
-          if (!card.querySelector(".hold-note")) card.appendChild(note);
+          note.textContent = "Held by " + (heldByName || heldBy);
+          note.hidden = false;
         }
       } catch (e) {
         console.error(e);
