@@ -103,7 +103,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Admin</h1>
-    <div class="sub">Updated: 2026-02-26 01:10</div>
+    <div class="sub">Updated: 2026-02-26 01:15</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme">
@@ -538,7 +538,7 @@ document.addEventListener("touchstart", (e) => {
 
   const BUYER_NAME = normBuyerName(BUYER_NAME_RAW);
 
-  // ==================== NEW: UNDO REJECT ====================
+  // ==================== UNDO REJECT FEATURE ====================
   async function undoReject(buyerId, propId) {
     if (!confirm("Remove this REJECT tag?\nThe property will become visible again for the buyer.")) return;
     try {
@@ -551,7 +551,7 @@ document.addEventListener("touchstart", (e) => {
     }
   }
   window.undoReject = undoReject;
-  // =======================================================
+  // ============================================================
 
   function el(tag, attrs = {}, html = "") {
     const e = document.createElement(tag);
