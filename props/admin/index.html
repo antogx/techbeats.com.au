@@ -122,7 +122,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Admin</h1>
-    <div class="sub">Updated: 2026-02-26 02:04</div>
+    <div class="sub">Updated: 2026-02-26 02:08</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -700,10 +700,8 @@ document.addEventListener("touchstart", (e) => {
         const heldBy = (st.holdBy || "").toString().trim();
 
         if (st.status === "Hold" && heldBy && heldBy !== BUYER_ID) {
-          const heldByName = normBuyerName(st.holdByName || heldBy);
-          accBtn.classList.add("btn-dis");
-          note.textContent = "Held by " + (heldByName || heldBy);
-          note.hidden = false;
+        accBtn.classList.add("btn-dis");
+        note.textContent = "Held by another buyer";
         }
       } catch (e) {
         console.error(e);
