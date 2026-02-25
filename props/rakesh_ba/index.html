@@ -72,6 +72,12 @@ body.dark .qk{color:var(--fg)}
 .qv{color:var(--ok)}
 .muted{color:var(--muted);font-weight:800;font-size:12px}
 
+.decisions{margin-top:10px;background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:10px}
+.dec-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn-acc{border-color:rgba(34,197,94,.30)}
+.btn-rej{border-color:rgba(239,68,68,.30)}
+.dec-comment{width:100%;margin-top:8px;border-radius:10px;border:1px solid var(--btnbd);padding:10px;font-weight:700;background:var(--btnbg);color:var(--fg)}
+
 .actions{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;position:relative;z-index:5}
 .btn{
   min-height:46px;
@@ -178,6 +184,70 @@ document.addEventListener("touchstart", (e) => {
   });
   for (const it of items) list.appendChild(it);
 })();
+</script>
+<script type="module">
+  // Import Firebase (browser version)
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import { getFirestore, doc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+  // Your Firebase config (from Console)
+  const firebaseConfig = {
+    apiKey: "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk",
+    authDomain: "techbeatsrealty.firebaseapp.com",
+    projectId: "techbeatsrealty",
+    storageBucket: "techbeatsrealty.firebasestorage.app",
+    messagingSenderId: "11824236488",
+    appId: "1:11824236488:web:8c9d56501f191566a222fd",
+    measurementId: "G-HLN70BQKFJ"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Create stable property ID
+  function propIdFromAddress(addr) {
+    return btoa(unescape(encodeURIComponent(addr))).replaceAll("=", "").slice(0, 80);
+  }
+
+  async function saveDecision(root, status) {
+    const buyerId = root.getAttribute("data-buyer");
+    const addr = root.getAttribute("data-prop") || "";
+    const propId = propIdFromAddress(addr);
+    const comment = (root.querySelector(".dec-comment")?.value || "").trim();
+    const msg = root.querySelector(".dec-msg");
+
+    try {
+      await setDoc(
+        doc(db, "buyer_decisions", buyerId, "props", propId),
+        {
+          buyerId: buyerId,
+          address: addr,
+          status: status,
+          comment: comment,
+          updatedAt: serverTimestamp()
+        },
+        { merge: true }
+      );
+
+      if (msg) msg.textContent = "Saved ✅";
+    } catch (e) {
+      if (msg) msg.textContent = "Save failed ❌";
+      console.error(e);
+    }
+  }
+
+  // Button click handler
+  document.addEventListener("click", (e) => {
+    const acc = e.target.closest(".js-acc");
+    const rej = e.target.closest(".js-rej");
+    if (!acc && !rej) return;
+
+    const root = e.target.closest(".decisions");
+    if (!root) return;
+
+    saveDecision(root, acc ? "ACCEPT" : "REJECT");
+  });
 </script>
 </body>
 </html>
