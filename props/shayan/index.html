@@ -11,19 +11,6 @@
   --btnbg:#ffffff; --btnbd:#e2e8f0;
   --hold:#f59e0b;
 }
-.btn-acc{border-color:rgba(34,197,94,.30)}
-.btn-rej{border-color:rgba(239,68,68,.30)}
-.btn-cmt{border-color:rgba(59,130,246,.30)}
-.btn-dis{opacity:.55;pointer-events:none}
-.hold-note{margin-top:8px;font-weight:900;font-size:12px;color:var(--hold)}
-.list-hidden { opacity: 0; }
-.admin-tabs{display:flex;gap:8px;flex-wrap:wrap}
-.atab{padding:8px 10px;border-radius:999px;border:1px solid var(--line);background:var(--btnbg);font-weight:900;cursor:pointer}
-.atab.active{border-color:rgba(59,130,246,.45)}
-.smallbtn{min-height:36px;padding:7px 10px;border-radius:12px;font-size:13px}
-.btn-dis{opacity:.55;pointer-events:none}
-.hold-note{margin-top:8px;font-weight:900;font-size:12px;color:var(--hold)}
-
 body.dark {
   --bg:#0b1220; --fg:#eaf0ff; --muted:rgba(234,240,255,.75); --line:rgba(234,240,255,.16);
   --chip:rgba(45,212,191,.12); --ok:#22c55e; --bad:#ef4444; --blue:#93c5fd;
@@ -136,12 +123,9 @@ body.dark .qk{color:var(--fg)}
   </div>
 </header>
 
+<div id="list">
 
-
-<div id="list" class="list-hidden">
-
-<div class="item" data-status="Available" data-prop="OTIgTGFrZSBUZXJyYWNlIEVhc3QsIE1vdW50IEdhbWJpZXIsIFNBIDUyOTA" data-addr="92 Lake Terrace East, Mount Gambier, SA 5290">
-  <div class="top">
+<div class="item" data-status="Available">
   <div class="top">
     <div class="ap">
       <div class="addr">92 Lake Terrace East, Mount Gambier, SA 5290</div>
@@ -166,20 +150,12 @@ body.dark .qk{color:var(--fg)}
 </svg>
 <span>Listing</span></a>
     <button class="btn btn-det js-details" type="button" aria-expanded="false">
-      
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
   <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
-<span>Details</span>
-    </button>
-    
-            <button class="btn btn-acc js-acc" type="button" data-prop="OTIgTGFrZSBUZXJyYWNlIEVhc3QsIE1vdW50IEdhbWJpZXIsIFNBIDUyOTA" data-addr="92 Lake Terrace East, Mount Gambier, SA 5290">✅ Accept</button>
-            <button class="btn btn-rej js-rej" type="button" data-prop="OTIgTGFrZSBUZXJyYWNlIEVhc3QsIE1vdW50IEdhbWJpZXIsIFNBIDUyOTA" data-addr="92 Lake Terrace East, Mount Gambier, SA 5290">❌ Reject</button>
-            <button class="btn btn-cmt js-cmt" type="button" data-prop="OTIgTGFrZSBUZXJyYWNlIEVhc3QsIE1vdW50IEdhbWJpZXIsIFNBIDUyOTA" data-addr="92 Lake Terrace East, Mount Gambier, SA 5290">💬 Comment</button>
-            
+<span>Details</span></button>
   </div>
-
 
   <div class="details-wrap" hidden>
     <div class="details">
@@ -190,8 +166,7 @@ body.dark .qk{color:var(--fg)}
   <div class="divider" aria-hidden="true"></div>
 </div>
 
-<div class="item" data-status="Available" data-prop="OCBXYXR0bGUgU3RyZWV0LCBXaW5maWVsZCwgUWxkIDQ2NzA" data-addr="8 Wattle Street, Winfield, Qld 4670">
-  <div class="top">
+<div class="item" data-status="Available">
   <div class="top">
     <div class="ap">
       <div class="addr">8 Wattle Street, Winfield, Qld 4670</div>
@@ -216,20 +191,12 @@ body.dark .qk{color:var(--fg)}
 </svg>
 <span>Listing</span></a>
     <button class="btn btn-det js-details" type="button" aria-expanded="false">
-      
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
   <path d="M10 13a5 5 0 0 1 0-7l.7-.7a5 5 0 0 1 7.1 7.1l-.7.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
   <path d="M14 11a5 5 0 0 1 0 7l-.7.7a5 5 0 0 1-7.1-7.1l.7-.7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
-<span>Details</span>
-    </button>
-    
-            <button class="btn btn-acc js-acc" type="button" data-prop="OCBXYXR0bGUgU3RyZWV0LCBXaW5maWVsZCwgUWxkIDQ2NzA" data-addr="8 Wattle Street, Winfield, Qld 4670">✅ Accept</button>
-            <button class="btn btn-rej js-rej" type="button" data-prop="OCBXYXR0bGUgU3RyZWV0LCBXaW5maWVsZCwgUWxkIDQ2NzA" data-addr="8 Wattle Street, Winfield, Qld 4670">❌ Reject</button>
-            <button class="btn btn-cmt js-cmt" type="button" data-prop="OCBXYXR0bGUgU3RyZWV0LCBXaW5maWVsZCwgUWxkIDQ2NzA" data-addr="8 Wattle Street, Winfield, Qld 4670">💬 Comment</button>
-            
+<span>Details</span></button>
   </div>
-
 
   <div class="details-wrap" hidden>
     <div class="details">
@@ -294,327 +261,5 @@ document.addEventListener("touchstart", (e) => {
   for (const it of items) list.appendChild(it);
 })();
 </script>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-  import {
-    getFirestore,
-    doc, setDoc, getDoc, deleteDoc,
-    collection, addDoc, query, orderBy, limit, getDocs,
-    serverTimestamp, runTransaction
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk",
-    authDomain: "techbeatsrealty.firebaseapp.com",
-    projectId: "techbeatsrealty",
-    storageBucket: "techbeatsrealty.firebasestorage.app",
-    messagingSenderId: "11824236488",
-    appId: "1:11824236488:web:8c9d56501f191566a222fd",
-    measurementId: "G-HLN70BQKFJ"
-  };
-
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  // injected by Python
-  const BUYER_ID = "shayan";
-  const BUYER_NAME = "Shayan Datta";
-  const IS_ADMIN = false;
-
-  function el(tag, attrs = {}, html = "") {
-    const e = document.createElement(tag);
-    for (const [k, v] of Object.entries(attrs)) e.setAttribute(k, v);
-    e.innerHTML = html;
-    return e;
-  }
-
-  async function writeEvent(type, propId, address, comment = "") {
-    await addDoc(collection(db, "events"), {
-      type,
-      propId,
-      address,
-      buyerId: BUYER_ID || "unknown",
-      buyerName: BUYER_NAME || BUYER_ID || "unknown",
-      comment,
-      createdAt: serverTimestamp()
-    });
-  }
-
-  async function saveBuyerDecision(buyerId, propId, address, status, comment = "") {
-    await setDoc(
-      doc(db, "buyer_decisions", buyerId, "props", propId),
-      {
-        buyerId,
-        propId,
-        address,
-        status,
-        comment,
-        updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
-  }
-
-  async function acceptHold(propId, address) {
-    if (!BUYER_ID) return false;
-
-    const ref = doc(db, "property_status", propId);
-    let ok = false;
-
-    await runTransaction(db, async (transaction) => {
-      const snap = await transaction.get(ref);
-
-      if (snap.exists()) {
-        const data = snap.data() || {};
-        if ((data.status || "") === "HOLD") {
-          ok = false;
-          return;
-        }
-      }
-
-      transaction.set(ref, {
-        status: "HOLD",
-        buyerId: BUYER_ID,
-        buyerName: BUYER_NAME,
-        updatedAt: serverTimestamp()
-      });
-
-      ok = true;
-    });
-
-    if (ok) {
-      await writeEvent("ACCEPT", propId, address, "");
-      await saveBuyerDecision(BUYER_ID, propId, address, "ACCEPT", "");
-    }
-
-    return ok;
-  }
-
-  async function reject(propId, address) {
-    await writeEvent("REJECT", propId, address, "");
-    await saveBuyerDecision(BUYER_ID, propId, address, "REJECT", "");
-  }
-
-  async function comment(propId, address) {
-    const text = prompt("Comment for admin feed:");
-    if (!text) return;
-    const msg = text.trim();
-    if (!msg) return;
-
-    await writeEvent("COMMENT", propId, address, msg);
-    await saveBuyerDecision(BUYER_ID, propId, address, "COMMENT", msg);
-  }
-
-  async function refreshHoldBadges() {
-    if (!BUYER_ID || IS_ADMIN) return;
-
-    const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
-    for (const card of cards) {
-      const accBtn = card.querySelector(".js-acc");
-      if (!accBtn) continue;
-
-      const propId = card.getAttribute("data-prop") || "";
-      const addr = card.getAttribute("data-addr") || "";
-
-      try {
-        const snap = await getDoc(doc(db, "property_states", propId));
-        if (!snap.exists()) continue;
-        const st = snap.data() || {};
-
-        if (st.status === "Hold" && st.holdBy && st.holdBy !== BUYER_ID) {
-          accBtn.classList.add("btn-dis");
-          const note = card.querySelector(".hold-note") || el("div", { class: "hold-note" });
-          note.textContent = `Held by ${st.holdByName || st.holdBy}`;
-          if (!card.querySelector(".hold-note")) card.appendChild(note);
-        }
-      } catch (e) {
-        console.error(e);
-      }
-    }
-  }
-
-  async function hideRejectedForBuyer() {
-    const list = document.getElementById("list");
-
-    // If admin or no buyer, just show list
-    if (!BUYER_ID || IS_ADMIN) {
-      if (list) list.classList.remove("list-hidden");
-      return;
-    }
-
-    try {
-      const snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
-      const rejected = new Set();
-
-      snaps.forEach((docSnap) => {
-        const x = docSnap.data() || {};
-        if ((x.status || "") === "REJECT") {
-          // doc id IS the propId (since you save with doc(..., propId))
-          rejected.add(docSnap.id);
-        }
-      });
-
-      document.querySelectorAll('.item[data-prop]').forEach((card) => {
-        const pid = card.getAttribute("data-prop") || "";
-        if (pid && rejected.has(pid)) {
-          card.remove();
-        }
-      });
-    } catch (e) {
-      console.error(e);
-    } finally {
-      if (list) list.classList.remove("list-hidden");
-    }
-  }
-
-  async function loadAdminUI() {
-    const tabs = document.getElementById("adminUsers");
-    const panel = document.getElementById("adminPanel");
-    const whoBox = document.getElementById("adminWho");
-    if (!tabs || !panel) return;
-
-    const qEv = query(collection(db, "events"), orderBy("createdAt", "desc"), limit(300));
-    const ev = await getDocs(qEv);
-
-    const seen = new Set();
-    const buyers = [];
-
-    ev.forEach((d) => {
-      const x = d.data() || {};
-      const id = x.buyerId || "unknown";
-      const name = x.buyerName || id;
-      if (id !== "admin" && !seen.has(id)) {
-        seen.add(id);
-        buyers.push({ id, name });
-      }
-    });
-
-    function renderTabs(activeId) {
-      tabs.innerHTML = buyers.map((b) =>
-        `<button class="atab ${b.id === activeId ? "active" : ""}" data-bid="${b.id}" type="button">${b.name}</button>`
-      ).join("") || `<div class="muted">No activity yet.</div>`;
-    }
-
-    async function renderBuyer(bid) {
-      const buyer = buyers.find((x) => x.id === bid);
-      if (whoBox) whoBox.textContent = buyer ? buyer.name : bid;
-
-      const snaps = await getDocs(collection(db, "buyer_decisions", bid, "props"));
-
-      const rows = [];
-      snaps.forEach((d) => {
-        const x = d.data() || {};
-        const st = x.status || "";
-        const addr = x.address || "";
-        const c = x.comment || "";
-        const pid = x.propId || "";
-
-        rows.push(`
-          <div class="drow">
-            <div class="dk">${st}</div>
-            <div class="dv">
-              <div><b>${addr}</b></div>
-              ${c ? `<div style="margin-top:6px;opacity:.85">💬 ${c}</div>` : ""}
-              ${st === "REJECT" && pid ? `
-                <div style="margin-top:8px">
-                  <button class="btn smallbtn js-clear-rej" data-bid="${bid}" data-prop="${pid}" type="button">
-                    Remove Reject
-                  </button>
-                </div>
-              ` : ""}
-            </div>
-          </div>
-        `);
-      });
-
-      panel.innerHTML = rows.join("") || `<div class="muted">No decisions for this buyer.</div>`;
-    }
-
-    const first = buyers[0]?.id || "";
-    renderTabs(first);
-    if (first) await renderBuyer(first);
-
-    tabs.addEventListener("click", async (e) => {
-      const btn = e.target.closest(".atab");
-      if (!btn) return;
-      const bid = btn.getAttribute("data-bid") || "";
-      renderTabs(bid);
-      await renderBuyer(bid);
-    });
-
-    document.addEventListener("click", async (e) => {
-      const b = e.target.closest(".js-clear-rej");
-      if (!b) return;
-
-      const bid = b.getAttribute("data-bid") || "";
-      const pid = b.getAttribute("data-prop") || "";
-      if (!bid || !pid) return;
-
-      await deleteDoc(doc(db, "buyer_decisions", bid, "props", pid));
-      alert("Reject removed. Buyer will see it again after refresh.");
-      await renderBuyer(bid);
-    });
-  }
-
-  document.addEventListener("click", async (e) => {
-    try {
-      const a = e.target.closest(".js-acc");
-      const r = e.target.closest(".js-rej");
-      const c = e.target.closest(".js-cmt");
-
-      if (a) {
-        const card = a.closest(".item");
-        const propId = card?.getAttribute("data-prop") || a.getAttribute("data-prop") || "";
-        const addr = card?.getAttribute("data-addr") || a.getAttribute("data-addr") || "";
-
-        const ok = await acceptHold(propId, addr);
-        if (!ok) {
-          alert("Already held by another buyer.");
-        } else {
-          alert("Accepted ✅ (saved)");
-        }
-        await refreshHoldBadges();
-        return;
-      }
-
-      if (r) {
-        const card = r.closest(".item");
-        const propId = card?.getAttribute("data-prop") || r.getAttribute("data-prop") || "";
-        const addr = card?.getAttribute("data-addr") || r.getAttribute("data-addr") || "";
-
-        await reject(propId, addr);
-        alert("Rejected ❌ (saved)");
-        // remove from page immediately
-        if (card) card.remove();
-        return;
-      }
-
-      if (c) {
-        const card = c.closest(".item");
-        const propId = card?.getAttribute("data-prop") || c.getAttribute("data-prop") || "";
-        const addr = card?.getAttribute("data-addr") || c.getAttribute("data-addr") || "";
-
-        await comment(propId, addr);
-        alert("Comment saved 💬");
-        return;
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Firebase save failed: " + (err?.message || err));
-    }
-  });
-
-  // init
-  (async () => {
-    if (IS_ADMIN) {
-      await loadAdminUI();
-    } else {
-      await hideRejectedForBuyer();
-      await refreshHoldBadges();
-    }
-  })();
-</script>
-
 </body>
 </html>
