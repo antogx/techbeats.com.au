@@ -421,33 +421,39 @@ document.addEventListener("touchstart", (e) => {
   }
 
   document.addEventListener("click", async (e) => {
-    const a = e.target.closest(".js-acc");
-    const r = e.target.closest(".js-rej");
-    const c = e.target.closest(".js-cmt");
+    try {
+      const a = e.target.closest(".js-acc");
+      const r = e.target.closest(".js-rej");
+      const c = e.target.closest(".js-cmt");
 
-    if (a) {
-      const propId = a.getAttribute("data-prop");
-      const addr = a.getAttribute("data-addr") || "";
-      const ok = await acceptHold(propId, addr);
-      if (!ok) alert("Already held by another buyer.");
-      await refreshHoldBadges();
-      return;
-    }
+      if (a) {
+        const propId = a.getAttribute("data-prop");
+        const addr = a.getAttribute("data-addr") || "";
+        const ok = await acceptHold(propId, addr);
+        if (!ok) alert("Already held by another buyer.");
+        await refreshHoldBadges();
+        return;
+      }
 
-    if (r) {
-      const propId = r.getAttribute("data-prop");
-      const addr = r.getAttribute("data-addr") || "";
-      await reject(propId, addr);
-      alert("Rejected (saved).");
-      return;
-    }
+      if (r) {
+        const propId = r.getAttribute("data-prop");
+        const addr = r.getAttribute("data-addr") || "";
+        await reject(propId, addr);
+        alert("Rejected (saved).");
+        return;
+      }
 
-    if (c) {
-      const propId = c.getAttribute("data-prop");
-      const addr = c.getAttribute("data-addr") || "";
-      await comment(propId, addr);
-      alert("Comment saved to admin feed.");
-      return;
+      if (c) {
+        const propId = c.getAttribute("data-prop");
+        const addr = c.getAttribute("data-addr") || "";
+        await comment(propId, addr);
+        alert("Comment saved to admin feed.");
+        return;
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Firebase save failed. Open DevTools Console for details.");
     }
   });
 
