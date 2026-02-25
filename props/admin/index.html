@@ -19,23 +19,15 @@ body.dark {
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
 .wrap{max-width:1100px;margin:0 auto;padding:12px}
 
-header{
-  display:flex; justify-content:space-between; align-items:center; gap:10px;
-  background:var(--btnbg); border:1px solid var(--line);
-  border-radius:12px; padding:12px;
-}
+header{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:12px}
 .lefthead{min-width:0}
 h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
 .sub{margin-top:6px;font-size:12px;color:var(--muted);font-weight:800}
 .right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
 .logo{width:140px;height:auto;max-width:45vw;display:block}
-@media(max-width:520px){ .logo{width:120px;max-width:52vw} }
+@media(max-width:520px){.logo{width:120px;max-width:52vw}}
 
-.tbtn{
-  width:40px;height:40px;border-radius:12px;
-  border:1px solid var(--btnbd); background:var(--btnbg); color:var(--fg);
-  cursor:pointer; flex:0 0 auto; display:flex; align-items:center; justify-content:center;
-}
+.tbtn{width:40px;height:40px;border-radius:12px;border:1px solid var(--btnbd);background:var(--btnbg);color:var(--fg);cursor:pointer;flex:0 0 auto;display:flex;align-items:center;justify-content:center}
 .tico{width:18px;height:18px}
 .moon{display:none}
 body.dark .moon{display:block}
@@ -63,14 +55,7 @@ body.dark .qk{color:var(--fg)}
 .muted{color:var(--muted);font-weight:800;font-size:12px}
 
 .actions{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;position:relative;z-index:5}
-.btn{
-  min-height:46px; padding:10px 14px; border-radius:14px;
-  border:1px solid var(--btnbd); background:var(--btnbg); color:var(--fg);
-  font-weight:950; font-size:15px; cursor:pointer;
-  display:inline-flex; align-items:center; gap:10px;
-  text-decoration:none; user-select:none;
-  -webkit-tap-highlight-color:transparent; touch-action:manipulation;
-}
+.btn{min-height:46px;padding:10px 14px;border-radius:14px;border:1px solid var(--btnbd);background:var(--btnbg);color:var(--fg);font-weight:950;font-size:15px;cursor:pointer;display:inline-flex;align-items:center;gap:10px;text-decoration:none;user-select:none;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 .ico{width:18px;height:18px;flex:0 0 18px}
 .btn-list{color:var(--fg)}
 .btn-det{color:var(--blue)}
@@ -89,24 +74,18 @@ body.dark .qk{color:var(--fg)}
 
 .hold-note{margin-top:8px;font-weight:900;font-size:12px;color:var(--hold)}
 
-/* ADMIN layout */
+/* ADMIN */
 .admin-wrap{margin-top:14px;display:grid;gap:12px}
 .admin-left,.admin-right{background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:12px}
 .admin-title{font-weight:950;margin-bottom:10px}
 .admin-users{display:flex;flex-direction:column;gap:8px}
-.userbtn{
-  width:100%; text-align:left; border-radius:12px; border:1px solid var(--btnbd);
-  background:var(--btnbg); color:var(--fg); padding:10px 12px; cursor:pointer;
-  display:flex; justify-content:space-between; gap:10px; align-items:center;
-}
+.userbtn{width:100%;text-align:left;border-radius:12px;border:1px solid var(--btnbd);background:var(--btnbg);color:var(--fg);padding:10px 12px;cursor:pointer;display:flex;justify-content:space-between;gap:10px;align-items:center}
 .userbtn.active{border-color:rgba(59,130,246,.45)}
 .ub-name{font-weight:950;word-break:break-word}
 .ub-meta{font-size:12px;color:var(--muted);font-weight:850;white-space:nowrap}
 .admin-who{margin-top:-4px;margin-bottom:10px}
 .admin-panel{display:grid;gap:8px}
-.ev{
-  background:var(--btnbg); border:1px solid var(--line); border-radius:12px; padding:10px 12px;
-}
+.ev{background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:10px 12px}
 .ev-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
 .ev-type{font-weight:950}
 .ev-date{font-size:12px;color:var(--muted);font-weight:850;white-space:nowrap}
@@ -116,9 +95,7 @@ body.dark .qk{color:var(--fg)}
 .badge-rej{color:var(--bad)}
 .badge-cmt{color:var(--blue)}
 
-@media(min-width:920px){
-  .admin-wrap{grid-template-columns: 340px 1fr}
-}
+@media(min-width:920px){.admin-wrap{grid-template-columns:340px 1fr}}
 </style>
 </head>
 <body>
@@ -126,7 +103,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Admin</h1>
-    <div class="sub">Updated: 2026-02-26 01:00</div>
+    <div class="sub">Updated: 2026-02-26 01:10</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme">
@@ -168,11 +145,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Land:</span> <span class="qv">535</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,312</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">4.9%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$687,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$670,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">3.2%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">2.4%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">1.4%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">48,715</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">54</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2019</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-eastwood-150386308" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -190,13 +165,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">54</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">12</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">17.8%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">2.4%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">51</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">1.4%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">4</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">2</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">East Gippsland Shire</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">48,715</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,312</div></div><div class="drow"><div class="dk">Land</div><div class="dv">535</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2019</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$580,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$687,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">—</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$670,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$550</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$564</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">1,932</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">3.2%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.9%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -212,11 +185,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Land:</span> <span class="qv">766</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$899</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">7.1%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">5.3%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$609,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">3.1%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.9%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.3%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">61,362</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">59</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-seymour-150232840" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -234,13 +205,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">59</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">20</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">34.2%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.9%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">66</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.3%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">4</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">2</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Shire of Mitchell</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">61,362</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$899</div></div><div class="drow"><div class="dk">Land</div><div class="dv">766</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1980</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$585,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$609,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">-</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$520,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$600</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$555</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">7.1%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">6,569</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">3.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">5.3%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -256,11 +225,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Land:</span> <span class="qv">715</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$666</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">4.6%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$568,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$660,000</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.5%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.4%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">27,888</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">60</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property-house-sa-mount+gambier-150386552" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -278,13 +245,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">60</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">25</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">34.7%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.5%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">70</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.4%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">City of Mount Gambier</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">27,888</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$666</div></div><div class="drow"><div class="dk">Land</div><div class="dv">715</div></div><div class="drow"><div class="dk">Built</div><div class="dv">-</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$529,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$568,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">-</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$660,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$470</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">-</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">27,888</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">2.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.6%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -300,11 +265,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$540</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">5.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$639,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">5.1%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.9%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.3%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">36,150</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">60</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2000</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property/7-goldie-ct-warrnambool-vic-3280/" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -322,13 +285,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">60</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">18</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">31.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.9%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">72</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.3%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Warrnambool City Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">36,150</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$540</div></div><div class="drow"><div class="dk">Land</div><div class="dv">465</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2000</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$601,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$639,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">—</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">—</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$580</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$566</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">35,406</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">5.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">5.0%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -344,11 +305,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Land:</span> <span class="qv">672</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$664</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">3.1%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">5.2%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$635,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$683,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$690,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">5.1%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.9%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.3%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">36,150</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">60</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-warrnambool-150322076" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -366,13 +325,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">60</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">18</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">31.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.9%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">72</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.3%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">2</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Warrnambool City Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">36,150</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$664</div></div><div class="drow"><div class="dk">Land</div><div class="dv">672</div></div><div class="drow"><div class="dk">Built</div><div class="dv">-</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$600,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$683,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$635,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$690,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$600</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$622</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">3.1%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">35,406</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">5.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">5.2%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -388,11 +345,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Land:</span> <span class="qv">749</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">3</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,219</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">4.6%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$635,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$633,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">5.0%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">1.2%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">48,715</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">53</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">1997</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property/9-hakea-ct-paynesville-vic-3880/" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -410,13 +365,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">53</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">11</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">21.5%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">3.9%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">58</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">1.2%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">2</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">3</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Shire of East Gippsland</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">48,715</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,219</div></div><div class="drow"><div class="dk">Land</div><div class="dv">749</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1997</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$595,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$633,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$635,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$520,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$530</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$593</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">3,649</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">5.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">4.6%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -432,11 +385,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Land:</span> <span class="qv">796</span></span><span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Bush Fire:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$1,527</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">Yield:</span> <span class="qv">5.7%</span></span><span class="q"><span class="qk">Corelogic Valuation:</span> <span class="qv">$570,000</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$611,000</span></span><span class="q"><span class="qk">Domain Valuation:</span> <span class="qv">$610,000</span></span><span class="q"><span class="qk">Pop Growth (5y):</span> <span class="qv">5.0%</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">1.1%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.0%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">106,146</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">55</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property-house-qld-winfield-150308500" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -454,13 +405,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">55</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">45</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">10.1%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">1.1%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">14</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">4</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">1</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">No</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">Bundaberg Regional Council</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">106,146</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$1,527</div></div><div class="drow"><div class="dk">Land</div><div class="dv">796</div></div><div class="drow"><div class="dk">Built</div><div class="dv">1983</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$525,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$611,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$570,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$610,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">$580</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$607</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">0.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">154</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">5.0%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">5.7%</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -476,11 +425,9 @@ body.dark .qk{color:var(--fg)}
     </div>
     <div class="st st-ok">Available</div>
   </div>
-
   <div class="quick">
     <span class="q"><span class="qk">Suburb Category:</span> <span class="qv">2</span></span><span class="q"><span class="qk">Flood:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Heritage:</span> <span class="qv">No</span></span><span class="q"><span class="qk">Insurance:</span> <span class="qv">$664</span></span><span class="q"><span class="qk">Public Housing:</span> <span class="qv">3.0%</span></span><span class="q"><span class="qk">CBA Valuation:</span> <span class="qv">$581,000</span></span><span class="q"><span class="qk">Stock %:</span> <span class="qv">0.7%</span></span><span class="q"><span class="qk">Vacancy:</span> <span class="qv">0.4%</span></span><span class="q"><span class="qk">LGA Population:</span> <span class="qv">118,000</span></span><span class="q"><span class="qk">Demand to Supply Ratio:</span> <span class="qv">57</span></span><span class="q"><span class="qk">Built:</span> <span class="qv">2025</span></span>
   </div>
-
   <div class="actions">
     <a class="btn btn-list" href="https://www.realestate.com.au/property-house-vic-sebastopol-150195788" target="_blank" rel="noopener">
 <svg class="ico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -498,13 +445,11 @@ body.dark .qk{color:var(--fg)}
     </button>
     
   </div>
-
   <div class="details-wrap" hidden>
     <div class="details">
       <div class="drow"><div class="dk">Demand to Supply Ratio</div><div class="dv">57</div></div><div class="drow"><div class="dk">Search Interest</div><div class="dv">43</div></div><div class="drow"><div class="dk">Renters %</div><div class="dv">42.2%</div></div><div class="drow"><div class="dk">Stock %</div><div class="dv">0.7%</div></div><div class="drow"><div class="dk">Statistical reliability</div><div class="dv">66</div></div><div class="drow"><div class="dk">Vacancy</div><div class="dv">0.4%</div></div><div class="drow"><div class="dk">Beds</div><div class="dv">3</div></div><div class="drow"><div class="dk">Baths</div><div class="dv">3</div></div><div class="drow"><div class="dk">Suburb Category</div><div class="dv">2</div></div><div class="drow"><div class="dk">Bush Fire</div><div class="dv">Yes</div></div><div class="drow"><div class="dk">Flood</div><div class="dv">No</div></div><div class="drow"><div class="dk">Heritage</div><div class="dv">No</div></div><div class="drow"><div class="dk">LGA</div><div class="dv">City of Ballarat</div></div><div class="drow"><div class="dk">LGA Population</div><div class="dv">118,000</div></div><div class="drow"><div class="dk">Insurance</div><div class="dv">$664</div></div><div class="drow"><div class="dk">Land</div><div class="dv">364</div></div><div class="drow"><div class="dk">Built</div><div class="dv">2025</div></div><div class="drow"><div class="dk">Price</div><div class="dv">$570,000</div></div><div class="drow"><div class="dk">CBA Valuation</div><div class="dv">$581,000</div></div><div class="drow"><div class="dk">Corelogic Valuation</div><div class="dv">$550,000</div></div><div class="drow"><div class="dk">Domain Valuation</div><div class="dv">$490,000</div></div><div class="drow"><div class="dk">Rent</div><div class="dv">-</div></div><div class="drow"><div class="dk">Rent (RP)</div><div class="dv">$449</div></div><div class="drow"><div class="dk">Public Housing</div><div class="dv">3.0%</div></div><div class="drow"><div class="dk">Suburb Population</div><div class="dv">10,194</div></div><div class="drow"><div class="dk">Pop Growth (5y)</div><div class="dv">1.1%</div></div><div class="drow"><div class="dk">Yield</div><div class="dv">—</div></div>
     </div>
   </div>
-
   <div class="divider" aria-hidden="true"></div>
 </div>
 
@@ -545,7 +490,6 @@ document.addEventListener("touchstart", (e) => {
   toggleDetails(btn);
 }, {passive:false});
 
-// Sort available first (extra client-side safety)
 (function sortAvailableFirst() {
   const list = document.getElementById("list");
   if (!list) return;
@@ -578,24 +522,36 @@ document.addEventListener("touchstart", (e) => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // injected by Python
   const BUYER_ID = "admin";
   const BUYER_NAME_RAW = "Admin";
   const IS_ADMIN = true;
 
   function decodeEntities(s) {
-    // Fixes showing "&amp;" in UI if older data was stored escaped
     const t = document.createElement("textarea");
     t.innerHTML = (s || "");
     return t.value;
   }
 
   function normBuyerName(s) {
-    // decode any accidental html entities, and trim
     return decodeEntities((s || "")).trim();
   }
 
   const BUYER_NAME = normBuyerName(BUYER_NAME_RAW);
+
+  // ==================== NEW: UNDO REJECT ====================
+  async function undoReject(buyerId, propId) {
+    if (!confirm("Remove this REJECT tag?\nThe property will become visible again for the buyer.")) return;
+    try {
+      await deleteDoc(doc(db, "buyer_decisions", buyerId, "props", propId));
+      alert("✅ Reject removed — property is now visible for the buyer again.");
+      location.reload();
+    } catch (e) {
+      console.error(e);
+      alert("Failed to remove reject: " + (e?.message || e));
+    }
+  }
+  window.undoReject = undoReject;
+  // =======================================================
 
   function el(tag, attrs = {}, html = "") {
     const e = document.createElement(tag);
@@ -606,20 +562,15 @@ document.addEventListener("touchstart", (e) => {
 
   function fmtTs(ts) {
     try {
-      // Firestore Timestamp -> Date
       if (!ts) return "";
       const d = ts.toDate ? ts.toDate() : new Date(ts);
       return d.toLocaleString();
-    } catch {
-      return "";
-    }
+    } catch { return ""; }
   }
 
   async function writeEvent(type, propId, address, comment = "") {
     await addDoc(collection(db, "events"), {
-      type,
-      propId,
-      address,
+      type, propId, address,
       buyerId: BUYER_ID || "unknown",
       buyerName: BUYER_NAME || BUYER_ID || "unknown",
       comment,
@@ -627,63 +578,35 @@ document.addEventListener("touchstart", (e) => {
     });
   }
 
-  // buyer_decisions is "latest state" per buyer+property
-  // decision: "ACCEPT" | "REJECT" | ""   (COMMENTS do NOT overwrite decision)
   async function setDecision(propId, address, decision) {
-    await setDoc(
-      doc(db, "buyer_decisions", BUYER_ID, "props", propId),
-      {
-        buyerId: BUYER_ID,
-        buyerName: BUYER_NAME || BUYER_ID,
-        propId,
-        address,
-        decision,
-        decisionAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
+    await setDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId), {
+      buyerId: BUYER_ID,
+      buyerName: BUYER_NAME || BUYER_ID,
+      propId, address, decision,
+      decisionAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    }, { merge: true });
   }
 
   async function setComment(propId, address, comment) {
-    await setDoc(
-      doc(db, "buyer_decisions", BUYER_ID, "props", propId),
-      {
-        buyerId: BUYER_ID,
-        buyerName: BUYER_NAME || BUYER_ID,
-        propId,
-        address,
-        comment,
-        commentAt: serverTimestamp(),
-        updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
+    await setDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId), {
+      buyerId: BUYER_ID,
+      buyerName: BUYER_NAME || BUYER_ID,
+      propId, address, comment,
+      commentAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    }, { merge: true });
   }
 
   async function acceptHold(propId, address) {
     const ref = doc(db, "property_states", propId);
-
     const ok = await runTransaction(db, async (tx) => {
       const snap = await tx.get(ref);
       const cur = snap.exists() ? snap.data() : null;
-
-      if (cur && cur.status === "Hold" && cur.holdBy && cur.holdBy !== BUYER_ID) {
-        return false;
-      }
-
-      tx.set(ref, {
-        propId,
-        address,
-        status: "Hold",
-        holdBy: BUYER_ID,
-        holdByName: BUYER_NAME || BUYER_ID,   // store normalized
-        updatedAt: serverTimestamp()
-      }, { merge: true });
-
+      if (cur && cur.status === "Hold" && cur.holdBy && cur.holdBy !== BUYER_ID) return false;
+      tx.set(ref, { propId, address, status: "Hold", holdBy: BUYER_ID, holdByName: BUYER_NAME || BUYER_ID, updatedAt: serverTimestamp() }, { merge: true });
       return true;
     });
-
     await writeEvent("ACCEPT", propId, address, "");
     await setDecision(propId, address, "ACCEPT");
     return ok;
@@ -699,61 +622,46 @@ document.addEventListener("touchstart", (e) => {
     if (!text) return;
     const msg = text.trim();
     if (!msg) return;
-
     await writeEvent("COMMENT", propId, address, msg);
     await setComment(propId, address, msg);
   }
 
   async function refreshHoldBadges() {
     if (!BUYER_ID || IS_ADMIN) return;
-
     const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
     for (const card of cards) {
       const accBtn = card.querySelector(".js-acc");
       if (!accBtn) continue;
-
       const propId = card.getAttribute("data-prop") || "";
-
       try {
         const snap = await getDoc(doc(db, "property_states", propId));
         if (!snap.exists()) continue;
         const st = snap.data() || {};
-
-        // display name safely (decode any legacy &amp;)
         const heldByName = normBuyerName(st.holdByName || st.holdBy || "");
-
         if (st.status === "Hold" && st.holdBy && st.holdBy !== BUYER_ID) {
           accBtn.classList.add("btn-dis");
-          const note = card.querySelector(".hold-note") || el("div", { class: "hold-note" });
+          let note = card.querySelector(".hold-note");
+          if (!note) { note = el("div", { class: "hold-note" }); card.appendChild(note); }
           note.textContent = `Held by ${heldByName || st.holdBy}`;
-          if (!card.querySelector(".hold-note")) card.appendChild(note);
         }
-      } catch (e) {
-        console.error(e);
-      }
+      } catch (e) { console.error(e); }
     }
   }
 
   async function hideRejectedForBuyer() {
     if (!BUYER_ID || IS_ADMIN) return;
-
     try {
       const snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
       const rejected = new Set();
-
       snaps.forEach((d) => {
         const x = d.data() || {};
         if ((x.decision || "") === "REJECT" && x.propId) rejected.add(x.propId);
       });
-
       document.querySelectorAll(".item[data-prop]").forEach((card) => {
         const pid = card.getAttribute("data-prop");
         if (pid && rejected.has(pid)) card.remove();
       });
-    } catch (e) {
-      console.error("hideRejectedForBuyer failed", e);
-      // don't block UI if firestore read fails
-    }
+    } catch (e) { console.error("hideRejectedForBuyer failed", e); }
   }
 
   async function loadAdminUI() {
@@ -762,8 +670,6 @@ document.addEventListener("touchstart", (e) => {
     const whoBox = document.getElementById("adminWho");
     if (!usersBox || !panel) return;
 
-    // Single read, no composite indexes needed:
-    // Pull recent events and build everything client-side
     const qEv = query(collection(db, "events"), orderBy("createdAt", "desc"), limit(1000));
     const ev = await getDocs(qEv);
 
@@ -782,28 +688,22 @@ document.addEventListener("touchstart", (e) => {
       });
     });
 
-    // Build users list with last activity time
-    const map = new Map(); // buyerId -> {id,name,lastTs}
+    const map = new Map();
     for (const e of events) {
       if (!e.buyerId || e.buyerId === "admin") continue;
       const cur = map.get(e.buyerId);
       const ts = e.createdAt;
       if (!cur) {
-        map.set(e.buyerId, {
-          id: e.buyerId,
-          name: e.buyerName || e.buyerId,
-          lastTs: ts
-        });
-      } else {
-        // first events are newest, so keep first lastTs
-        if (!cur.lastTs && ts) cur.lastTs = ts;
+        map.set(e.buyerId, { id: e.buyerId, name: e.buyerName || e.buyerId, lastTs: ts });
+      } else if (!cur.lastTs && ts) {
+        cur.lastTs = ts;
       }
     }
 
     const users = Array.from(map.values()).sort((a,b) => {
       const ad = a.lastTs?.toDate ? a.lastTs.toDate().getTime() : 0;
       const bd = b.lastTs?.toDate ? b.lastTs.toDate().getTime() : 0;
-      return bd - ad; // most recent first
+      return bd - ad;
     });
 
     function badgeClass(t) {
@@ -813,29 +713,27 @@ document.addEventListener("touchstart", (e) => {
     }
 
     function renderUsers(activeId) {
-    usersBox.innerHTML = users.map(function(u) {
+      usersBox.innerHTML = users.map(function(u) {
         var isActive = (u.id === activeId) ? "active" : "";
         var last = fmtTs(u.lastTs) || "";
-
         return (
-        '<button class="userbtn ' + isActive + '" type="button" data-bid="' + u.id + '">' +
+          '<button class="userbtn ' + isActive + '" type="button" data-bid="' + u.id + '">' +
             '<div class="ub-name">' + u.name + '</div>' +
             '<div class="ub-meta">' + last + '</div>' +
-        '</button>'
+          '</button>'
         );
-    }).join("") || '<div class="muted">No activity yet.</div>';
+      }).join("") || '<div class="muted">No activity yet.</div>';
     }
 
     function renderTimeline(bid) {
-    const u = users.find(function(x) { return x.id === bid; });
-    if (whoBox) whoBox.textContent = u ? u.name : bid;
+      const u = users.find(function(x) { return x.id === bid; });
+      if (whoBox) whoBox.textContent = u ? u.name : bid;
 
-    const list = events.filter(function(x) { return x.buyerId === bid; });
+      const list = events.filter(function(x) { return x.buyerId === bid; });
 
-    panel.innerHTML = list.map(function(e) {
+      panel.innerHTML = list.map(function(e) {
         const ts = fmtTs(e.createdAt);
         const c = (e.comment || "").trim();
-
         const typeCls = badgeClass(e.type);
         const addr = e.address || "";
 
@@ -848,12 +746,18 @@ document.addEventListener("touchstart", (e) => {
         +   '<div class="ev-addr">' + addr + '</div>';
 
         if (c) {
-        html += '<div class="ev-cmt">💬 ' + c + '</div>';
+          html += '<div class="ev-cmt">💬 ' + c + '</div>';
+        }
+
+        if (e.type === "REJECT" && e.propId) {
+          html += '<button onclick="undoReject('' + bid + '', '' + e.propId + '')" ' +
+                  'style="margin-top:8px;font-size:12px;padding:4px 10px;background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:8px;cursor:pointer;">' +
+                  '🗑️ Remove Reject</button>';
         }
 
         html += '</div>';
         return html;
-    }).join("") || '<div class="muted">No events for this user.</div>';
+      }).join("") || '<div class="muted">No events for this user.</div>';
     }
 
     const first = users[0]?.id || "";
@@ -879,33 +783,25 @@ document.addEventListener("touchstart", (e) => {
         const card = a.closest(".item");
         const propId = card?.getAttribute("data-prop") || a.getAttribute("data-prop") || "";
         const addr = card?.getAttribute("data-addr") || a.getAttribute("data-addr") || "";
-
         const ok = await acceptHold(propId, addr);
-        if (!ok) {
-          alert("Already held by another buyer.");
-        } else {
-          alert("Accepted ✅ (saved)");
-        }
+        if (!ok) alert("Already held by another buyer.");
+        else alert("Accepted ✅ (saved)");
         await refreshHoldBadges();
         return;
       }
-
       if (r) {
         const card = r.closest(".item");
         const propId = card?.getAttribute("data-prop") || r.getAttribute("data-prop") || "";
         const addr = card?.getAttribute("data-addr") || r.getAttribute("data-addr") || "";
-
         await reject(propId, addr);
         alert("Rejected ❌ (saved)");
-        if (card) card.remove(); // remove immediately
+        if (card) card.remove();
         return;
       }
-
       if (c) {
         const card = c.closest(".item");
         const propId = card?.getAttribute("data-prop") || c.getAttribute("data-prop") || "";
         const addr = card?.getAttribute("data-addr") || c.getAttribute("data-addr") || "";
-
         await comment(propId, addr);
         alert("Comment saved 💬");
         return;
