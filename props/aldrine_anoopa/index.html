@@ -122,7 +122,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Aldrine &amp; Anoopa</h1>
-    <div class="sub">Updated: 2026-02-26 02:08</div>
+    <div class="sub">Updated: 2026-02-26 02:10</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -563,6 +563,10 @@ document.addEventListener("touchstart", (e) => {
         if (st.status === "Hold" && heldBy && heldBy !== BUYER_ID) {
         accBtn.classList.add("btn-dis");
         note.textContent = "Held by another buyer";
+        note.hidden = false;          // ✅ IMPORTANT
+        } else {
+        note.textContent = "";
+        note.hidden = true;
         }
       } catch (e) {
         console.error(e);
