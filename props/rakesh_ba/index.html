@@ -122,7 +122,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Rakesh BA</h1>
-    <div class="sub">Updated: 2026-02-26 11:48</div>
+    <div class="sub">Updated: 2026-02-26 11:54</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -314,13 +314,20 @@ document.addEventListener("touchstart", (e) => {
   }
 
   async function comment(propId, address) {
-    const text = prompt("Comment for admin feed:");
-    if (!text) return;
+    const text = prompt("Comment");
+
+    // If user clicks Cancel → text is null
+    if (text === null) return;
+
     const msg = text.trim();
+
+    // If user submits empty comment → do nothing
     if (!msg) return;
 
     await writeEvent("COMMENT", propId, address, msg);
     await setComment(propId, address, msg);
+
+    alert("Comment saved 💬");
   }
 
   async function refreshHoldBadges() {
@@ -543,13 +550,14 @@ document.addEventListener("touchstart", (e) => {
       }
 
       if (c) {
-        const card = c.closest(".item");
-        const propId = (card && card.getAttribute("data-prop")) || c.getAttribute("data-prop") || "";
-        const addr = (card && card.getAttribute("data-addr")) || c.getAttribute("data-addr") || "";
-        await comment(propId, addr);
-        alert("Comment saved 💬");
-        return;
+      const card = c.closest(".item");
+      const propId = (card && card.getAttribute("data-prop")) || c.getAttribute("data-prop") || "";
+      const addr = (card && card.getAttribute("data-addr")) || c.getAttribute("data-addr") || "";
+
+      await comment(propId, addr);
+      return;
       }
+      
     } catch (err) {
       console.error(err);
       alert("Firebase save failed: " + (err && err.message ? err.message : err));
