@@ -101,14 +101,36 @@ body.dark .qk{color:var(--fg)}
 .ub-meta{font-size:12px;color:var(--muted);font-weight:850;white-space:nowrap}
 .admin-who{margin-top:-4px;margin-bottom:10px}
 .admin-panel{display:grid;gap:8px}
-.ev{
-  background:var(--btnbg); border:1px solid var(--line); border-radius:12px; padding:10px 12px;
+
+.ev-line{
+  padding:6px 0;
+  border-bottom:1px solid var(--line);
+  font-size:14px;
+  line-height:1.4;
+  word-break:break-word;
 }
-.ev-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
-.ev-type{font-weight:950}
-.ev-date{font-size:12px;color:var(--muted);font-weight:850;white-space:nowrap}
-.ev-addr{margin-top:6px;font-weight:900;word-break:break-word}
-.ev-cmt{margin-top:6px;color:var(--muted);font-weight:850;white-space:pre-wrap}
+
+.ev-type{
+  font-weight:950;
+}
+
+.ev-date{
+  font-size:12px;
+  color:var(--muted);
+  font-weight:850;
+  margin-left:8px;
+  white-space:nowrap;
+}
+
+.ev-addr{
+  font-weight:900;
+}
+
+.ev-cmt{
+  color:var(--muted);
+  font-weight:850;
+}
+
 .badge-acc{color:var(--ok)}
 .badge-rej{color:var(--bad)}
 .badge-cmt{color:var(--blue)}
@@ -122,7 +144,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Benoy &amp; Sneha</h1>
-    <div class="sub">Updated: 2026-02-26 11:54</div>
+    <div class="sub">Updated: 2026-02-26 12:02</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -558,22 +580,24 @@ document.addEventListener("touchstart", (e) => {
       }
 
       panel.innerHTML = list.map((e) => {
-        const ts = fmtTs(e.createdAt) || "";
-        const c = (e.comment || "").trim();
-        const typeCls = badgeClass(e.type);
-        const addr = e.address || "";
+      const ts = fmtTs(e.createdAt) || "";
+      const c = (e.comment || "").trim();
+      const typeCls = badgeClass(e.type);
+      const addr = e.address || "";
 
-        let html = ''
-          + '<div class="ev">'
-          +   '<div class="ev-top">'
-          +     '<div class="ev-type ' + typeCls + '">' + (e.type || '') + '</div>'
-          +     '<div class="ev-date">' + ts + '</div>'
-          +   '</div>'
-          +   '<div class="ev-addr">' + addr + '</div>';
+      let line = ''
+          + '<div class="ev-line">'
+          +   '<span class="ev-type ' + typeCls + '">' + (e.type || '') + '</span> '
+          +   '<span class="ev-addr">' + addr + '</span>';
 
-        if (c) html += '<div class="ev-cmt">💬 ' + c + '</div>';
-        html += '</div>';
-        return html;
+      if (c) {
+          line += ' <span class="ev-cmt">💬 ' + c + '</span>';
+      }
+
+      line += ' <span class="ev-date">' + ts + '</span>'
+              + '</div>';
+
+      return line;
       }).join("");
     }
 
