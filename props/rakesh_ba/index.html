@@ -144,7 +144,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Rakesh BA</h1>
-    <div class="sub">Updated: 2026-02-26 12:02</div>
+    <div class="sub">Updated: 2026-02-26 12:11</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -356,10 +356,13 @@ document.addEventListener("touchstart", (e) => {
     if (!BUYER_ID || IS_ADMIN) return;
 
     const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
+
     for (const card of cards) {
       const accBtn = card.querySelector(".js-acc");
       const note = card.querySelector(".hold-note");
-      if (!accBtn || !note) continue;
+      const badge = card.querySelector(".st");
+
+      if (!accBtn || !note || !badge) continue;
 
       note.hidden = true;
       note.textContent = "";
@@ -370,19 +373,26 @@ document.addEventListener("touchstart", (e) => {
 
       try {
         const snap = await getDoc(doc(db, "property_states", propId));
-       if (!snap.exists()) continue;
+        if (!snap.exists()) continue;
 
         const st = snap.data() || {};
         const heldBy = (st.holdBy || "").toString().trim();
 
-        if (st.status === "Hold" && heldBy && heldBy !== BUYER_ID) {
-        accBtn.classList.add("btn-dis");
-        note.textContent = "Held by another buyer";
-        note.hidden = false;          // ✅ IMPORTANT
-        } else {
-        note.textContent = "";
-        note.hidden = true;
+        if (st.status === "Hold") {
+
+          // 🔥 UPDATE BADGE TEXT + CLASS
+          badge.textContent = "Hold";
+          badge.classList.remove("st-ok", "st-bad");
+          badge.classList.add("st-hold");
+
+          if (heldBy && heldBy !== BUYER_ID) {
+            accBtn.classList.add("btn-dis");
+            note.textContent = "Held by another buyer";
+            note.hidden = false;
+          }
+
         }
+
       } catch (e) {
         console.error(e);
       }
@@ -557,7 +567,7 @@ document.addEventListener("touchstart", (e) => {
       }
 
       if (r) {
-      const confirmReject = confirm("Reject (The property will be removed from your page)");
+      const confirmReject = confirm("Reject (The property will be removed from your page). Confirm?");
 
       if (!confirmReject) return;
 
