@@ -122,7 +122,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Admin</h1>
-    <div class="sub">Updated: 2026-02-26 02:10</div>
+    <div class="sub">Updated: 2026-02-26 11:42</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -868,13 +868,20 @@ document.addEventListener("touchstart", (e) => {
       }
 
       if (r) {
-        const card = r.closest(".item");
-        const propId = (card && card.getAttribute("data-prop")) || r.getAttribute("data-prop") || "";
-        const addr = (card && card.getAttribute("data-addr")) || r.getAttribute("data-addr") || "";
-        await reject(propId, addr);
-        alert("Rejected ❌ (saved)");
-        if (card) card.remove();
-        return;
+      const confirmReject = confirm("Reject (The property will be removed from your page)");
+
+      if (!confirmReject) return;
+
+      const card = r.closest(".item");
+      const propId = (card && card.getAttribute("data-prop")) || r.getAttribute("data-prop") || "";
+      const addr = (card && card.getAttribute("data-addr")) || r.getAttribute("data-addr") || "";
+
+      await reject(propId, addr);
+
+      alert("Property rejected and removed from your page ❌");
+
+      if (card) card.remove();
+      return;
       }
 
       if (c) {
