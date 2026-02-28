@@ -144,7 +144,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-02-28 23:32</div>
+    <div class="sub">Updated: 2026-02-28 23:36</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -542,13 +542,6 @@ document.addEventListener("touchstart", (e) => {
 </script>
 
 <script type="module">
-  import {
-    getFirestore,
-    doc, setDoc, getDoc, deleteDoc,
-    collection, addDoc, query, orderBy, limit, getDocs,
-    serverTimestamp, runTransaction
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
   import {
     getFirestore,
@@ -605,28 +598,17 @@ document.addEventListener("touchstart", (e) => {
     }
   }
 
-  function eventDocId(type, propId) {
-    // One doc per buyer+property+action (ACCEPT/REJECT/COMMENT)
-    return [String(BUYER_ID || "unknown"), String(propId || ""), String(type || "")].join("__");
-  }
-
   async function writeEvent(type, propId, address, comment = "") {
-    const id = eventDocId(type, propId);
-    await setDoc(
-      doc(db, "events", id),
-      {
-        type,
-        propId,
-        address,
-        addressNorm: normAddr(address),
-        buyerId: BUYER_ID || "unknown",
-        buyerName: BUYER_NAME || BUYER_ID || "unknown",
-        comment,
-        createdAt: serverTimestamp(),   // overwritten each time => becomes “latest”
-        updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
+    await addDoc(collection(db, "events"), {
+      type,
+      propId,
+      address,
+      addressNorm: normAddr(address),
+      buyerId: BUYER_ID || "unknown",
+      buyerName: BUYER_NAME || BUYER_ID || "unknown",
+      comment,
+      createdAt: serverTimestamp()
+    });
   }
 
   async function setDecision(propId, address, decision) {
