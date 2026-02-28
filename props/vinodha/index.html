@@ -546,7 +546,7 @@ document.addEventListener("touchstart", (e) => {
   import {
     getFirestore,
     doc, setDoc, getDoc,
-    collection, addDoc, query, orderBy, limit, getDocs,
+    collection, query, orderBy, limit, getDocs,
     serverTimestamp, runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -598,8 +598,15 @@ document.addEventListener("touchstart", (e) => {
     }
   }
 
+  function safeId(s) {
+    return (s || "x").toString().replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 500);
+  }
+
   async function writeEvent(type, propId, address, comment = "") {
-    await addDoc(collection(db, "events"), {
+    // One event per (buyerId + type + propId). Re-click overwrites the same doc.
+    const eventId = safeId((BUYER_ID || "unknown") + "__" + (type || "") + "__" + (propId || ""));
+
+    await setDoc(doc(db, "events", eventId), {
       type,
       propId,
       address,
@@ -607,8 +614,9 @@ document.addEventListener("touchstart", (e) => {
       buyerId: BUYER_ID || "unknown",
       buyerName: BUYER_NAME || BUYER_ID || "unknown",
       comment,
-      createdAt: serverTimestamp()
-    });
+      createdAt: serverTimestamp(),   // becomes the latest timestamp
+      updatedAt: serverTimestamp()
+    }, { merge: true });
   }
 
   async function setDecision(propId, address, decision) {
@@ -841,7 +849,24 @@ document.addEventListener("touchstart", (e) => {
       const u = users.find((x) => x.id === bid);
       if (whoBox) whoBox.textContent = u ? u.name : bid;
 
-      const list = events.filter((x) => x.buyerId === bid);
+      let list = events.filter((x) => x.buyerId === bid);
+
+      // Dedupe ACCEPT/REJECT for same property (keep latest only)
+      const seen = new Set();
+      list = list.filter((e) => {
+      const pid = (e.propId || "").trim();
+      const an  = normAddr(e.address || "");
+      const keyBase = pid ? ("pid:" + pid) : ("addr:" + an);
+
+      // Only dedupe action clicks; keep all comments
+      if (e.type === "ACCEPT" || e.type === "REJECT") {
+          const key = e.buyerId + "|" + e.type + "|" + keyBase;
+          if (seen.has(key)) return false;
+          seen.add(key);
+      }
+      return true;
+      });
+
       if (!list.length) {
         panel.innerHTML = '<div class="muted">No events for this user.</div>';
         return;
