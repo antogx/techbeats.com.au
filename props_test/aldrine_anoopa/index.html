@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Aldrine &amp; Anoopa</h1>
-    <div class="sub">Updated: 2026-03-02 00:54</div>
+    <div class="sub">Updated: 2026-03-02 00:58</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -695,6 +695,26 @@ document.addEventListener("touchstart", (e) => {
     let snaps;
     try {
       snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
+    // Load comment history from EVENTS (so old comments also show)
+    const evQ = query(
+      collection(db, "events"),
+      where("buyerId", "==", BUYER_ID),
+      where("type", "==", "COMMENT"),
+      orderBy("createdAt", "desc"),
+      limit(1000)
+    );
+    const evSnap = await getDocs(evQ);
+
+    const commentsByProp = new Map(); // propId -> [comment strings newest-first]
+    evSnap.forEach((d) => {
+      const e = d.data() || {};
+      const pid = (e.propId || "").toString().trim();
+      const c = (e.comment || "").toString().trim();
+      if (!pid || !c) return;
+      if (!commentsByProp.has(pid)) commentsByProp.set(pid, []);
+      commentsByProp.get(pid).push(c);
+    });
+
     } catch (e) {
       console.error("bucketizeBuyerDecisions failed", e);
       return;
@@ -725,6 +745,7 @@ document.addEventListener("touchstart", (e) => {
       const decision = (x.decision || "").toString().trim();
       const comment = (x.comment || "").toString().trim();
       const commentsArr = Array.isArray(x.comments) ? x.comments : [];
+      const evComments = commentsByProp.get(pid) || [];
 
       // Clean any old comment badge
       const oldBadge = card.querySelector(".cmt-badge");
@@ -770,7 +791,13 @@ document.addEventListener("touchstart", (e) => {
         const lines = [];
 
         // Prefer comments array history (newest first)
-        if (commentsArr.length) {
+        // Prefer EVENTS history (shows old comments too), else buyer_decisions.comments[], else latest comment
+        if (evComments.length) {
+          for (const t0 of evComments) {
+            const t = String(t0 || "").trim();
+            if (t) lines.push(t);
+          }
+        } else if (commentsArr.length) {
           const sorted = commentsArr
             .slice()
             .sort((a, b) => (b.atMs || 0) - (a.atMs || 0));
