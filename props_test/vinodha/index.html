@@ -101,14 +101,42 @@ body.dark .bhead{
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
 .wrap{max-width:1100px;margin:0 auto;padding:12px}
+
+
 header{
-  display:flex; justify-content:space-between; align-items:center; gap:10px;
-  background:var(--btnbg); border:1px solid var(--line);
-  border-radius:12px; padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:linear-gradient(135deg, #1e3a8a, #2563eb);
+  border-radius:18px;
+  padding:22px 24px;
+  color:white;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
-.lefthead{min-width:0}
-h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
-.sub{margin-top:6px;font-size:12px;color:var(--muted);font-weight:800}
+
+body.dark header{
+  background:linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.lefthead{
+  min-width:0;
+}
+
+h1{
+  margin:0;
+  font-size:26px;
+  font-weight:900;
+  letter-spacing:.3px;
+}
+
+.sub{
+  margin-top:6px;
+  font-size:13px;
+  font-weight:600;
+  opacity:.9;
+}
+
 .right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
 .logo{width:140px;height:auto;max-width:45vw;display:block}
 @media(max-width:520px){ .logo{width:120px;max-width:52vw} }
@@ -227,7 +255,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Vinodha</h1>
-    <div class="sub">Updated: 2026-03-02 01:47</div>
+    <div class="sub">Updated: 2026-03-02 02:02</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
