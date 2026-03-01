@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Jeo &amp; Seena</h1>
-    <div class="sub">Updated: 2026-03-02 01:13</div>
+    <div class="sub">Updated: 2026-03-02 01:18</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -299,8 +299,8 @@ document.addEventListener("touchstart", (e) => {
   import {
     getFirestore,
     doc, setDoc, getDoc,
-    collection, addDoc, query, where, orderBy, limit, getDocs,
-    serverTimestamp, runTransaction, arrayUnion
+    collection, query, where, orderBy, limit, getDocs,
+    serverTimestamp, runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -423,29 +423,35 @@ document.addEventListener("touchstart", (e) => {
   }
 
   async function setComment(propId, address, comment) {
-    await setDoc(
-      doc(db, "buyer_decisions", BUYER_ID, "props", propId),
-      {
+    const ref = doc(db, "buyer_decisions", BUYER_ID, "props", propId);
+
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(ref);
+      const cur = snap.exists() ? (snap.data() || {}) : {};
+
+      const arr = Array.isArray(cur.comments) ? cur.comments.slice() : [];
+      arr.push({
+        text: String(comment || "").trim(),
+        atMs: Date.now()
+      });
+
+      tx.set(ref, {
         buyerId: BUYER_ID,
         buyerName: BUYER_NAME || BUYER_ID,
         propId,
         address,
         addressNorm: normAddr(address),
 
-        // Latest comment
-        comment,
+        // ✅ history
+        comments: arr,
+
+        // ✅ keep latest also (optional, but handy)
+        comment: String(comment || "").trim(),
         commentAt: serverTimestamp(),
 
-        // Comment history (append)
-        comments: arrayUnion({
-          text: comment,
-          atMs: Date.now()
-        }),
-
         updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
+      }, { merge: true });
+    });
   }
 
    async function acceptHold(propId, address) {
