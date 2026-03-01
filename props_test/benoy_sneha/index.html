@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Benoy &amp; Sneha</h1>
-    <div class="sub">Updated: 2026-03-02 01:00</div>
+    <div class="sub">Updated: 2026-03-02 01:05</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -664,11 +664,14 @@ document.addEventListener("touchstart", (e) => {
 
     const commentsByProp = new Map(); // propId -> [comment strings newest-first]
 
-    // Load buyer decisions + comment history from EVENTS
+    // Load buyer decisions
     let snaps;
+    const commentsByProp = new Map(); // propId -> [comment strings newest-first]
+
     try {
       snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
 
+      // Load comment history from EVENTS (so old comments also show)
       const evQ = query(
         collection(db, "events"),
         where("buyerId", "==", BUYER_ID),
@@ -680,17 +683,12 @@ document.addEventListener("touchstart", (e) => {
 
       evSnap.forEach((d) => {
         const e = d.data() || {};
-        const pid = (e.propId || "").toString().trim();
+        const pid2 = (e.propId || "").toString().trim();
         const c = (e.comment || "").toString().trim();
-        if (!pid || !c) return;
-        if (!commentsByProp.has(pid)) commentsByProp.set(pid, []);
-        commentsByProp.get(pid).push(c);
+        if (!pid2 || !c) return;
+        if (!commentsByProp.has(pid2)) commentsByProp.set(pid2, []);
+        commentsByProp.get(pid2).push(c);
       });
-
-    } catch (e) {
-      console.error("bucketizeBuyerDecisions failed", e);
-      return;
-    }
 
     } catch (e) {
       console.error("bucketizeBuyerDecisions failed", e);
@@ -742,7 +740,7 @@ document.addEventListener("touchstart", (e) => {
       }
 
       // Always show comments (even if ACCEPT or REJECT)
-      if (comment || commentsArr.length) {
+      if (comment || commentsArr.length || evComments.length) {
 
         // Card badge shows latest comment only
         if (comment) {
