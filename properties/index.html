@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-03-02 00:43</div>
+    <div class="sub">Updated: 2026-03-02 00:49</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -782,7 +782,7 @@ document.addEventListener("touchstart", (e) => {
         // Comment history (append)
         comments: arrayUnion({
           text: comment,
-          at: serverTimestamp()
+          atMs: Date.now()
         }),
 
         updatedAt: serverTimestamp()
@@ -988,10 +988,13 @@ document.addEventListener("touchstart", (e) => {
         // Build full history text
         const lines = [];
 
-        // Prefer comments array history
+        // Prefer comments array history (newest first)
         if (commentsArr.length) {
-          // Each element may be {text, at}; keep it simple and show text
-          for (const it of commentsArr) {
+          const sorted = commentsArr
+            .slice()
+            .sort((a, b) => (b.atMs || 0) - (a.atMs || 0));
+
+          for (const it of sorted) {
             const t = (it && it.text ? String(it.text) : "").trim();
             if (t) lines.push(t);
           }
