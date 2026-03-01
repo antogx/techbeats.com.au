@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Admin</h1>
-    <div class="sub">Updated: 2026-03-02 01:39</div>
+    <div class="sub">Updated: 2026-03-02 01:42</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -251,19 +251,6 @@ body.dark .qk{color:var(--fg)}
   <div class="bucket bucket-selected">
     <div class="bhead">You Selected <span class="bcount" id="cntSelected">0</span></div>
     <div id="bucketSelected"></div>
-  </div>
-</div>
-
-<!-- Rejected + Comments moved to bottom -->
-<div id="buyerBucketsBottom" class="buckets" hidden>
-  <div class="bucket bucket-rejected">
-    <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
-    <div id="bucketRejected"></div>
-  </div>
-
-  <div class="bucket bucket-commented">
-    <div class="bhead">Your Comments <span class="bcount" id="cntCommented">0</span></div>
-    <div id="bucketCommented"></div>
   </div>
 </div>
 
@@ -614,6 +601,17 @@ body.dark .qk{color:var(--fg)}
 </div>
 </div>
 
+<!-- Rejected + Comments at very bottom -->
+<div id="buyerBucketsBottom" class="buckets" hidden>
+  <div class="bucket bucket-rejected">
+    <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
+    <div id="bucketRejected"></div>
+  </div>
+
+  <div class="bucket bucket-commented">
+    <div class="bhead">Your Comments <span class="bcount" id="cntCommented">0</span></div>
+    <div id="bucketCommented"></div>
+  </div>
 </div>
 
 <script>
@@ -1052,7 +1050,7 @@ document.addEventListener("touchstart", (e) => {
         det.className = "cmt-line";
 
         const sum = document.createElement("summary");
-        sum.textContent = addrText || "Unknown address";
+        sum.textContent = "Comment";
         det.appendChild(sum);
 
         const body = document.createElement("div");
@@ -1081,7 +1079,7 @@ document.addEventListener("touchstart", (e) => {
           lines.push(comment);
         }
 
-        body.textContent = (addrText || "Unknown address") + " : " + lines.join(" | ");
+        body.textContent = lines.join(" | ");
         det.appendChild(body);
 
         cmtBox.appendChild(det);
