@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Benoy &amp; Sneha</h1>
-    <div class="sub">Updated: 2026-03-02 01:18</div>
+    <div class="sub">Updated: 2026-03-02 01:24</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -385,6 +385,7 @@ document.addEventListener("touchstart", (e) => {
     getFirestore,
     doc, setDoc, getDoc,
     collection, query, where, orderBy, limit, getDocs,
+    addDoc,
     serverTimestamp, runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -438,6 +439,32 @@ document.addEventListener("touchstart", (e) => {
 
   function safeId(s) {
     return (s || "x").toString().replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 500);
+  }
+
+  async function reject(propId, address) {
+    // Remove hold if this buyer held it
+    const stateRef = doc(db, "property_states", propId);
+
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(stateRef);
+      if (snap.exists()) {
+        const cur = snap.data() || {};
+        if (cur.holdBy === BUYER_ID) {
+          tx.set(stateRef, {
+            status: "Available",
+            holdBy: "",
+            holdByName: "",
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+        }
+      }
+    });
+
+    // Write event (deduped by eventId logic)
+    await writeEvent("REJECT", propId, address, "");
+
+    // Save buyer decision
+    await setDecision(propId, address, "REJECT");
   }
 
   async function writeEvent(type, propId, address, comment = "") {
