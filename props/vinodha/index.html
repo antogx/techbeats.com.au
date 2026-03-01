@@ -10,22 +10,133 @@
   --chip:#eef2ff; --ok:#16a34a; --bad:#dc2626; --blue:#1e3a8a;
   --btnbg:#ffffff; --btnbd:#e2e8f0; --hold:#f59e0b;
 }
+.buckets{margin-top:12px;display:grid;gap:12px}
+.bucket{background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:10px}
+/* Buyer bucket colors (light mode) */
+.bucket-selected{
+  background:#e6f7ec;      /* light green */
+  border-color:#b7e4c7;
+}
+.cmt-line{
+  background:rgba(255,255,255,.55);
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:8px 10px;
+  margin-top:8px;
+}
+body.dark .cmt-line{
+  background:rgba(234,240,255,.06);
+}
+
+.cmt-row{margin-top:10px}
+.cmt-addr{font-weight:950;margin-bottom:6px}
+
+.cmt-line summary{
+  cursor:pointer;
+  font-weight:950;
+}
+.cmt-line .cmt-text{
+  margin-top:6px;
+  font-weight:850;
+  color:var(--muted);
+  word-break:break-word;
+}
+.bucket-rejected{
+  background:#ffe6ea;        /* light rose */
+  border-color:#ffb6c1;
+}
+.bucket-commented{
+  background:#fff9db;        /* light yellow */
+  border-color:#ffe58a;
+}
+
+/* Dark mode adjustments */
+body.dark .bucket-selected{
+  background:rgba(34,197,94,.18);
+  border-color:rgba(34,197,94,.40);
+}
+body.dark .bucket-rejected{
+  background:rgba(239,68,68,.15);
+  border-color:rgba(239,68,68,.35);
+}
+body.dark .bucket-commented{
+  background:rgba(250,204,21,.18);
+  border-color:rgba(250,204,21,.40);
+}
+
+.bhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  font-weight:950;
+  font-size:18px;          /* Bigger than address (16px) */
+  color:#4b2e1e;           /* Dark brown */
+}
+.bcount{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;font-weight:950}
+.bucket .item{padding:6px 2px}
+.cmt-badge{margin-top:6px;font-size:12px;font-weight:900;color:var(--muted)}
 body.dark {
   --bg:#0b1220; --fg:#eaf0ff; --muted:rgba(234,240,255,.75); --line:rgba(234,240,255,.16);
   --chip:rgba(45,212,191,.12); --ok:#22c55e; --bad:#ef4444; --blue:#93c5fd;
   --btnbg:rgba(234,240,255,.10); --btnbd:rgba(234,240,255,.18); --hold:#fbbf24;
 }
+body.dark {
+  --bg:#0b1220;
+  --fg:#eaf0ff;
+  --muted:rgba(234,240,255,.75);
+  --line:rgba(234,240,255,.16);
+  --chip:rgba(45,212,191,.12);
+  --ok:#22c55e;
+  --bad:#ef4444;
+  --blue:#93c5fd;
+  --btnbg:rgba(234,240,255,.10);
+  --btnbd:rgba(234,240,255,.18);
+  --hold:#fbbf24;
+}
+
+/* Dark mode bucket header color */
+body.dark .bhead{
+  color:#d2b48c;   /* soft brown / tan */
+}
 *{box-sizing:border-box}
 body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--fg)}
 .wrap{max-width:1100px;margin:0 auto;padding:12px}
+
+
 header{
-  display:flex; justify-content:space-between; align-items:center; gap:10px;
-  background:var(--btnbg); border:1px solid var(--line);
-  border-radius:12px; padding:12px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  background:linear-gradient(135deg, #1e3a8a, #2563eb);
+  border-radius:18px;
+  padding:22px 24px;
+  color:white;
+  box-shadow:0 10px 30px rgba(0,0,0,.08);
 }
-.lefthead{min-width:0}
-h1{margin:0;font-size:20px;font-weight:950;line-height:1.1}
-.sub{margin-top:6px;font-size:12px;color:var(--muted);font-weight:800}
+
+body.dark header{
+  background:linear-gradient(135deg, #0f172a, #1e293b);
+}
+
+.lefthead{
+  min-width:0;
+}
+
+h1{
+  margin:0;
+  font-size:22px;   /* reduced from 26px */
+  font-weight:900;
+  letter-spacing:.2px;
+}
+
+.sub{
+  margin-top:6px;
+  font-size:13px;
+  font-weight:600;
+  opacity:.9;
+}
+
 .right{display:flex;align-items:center;gap:10px;flex:0 0 auto}
 .logo{width:140px;height:auto;max-width:45vw;display:block}
 @media(max-width:520px){ .logo{width:120px;max-width:52vw} }
@@ -144,7 +255,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Vinodha</h1>
-    <div class="sub">Updated: 2026-03-01 20:41</div>
+    <div class="sub">Updated: 2026-03-02 02:12</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -157,6 +268,13 @@ body.dark .qk{color:var(--fg)}
 </header>
 
 
+
+<div id="buyerBuckets" class="buckets" hidden>
+  <div class="bucket bucket-selected">
+    <div class="bhead">You Selected <span class="bcount" id="cntSelected">0</span></div>
+    <div id="bucketSelected"></div>
+  </div>
+</div>
 
 <div id="list">
 <div class="item" data-status="Available" data-prop="8f556e87520c67fdbbf1854d1bca95cbb724c865" data-addr="118 Langford Parade, Paynesville, Vic 3880" data-addrn="118 langford parade, paynesville, vic 3880">
@@ -505,6 +623,17 @@ body.dark .qk{color:var(--fg)}
 </div>
 </div>
 
+<!-- Rejected + Comments at very bottom -->
+<div id="buyerBucketsBottom" class="buckets" hidden>
+  <div class="bucket bucket-rejected">
+    <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
+    <div id="bucketRejected"></div>
+  </div>
+
+  <div class="bucket bucket-commented">
+    <div class="bhead">Your Comments <span class="bcount" id="cntCommented">0</span></div>
+    <div id="bucketCommented"></div>
+  </div>
 </div>
 
 <script>
@@ -546,7 +675,8 @@ document.addEventListener("touchstart", (e) => {
   import {
     getFirestore,
     doc, setDoc, getDoc,
-    collection, query, orderBy, limit, getDocs,
+    collection, query, where, orderBy, limit, getDocs,
+    addDoc,
     serverTimestamp, runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -602,6 +732,32 @@ document.addEventListener("touchstart", (e) => {
     return (s || "x").toString().replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 500);
   }
 
+  async function reject(propId, address) {
+    // Remove hold if this buyer held it
+    const stateRef = doc(db, "property_states", propId);
+
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(stateRef);
+      if (snap.exists()) {
+        const cur = snap.data() || {};
+        if (cur.holdBy === BUYER_ID) {
+          tx.set(stateRef, {
+            status: "Available",
+            holdBy: "",
+            holdByName: "",
+            updatedAt: serverTimestamp()
+          }, { merge: true });
+        }
+      }
+    });
+
+    // Write event (deduped by eventId logic)
+    await writeEvent("REJECT", propId, address, "");
+
+    // Save buyer decision
+    await setDecision(propId, address, "REJECT");
+  }
+
   async function writeEvent(type, propId, address, comment = "") {
     // One event per (buyerId + type + propId). Re-click overwrites the same doc.
     const eventId = safeId((BUYER_ID || "unknown") + "__" + (type || "") + "__" + (propId || ""));
@@ -617,6 +773,20 @@ document.addEventListener("touchstart", (e) => {
       createdAt: serverTimestamp(),   // becomes the latest timestamp
       updatedAt: serverTimestamp()
     }, { merge: true });
+  }
+
+  async function writeCommentEvent(propId, address, comment) {
+    await addDoc(collection(db, "events"), {
+      type: "COMMENT",
+      propId,
+      address,
+      addressNorm: normAddr(address),
+      buyerId: BUYER_ID || "unknown",
+      buyerName: BUYER_NAME || BUYER_ID || "unknown",
+      comment,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
   }
 
   async function setDecision(propId, address, decision) {
@@ -636,25 +806,60 @@ document.addEventListener("touchstart", (e) => {
     );
   }
 
+  async function canAcceptAnother(propId) {
+    if (!BUYER_ID || IS_ADMIN) return true;
+
+    // If this specific property is already accepted by this buyer, allow
+    const decSnap = await getDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId));
+    if (decSnap.exists()) {
+      const d = decSnap.data() || {};
+      if ((d.decision || "").toString().trim() === "ACCEPT") return true;
+    }
+
+    // Count accepted properties for this buyer
+    const qAcc = query(
+      collection(db, "buyer_decisions", BUYER_ID, "props"),
+      where("decision", "==", "ACCEPT")
+    );
+    const accSnaps = await getDocs(qAcc);
+    return accSnaps.size < 2;
+  }
+
   async function setComment(propId, address, comment) {
-    await setDoc(
-      doc(db, "buyer_decisions", BUYER_ID, "props", propId),
-      {
+    const ref = doc(db, "buyer_decisions", BUYER_ID, "props", propId);
+
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(ref);
+      const cur = snap.exists() ? (snap.data() || {}) : {};
+
+      const arr = Array.isArray(cur.comments) ? cur.comments.slice() : [];
+      arr.push({
+        text: String(comment || "").trim(),
+        atMs: Date.now()
+      });
+
+      tx.set(ref, {
         buyerId: BUYER_ID,
         buyerName: BUYER_NAME || BUYER_ID,
         propId,
         address,
         addressNorm: normAddr(address),
-        comment,
+
+        // ✅ history
+        comments: arr,
+
+        // ✅ keep latest also (optional, but handy)
+        comment: String(comment || "").trim(),
         commentAt: serverTimestamp(),
+
         updatedAt: serverTimestamp()
-      },
-      { merge: true }
-    );
+      }, { merge: true });
+    });
   }
 
-  async function acceptHold(propId, address) {
+   async function acceptHold(propId, address) {
     const ref = doc(db, "property_states", propId);
+
     const ok = await runTransaction(db, async (tx) => {
       const snap = await tx.get(ref);
       const cur = snap.exists() ? snap.data() : null;
@@ -676,28 +881,22 @@ document.addEventListener("touchstart", (e) => {
       return true;
     });
 
-    await writeEvent("ACCEPT", propId, address, "");
-    await setDecision(propId, address, "ACCEPT");
-    return ok;
-  }
+    if (ok) {
+      await writeEvent("ACCEPT", propId, address, "");
+      await setDecision(propId, address, "ACCEPT");
+    }
 
-  async function reject(propId, address) {
-    await writeEvent("REJECT", propId, address, "");
-    await setDecision(propId, address, "REJECT");
+    return ok;
   }
 
   async function comment(propId, address) {
     const text = prompt("Comment");
-
-    // If user clicks Cancel → text is null
     if (text === null) return;
 
     const msg = text.trim();
-
-    // If user submits empty comment → do nothing
     if (!msg) return;
 
-    await writeEvent("COMMENT", propId, address, msg);
+    await writeCommentEvent(propId, address, msg);
     await setComment(propId, address, msg);
 
     alert("Comment saved 💬");
@@ -728,19 +927,22 @@ document.addEventListener("touchstart", (e) => {
 
         const st = snap.data() || {};
         const heldBy = (st.holdBy || "").toString().trim();
-
         if (st.status === "Hold") {
 
-          // 🔥 UPDATE BADGE TEXT + CLASS
-          badge.textContent = "Hold";
-          badge.classList.remove("st-ok", "st-bad");
-          badge.classList.add("st-hold");
+        badge.textContent = "Hold";
+        badge.classList.remove("st-ok", "st-bad");
+        badge.classList.add("st-hold");
 
-          if (heldBy && heldBy !== BUYER_ID) {
+        if (heldBy && heldBy === BUYER_ID) {
+            // Held by same buyer → disable Accept
             accBtn.classList.add("btn-dis");
+            note.textContent = "You have accepted this property";
+            note.hidden = false;
+        } else if (heldBy && heldBy !== BUYER_ID) {
+            // Held by someone else → show note only (but keep Accept enabled)
             note.textContent = "Held by another buyer";
             note.hidden = false;
-          }
+        }
 
         }
 
@@ -750,35 +952,180 @@ document.addEventListener("touchstart", (e) => {
     }
   }
 
-  // ✅ FIX: hide by BOTH propId and normalized address
-  async function hideRejectedForBuyer() {
+  async function bucketizeBuyerDecisions() {
     if (!BUYER_ID || IS_ADMIN) return;
 
+    const bucketsWrap = document.getElementById("buyerBuckets");
+    const bucketsBottom = document.getElementById("buyerBucketsBottom");
+    const selBox = document.getElementById("bucketSelected");
+    const rejBox = document.getElementById("bucketRejected");
+    const cmtBox = document.getElementById("bucketCommented");
+    const cntSel = document.getElementById("cntSelected");
+    const cntRej = document.getElementById("cntRejected");
+    const cntCmt = document.getElementById("cntCommented");
+    const list = document.getElementById("list");
+
+    if (!bucketsWrap || !selBox || !rejBox || !cmtBox || !list) return;
+
+    // Show the buckets UI for buyer pages
+    bucketsWrap.hidden = false;
+    if (bucketsBottom) bucketsBottom.hidden = false;
+    selBox.innerHTML = "";
+    rejBox.innerHTML = "";
+    cmtBox.innerHTML = "";
+
+    // Load buyer decisions + comment history from EVENTS (so old comments also show)
+    let snaps;
+    const commentsByProp = new Map(); // propId -> [comment strings newest-first]
+
+    // 1) Always try to load buyer decisions first (this drives Selected/Rejected)
     try {
-      const snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
-      const rejectedPropIds = new Set();
-      const rejectedAddrNorms = new Set();
+      snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
+    } catch (e) {
+      console.error("Failed to load buyer_decisions:", e);
+      return; // without decisions we can't build Selected/Rejected
+    }
 
-      snaps.forEach((d) => {
-        const x = d.data() || {};
-        if ((x.decision || "") === "REJECT") {
-          if (x.propId) rejectedPropIds.add(String(x.propId));
-          if (x.addressNorm) rejectedAddrNorms.add(String(x.addressNorm));
-          else if (x.address) rejectedAddrNorms.add(normAddr(x.address));
-        }
-      });
+    // 2) Try to load COMMENT events (optional). If it fails (missing index), still continue.
+    try {
+      const evQ = query(
+        collection(db, "events"),
+        where("buyerId", "==", BUYER_ID),
+        where("type", "==", "COMMENT"),
+        orderBy("createdAt", "desc"),
+        limit(1000)
+      );
+      const evSnap = await getDocs(evQ);
 
-      document.querySelectorAll(".item[data-prop]").forEach((card) => {
-        const pid = (card.getAttribute("data-prop") || "").trim();
-        const addrn = normAddr(card.getAttribute("data-addrn") || card.getAttribute("data-addr") || "");
-
-        if ((pid && rejectedPropIds.has(pid)) || (addrn && rejectedAddrNorms.has(addrn))) {
-          card.remove();
-        }
+      evSnap.forEach((d) => {
+        const e = d.data() || {};
+        const pid2 = (e.propId || "").toString().trim();
+        const c = (e.comment || "").toString().trim();
+        if (!pid2 || !c) return;
+        if (!commentsByProp.has(pid2)) commentsByProp.set(pid2, []);
+        commentsByProp.get(pid2).push(c);
       });
     } catch (e) {
-      console.error("hideRejectedForBuyer failed", e);
+      // This commonly fails if Firestore needs a composite index.
+      console.warn("Could not load COMMENT events (continuing without event history):", e);
+      // Continue with empty commentsByProp
     }
+
+    // Map by propId and by addressNorm (for safety)
+    const byProp = new Map();   // propId -> doc
+    const byAddr = new Map();   // addressNorm -> doc
+    snaps.forEach((d) => {
+      const x = d.data() || {};
+      const pid = (x.propId || "").toString().trim();
+      const an = (x.addressNorm || (x.address ? normAddr(x.address) : "") || "").toString().trim();
+      if (pid) byProp.set(pid, x);
+      if (an) byAddr.set(an, x);
+    });
+
+    const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
+
+    let nSel = 0, nRej = 0, nCmt = 0;
+
+    for (const card of cards) {
+      const pid = (card.getAttribute("data-prop") || "").trim();
+      const an  = normAddr(card.getAttribute("data-addrn") || card.getAttribute("data-addr") || "");
+
+      const x = (pid && byProp.get(pid)) || (an && byAddr.get(an)) || null;
+      if (!x) continue;
+
+      const decision = (x.decision || "").toString().trim();
+      const comment = (x.comment || "").toString().trim();
+      const commentsArr = Array.isArray(x.comments) ? x.comments : [];
+      const evComments = commentsByProp.get(pid) || [];
+
+      // Clean any old comment badge
+      const oldBadge = card.querySelector(".cmt-badge");
+      if (oldBadge) oldBadge.remove();
+
+      // Priority:
+      // 1) ACCEPT -> You Selected
+      // 2) REJECT -> You Rejected
+      // 3) comment only -> Your Comments
+      // Put into Selected / Rejected buckets
+      if (decision === "ACCEPT") {
+        selBox.appendChild(card);
+        nSel += 1;
+      } else if (decision === "REJECT") {
+        rejBox.appendChild(card);
+        nRej += 1;
+      }
+
+      // Always show comments (even if ACCEPT or REJECT)
+      if (comment || commentsArr.length || evComments.length) {
+
+        // Card badge shows latest comment only
+        if (comment) {
+          const badge = document.createElement("div");
+          badge.className = "cmt-badge";
+          badge.textContent = "💬 " + comment;
+          card.appendChild(badge);
+        }
+
+        const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
+
+        const det = document.createElement("details");
+        det.className = "cmt-line";
+
+        const sum = document.createElement("summary");
+        sum.textContent = "Comment";
+        det.appendChild(sum);
+
+        const body = document.createElement("div");
+        body.className = "cmt-text";
+
+        // Build full history text
+        const lines = [];
+
+        // Prefer comments array history (newest first)
+        // Prefer EVENTS history (shows old comments too), else buyer_decisions.comments[], else latest comment
+        if (evComments.length) {
+          for (const t0 of evComments) {
+            const t = String(t0 || "").trim();
+            if (t) lines.push(t);
+          }
+        } else if (commentsArr.length) {
+          const sorted = commentsArr
+            .slice()
+            .sort((a, b) => (b.atMs || 0) - (a.atMs || 0));
+
+          for (const it of sorted) {
+            const t = (it && it.text ? String(it.text) : "").trim();
+            if (t) lines.push(t);
+          }
+        } else if (comment) {
+          lines.push(comment);
+        }
+
+        body.textContent = lines.join(" | ");
+        det.appendChild(body);
+
+        const row = document.createElement("div");
+        row.className = "cmt-row";
+
+        const addrLine = document.createElement("div");
+        addrLine.className = "cmt-addr";
+        addrLine.textContent = addrText || "Unknown address";
+
+        row.appendChild(addrLine);
+        row.appendChild(det);
+
+        cmtBox.appendChild(row);
+        nCmt += 1;
+      }
+    }
+
+    // Update counts
+    if (cntSel) cntSel.textContent = String(nSel);
+    if (cntRej) cntRej.textContent = String(nRej);
+    if (cntCmt) cntCmt.textContent = String(nCmt);
+
+    // Keep the remaining cards in All Properties (already in #list).
+    // (We moved selected/rejected/commented cards out, so #list now naturally becomes All Properties.)
   }
 
   async function loadAdminUI() {
@@ -914,50 +1261,60 @@ document.addEventListener("touchstart", (e) => {
       const c = e.target.closest(".js-cmt");
 
       if (a) {
-      const confirmAccept = confirm("Marked as accepted. Confirm?");
+        const confirmAccept = confirm("Marked as accepted. Confirm?");
 
-      if (!confirmAccept) return;
+        if (!confirmAccept) return;
 
-      const card = a.closest(".item");
-      const propId = (card && card.getAttribute("data-prop")) || a.getAttribute("data-prop") || "";
-      const addr = (card && card.getAttribute("data-addr")) || a.getAttribute("data-addr") || "";
+        const card = a.closest(".item");
+        const propId = (card && card.getAttribute("data-prop")) || a.getAttribute("data-prop") || "";
+        const addr = (card && card.getAttribute("data-addr")) || a.getAttribute("data-addr") || "";
 
-      const ok = await acceptHold(propId, addr);
+        const allowed = await canAcceptAnother(propId);
 
-      if (ok) {
+        if (!allowed) {
+          alert("You can accept maximum 2 properties. Please contact admin to accept more than 2.");
+          return;
+        }
+
+        const ok = await acceptHold(propId, addr);
+
+        if (ok) {
           alert("Property marked as accepted ✅");
-      } else {
+        } else {
           alert("Already held by another buyer.");
-      }
+        }
 
-      await refreshHoldBadges();
-      return;
+        await refreshHoldBadges();
+        await bucketizeBuyerDecisions();
+        return;
       }
 
       if (r) {
-      const confirmReject = confirm("Reject (The property will be removed from your page). Confirm?");
+        const confirmReject = confirm("Reject this property? Confirm?");
 
-      if (!confirmReject) return;
+        if (!confirmReject) return;
 
-      const card = r.closest(".item");
-      const propId = (card && card.getAttribute("data-prop")) || r.getAttribute("data-prop") || "";
-      const addr = (card && card.getAttribute("data-addr")) || r.getAttribute("data-addr") || "";
+        const card = r.closest(".item");
+        const propId = (card && card.getAttribute("data-prop")) || r.getAttribute("data-prop") || "";
+        const addr = (card && card.getAttribute("data-addr")) || r.getAttribute("data-addr") || "";
 
-      await reject(propId, addr);
+        await reject(propId, addr);
 
-      alert("Property rejected and removed from your page ❌");
+        alert("Property rejected ❌");
 
-      if (card) card.remove();
-      return;
+        await bucketizeBuyerDecisions();
+        return;
       }
 
       if (c) {
-      const card = c.closest(".item");
-      const propId = (card && card.getAttribute("data-prop")) || c.getAttribute("data-prop") || "";
-      const addr = (card && card.getAttribute("data-addr")) || c.getAttribute("data-addr") || "";
+        const card = c.closest(".item");
+        const propId = (card && card.getAttribute("data-prop")) || c.getAttribute("data-prop") || "";
+        const addr = (card && card.getAttribute("data-addr")) || c.getAttribute("data-addr") || "";
 
-      await comment(propId, addr);
-      return;
+        await comment(propId, addr);
+
+        await bucketizeBuyerDecisions();
+        return;
       }
       
     } catch (err) {
@@ -970,7 +1327,7 @@ document.addEventListener("touchstart", (e) => {
     if (IS_ADMIN) {
       await loadAdminUI();
     } else {
-      await hideRejectedForBuyer();
+      await bucketizeBuyerDecisions();
       await refreshHoldBadges();
     }
   })();
