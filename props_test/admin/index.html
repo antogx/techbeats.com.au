@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Admin</h1>
-    <div class="sub">Updated: 2026-03-02 01:28</div>
+    <div class="sub">Updated: 2026-03-02 01:35</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -252,7 +252,10 @@ body.dark .qk{color:var(--fg)}
     <div class="bhead">You Selected <span class="bcount" id="cntSelected">0</span></div>
     <div id="bucketSelected"></div>
   </div>
+</div>
 
+<!-- Rejected + Comments moved to bottom -->
+<div id="buyerBucketsBottom" class="buckets" hidden>
   <div class="bucket bucket-rejected">
     <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
     <div id="bucketRejected"></div>
@@ -933,6 +936,7 @@ document.addEventListener("touchstart", (e) => {
     if (!BUYER_ID || IS_ADMIN) return;
 
     const bucketsWrap = document.getElementById("buyerBuckets");
+    const bucketsBottom = document.getElementById("buyerBucketsBottom");
     const selBox = document.getElementById("bucketSelected");
     const rejBox = document.getElementById("bucketRejected");
     const cmtBox = document.getElementById("bucketCommented");
@@ -945,6 +949,7 @@ document.addEventListener("touchstart", (e) => {
 
     // Show the buckets UI for buyer pages
     bucketsWrap.hidden = false;
+    if (bucketsBottom) bucketsBottom.hidden = false;
     selBox.innerHTML = "";
     rejBox.innerHTML = "";
     cmtBox.innerHTML = "";
