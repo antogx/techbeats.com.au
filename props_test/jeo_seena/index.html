@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Jeo &amp; Seena</h1>
-    <div class="sub">Updated: 2026-03-02 01:36</div>
+    <div class="sub">Updated: 2026-03-02 01:39</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -693,11 +693,13 @@ document.addEventListener("touchstart", (e) => {
           card.appendChild(badge);
         }
 
+        const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
+
         const det = document.createElement("details");
         det.className = "cmt-line";
 
         const sum = document.createElement("summary");
-        sum.textContent = "Comment";
+        sum.textContent = addrText || "Unknown address";
         det.appendChild(sum);
 
         const body = document.createElement("div");
