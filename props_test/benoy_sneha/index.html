@@ -203,7 +203,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Benoy &amp; Sneha</h1>
-    <div class="sub">Updated: 2026-03-01 23:59</div>
+    <div class="sub">Updated: 2026-03-02 00:14</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -364,7 +364,7 @@ document.addEventListener("touchstart", (e) => {
   import {
     getFirestore,
     doc, setDoc, getDoc,
-    collection, query, orderBy, limit, getDocs,
+    collection, query, where, orderBy, limit, getDocs,
     serverTimestamp, runTransaction
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
@@ -454,6 +454,25 @@ document.addEventListener("touchstart", (e) => {
     );
   }
 
+  async function canAcceptAnother(propId) {
+    if (!BUYER_ID || IS_ADMIN) return true;
+
+    // If this specific property is already accepted by this buyer, allow
+    const decSnap = await getDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId));
+    if (decSnap.exists()) {
+      const d = decSnap.data() || {};
+      if ((d.decision || "").toString().trim() === "ACCEPT") return true;
+    }
+
+    // Count accepted properties for this buyer
+    const qAcc = query(
+      collection(db, "buyer_decisions", BUYER_ID, "props"),
+      where("decision", "==", "ACCEPT")
+    );
+    const accSnaps = await getDocs(qAcc);
+    return accSnaps.size < 2;
+  }
+
   async function setComment(propId, address, comment) {
     await setDoc(
       doc(db, "buyer_decisions", BUYER_ID, "props", propId),
@@ -471,8 +490,9 @@ document.addEventListener("touchstart", (e) => {
     );
   }
 
-  async function acceptHold(propId, address) {
+   async function acceptHold(propId, address) {
     const ref = doc(db, "property_states", propId);
+
     const ok = await runTransaction(db, async (tx) => {
       const snap = await tx.get(ref);
       const cur = snap.exists() ? snap.data() : null;
@@ -494,14 +514,12 @@ document.addEventListener("touchstart", (e) => {
       return true;
     });
 
-    await writeEvent("ACCEPT", propId, address, "");
-    await setDecision(propId, address, "ACCEPT");
-    return ok;
-  }
+    if (ok) {
+      await writeEvent("ACCEPT", propId, address, "");
+      await setDecision(propId, address, "ACCEPT");
+    }
 
-  async function reject(propId, address) {
-    await writeEvent("REJECT", propId, address, "");
-    await setDecision(propId, address, "REJECT");
+    return ok;
   }
 
   async function comment(propId, address) {
@@ -796,6 +814,13 @@ document.addEventListener("touchstart", (e) => {
         const card = a.closest(".item");
         const propId = (card && card.getAttribute("data-prop")) || a.getAttribute("data-prop") || "";
         const addr = (card && card.getAttribute("data-addr")) || a.getAttribute("data-addr") || "";
+
+        const allowed = await canAcceptAnother(propId);
+
+        if (!allowed) {
+          alert("You can accept maximum 2 properties. Please contact admin to accept more than 2.");
+          return;
+        }
 
         const ok = await acceptHold(propId, addr);
 
