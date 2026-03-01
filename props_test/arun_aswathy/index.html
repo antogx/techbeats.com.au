@@ -203,7 +203,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Arun &amp; Aswathy</h1>
-    <div class="sub">Updated: 2026-03-01 23:49</div>
+    <div class="sub">Updated: 2026-03-01 23:59</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -467,15 +467,14 @@ document.addEventListener("touchstart", (e) => {
         badge.classList.remove("st-ok", "st-bad");
         badge.classList.add("st-hold");
 
-        if (heldBy && heldBy !== BUYER_ID) {
-            // Held by someone else
-            accBtn.classList.add("btn-dis");
-            note.textContent = "Held by another buyer";
-            note.hidden = false;
-        } else if (heldBy && heldBy === BUYER_ID) {
+        if (heldBy && heldBy === BUYER_ID) {
             // Held by same buyer → disable Accept
             accBtn.classList.add("btn-dis");
             note.textContent = "You have accepted this property";
+            note.hidden = false;
+        } else if (heldBy && heldBy !== BUYER_ID) {
+            // Held by someone else → show note only (but keep Accept enabled)
+            note.textContent = "Held by another buyer";
             note.hidden = false;
         }
 
