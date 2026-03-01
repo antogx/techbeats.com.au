@@ -27,6 +27,10 @@
 body.dark .cmt-line{
   background:rgba(234,240,255,.06);
 }
+
+.cmt-row{margin-top:10px}
+.cmt-addr{font-weight:950;margin-bottom:6px}
+
 .cmt-line summary{
   cursor:pointer;
   font-weight:950;
@@ -223,7 +227,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Anish &amp; Anitta</h1>
-    <div class="sub">Updated: 2026-03-02 01:42</div>
+    <div class="sub">Updated: 2026-03-02 01:46</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -1072,7 +1076,17 @@ document.addEventListener("touchstart", (e) => {
         body.textContent = lines.join(" | ");
         det.appendChild(body);
 
-        cmtBox.appendChild(det);
+        const row = document.createElement("div");
+        row.className = "cmt-row";
+
+        const addrLine = document.createElement("div");
+        addrLine.className = "cmt-addr";
+        addrLine.textContent = addrText || "Unknown address";
+
+        row.appendChild(addrLine);
+        row.appendChild(det);
+
+        cmtBox.appendChild(row);
         nCmt += 1;
       }
     }
