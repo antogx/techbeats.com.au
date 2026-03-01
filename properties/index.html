@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-03-02 00:29</div>
+    <div class="sub">Updated: 2026-03-02 00:43</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -642,8 +642,8 @@ document.addEventListener("touchstart", (e) => {
   import {
     getFirestore,
     doc, setDoc, getDoc,
-    collection, query, where, orderBy, limit, getDocs,
-    serverTimestamp, runTransaction
+    collection, addDoc, query, where, orderBy, limit, getDocs,
+    serverTimestamp, runTransaction, arrayUnion
   } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
   const firebaseConfig = {
@@ -715,6 +715,20 @@ document.addEventListener("touchstart", (e) => {
     }, { merge: true });
   }
 
+  async function writeCommentEvent(propId, address, comment) {
+    await addDoc(collection(db, "events"), {
+      type: "COMMENT",
+      propId,
+      address,
+      addressNorm: normAddr(address),
+      buyerId: BUYER_ID || "unknown",
+      buyerName: BUYER_NAME || BUYER_ID || "unknown",
+      comment,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+  }
+
   async function setDecision(propId, address, decision) {
     await setDoc(
       doc(db, "buyer_decisions", BUYER_ID, "props", propId),
@@ -760,8 +774,17 @@ document.addEventListener("touchstart", (e) => {
         propId,
         address,
         addressNorm: normAddr(address),
+
+        // Latest comment (for quick display)
         comment,
         commentAt: serverTimestamp(),
+
+        // Comment history (append)
+        comments: arrayUnion({
+          text: comment,
+          at: serverTimestamp()
+        }),
+
         updatedAt: serverTimestamp()
       },
       { merge: true }
@@ -811,7 +834,7 @@ document.addEventListener("touchstart", (e) => {
     // If user submits empty comment → do nothing
     if (!msg) return;
 
-    await writeEvent("COMMENT", propId, address, msg);
+    await writeCommentEvent(propId, address, msg);
     await setComment(propId, address, msg);
 
     alert("Comment saved 💬");
@@ -919,7 +942,8 @@ document.addEventListener("touchstart", (e) => {
       if (!x) continue;
 
       const decision = (x.decision || "").toString().trim();
-      const comment  = (x.comment || "").toString().trim();
+      const comment = (x.comment || "").toString().trim();
+      const commentsArr = Array.isArray(x.comments) ? x.comments : [];
 
       // Clean any old comment badge
       const oldBadge = card.querySelector(".cmt-badge");
@@ -939,15 +963,16 @@ document.addEventListener("touchstart", (e) => {
       }
 
       // Always show comments (even if ACCEPT or REJECT)
-      if (comment) {
+      if (comment || commentsArr.length) {
 
-        // Small badge on the card itself
-        const badge = document.createElement("div");
-        badge.className = "cmt-badge";
-        badge.textContent = "💬 " + comment;
-        card.appendChild(badge);
+        // Card badge shows latest comment only
+        if (comment) {
+          const badge = document.createElement("div");
+          badge.className = "cmt-badge";
+          badge.textContent = "💬 " + comment;
+          card.appendChild(badge);
+        }
 
-        // Expandable entry inside "Your Comments"
         const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
 
         const det = document.createElement("details");
@@ -959,7 +984,22 @@ document.addEventListener("touchstart", (e) => {
 
         const body = document.createElement("div");
         body.className = "cmt-text";
-        body.textContent = (addrText || "Unknown address") + " : " + comment;
+
+        // Build full history text
+        const lines = [];
+
+        // Prefer comments array history
+        if (commentsArr.length) {
+          // Each element may be {text, at}; keep it simple and show text
+          for (const it of commentsArr) {
+            const t = (it && it.text ? String(it.text) : "").trim();
+            if (t) lines.push(t);
+          }
+        } else if (comment) {
+          lines.push(comment);
+        }
+
+        body.textContent = (addrText || "Unknown address") + " : " + lines.join(" | ");
         det.appendChild(body);
 
         cmtBox.appendChild(det);
