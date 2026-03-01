@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Josin &amp; Jeethu</h1>
-    <div class="sub">Updated: 2026-03-02 00:58</div>
+    <div class="sub">Updated: 2026-03-02 01:00</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -921,14 +921,34 @@ document.addEventListener("touchstart", (e) => {
     const evSnap = await getDocs(evQ);
 
     const commentsByProp = new Map(); // propId -> [comment strings newest-first]
-    evSnap.forEach((d) => {
-      const e = d.data() || {};
-      const pid = (e.propId || "").toString().trim();
-      const c = (e.comment || "").toString().trim();
-      if (!pid || !c) return;
-      if (!commentsByProp.has(pid)) commentsByProp.set(pid, []);
-      commentsByProp.get(pid).push(c);
-    });
+
+    // Load buyer decisions + comment history from EVENTS
+    let snaps;
+    try {
+      snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
+
+      const evQ = query(
+        collection(db, "events"),
+        where("buyerId", "==", BUYER_ID),
+        where("type", "==", "COMMENT"),
+        orderBy("createdAt", "desc"),
+        limit(1000)
+      );
+      const evSnap = await getDocs(evQ);
+
+      evSnap.forEach((d) => {
+        const e = d.data() || {};
+        const pid = (e.propId || "").toString().trim();
+        const c = (e.comment || "").toString().trim();
+        if (!pid || !c) return;
+        if (!commentsByProp.has(pid)) commentsByProp.set(pid, []);
+        commentsByProp.get(pid).push(c);
+      });
+
+    } catch (e) {
+      console.error("bucketizeBuyerDecisions failed", e);
+      return;
+    }
 
     } catch (e) {
       console.error("bucketizeBuyerDecisions failed", e);
