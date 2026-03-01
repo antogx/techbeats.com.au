@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Benoy &amp; Sneha</h1>
-    <div class="sub">Updated: 2026-03-02 00:49</div>
+    <div class="sub">Updated: 2026-03-02 00:54</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -517,7 +517,7 @@ document.addEventListener("touchstart", (e) => {
         address,
         addressNorm: normAddr(address),
 
-        // Latest comment (for quick display)
+        // Latest comment
         comment,
         commentAt: serverTimestamp(),
 
@@ -567,13 +567,9 @@ document.addEventListener("touchstart", (e) => {
 
   async function comment(propId, address) {
     const text = prompt("Comment");
-
-    // If user clicks Cancel → text is null
     if (text === null) return;
 
     const msg = text.trim();
-
-    // If user submits empty comment → do nothing
     if (!msg) return;
 
     await writeCommentEvent(propId, address, msg);
