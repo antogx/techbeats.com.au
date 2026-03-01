@@ -223,7 +223,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Arun &amp; Aswathy</h1>
-    <div class="sub">Updated: 2026-03-02 01:24</div>
+    <div class="sub">Updated: 2026-03-02 01:28</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -600,9 +600,16 @@ document.addEventListener("touchstart", (e) => {
     let snaps;
     const commentsByProp = new Map(); // propId -> [comment strings newest-first]
 
+    // 1) Always try to load buyer decisions first (this drives Selected/Rejected)
     try {
       snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
+    } catch (e) {
+      console.error("Failed to load buyer_decisions:", e);
+      return; // without decisions we can't build Selected/Rejected
+    }
 
+    // 2) Try to load COMMENT events (optional). If it fails (missing index), still continue.
+    try {
       const evQ = query(
         collection(db, "events"),
         where("buyerId", "==", BUYER_ID),
@@ -620,10 +627,10 @@ document.addEventListener("touchstart", (e) => {
         if (!commentsByProp.has(pid2)) commentsByProp.set(pid2, []);
         commentsByProp.get(pid2).push(c);
       });
-
     } catch (e) {
-      console.error("bucketizeBuyerDecisions failed", e);
-      return;
+      // This commonly fails if Firestore needs a composite index.
+      console.warn("Could not load COMMENT events (continuing without event history):", e);
+      // Continue with empty commentsByProp
     }
 
     // Map by propId and by addressNorm (for safety)
