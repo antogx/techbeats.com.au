@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Properties</title>
+<title>Admin</title>
 <style>
 :root {
   --bg:#f6f8fc; --fg:#0f172a; --muted:#475569; --line:#e2e8f0;
@@ -149,7 +149,7 @@ body.dark .qk{color:var(--fg)}
 <div class="wrap">
 <header>
   <div class="lefthead">
-    <h1>Properties</h1>
+    <h1>Admin</h1>
     <div class="sub">Updated: 2026-03-01 23:17</div>
   </div>
   <div class="right">
@@ -162,7 +162,17 @@ body.dark .qk{color:var(--fg)}
   </div>
 </header>
 
-
+<div class="admin-wrap">
+  <div class="admin-left">
+    <div class="admin-title">Users</div>
+    <div id="adminUsers" class="admin-users"></div>
+  </div>
+  <div class="admin-right">
+    <div class="admin-title">Activity</div>
+    <div id="adminWho" class="admin-who muted">Select a user</div>
+    <div id="adminPanel" class="admin-panel"></div>
+  </div>
+</div>
 
 <div id="buyerBuckets" class="buckets" hidden>
   <div class="bucket">
@@ -587,9 +597,9 @@ document.addEventListener("touchstart", (e) => {
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  const BUYER_ID = "";
-  const BUYER_NAME_RAW = "";
-  const IS_ADMIN = false;
+  const BUYER_ID = "admin";
+  const BUYER_NAME_RAW = "Admin";
+  const IS_ADMIN = true;
 
   function decodeEntities(s) {
     const t = document.createElement("textarea");
