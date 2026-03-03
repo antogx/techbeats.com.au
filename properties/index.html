@@ -255,7 +255,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-03-03 19:16</div>
+    <div class="sub">Updated: 2026-03-03 19:17</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -952,6 +952,7 @@ document.addEventListener("touchstart", (e) => {
 
     for (const card of cards) {
       const accBtn = card.querySelector(".js-acc");
+      const rejBtn = card.querySelector(".js-rej");
       const note = card.querySelector(".hold-note");
       const badge = card.querySelector(".st");
 
@@ -960,6 +961,27 @@ document.addEventListener("touchstart", (e) => {
       note.hidden = true;
       note.textContent = "";
       accBtn.classList.remove("btn-dis");
+      if (rejBtn) rejBtn.classList.remove("btn-dis");
+      accBtn.disabled = false;
+      if (rejBtn) rejBtn.disabled = false;
+
+      // ✅ CSV "Taken" must win (do NOT override to Hold from Firebase)
+      const baseStatus = (card.getAttribute("data-status") || "").trim();
+      if (baseStatus === "Taken") {
+        badge.textContent = "Taken";
+        badge.classList.remove("st-ok", "st-hold");
+        badge.classList.add("st-bad");     // red
+
+        accBtn.classList.add("btn-dis");
+        accBtn.disabled = true;
+        if (rejBtn) { rejBtn.classList.add("btn-dis"); rejBtn.disabled = true; }
+
+        // optional message (can remove if you don’t want any note)
+        note.textContent = "Taken";
+        note.hidden = false;
+
+        continue;
+      }
 
       const propId = card.getAttribute("data-prop") || "";
       if (!propId) continue;
@@ -1304,6 +1326,8 @@ document.addEventListener("touchstart", (e) => {
       const c = e.target.closest(".js-cmt");
 
       if (a) {
+        if (a.classList.contains("btn-dis") || a.disabled) return;
+
         const confirmAccept = confirm("Marked as accepted. Confirm?");
 
         if (!confirmAccept) return;
@@ -1333,6 +1357,8 @@ document.addEventListener("touchstart", (e) => {
       }
 
       if (r) {
+        if (r.classList.contains("btn-dis") || r.disabled) return;
+
         const confirmReject = confirm("Reject this property? Confirm?");
 
         if (!confirmReject) return;
