@@ -255,7 +255,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Arun &amp; Aswathy</h1>
-    <div class="sub">Updated: 2026-03-07 14:25</div>
+    <div class="sub">Updated: 2026-03-08 21:39</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -515,13 +515,35 @@ document.addEventListener("touchstart", (e) => {
       if ((d.decision || "").toString().trim() === "ACCEPT") return true;
     }
 
-    // Count accepted properties for this buyer
+    // Get properties currently visible on the page
+    const visibleProps = new Set();
+    document.querySelectorAll(".item[data-prop]").forEach((el) => {
+      const pid = (el.getAttribute("data-prop") || "").trim();
+      if (pid) visibleProps.add(pid);
+    });
+
+    // Query accepted properties from Firestore
     const qAcc = query(
       collection(db, "buyer_decisions", BUYER_ID, "props"),
       where("decision", "==", "ACCEPT")
     );
+
     const accSnaps = await getDocs(qAcc);
-    return accSnaps.size < 2;
+
+    let count = 0;
+
+    accSnaps.forEach((docSnap) => {
+      const d = docSnap.data() || {};
+      const pid = (d.propId || "").toString().trim();
+
+      // Count only if property still exists on page
+      if (visibleProps.has(pid)) {
+        count += 1;
+      }
+    });
+
+    // Limit = 3 properties
+    return count < 3;
   }
 
   async function setComment(propId, address, comment) {
@@ -995,7 +1017,7 @@ document.addEventListener("touchstart", (e) => {
         const allowed = await canAcceptAnother(propId);
 
         if (!allowed) {
-          alert("You can accept maximum 2 properties. Please contact admin to accept more than 2.");
+          alert("You can accept maximum 3 properties. Please contact admin to accept more than 3.");
           return;
         }
 
