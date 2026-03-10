@@ -456,7 +456,7 @@
         </div>
 
         <div class="save-note" id="templateNote" style="display:none;">
-          Template mode: Address and Price are editable. Saved values persist only in this browser (localStorage).
+          Template mode: Address and Price are editable. Values reset to defaults when the page reloads.
         </div>
       </section>
 
@@ -642,7 +642,7 @@
       lvr: 0.8,
       interest: 0.06,
       rentWeek: 680,
-      council: 2000,
+      council: 2500,
       insurance: 1900,
       pmPct: 7,          // percent number (e.g. 9)
       maintenance: 500,
@@ -655,7 +655,6 @@
       stampDuty: 23848,
     };
 
-    const STORAGE_KEY = "cf_calc_v2"; 
     const KEY_YEARS = new Set([1,5,10,15,20]);
 
     // --- LMI (Approx AU) ---
@@ -927,7 +926,6 @@
     const themeToggle = $("themeToggle");
     function setTheme(mode) {
       document.body.setAttribute("data-theme", mode);
-      try { localStorage.setItem("cf_theme", mode); } catch(e) {}
     }
     function toggleTheme() {
       const cur = document.body.getAttribute("data-theme") || "light";
@@ -969,115 +967,8 @@
     }
     $("forecastMode").addEventListener("change", () => safeRecalc());
 
-    function getCurrentFormState() {
-      return {
-        address: $("address").value || "",
-        purchasePrice: $("purchasePrice").value || "",
-        state: $("state").value || "",
-        lvr: $("lvr").value || "",
-        lmi: $("lmi").value || "",
-        lmiAuto: $("lmiAuto").checked,
-        stampDuty: $("stampDuty").value || "",
-        dutyAuto: $("dutyAuto").checked,
-        interest: $("interest").value || "",
-        rentWeek: $("rentWeek").value || "",
-        councilRates: $("councilRates").value || "",
-        insurance: $("insurance").value || "",
-        pmFeePct: $("pmFeePct").value || "",
-        pmFee: $("pmFee").value || "",
-        pmUseFormula: $("pmUseFormula").checked,
-        maintenance: $("maintenance").value || "",
-        landTax: $("landTax").value || "",
-        depreciation: $("depreciation").value || "",
-        taxRate: $("taxRate").value || "",
-        capGrowth: $("capGrowth").value || "",
-        rentGrowth: $("rentGrowth").value || "",
-        forecastMode: $("forecastMode").value || "key",
-        theme: document.body.getAttribute("data-theme") || "light",
-      };
-    }
-
-    function setIfNonEmpty(id, val) {
-      if (typeof val !== "string") return;
-      const trimmed = val.trim();
-      if (!trimmed) return;                 // skip empty strings so defaults remain
-      $(id).value = trimmed;
-    }
-
-    function applyFormState(s) {
-      if (!s || typeof s !== "object") return;
-
-      // Allow address to be empty in template mode
-      if (typeof s.address === "string") $("address").value = s.address;
-
-      // Price: allow empty in template mode, otherwise skip blank
-      if (typeof s.purchasePrice === "string") {
-        if (IS_TEMPLATE) $("purchasePrice").value = s.purchasePrice;
-        else if (s.purchasePrice.trim()) $("purchasePrice").value = s.purchasePrice.trim();
-      }
-
-      // Everything else: do NOT overwrite defaults with ""
-      setIfNonEmpty("state", s.state);
-      setIfNonEmpty("lvr", s.lvr);
-
-      if (typeof s.lmiAuto === "boolean") $("lmiAuto").checked = s.lmiAuto;
-      setIfNonEmpty("lmi", s.lmi);
-
-      if (typeof s.dutyAuto === "boolean") $("dutyAuto").checked = s.dutyAuto;
-      setIfNonEmpty("stampDuty", s.stampDuty);
-
-      setIfNonEmpty("interest", s.interest);
-      setIfNonEmpty("rentWeek", s.rentWeek);
-
-      setIfNonEmpty("councilRates", s.councilRates);
-      setIfNonEmpty("insurance", s.insurance);
-      setIfNonEmpty("pmFeePct", s.pmFeePct);
-      if (typeof s.pmUseFormula === "boolean") $("pmUseFormula").checked = s.pmUseFormula;
-      setIfNonEmpty("pmFee", s.pmFee);
-
-      setIfNonEmpty("maintenance", s.maintenance);
-      setIfNonEmpty("landTax", s.landTax);
-      setIfNonEmpty("depreciation", s.depreciation);
-
-      setIfNonEmpty("taxRate", s.taxRate);
-      setIfNonEmpty("capGrowth", s.capGrowth);
-      setIfNonEmpty("rentGrowth", s.rentGrowth);
-
-      if (typeof s.forecastMode === "string" && s.forecastMode.trim()) {
-        $("forecastMode").value = s.forecastMode.trim();
-      }
-
-      if (typeof s.theme === "string" && (s.theme === "light" || s.theme === "dark")) {
-        setTheme(s.theme);
-      }
-    }
-
-
-    function saveToBrowserCache() {
-      const status = $("saveStatus");
-      try {
-        const payload = getCurrentFormState();
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-        status.textContent = "Saved to browser cache.";
-      } catch (e) {
-        status.textContent = "Save failed (browser blocked storage).";
-      }
-      setTimeout(() => { status.textContent = ""; }, 2500);
-    }
-
-    function resetBrowserCache() {
-      const status = $("saveStatus");
-      try {
-        localStorage.removeItem(STORAGE_KEY);
-        status.textContent = "Reset: browser cache cleared.";
-      } catch (e) {
-        status.textContent = "Reset failed.";
-      }
-      setTimeout(() => { status.textContent = ""; }, 2500);
-    }
-
-    $("saveBtn").addEventListener("click", () => { saveToBrowserCache(); safeRecalc(); });
-    $("resetBtn").addEventListener("click", () => { resetBrowserCache(); applyDefaults(); safeRecalc(); });
+    $("saveBtn").addEventListener("click", () => { safeRecalc(); });
+    $("resetBtn").addEventListener("click", () => { applyDefaults(); safeRecalc(); });
 
     function applyDefaults() {
       $("address").value = (DEFAULTS.address || "");
@@ -1349,41 +1240,13 @@
     ].forEach(id => $(id).addEventListener("input", debounceRecalc));
 
     function initRun() {
-      try {
-        const savedTheme = localStorage.getItem("cf_theme");
-        if (savedTheme === "dark" || savedTheme === "light") setTheme(savedTheme);
-      } catch(e) {}
-
       setPropertyFieldsEditable();
       applyDefaults();
 
-      // load saved values (browser cache only)
-      // IMPORTANT: In non-template mode, do NOT let saved cache override address/price from the generated HTML
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-          const obj = JSON.parse(raw);
-
-          if (!IS_TEMPLATE) {
-            // Keep injected address/price fixed (locked)
-            if (obj && typeof obj === "object") {
-              delete obj.address;
-              delete obj.purchasePrice;
-            }
-          }
-
-          applyFormState(obj);
-        }
-      } catch(e) {}
-
-      // forecast mode default: key on mobile
-      if (!($("forecastMode").value || "").trim()) {
-        $("forecastMode").value = (window.matchMedia("(max-width: 560px)").matches ? "key" : "all");
+      if (IS_TEMPLATE) {
+        $("templateNote").style.display = "block";
       }
 
-      updatePmModeTag();
-      updateLmiModeTag();
-      updateDutyModeTag();
       safeRecalc();
     }
 
