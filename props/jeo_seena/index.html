@@ -255,7 +255,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Jeo &amp; Seena</h1>
-    <div class="sub">Updated: 2026-03-11 23:47</div>
+    <div class="sub">Updated: 2026-03-12 00:07</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -431,9 +431,13 @@ document.addEventListener("touchstart", (e) => {
     return (s || "x").toString().replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 500);
   }
 
+  function propertyStateId(propId) {
+    return safeId((BUYER_ID || "unknown") + "__" + (propId || ""));
+  }
+
   async function reject(propId, address) {
     // Remove hold if this buyer held it
-    const stateRef = doc(db, "property_states", propId);
+    const stateRef = doc(db, "property_states", propertyStateId(propId));
 
     await runTransaction(db, async (tx) => {
       const snap = await tx.get(stateRef);
@@ -441,6 +445,11 @@ document.addEventListener("touchstart", (e) => {
         const cur = snap.data() || {};
         if (cur.holdBy === BUYER_ID) {
           tx.set(stateRef, {
+            propId,
+            address,
+            addressNorm: normAddr(address),
+            buyerId: BUYER_ID,
+            buyerName: BUYER_NAME || BUYER_ID,
             status: "Available",
             holdBy: "",
             holdByName: "",
@@ -450,16 +459,14 @@ document.addEventListener("touchstart", (e) => {
       }
     });
 
-    // Write event (deduped by eventId logic)
     await writeEvent("REJECT", propId, address, "");
-
-    // Save buyer decision
     await setDecision(propId, address, "REJECT");
   }
 
   async function writeEvent(type, propId, address, comment = "") {
-    // One event per (buyerId + type + propId). Re-click overwrites the same doc.
-    const eventId = safeId((BUYER_ID || "unknown") + "__" + (type || "") + "__" + (propId || ""));
+    const eventId = safeId(
+      (BUYER_ID || "unknown") + "__" + (type || "") + "__" + (propId || "")
+    );
 
     await setDoc(doc(db, "events", eventId), {
       type,
@@ -469,13 +476,17 @@ document.addEventListener("touchstart", (e) => {
       buyerId: BUYER_ID || "unknown",
       buyerName: BUYER_NAME || BUYER_ID || "unknown",
       comment,
-      createdAt: serverTimestamp(),   // becomes the latest timestamp
+      createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
     }, { merge: true });
   }
 
   async function writeCommentEvent(propId, address, comment) {
-    await addDoc(collection(db, "events"), {
+    const commentEventId = safeId(
+      (BUYER_ID || "unknown") + "__COMMENT__" + (propId || "") + "__" + Date.now()
+    );
+
+    await setDoc(doc(db, "events", commentEventId), {
       type: "COMMENT",
       propId,
       address,
@@ -578,36 +589,46 @@ document.addEventListener("touchstart", (e) => {
     });
   }
 
-   async function acceptHold(propId, address) {
-    const ref = doc(db, "property_states", propId);
+  async function acceptHold(propId, address) {
+    const myRef = doc(db, "property_states", propertyStateId(propId));
 
-    const ok = await runTransaction(db, async (tx) => {
-      const snap = await tx.get(ref);
-      const cur = snap.exists() ? snap.data() : null;
+    const qHold = query(
+      collection(db, "property_states"),
+      where("propId", "==", propId)
+    );
 
-      if (cur && cur.status === "Hold" && cur.holdBy && cur.holdBy !== BUYER_ID) {
-        return false;
+    const existingSnaps = await getDocs(qHold);
+
+    let blocked = false;
+
+    existingSnaps.forEach((s) => {
+      const d = s.data() || {};
+      const heldBy = (d.holdBy || "").toString().trim();
+      const status = (d.status || "").toString().trim();
+
+      if (status === "Hold" && heldBy && heldBy !== BUYER_ID) {
+        blocked = true;
       }
-
-      tx.set(ref, {
-        propId,
-        address,
-        addressNorm: normAddr(address),
-        status: "Hold",
-        holdBy: BUYER_ID,
-        holdByName: BUYER_NAME || BUYER_ID,
-        updatedAt: serverTimestamp()
-      }, { merge: true });
-
-      return true;
     });
 
-    if (ok) {
-      await writeEvent("ACCEPT", propId, address, "");
-      await setDecision(propId, address, "ACCEPT");
-    }
+    if (blocked) return false;
 
-    return ok;
+    await setDoc(myRef, {
+      propId,
+      address,
+      addressNorm: normAddr(address),
+      buyerId: BUYER_ID,
+      buyerName: BUYER_NAME || BUYER_ID,
+      status: "Hold",
+      holdBy: BUYER_ID,
+      holdByName: BUYER_NAME || BUYER_ID,
+      updatedAt: serverTimestamp()
+    }, { merge: true });
+
+    await writeEvent("ACCEPT", propId, address, "");
+    await setDecision(propId, address, "ACCEPT");
+
+    return true;
   }
 
   async function comment(propId, address) {
@@ -665,10 +686,25 @@ document.addEventListener("touchstart", (e) => {
       if (!propId) continue;
 
       try {
-        const snap = await getDoc(doc(db, "property_states", propId));
-        if (!snap.exists()) continue;
+        const qHold = query(
+          collection(db, "property_states"),
+          where("propId", "==", propId)
+        );
 
-        const st = snap.data() || {};
+        const holdSnaps = await getDocs(qHold);
+        if (holdSnaps.empty) continue;
+
+        let st = null;
+
+        holdSnaps.forEach((s) => {
+          const d = s.data() || {};
+          if (!st && (d.status || "").toString().trim() === "Hold") {
+            st = d;
+          }
+        });
+
+        if (!st) continue;
+
         const heldBy = (st.holdBy || "").toString().trim();
         if (st.status === "Hold") {
 
