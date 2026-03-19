@@ -12,15 +12,12 @@
   --line:#d1d5db;
   --line2:#e5e7eb;
   --card:#ffffff;
-  --panel:#ffffff;
   --char:#1f2937;
   --char2:#374151;
-  --accent:#3f3f46;
   --green:#15803d;
   --red:#b91c1c;
   --orange:#c2410c;
-  --shadow:0 10px 28px rgba(17,24,39,.07);
-  --shadow2:0 4px 12px rgba(17,24,39,.05);
+  --shadow:0 8px 24px rgba(17,24,39,.06);
 }
 * { box-sizing:border-box; }
 body {
@@ -30,87 +27,87 @@ body {
   color:var(--fg);
 }
 .wrap {
-  max-width:1800px;
+  max-width:1900px;
   margin:0 auto;
-  padding:10px 12px 18px;
+  padding:8px 10px 14px;
 }
 header {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:16px;
+  gap:12px;
   background:linear-gradient(135deg, var(--char), var(--char2));
   color:#fff;
-  border-radius:14px;
-  padding:14px 18px;
+  border-radius:12px;
+  padding:10px 14px;
   box-shadow:var(--shadow);
 }
 h1 {
   margin:0;
-  font-size:24px;
-  letter-spacing:.2px;
+  font-size:22px;
+  line-height:1.2;
 }
 .sub {
-  margin-top:4px;
-  font-size:12px;
-  opacity:.9;
+  margin-top:3px;
+  font-size:11px;
+  opacity:.92;
 }
 .logo {
-  width:120px;
-  max-width:34vw;
+  width:108px;
+  max-width:30vw;
   height:auto;
   display:block;
 }
 .toolbar {
-  margin-top:10px;
-  background:var(--panel);
+  margin-top:8px;
+  background:#fff;
   border:1px solid var(--line2);
-  border-radius:14px;
-  padding:10px;
-  box-shadow:var(--shadow2);
+  border-radius:12px;
+  padding:8px;
+  box-shadow:var(--shadow);
   display:grid;
-  gap:8px;
+  gap:6px;
 }
 .toolbar-grid {
   display:grid;
-  gap:8px;
-  grid-template-columns:1.05fr 1.6fr .95fr .95fr 1fr .95fr;
+  gap:6px;
+  grid-template-columns:0.9fr 1.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.9fr;
 }
 .control label {
   display:block;
-  font-size:11px;
+  font-size:10px;
   font-weight:800;
   color:var(--muted);
-  margin-bottom:4px;
+  margin-bottom:3px;
   letter-spacing:.2px;
 }
-input[type="text"], input[type="number"], select, textarea {
+input[type="text"], select, textarea {
   width:100%;
-  min-height:36px;
+  min-height:31px;
   border:1px solid var(--line);
-  border-radius:10px;
-  padding:7px 10px;
+  border-radius:8px;
+  padding:4px 7px;
   background:#fff;
   color:var(--fg);
-  font:inherit;
-}
-input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus {
-  outline:none;
-  border-color:#9ca3af;
-  box-shadow:0 0 0 3px rgba(107,114,128,.12);
+  font:12px/1.2 Inter, system-ui, sans-serif;
 }
 textarea {
-  min-height:72px;
+  min-height:40px;
   resize:vertical;
 }
+input[type="text"]:focus, select:focus, textarea:focus {
+  outline:none;
+  border-color:#9ca3af;
+  box-shadow:0 0 0 2px rgba(107,114,128,.12);
+}
 .btn {
-  min-height:36px;
-  border-radius:10px;
+  min-height:31px;
+  border-radius:8px;
   border:1px solid var(--line);
   background:#fff;
-  padding:8px 11px;
+  padding:4px 8px;
   cursor:pointer;
-  font-weight:800;
+  font:700 12px/1 Inter, system-ui, sans-serif;
   color:var(--fg);
 }
 .btn-primary {
@@ -128,134 +125,151 @@ textarea {
 }
 .meta-row {
   display:flex;
-  gap:8px;
+  gap:6px;
   flex-wrap:wrap;
   align-items:center;
-  font-size:12px;
+  font-size:11px;
   color:var(--muted);
 }
 .pill {
   display:inline-flex;
   align-items:center;
-  gap:6px;
+  gap:5px;
   border-radius:999px;
-  padding:4px 9px;
+  padding:3px 7px;
   border:1px solid var(--line2);
   background:#fff;
+  font-size:11px;
   font-weight:800;
   white-space:nowrap;
 }
-.grid {
-  display:block;
-  margin-top:10px;
-}
 .panel {
-  background:var(--panel);
+  margin-top:8px;
+  background:#fff;
   border:1px solid var(--line2);
-  border-radius:16px;
-  box-shadow:var(--shadow2);
+  border-radius:12px;
+  box-shadow:var(--shadow);
   overflow:hidden;
 }
 .panel-head {
   display:flex;
   justify-content:space-between;
   align-items:center;
-  gap:12px;
-  padding:12px 14px;
+  gap:10px;
+  padding:8px 10px;
   border-bottom:1px solid var(--line2);
 }
 .panel-title {
-  font-size:17px;
+  font-size:15px;
   font-weight:900;
   color:var(--char);
 }
+.small-note {
+  font-size:10px;
+  color:var(--muted);
+}
 .list {
-  padding:8px;
+  padding:6px;
   display:grid;
-  gap:8px;
+  gap:5px;
 }
-.card {
+.row {
   border:1px solid var(--line2);
-  border-radius:14px;
-  overflow:hidden;
+  border-radius:10px;
   background:#fff;
+  overflow:hidden;
 }
-.card.archived-card {
-  opacity:.88;
-  border-color:#e5e7eb;
+.row.archived-row {
+  opacity:.86;
   background:#fafafa;
 }
-.card-top {
-  padding:10px 12px;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  align-items:flex-start;
+.row-head {
+  display:grid;
+  grid-template-columns: minmax(280px, 1.4fr) 130px 120px 95px auto;
+  gap:6px;
+  align-items:center;
+  padding:6px 8px;
 }
-.card-main {
+.row-body {
+  border-top:1px solid var(--line2);
+  padding:6px 8px;
+}
+.row.compact .row-body {
+  padding:4px 8px 6px;
+}
+.titlebox {
   min-width:0;
-  flex:1 1 auto;
 }
 .property-link {
   color:var(--char);
   text-decoration:none;
   font-weight:900;
-  font-size:13px;
+  font-size:11px;
 }
 .property-link:hover {
   text-decoration:underline;
 }
 .addr {
-  font-size:15px;
+  font-size:13px;
   font-weight:900;
-  line-height:1.3;
-  margin-top:2px;
-  word-break:break-word;
+  line-height:1.2;
   color:#0f172a;
+  word-break:break-word;
 }
-.owner-badge {
+.owner-tag {
   border-radius:999px;
-  padding:5px 9px;
-  font-size:12px;
+  padding:4px 8px;
+  font-size:11px;
   font-weight:900;
   border:1px solid rgba(17,24,39,.08);
+  display:inline-flex;
+  align-items:center;
 }
-.owner-select-lock {
-  margin-top:5px;
+.status-pack {
   display:flex;
-  gap:6px;
+  gap:5px;
   flex-wrap:wrap;
   align-items:center;
 }
-.card-body {
-  padding:0 12px 12px 12px;
+.row-actions {
+  display:flex;
+  gap:5px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
 }
-.fields {
+.compact-grid {
   display:grid;
-  gap:8px;
-  grid-template-columns:repeat(4, minmax(180px, 1fr));
+  gap:5px;
+  grid-template-columns: repeat(10, minmax(90px, 1fr));
+  align-items:end;
 }
-.field {
+.detail-grid {
+  display:grid;
+  gap:6px;
+  grid-template-columns: repeat(6, minmax(140px, 1fr));
+  align-items:end;
+}
+.fld-wrap {
   min-width:0;
 }
-.field label {
+.fld-wrap label {
   display:block;
+  font-size:10px;
+  font-weight:800;
+  color:var(--muted);
+  margin-bottom:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+}
+.fld-s input, .fld-s select { min-height:28px; font-size:11px; padding:3px 6px; }
+.fld-m input, .fld-m select { min-height:28px; font-size:11px; padding:3px 6px; }
+.fld-l textarea { min-height:44px; font-size:11px; padding:4px 6px; }
+.save-state {
   font-size:11px;
   font-weight:800;
   color:var(--muted);
-  margin-bottom:4px;
-}
-.card-actions {
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  margin-top:10px;
-  align-items:center;
-}
-.save-state {
-  font-size:12px;
-  font-weight:800;
-  color:var(--muted);
+  min-width:48px;
 }
 .badge-green {
   color:#166534;
@@ -272,35 +286,35 @@ textarea {
   background:#ffedd5;
   border:1px solid #fed7aa;
 }
-.small-note {
-  font-size:11px;
-  color:var(--muted);
-}
 .hidden {
   display:none !important;
 }
-@media (max-width: 1450px) {
-  .fields { grid-template-columns:repeat(3, minmax(180px, 1fr)); }
+@media (max-width: 1600px) {
+  .compact-grid { grid-template-columns: repeat(8, minmax(90px, 1fr)); }
+  .detail-grid { grid-template-columns: repeat(4, minmax(140px, 1fr)); }
 }
-@media (max-width: 1100px) {
-  .toolbar-grid { grid-template-columns:repeat(3, minmax(160px, 1fr)); }
-  .fields { grid-template-columns:repeat(2, minmax(180px, 1fr)); }
+@media (max-width: 1200px) {
+  .toolbar-grid { grid-template-columns: repeat(4, minmax(140px, 1fr)); }
+  .row-head { grid-template-columns: 1fr 120px 95px; }
+  .row-actions { grid-column:1 / -1; justify-content:flex-start; }
+  .compact-grid { grid-template-columns: repeat(4, minmax(120px, 1fr)); }
+  .detail-grid { grid-template-columns: repeat(3, minmax(140px, 1fr)); }
 }
-@media (max-width: 760px) {
-  .wrap { padding:8px; }
-  .toolbar-grid { grid-template-columns:repeat(2, minmax(120px, 1fr)); }
-  .fields { grid-template-columns:1fr; }
-  .card-top { flex-direction:column; }
+@media (max-width: 780px) {
+  .wrap { padding:6px; }
+  .toolbar-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+  .row-head { grid-template-columns: 1fr; }
+  .compact-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
+  .detail-grid { grid-template-columns: repeat(2, minmax(120px, 1fr)); }
 }
 </style>
-
 </head>
 <body>
 <div class="wrap">
   <header>
     <div>
       <h1>Master Properties</h1>
-      <div class="sub">Generated: 2026-03-20 02:48 · Output: https://techbeats.com.au/props/master</div>
+      <div class="sub">Generated: 2026-03-20 03:03 · Output: https://techbeats.com.au/props/master</div>
     </div>
     <div></div>
   </header>
@@ -318,7 +332,7 @@ textarea {
       <div class="control">
         <label>Show</label>
         <select id="filterMine">
-          <option value="all">All active rows</option>
+          <option value="all">All active</option>
           <option value="mine">Only my rows</option>
         </select>
       </div>
@@ -326,55 +340,63 @@ textarea {
         <label>Archived</label>
         <select id="showArchived">
           <option value="hide">Hide archived</option>
-          <option value="show">Show archived also</option>
+          <option value="show">Show archived</option>
         </select>
       </div>
       <div class="control">
-        <label>Manual owner change</label>
+        <label>Owner change</label>
         <select id="adminMode">
-          <option value="off">Off</option>
-          <option value="on">On</option>
+          <option value="off">Locked</option>
+          <option value="on">Manual</option>
+        </select>
+      </div>
+      <div class="control">
+        <label>View</label>
+        <select id="viewMode">
+          <option value="compact">Compact rows</option>
+          <option value="detailed">Detailed edit</option>
         </select>
       </div>
       <div class="control">
         <label>&nbsp;</label>
-        <button class="btn btn-soft" id="recalcBtn" type="button">Preview rebalance</button>
+        <button class="btn btn-soft" id="recalcBtn" type="button">Preview balance</button>
       </div>
     </div>
 
     <div class="meta-row" id="summaryRow"></div>
     <div class="small-note">
-      Allocation is sticky. New properties are assigned automatically. Existing rows remain locked to the allocated owner unless manual owner change is enabled and saved.
+      Compact rows show the most-used fields in one or two rows. Detailed mode shows all configured fields.
     </div>
+    <div class="small-note" id="firebaseStatus">Firebase: checking…</div>
   </div>
 
-  <div class="grid">
-    <div class="panel">
-      <div class="panel-head">
-        <div class="panel-title">Properties</div>
-        <div class="small-note">Use Archive on a row to move it out of the active view</div>
-      </div>
-      <div class="list" id="activeList"></div>
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Properties</div>
+      <div class="small-note">Save writes to Firestore. Archived rows can be shown in the same page.</div>
     </div>
+    <div class="list" id="activeList"></div>
   </div>
 </div>
 
 <script>
-window.__MASTER_PROPS_DATA__ = {"sourceRows": [{"propId": "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5", "property": "https://www.realestate.com.au/property/246-sutton-st-warragul-vic-3820/", "address": "246 Sutton Street, Warragul, Vic 3820", "addressNorm": "246 sutton street, warragul, vic 3820", "sourceStatus": "Available"}, {"propId": "0f1205ed01aa1e421b0471ca328ec7834d2a8c00", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150566848", "address": "67 Burke Street, Maryborough, Vic 3465", "addressNorm": "67 burke street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "94ef50f878eb35c61db93a11a0cdda99beedb722", "property": "https://www.realestate.com.au/property-house-nsw-mount+austin-150608380", "address": "16 Adjin Street, Mount Austin, NSW 2650", "addressNorm": "16 adjin street, mount austin, nsw 2650", "sourceStatus": "Available"}, {"propId": "cfdb949c20da33be9e4b5b046274180047342e5d", "property": "https://www.realestate.com.au/property-house-vic-stratford-150605220", "address": "29 Fitzroy Street, Stratford, Vic 3862", "addressNorm": "29 fitzroy street, stratford, vic 3862", "sourceStatus": "Available"}, {"propId": "d930c817ec36af66817f7decfcc7d97908a5b17b", "property": "https://www.realestate.com.au/property/28-royes-st-mareeba-qld-4880", "address": "28 Royes Street, Mareeba, QLD 4880", "addressNorm": "28 royes street, mareeba, qld 4880", "sourceStatus": "Available"}, {"propId": "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9", "property": "https://www.realestate.com.au/property/9-cedar-st-sale-vic-3850/", "address": "9 Cedar Street, Sale, VIC 3850", "addressNorm": "9 cedar street, sale, vic 3850", "sourceStatus": "Available"}, {"propId": "c04766d5026325275485315a5033c9d867f4de18", "property": "https://www.realestate.com.au/property-house-sa-waikerie-150603836", "address": "20 Kirby Street, Waikerie, SA 5330", "addressNorm": "20 kirby street, waikerie, sa 5330", "sourceStatus": "Available"}, {"propId": "fcfff58d0e4068c0dbdcc86a7254a81001a9b843", "property": "https://www.realestate.com.au/property-house-vic-hoppers+crossing-150590712", "address": "15 Courtney Avenue, Hoppers Crossing, Vic 3029", "addressNorm": "15 courtney avenue, hoppers crossing, vic 3029", "sourceStatus": "Available"}, {"propId": "29698ca37248b2464c30d62a658496762b344f52", "property": "https://www.realestate.com.au/property-house-vic-lakes+entrance-150603448", "address": "61 Lakeview Drive, Lakes Entrance, Vic 3909", "addressNorm": "61 lakeview drive, lakes entrance, vic 3909", "sourceStatus": "Available"}, {"propId": "4a4e57ed0741a1543db7c85228f02d56f63e0fa1", "property": "https://www.realestate.com.au/property-house-vic-bannockburn-150602708", "address": "10 Victor Street, Bannockburn, Vic 3331", "addressNorm": "10 victor street, bannockburn, vic 3331", "sourceStatus": "Available"}, {"propId": "4b168f1be2eafded3caa74d9af306f03bf5ea172", "property": "https://www.realestate.com.au/property-house-sa-edithburgh-150612052", "address": "1 Grace Street, Edithburgh, SA 5583", "addressNorm": "1 grace street, edithburgh, sa 5583", "sourceStatus": "Available"}, {"propId": "a094161e87190ba9e917e18cd23df43046fca67b", "property": "https://www.realestate.com.au/property-house-vic-portland-150611272", "address": "145 Garden Street, Portland, Vic 3305", "addressNorm": "145 garden street, portland, vic 3305", "sourceStatus": "Available"}, {"propId": "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e", "property": "https://www.realestate.com.au/property-house-vic-winter+valley-150074132", "address": "64 Snowbird Road, Winter Valley, Vic 3358", "addressNorm": "64 snowbird road, winter valley, vic 3358", "sourceStatus": "Available"}, {"propId": "87910f5bde777af1dca0ebe64b45cf16e94d77e9", "property": "https://www.realestate.com.au/property-house-qld-atherton-150628056", "address": "19 Ellwood Close, Atherton, Qld 4883", "addressNorm": "19 ellwood close, atherton, qld 4883", "sourceStatus": "Available"}, {"propId": "3cc3738d950f174b78c276257c7b2d033b50c63f", "property": "https://www.realestate.com.au/property-house-nsw-mudgee-150627376", "address": "4 Headley Place, Mudgee, NSW 2850", "addressNorm": "4 headley place, mudgee, nsw 2850", "sourceStatus": "Available"}, {"propId": "d3e99d69db0e351230bca74b85bbe1b23726fc3c", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150625296", "address": "12 Barkly Street, Maryborough, Vic 3465", "addressNorm": "12 barkly street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "4925921cd6d3638b6d7e925811f069127116825f", "property": "https://www.realestate.com.au/property-house-wa-somerville-150608532", "address": "11B Rourke Cove, Somerville, WA 6430", "addressNorm": "11b rourke cove, somerville, wa 6430", "sourceStatus": "Available"}, {"propId": "52a88ca28741f6da4191d6dd3900729d790278cb", "property": "https://www.realestate.com.au/property-house-sa-goolwa+beach-150624464", "address": "33 Port Elliot Road, Goolwa Beach, SA 5214", "addressNorm": "33 port elliot road, goolwa beach, sa 5214", "sourceStatus": "Available"}, {"propId": "598fae186444d5d9e7e759db82ed5cb76c2f5fce", "property": "https://www.realestate.com.au/property-house-vic-benalla-148571812", "address": "2 Exton Crescent, Benalla, Vic 3672", "addressNorm": "2 exton crescent, benalla, vic 3672", "sourceStatus": "Available"}, {"propId": "54b8bae2dab3a331d6fc7a6b303e464bbc7828df", "property": "https://www.realestate.com.au/property-house-vic-timboon-150516768", "address": "1 Dawson Street, Timboon, Vic 3268", "addressNorm": "1 dawson street, timboon, vic 3268", "sourceStatus": "Available"}, {"propId": "1a0c37b479ec9cdac3fec9d937f47dea69e54340", "property": "https://www.realestate.com.au/property-house-nt-braitling-146754388", "address": "2 Priest Street, Braitling, NT 0870", "addressNorm": "2 priest street, braitling, nt 0870", "sourceStatus": "Available"}, {"propId": "58a4647f402e868a34a3eb18b376ec5c50f77f56", "property": "https://www.realestate.com.au/property-house-sa-mannum-150524200", "address": "80 Adelaide Road, Mannum, SA 5238", "addressNorm": "80 adelaide road, mannum, sa 5238", "sourceStatus": "Available"}, {"propId": "d5c0b447295555bb8e44c4b406aefcab09104874", "property": "https://www.realestate.com.au/property-house-vic-penshurst-150485880", "address": "21 French Street, Penshurst, Vic 3289", "addressNorm": "21 french street, penshurst, vic 3289", "sourceStatus": "Available"}], "initialAssignments": {"54b8bae2dab3a331d6fc7a6b303e464bbc7828df": "anto", "4b168f1be2eafded3caa74d9af306f03bf5ea172": "bibin", "4a4e57ed0741a1543db7c85228f02d56f63e0fa1": "aneesh", "4925921cd6d3638b6d7e925811f069127116825f": "john", "d3e99d69db0e351230bca74b85bbe1b23726fc3c": "anto", "a094161e87190ba9e917e18cd23df43046fca67b": "bibin", "fcfff58d0e4068c0dbdcc86a7254a81001a9b843": "aneesh", "94ef50f878eb35c61db93a11a0cdda99beedb722": "anto", "87910f5bde777af1dca0ebe64b45cf16e94d77e9": "john", "598fae186444d5d9e7e759db82ed5cb76c2f5fce": "bibin", "1a0c37b479ec9cdac3fec9d937f47dea69e54340": "anto", "c04766d5026325275485315a5033c9d867f4de18": "aneesh", "d5c0b447295555bb8e44c4b406aefcab09104874": "bibin", "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5": "john", "d930c817ec36af66817f7decfcc7d97908a5b17b": "anto", "cfdb949c20da33be9e4b5b046274180047342e5d": "aneesh", "52a88ca28741f6da4191d6dd3900729d790278cb": "bibin", "3cc3738d950f174b78c276257c7b2d033b50c63f": "anto", "29698ca37248b2464c30d62a658496762b344f52": "john", "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e": "aneesh", "0f1205ed01aa1e421b0471ca328ec7834d2a8c00": "bibin", "58a4647f402e868a34a3eb18b376ec5c50f77f56": "anto", "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9": "anto"}, "owners": [{"key": "anto", "name": "Anto", "join_date": "2025-01-01", "color": "#eef2f7"}, {"key": "bibin", "name": "Bibin", "join_date": "2025-05-01", "color": "#f2f5f3"}, {"key": "aneesh", "name": "Aneesh", "join_date": "2025-08-15", "color": "#f8f5ef"}, {"key": "john", "name": "John", "join_date": "2025-11-01", "color": "#f4f2f8"}], "fields": [{"key": "agent", "label": "Agent", "type": "text"}, {"key": "availability", "label": "Availability", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}}, {"key": "multiple_offer_situation", "label": "Multiple offer situation", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "orange", "No": "green"}}, {"key": "occupancy", "label": "Occupancy", "type": "select", "options": ["", "Owner occupied", "Tenanted", "Vacant"]}, {"key": "current_rent", "label": "Current Rent", "type": "money"}, {"key": "rental_appraisal", "label": "Rental appraisal", "type": "money"}, {"key": "written_offers", "label": "Have you got any written offers?", "type": "text"}, {"key": "price_expectation", "label": "Price expectation", "type": "text"}, {"key": "decision_date_on_offers", "label": "Decision date on Offers?", "type": "text"}, {"key": "okey_for_email_offer", "label": "Okey for Email Offer?", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}}, {"key": "is_agent_chasing", "label": "Is agent chasing?", "type": "text"}, {"key": "notes", "label": "Notes", "type": "textarea"}], "firebaseConfig": {"apiKey": "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk", "authDomain": "techbeatsrealty.firebaseapp.com", "projectId": "techbeatsrealty", "storageBucket": "techbeatsrealty.firebasestorage.app", "messagingSenderId": "11824236488", "appId": "1:11824236488:web:8c9d56501f191566a222fd", "measurementId": "G-HLN70BQKFJ"}, "collectionName": "master_props", "generatedAt": "2026-03-20 02:48"};
+window.__MASTER_PROPS_DATA__ = {"sourceRows": [{"propId": "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5", "property": "https://www.realestate.com.au/property/246-sutton-st-warragul-vic-3820/", "address": "246 Sutton Street, Warragul, Vic 3820", "addressNorm": "246 sutton street, warragul, vic 3820", "sourceStatus": "Available"}, {"propId": "0f1205ed01aa1e421b0471ca328ec7834d2a8c00", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150566848", "address": "67 Burke Street, Maryborough, Vic 3465", "addressNorm": "67 burke street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "94ef50f878eb35c61db93a11a0cdda99beedb722", "property": "https://www.realestate.com.au/property-house-nsw-mount+austin-150608380", "address": "16 Adjin Street, Mount Austin, NSW 2650", "addressNorm": "16 adjin street, mount austin, nsw 2650", "sourceStatus": "Available"}, {"propId": "cfdb949c20da33be9e4b5b046274180047342e5d", "property": "https://www.realestate.com.au/property-house-vic-stratford-150605220", "address": "29 Fitzroy Street, Stratford, Vic 3862", "addressNorm": "29 fitzroy street, stratford, vic 3862", "sourceStatus": "Available"}, {"propId": "d930c817ec36af66817f7decfcc7d97908a5b17b", "property": "https://www.realestate.com.au/property/28-royes-st-mareeba-qld-4880", "address": "28 Royes Street, Mareeba, QLD 4880", "addressNorm": "28 royes street, mareeba, qld 4880", "sourceStatus": "Available"}, {"propId": "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9", "property": "https://www.realestate.com.au/property/9-cedar-st-sale-vic-3850/", "address": "9 Cedar Street, Sale, VIC 3850", "addressNorm": "9 cedar street, sale, vic 3850", "sourceStatus": "Available"}, {"propId": "c04766d5026325275485315a5033c9d867f4de18", "property": "https://www.realestate.com.au/property-house-sa-waikerie-150603836", "address": "20 Kirby Street, Waikerie, SA 5330", "addressNorm": "20 kirby street, waikerie, sa 5330", "sourceStatus": "Available"}, {"propId": "fcfff58d0e4068c0dbdcc86a7254a81001a9b843", "property": "https://www.realestate.com.au/property-house-vic-hoppers+crossing-150590712", "address": "15 Courtney Avenue, Hoppers Crossing, Vic 3029", "addressNorm": "15 courtney avenue, hoppers crossing, vic 3029", "sourceStatus": "Available"}, {"propId": "29698ca37248b2464c30d62a658496762b344f52", "property": "https://www.realestate.com.au/property-house-vic-lakes+entrance-150603448", "address": "61 Lakeview Drive, Lakes Entrance, Vic 3909", "addressNorm": "61 lakeview drive, lakes entrance, vic 3909", "sourceStatus": "Available"}, {"propId": "4a4e57ed0741a1543db7c85228f02d56f63e0fa1", "property": "https://www.realestate.com.au/property-house-vic-bannockburn-150602708", "address": "10 Victor Street, Bannockburn, Vic 3331", "addressNorm": "10 victor street, bannockburn, vic 3331", "sourceStatus": "Available"}, {"propId": "4b168f1be2eafded3caa74d9af306f03bf5ea172", "property": "https://www.realestate.com.au/property-house-sa-edithburgh-150612052", "address": "1 Grace Street, Edithburgh, SA 5583", "addressNorm": "1 grace street, edithburgh, sa 5583", "sourceStatus": "Available"}, {"propId": "a094161e87190ba9e917e18cd23df43046fca67b", "property": "https://www.realestate.com.au/property-house-vic-portland-150611272", "address": "145 Garden Street, Portland, Vic 3305", "addressNorm": "145 garden street, portland, vic 3305", "sourceStatus": "Available"}, {"propId": "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e", "property": "https://www.realestate.com.au/property-house-vic-winter+valley-150074132", "address": "64 Snowbird Road, Winter Valley, Vic 3358", "addressNorm": "64 snowbird road, winter valley, vic 3358", "sourceStatus": "Available"}, {"propId": "87910f5bde777af1dca0ebe64b45cf16e94d77e9", "property": "https://www.realestate.com.au/property-house-qld-atherton-150628056", "address": "19 Ellwood Close, Atherton, Qld 4883", "addressNorm": "19 ellwood close, atherton, qld 4883", "sourceStatus": "Available"}, {"propId": "3cc3738d950f174b78c276257c7b2d033b50c63f", "property": "https://www.realestate.com.au/property-house-nsw-mudgee-150627376", "address": "4 Headley Place, Mudgee, NSW 2850", "addressNorm": "4 headley place, mudgee, nsw 2850", "sourceStatus": "Available"}, {"propId": "d3e99d69db0e351230bca74b85bbe1b23726fc3c", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150625296", "address": "12 Barkly Street, Maryborough, Vic 3465", "addressNorm": "12 barkly street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "4925921cd6d3638b6d7e925811f069127116825f", "property": "https://www.realestate.com.au/property-house-wa-somerville-150608532", "address": "11B Rourke Cove, Somerville, WA 6430", "addressNorm": "11b rourke cove, somerville, wa 6430", "sourceStatus": "Available"}, {"propId": "52a88ca28741f6da4191d6dd3900729d790278cb", "property": "https://www.realestate.com.au/property-house-sa-goolwa+beach-150624464", "address": "33 Port Elliot Road, Goolwa Beach, SA 5214", "addressNorm": "33 port elliot road, goolwa beach, sa 5214", "sourceStatus": "Available"}, {"propId": "598fae186444d5d9e7e759db82ed5cb76c2f5fce", "property": "https://www.realestate.com.au/property-house-vic-benalla-148571812", "address": "2 Exton Crescent, Benalla, Vic 3672", "addressNorm": "2 exton crescent, benalla, vic 3672", "sourceStatus": "Available"}, {"propId": "54b8bae2dab3a331d6fc7a6b303e464bbc7828df", "property": "https://www.realestate.com.au/property-house-vic-timboon-150516768", "address": "1 Dawson Street, Timboon, Vic 3268", "addressNorm": "1 dawson street, timboon, vic 3268", "sourceStatus": "Available"}, {"propId": "1a0c37b479ec9cdac3fec9d937f47dea69e54340", "property": "https://www.realestate.com.au/property-house-nt-braitling-146754388", "address": "2 Priest Street, Braitling, NT 0870", "addressNorm": "2 priest street, braitling, nt 0870", "sourceStatus": "Available"}, {"propId": "58a4647f402e868a34a3eb18b376ec5c50f77f56", "property": "https://www.realestate.com.au/property-house-sa-mannum-150524200", "address": "80 Adelaide Road, Mannum, SA 5238", "addressNorm": "80 adelaide road, mannum, sa 5238", "sourceStatus": "Available"}, {"propId": "d5c0b447295555bb8e44c4b406aefcab09104874", "property": "https://www.realestate.com.au/property-house-vic-penshurst-150485880", "address": "21 French Street, Penshurst, Vic 3289", "addressNorm": "21 french street, penshurst, vic 3289", "sourceStatus": "Available"}], "initialAssignments": {"54b8bae2dab3a331d6fc7a6b303e464bbc7828df": "anto", "4b168f1be2eafded3caa74d9af306f03bf5ea172": "bibin", "4a4e57ed0741a1543db7c85228f02d56f63e0fa1": "aneesh", "4925921cd6d3638b6d7e925811f069127116825f": "john", "d3e99d69db0e351230bca74b85bbe1b23726fc3c": "anto", "a094161e87190ba9e917e18cd23df43046fca67b": "bibin", "fcfff58d0e4068c0dbdcc86a7254a81001a9b843": "aneesh", "94ef50f878eb35c61db93a11a0cdda99beedb722": "anto", "87910f5bde777af1dca0ebe64b45cf16e94d77e9": "john", "598fae186444d5d9e7e759db82ed5cb76c2f5fce": "bibin", "1a0c37b479ec9cdac3fec9d937f47dea69e54340": "anto", "c04766d5026325275485315a5033c9d867f4de18": "aneesh", "d5c0b447295555bb8e44c4b406aefcab09104874": "bibin", "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5": "john", "d930c817ec36af66817f7decfcc7d97908a5b17b": "anto", "cfdb949c20da33be9e4b5b046274180047342e5d": "aneesh", "52a88ca28741f6da4191d6dd3900729d790278cb": "bibin", "3cc3738d950f174b78c276257c7b2d033b50c63f": "anto", "29698ca37248b2464c30d62a658496762b344f52": "john", "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e": "aneesh", "0f1205ed01aa1e421b0471ca328ec7834d2a8c00": "bibin", "58a4647f402e868a34a3eb18b376ec5c50f77f56": "anto", "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9": "anto"}, "owners": [{"key": "anto", "name": "Anto", "join_date": "2025-01-01", "color": "#eef2f7"}, {"key": "bibin", "name": "Bibin", "join_date": "2025-05-01", "color": "#f2f5f3"}, {"key": "aneesh", "name": "Aneesh", "join_date": "2025-08-15", "color": "#f8f5ef"}, {"key": "john", "name": "John", "join_date": "2025-11-01", "color": "#f4f2f8"}], "fields": [{"key": "agent", "label": "Agent", "type": "text", "compact": true, "width": "m"}, {"key": "availability", "label": "Availability", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}, "compact": true, "width": "s"}, {"key": "multiple_offer_situation", "label": "Multiple offer", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "orange", "No": "green"}, "compact": true, "width": "s"}, {"key": "occupancy", "label": "Occupancy", "type": "select", "options": ["", "Owner occupied", "Tenanted", "Vacant"], "compact": true, "width": "m"}, {"key": "current_rent", "label": "Current Rent", "type": "money", "compact": true, "width": "s"}, {"key": "rental_appraisal", "label": "Rental Appraisal", "type": "money", "compact": true, "width": "s"}, {"key": "written_offers", "label": "Written offers?", "type": "text", "compact": true, "width": "m"}, {"key": "price_expectation", "label": "Price expectation", "type": "text", "compact": true, "width": "m"}, {"key": "decision_date_on_offers", "label": "Decision date", "type": "text", "compact": true, "width": "s"}, {"key": "okey_for_email_offer", "label": "Email Offer?", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}, "compact": true, "width": "s"}, {"key": "is_agent_chasing", "label": "Agent chasing?", "type": "text", "compact": false, "width": "m"}, {"key": "notes", "label": "Notes", "type": "textarea", "compact": false, "width": "l"}], "firebaseConfig": {"apiKey": "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk", "authDomain": "techbeatsrealty.firebaseapp.com", "projectId": "techbeatsrealty", "storageBucket": "techbeatsrealty.firebasestorage.app", "messagingSenderId": "11824236488", "appId": "1:11824236488:web:8c9d56501f191566a222fd", "measurementId": "G-HLN70BQKFJ"}, "collectionName": "master_props", "generatedAt": "2026-03-20 03:03"};
 </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 import {
-  getFirestore, collection, doc, getDocs, setDoc, serverTimestamp, writeBatch
+  getFirestore, collection, doc, getDocs, setDoc, serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const CFG = window.__MASTER_PROPS_DATA__;
 const app = initializeApp(CFG.firebaseConfig);
+const auth = getAuth(app);
 const db = getFirestore(app);
 
 const collectionName = CFG.collectionName;
-const sourceRows = CFG.sourceRows;
+const sourceRows = CFG.sourceRows || [];
 const initialAssignments = CFG.initialAssignments || {};
 const owners = CFG.owners || [];
 const fields = CFG.fields || [];
@@ -383,14 +405,16 @@ const ownerMap = Object.fromEntries(owners.map(o => [o.key, o]));
 const fieldMap = Object.fromEntries(fields.map(f => [f.key, f]));
 
 const state = {
-  docs: new Map(),          // propId -> firestore doc data
-  sourceMap: new Map(),     // propId -> source row
-  dirty: new Set(),
+  docs: new Map(),
+  sourceMap: new Map(),
   currentOwner: "",
   filterMine: "all",
   showArchived: "hide",
   search: "",
   adminMode: "off",
+  viewMode: "compact",
+  firebaseReady: false,
+  firebaseError: "",
 };
 
 for (const row of sourceRows) {
@@ -407,25 +431,44 @@ function esc(s) {
 }
 
 function moneyOnly(v) {
-  const x = String(v ?? "").replace(/[^0-9.]/g, "");
-  return x;
+  return String(v ?? "").replace(/[^0-9.]/g, "");
 }
 
 function ownerBadgeStyle(ownerKey) {
   const owner = ownerMap[ownerKey];
-  const color = owner?.color || "#f8fafc";
-  return `background:${color};`;
+  return `background:${owner?.color || "#f8fafc"};`;
 }
 
 function currentOwnerName() {
   return ownerMap[state.currentOwner]?.name || state.currentOwner || "";
 }
 
+function compactFields() {
+  return fields.filter(f => !!f.compact);
+}
+
+function detailedFields() {
+  return fields;
+}
+
+function fieldWidthClass(field) {
+  const w = field.width || "m";
+  if (w === "s") return "fld-s";
+  if (w === "l") return "fld-l";
+  return "fld-m";
+}
+
+function updateFirebaseStatus(text, good=true) {
+  const el = document.getElementById("firebaseStatus");
+  if (!el) return;
+  el.textContent = "Firebase: " + text;
+  el.style.color = good ? "#166534" : "#991b1b";
+}
+
 function getComputedDoc(propId) {
   const src = state.sourceMap.get(propId);
   const dbDoc = state.docs.get(propId) || {};
   const assignedOwner = dbDoc.ownerKey || initialAssignments[propId] || owners[0]?.key || "";
-  const ownerName = ownerMap[assignedOwner]?.name || assignedOwner;
   return {
     propId,
     property: src?.property || "",
@@ -433,7 +476,7 @@ function getComputedDoc(propId) {
     addressNorm: src?.addressNorm || "",
     sourceStatus: src?.sourceStatus || "Available",
     ownerKey: assignedOwner,
-    ownerName,
+    ownerName: ownerMap[assignedOwner]?.name || assignedOwner,
     archived: !!dbDoc.archived,
     manualOwner: !!dbDoc.manualOwner,
     formData: dbDoc.formData || {},
@@ -443,36 +486,34 @@ function getComputedDoc(propId) {
 }
 
 function buildOwnerOptions(selected) {
-  return owners.map(o => `<option value="${esc(o.key)}" ${o.key===selected ? "selected" : ""}>${esc(o.name)}</option>`).join("");
+  return owners.map(o => `<option value="${esc(o.key)}" ${o.key === selected ? "selected" : ""}>${esc(o.name)}</option>`).join("");
 }
 
 function buildOwnerSelect(docData) {
-  const disabled = state.adminMode === "on" ? "" : "disabled";
   return `
-    <select class="owner-select" data-prop="${esc(docData.propId)}" ${disabled}>
-      ${owners.map(o => `<option value="${esc(o.key)}" ${o.key===docData.ownerKey ? "selected" : ""}>${esc(o.name)}</option>`).join("")}
+    <select class="owner-select" data-prop="${esc(docData.propId)}">
+      ${owners.map(o => `<option value="${esc(o.key)}" ${o.key === docData.ownerKey ? "selected" : ""}>${esc(o.name)}</option>`).join("")}
     </select>`;
 }
 
 function fieldInputHtml(propId, field, value) {
   const v = value ?? "";
   const dataAttr = `data-prop="${esc(propId)}" data-field="${esc(field.key)}"`;
-  const label = `<label>${esc(field.label)}</label>`;
+  const wrapClass = fieldWidthClass(field);
+
   if (field.type === "textarea") {
-    return `<div class="field">${label}<textarea ${dataAttr} class="fld">${esc(v)}</textarea></div>`;
+    return `<div class="fld-wrap ${wrapClass}"><label>${esc(field.label)}</label><textarea ${dataAttr} class="fld">${esc(v)}</textarea></div>`;
   }
   if (field.type === "select") {
-    const opts = (field.options || []).map(opt => {
-      const cls = ((field.badge_colors || {})[opt] || "").toLowerCase();
-      const text = opt || "-- Select --";
-      return `<option value="${esc(opt)}" ${opt===v ? "selected" : ""} data-color="${esc(cls)}">${esc(text)}</option>`;
-    }).join("");
-    return `<div class="field">${label}<select ${dataAttr} class="fld">${opts}</select></div>`;
+    const opts = (field.options || []).map(opt =>
+      `<option value="${esc(opt)}" ${opt === v ? "selected" : ""}>${esc(opt || "--")}</option>`
+    ).join("");
+    return `<div class="fld-wrap ${wrapClass}"><label>${esc(field.label)}</label><select ${dataAttr} class="fld">${opts}</select></div>`;
   }
   if (field.type === "money") {
-    return `<div class="field">${label}<input ${dataAttr} class="fld fld-money" type="text" value="${esc(v)}" placeholder="$0"></div>`;
+    return `<div class="fld-wrap ${wrapClass}"><label>${esc(field.label)}</label><input ${dataAttr} class="fld fld-money" type="text" value="${esc(v)}" placeholder="$0"></div>`;
   }
-  return `<div class="field">${label}<input ${dataAttr} class="fld" type="text" value="${esc(v)}"></div>`;
+  return `<div class="fld-wrap ${wrapClass}"><label>${esc(field.label)}</label><input ${dataAttr} class="fld" type="text" value="${esc(v)}"></div>`;
 }
 
 function displayFieldBadge(field, value) {
@@ -485,12 +526,12 @@ function displayFieldBadge(field, value) {
 function renderSummary() {
   const activeDocs = sourceRows.map(r => getComputedDoc(r.propId)).filter(d => !d.archived);
   const counts = Object.fromEntries(owners.map(o => [o.key, 0]));
-  for (const d of activeDocs) {
-    counts[d.ownerKey] = (counts[d.ownerKey] || 0) + 1;
-  }
+  for (const d of activeDocs) counts[d.ownerKey] = (counts[d.ownerKey] || 0) + 1;
+
   const bits = [];
   bits.push(`<span class="pill">Active: ${activeDocs.length}</span>`);
-  bits.push(`<span class="pill">Current owner: ${esc(currentOwnerName())}</span>`);
+  bits.push(`<span class="pill">User: ${esc(currentOwnerName())}</span>`);
+  bits.push(`<span class="pill">View: ${esc(state.viewMode)}</span>`);
   for (const o of owners) {
     bits.push(`<span class="pill" style="${ownerBadgeStyle(o.key)}">${esc(o.name)}: ${counts[o.key] || 0}</span>`);
   }
@@ -522,52 +563,41 @@ function visibleDocs() {
     });
 }
 
-function renderCard(docData, archived=false) {
-  const badges = fields
+function renderRow(docData) {
+  const archived = !!docData.archived;
+  const readOnly = state.currentOwner !== docData.ownerKey && state.adminMode !== "on";
+  const usedFields = state.viewMode === "compact" ? compactFields() : detailedFields();
+  const fieldHtml = usedFields.map(f => fieldInputHtml(docData.propId, f, docData.formData?.[f.key] || "")).join("");
+  const badges = compactFields()
+    .slice(0, 4)
     .map(f => displayFieldBadge(f, docData.formData?.[f.key] || ""))
     .filter(Boolean)
     .join("");
 
-  const fieldHtml = fields
-    .map(f => fieldInputHtml(docData.propId, f, docData.formData?.[f.key] || ""))
-    .join("");
-
-  const lockText = docData.manualOwner ? "Manual" : "Auto";
-  const readOnly = state.currentOwner !== docData.ownerKey && state.adminMode !== "on";
-
   return `
-  <div class="card ${archived ? "archived-card" : ""}" data-prop="${esc(docData.propId)}">
-    <div class="card-top" style="${ownerBadgeStyle(docData.ownerKey)}">
-      <div class="card-main">
+  <div class="row ${archived ? "archived-row" : ""} ${state.viewMode === "compact" ? "compact" : "detail"}" data-prop="${esc(docData.propId)}">
+    <div class="row-head" style="${ownerBadgeStyle(docData.ownerKey)}">
+      <div class="titlebox">
         <div><a class="property-link" href="${esc(docData.property)}" target="_blank" rel="noopener">${esc(docData.property || "Listing")}</a></div>
         <div class="addr">${esc(docData.address)}</div>
-
-        <div class="owner-select-lock">
-          <span class="owner-badge" style="${ownerBadgeStyle(docData.ownerKey)}">Owner: ${esc(docData.ownerName)}</span>
-          <span class="pill">${lockText}</span>
-          <span class="pill">${archived ? "Archived" : "Active"}</span>
-          <span class="pill">Status: ${esc(docData.sourceStatus)}</span>
-          ${badges}
-        </div>
-
-        <div class="owner-select-lock">
-          ${buildOwnerSelect(docData)}
-          <span class="small-note">${readOnly ? "Locked for other users" : "Editable by you"}</span>
-        </div>
       </div>
 
-      <div class="small-note">
-        ${docData.updatedAtMs ? ("Saved: " + new Date(docData.updatedAtMs).toLocaleString()) : ""}
-        ${docData.updatedBy ? (" · By: " + docData.updatedBy) : ""}
-      </div>
-    </div>
-
-    <div class="card-body">
-      <div class="fields">
-        ${fieldHtml}
+      <div class="status-pack">
+        <span class="owner-tag" style="${ownerBadgeStyle(docData.ownerKey)}">${esc(docData.ownerName)}</span>
+        <span class="pill">${docData.manualOwner ? "Manual" : "Auto"}</span>
       </div>
 
-      <div class="card-actions">
+      <div class="status-pack">
+        <span class="pill">${archived ? "Archived" : "Active"}</span>
+        <span class="pill">Status: ${esc(docData.sourceStatus)}</span>
+      </div>
+
+      <div class="status-pack">
+        ${badges}
+      </div>
+
+      <div class="row-actions">
+        ${buildOwnerSelect(docData)}
         <button class="btn btn-primary save-btn" data-prop="${esc(docData.propId)}">Save</button>
         ${archived
           ? `<button class="btn btn-soft unarchive-btn" data-prop="${esc(docData.propId)}">Unarchive</button>`
@@ -575,35 +605,60 @@ function renderCard(docData, archived=false) {
         <span class="save-state" id="save-state-${esc(docData.propId)}"></span>
       </div>
     </div>
+
+    <div class="row-body">
+      <div class="${state.viewMode === "compact" ? "compact-grid" : "detail-grid"}">
+        ${fieldHtml}
+      </div>
+      <div class="small-note" style="margin-top:4px;">
+        ${docData.updatedAtMs ? ("Saved: " + new Date(docData.updatedAtMs).toLocaleString()) : ""}
+        ${docData.updatedBy ? (" · By: " + docData.updatedBy) : ""}
+        ${readOnly ? " · Locked for other users" : ""}
+      </div>
+    </div>
   </div>`;
 }
 
 function applyReadonlyRules() {
-  document.querySelectorAll(".card").forEach(card => {
-    const propId = card.getAttribute("data-prop") || "";
+  document.querySelectorAll(".row").forEach(row => {
+    const propId = row.getAttribute("data-prop") || "";
     const docData = getComputedDoc(propId);
     const readOnly = state.currentOwner !== docData.ownerKey && state.adminMode !== "on";
-    card.querySelectorAll(".fld, .save-btn, .archive-btn").forEach(el => {
-      el.disabled = readOnly;
+
+    row.querySelectorAll(".fld, .save-btn, .archive-btn, .unarchive-btn").forEach(el => {
+      el.disabled = readOnly || !state.firebaseReady;
     });
-    const ownerSelect = card.querySelector(".owner-select");
-    if (ownerSelect) ownerSelect.disabled = state.adminMode !== "on";
+
+    const ownerSelect = row.querySelector(".owner-select");
+    if (ownerSelect) ownerSelect.disabled = state.adminMode !== "on" || !state.firebaseReady;
   });
 }
 
 function render() {
   renderSummary();
   const docs = visibleDocs();
-
-  const mainList = docs.map(d => renderCard(d, !!d.archived)).join("");
   document.getElementById("activeList").innerHTML =
-    mainList || '<div class="small-note">No properties found.</div>';
-
+    docs.map(d => renderRow(d)).join("") || '<div class="small-note" style="padding:8px;">No properties found.</div>';
   document.getElementById("currentOwner").innerHTML = buildOwnerOptions(state.currentOwner);
   applyReadonlyRules();
 }
 
+async function ensureFirebaseReady() {
+  try {
+    await signInAnonymously(auth);
+    state.firebaseReady = true;
+    state.firebaseError = "";
+    updateFirebaseStatus("connected", true);
+  } catch (err) {
+    state.firebaseReady = false;
+    state.firebaseError = err?.message || String(err);
+    updateFirebaseStatus("auth failed - " + state.firebaseError, false);
+    throw err;
+  }
+}
+
 async function loadDb() {
+  if (!state.firebaseReady) return;
   const snap = await getDocs(collection(db, collectionName));
   snap.forEach(d => {
     state.docs.set(d.id, d.data() || {});
@@ -633,11 +688,15 @@ function setSaveState(propId, text, good=true) {
 }
 
 async function saveProp(propId, opts={}) {
+  if (!state.firebaseReady) throw new Error(state.firebaseError || "Firebase not ready");
+
   const docData = getComputedDoc(propId);
   const formData = gatherFormData(propId);
   const ownerSelect = document.querySelector(`.owner-select[data-prop="${CSS.escape(propId)}"]`);
   const desiredOwner = ownerSelect ? ownerSelect.value : docData.ownerKey;
-  const manualOwner = state.adminMode === "on" && desiredOwner !== docData.ownerKey ? true : (state.docs.get(propId)?.manualOwner || false);
+  const hadDoc = state.docs.get(propId) || {};
+  const ownerChanged = desiredOwner !== docData.ownerKey;
+  const manualOwner = state.adminMode === "on" && ownerChanged ? true : !!hadDoc.manualOwner;
 
   const payload = {
     propId,
@@ -655,51 +714,55 @@ async function saveProp(propId, opts={}) {
     updatedBy: state.currentOwner,
   };
 
-  await setDoc(doc(db, collectionName, propId), payload, { merge:true });
+  await setDoc(doc(db, collectionName, propId), payload, { merge: true });
   state.docs.set(propId, { ...(state.docs.get(propId) || {}), ...payload });
   setSaveState(propId, "Saved");
   render();
 }
 
 async function archiveProp(propId, archived) {
-  const current = getComputedDoc(propId);
+  if (!state.firebaseReady) throw new Error(state.firebaseError || "Firebase not ready");
+
   const payload = {
     archived: !!archived,
     updatedAt: serverTimestamp(),
     updatedAtMs: Date.now(),
     updatedBy: state.currentOwner,
   };
-  await setDoc(doc(db, collectionName, propId), payload, { merge:true });
+  await setDoc(doc(db, collectionName, propId), payload, { merge: true });
   state.docs.set(propId, { ...(state.docs.get(propId) || {}), ...payload, archived: !!archived });
   render();
 }
 
 function previewRebalance() {
   const active = sourceRows.map(r => getComputedDoc(r.propId)).filter(d => !d.archived);
-  const shares = (() => {
-    const today = new Date();
-    const weights = {};
-    let total = 0;
-    for (const o of owners) {
-      const joined = new Date(o.join_date + "T00:00:00");
-      const days = Math.max(1, Math.floor((today - joined) / 86400000) + 1);
-      const weight = Math.sqrt(days);
-      weights[o.key] = weight;
-      total += weight;
-    }
-    for (const k of Object.keys(weights)) weights[k] = total ? weights[k] / total : 0;
-    return weights;
-  })();
+  const today = new Date();
+  const weights = {};
+  let total = 0;
+
+  for (const o of owners) {
+    const joined = new Date(o.join_date + "T00:00:00");
+    const days = Math.max(1, Math.floor((today - joined) / 86400000) + 1);
+    const weight = Math.sqrt(days);
+    weights[o.key] = weight;
+    total += weight;
+  }
+  for (const k of Object.keys(weights)) weights[k] = total ? weights[k] / total : 0;
+
   const counts = Object.fromEntries(owners.map(o => [o.key, 0]));
   for (const d of active) counts[d.ownerKey] = (counts[d.ownerKey] || 0) + 1;
-  const lines = owners.map(o => `${o.name}: current ${counts[o.key] || 0}, target share ${(shares[o.key]*100).toFixed(1)}%`);
+
+  const lines = owners.map(o => `${o.name}: current ${counts[o.key] || 0}, target share ${(weights[o.key]*100).toFixed(1)}%`);
   alert("Tenure-aware allocation preview\n\n" + lines.join("\n"));
 }
 
 function initToolbar() {
   const ownerSel = document.getElementById("currentOwner");
   state.currentOwner = localStorage.getItem("master_props_current_owner") || owners[0]?.key || "";
+  state.viewMode = localStorage.getItem("master_props_view_mode") || "compact";
+
   ownerSel.value = state.currentOwner;
+  document.getElementById("viewMode").value = state.viewMode;
 
   ownerSel.addEventListener("change", () => {
     state.currentOwner = ownerSel.value;
@@ -727,6 +790,12 @@ function initToolbar() {
     render();
   });
 
+  document.getElementById("viewMode").addEventListener("change", (e) => {
+    state.viewMode = e.target.value || "compact";
+    localStorage.setItem("master_props_view_mode", state.viewMode);
+    render();
+  });
+
   document.getElementById("recalcBtn").addEventListener("click", previewRebalance);
 }
 
@@ -736,11 +805,12 @@ function attachEvents() {
     if (saveBtn) {
       const propId = saveBtn.getAttribute("data-prop") || "";
       try {
+        const docData = getComputedDoc(propId);
         setSaveState(propId, "Saving...", true);
-        await saveProp(propId, { archived:false });
+        await saveProp(propId, { archived: !!docData.archived });
       } catch (err) {
         console.error(err);
-        setSaveState(propId, "Save failed", false);
+        setSaveState(propId, "Failed", false);
         alert("Save failed: " + (err?.message || err));
       }
       return;
@@ -750,7 +820,8 @@ function attachEvents() {
     if (archiveBtn) {
       const propId = archiveBtn.getAttribute("data-prop") || "";
       try {
-        await saveProp(propId, { archived:false });
+        const docData = getComputedDoc(propId);
+        await saveProp(propId, { archived: !!docData.archived });
         await archiveProp(propId, true);
       } catch (err) {
         console.error(err);
@@ -775,7 +846,15 @@ function attachEvents() {
 
 (async () => {
   initToolbar();
-  await loadDb();
+  render();
+
+  try {
+    await ensureFirebaseReady();
+    await loadDb();
+  } catch (err) {
+    console.error(err);
+  }
+
   render();
   attachEvents();
 })();
