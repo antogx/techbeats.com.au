@@ -11,7 +11,6 @@
   --muted:#6b7280;
   --line:#d1d5db;
   --line2:#e5e7eb;
-  --card:#ffffff;
   --char:#1f2937;
   --char2:#374151;
   --green:#15803d;
@@ -26,272 +25,142 @@ body {
   background:var(--bg);
   color:var(--fg);
 }
-.wrap {
-  max-width:1900px;
-  margin:0 auto;
-  padding:8px 10px 14px;
-}
+.wrap { max-width:1920px; margin:0 auto; padding:8px 10px 14px; }
 header {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
+  display:flex; justify-content:space-between; align-items:center; gap:12px;
   background:linear-gradient(135deg, var(--char), var(--char2));
-  color:#fff;
-  border-radius:12px;
-  padding:10px 14px;
-  box-shadow:var(--shadow);
+  color:#fff; border-radius:12px; padding:10px 14px; box-shadow:var(--shadow);
 }
-h1 {
-  margin:0;
-  font-size:22px;
-  line-height:1.2;
-}
-.sub {
-  margin-top:3px;
-  font-size:11px;
-  opacity:.92;
-}
-.logo {
-  width:108px;
-  max-width:30vw;
-  height:auto;
-  display:block;
-}
+h1 { margin:0; font-size:22px; line-height:1.2; }
+.sub { margin-top:3px; font-size:11px; opacity:.92; }
+.logo { width:108px; max-width:30vw; height:auto; display:block; }
+
 .toolbar {
-  margin-top:8px;
-  background:#fff;
-  border:1px solid var(--line2);
-  border-radius:12px;
-  padding:8px;
-  box-shadow:var(--shadow);
-  display:grid;
-  gap:6px;
+  margin-top:8px; background:#fff; border:1px solid var(--line2);
+  border-radius:12px; padding:8px; box-shadow:var(--shadow); display:grid; gap:6px;
 }
 .toolbar-grid {
-  display:grid;
-  gap:6px;
-  grid-template-columns:0.9fr 1.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.9fr;
+  display:grid; gap:6px; grid-template-columns:0.9fr 1.8fr 0.8fr 0.8fr 0.8fr 0.8fr 0.9fr;
 }
 .control label {
-  display:block;
-  font-size:10px;
-  font-weight:800;
-  color:var(--muted);
-  margin-bottom:3px;
-  letter-spacing:.2px;
+  display:block; font-size:10px; font-weight:800; color:var(--muted); margin-bottom:3px; letter-spacing:.2px;
 }
 input[type="text"], select, textarea {
-  width:100%;
-  min-height:31px;
-  border:1px solid var(--line);
-  border-radius:8px;
-  padding:4px 7px;
-  background:#fff;
-  color:var(--fg);
-  font:12px/1.2 Inter, system-ui, sans-serif;
+  width:100%; min-height:30px; border:1px solid var(--line); border-radius:8px;
+  padding:4px 7px; background:#fff; color:var(--fg); font:12px/1.2 Inter, system-ui, sans-serif;
 }
-textarea {
-  min-height:40px;
-  resize:vertical;
-}
+textarea { min-height:42px; resize:vertical; }
 input[type="text"]:focus, select:focus, textarea:focus {
-  outline:none;
-  border-color:#9ca3af;
-  box-shadow:0 0 0 2px rgba(107,114,128,.12);
+  outline:none; border-color:#9ca3af; box-shadow:0 0 0 2px rgba(107,114,128,.12);
 }
 .btn {
-  min-height:31px;
-  border-radius:8px;
-  border:1px solid var(--line);
-  background:#fff;
-  padding:4px 8px;
-  cursor:pointer;
-  font:700 12px/1 Inter, system-ui, sans-serif;
-  color:var(--fg);
+  min-height:30px; border-radius:8px; border:1px solid var(--line); background:#fff;
+  padding:4px 8px; cursor:pointer; font:700 12px/1 Inter, system-ui, sans-serif; color:var(--fg);
 }
-.btn-primary {
-  background:var(--char);
-  color:#fff;
-  border-color:var(--char);
-}
-.btn-archive {
-  background:#fafaf9;
-  color:#44403c;
-  border-color:#d6d3d1;
-}
-.btn-soft {
-  background:#f9fafb;
-}
+.btn-primary { background:var(--char); color:#fff; border-color:var(--char); }
+.btn-archive { background:#fafaf9; color:#44403c; border-color:#d6d3d1; }
+.btn-soft { background:#f9fafb; }
+
 .meta-row {
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-  align-items:center;
-  font-size:11px;
-  color:var(--muted);
+  display:flex; gap:6px; flex-wrap:wrap; align-items:center; font-size:11px; color:var(--muted);
 }
 .pill {
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  border-radius:999px;
-  padding:3px 7px;
-  border:1px solid var(--line2);
-  background:#fff;
-  font-size:11px;
-  font-weight:800;
-  white-space:nowrap;
+  display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:3px 7px;
+  border:1px solid var(--line2); background:#fff; font-size:11px; font-weight:800; white-space:nowrap;
 }
+
 .panel {
-  margin-top:8px;
-  background:#fff;
-  border:1px solid var(--line2);
-  border-radius:12px;
-  box-shadow:var(--shadow);
-  overflow:hidden;
+  margin-top:8px; background:#fff; border:1px solid var(--line2); border-radius:12px;
+  box-shadow:var(--shadow); overflow:hidden;
 }
 .panel-head {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  padding:8px 10px;
-  border-bottom:1px solid var(--line2);
+  display:flex; justify-content:space-between; align-items:center; gap:10px;
+  padding:8px 10px; border-bottom:1px solid var(--line2);
 }
-.panel-title {
-  font-size:15px;
-  font-weight:900;
-  color:var(--char);
-}
-.small-note {
-  font-size:10px;
-  color:var(--muted);
-}
-.list {
-  padding:6px;
-  display:grid;
-  gap:5px;
-}
+.panel-title { font-size:15px; font-weight:900; color:var(--char); }
+.small-note { font-size:10px; color:var(--muted); }
+.list { padding:6px; display:grid; gap:6px; }
+
 .row {
-  border:1px solid var(--line2);
-  border-radius:10px;
-  background:#fff;
-  overflow:hidden;
+  border:1px solid var(--line2); border-radius:10px; background:#fff; overflow:hidden;
 }
-.row.archived-row {
-  opacity:.86;
-  background:#fafafa;
-}
+.row.archived-row { opacity:.86; background:#fafafa; }
+
 .row-head {
-  display:grid;
-  grid-template-columns:minmax(560px, 1.8fr) auto;
-  gap:8px;
-  align-items:center;
-  padding:7px 10px;
+  display:grid; grid-template-columns:minmax(560px,1.8fr) auto; gap:8px; align-items:center; padding:7px 10px;
 }
-
 .titlebox {
-  min-width:0;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
+  min-width:0; display:flex; align-items:center; gap:10px; flex-wrap:wrap;
 }
-
 .property-link {
-  color:var(--char);
-  text-decoration:none;
-  font-weight:900;
-  font-size:13px;
-  white-space:nowrap;
+  color:var(--char); text-decoration:none; font-weight:900; font-size:13px; white-space:nowrap;
 }
-
-.addr {
-  font-size:15px;
-  font-weight:900;
-  line-height:1.25;
-  color:#0f172a;
-  word-break:break-word;
-}
-
+.property-link:hover { text-decoration:underline; }
 .addr-line {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  flex-wrap:wrap;
-  min-width:0;
+  display:flex; align-items:center; gap:8px; flex-wrap:wrap; min-width:0;
 }
-
-.avail-inline {
-  display:inline-flex;
-  align-items:center;
-  gap:6px;
+.addr {
+  font-size:15px; font-weight:900; line-height:1.25; color:#0f172a; word-break:break-word;
 }
+.avail-inline { display:inline-flex; align-items:center; gap:6px; }
 
 .row-actions {
-  display:flex;
-  gap:6px;
-  justify-content:flex-end;
-  align-items:center;
-  flex-wrap:nowrap;
+  display:flex; gap:6px; justify-content:flex-end; align-items:center; flex-wrap:nowrap;
+}
+.owner-select { min-width:108px; max-width:130px; }
+
+.row-body { border-top:1px solid var(--line2); padding:5px 10px 6px; }
+
+.grid-compact {
+  display:grid; gap:5px 6px; grid-template-columns:repeat(6, minmax(125px, 1fr)); align-items:end;
+}
+.grid-detailed {
+  display:grid; gap:6px 8px; grid-template-columns:repeat(4, minmax(170px, 1fr)); align-items:end;
 }
 
-.owner-select {
-  min-width:108px;
-  max-width:130px;
+.fld-wrap { min-width:0; }
+.fld-wrap label {
+  display:block; font-size:10px; font-weight:800; color:var(--muted); margin-bottom:2px;
+  white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
-
-.btn {
-  min-height:30px;
-  border-radius:8px;
-  border:1px solid var(--line);
-  background:#fff;
-  padding:4px 9px;
-  cursor:pointer;
-  font:700 12px/1 Inter, system-ui, sans-serif;
-  color:var(--fg);
+.fld-wrap.width-s select, .fld-wrap.width-s input,
+.fld-wrap.width-m select, .fld-wrap.width-m input {
+  min-height:28px; font-size:11px; padding:3px 6px;
 }
-
+.fld-wrap.width-full,
+.fld-wrap.notes-full {
+  grid-column:1 / -1;
+}
+.fld-wrap.width-full textarea,
+.fld-wrap.notes-full textarea {
+  min-height:46px; font-size:11px; padding:4px 6px;
+}
 .save-state {
-  font-size:11px;
-  font-weight:800;
-  color:var(--muted);
-  min-width:42px;
-  text-align:left;
+  font-size:11px; font-weight:800; color:var(--muted); min-width:42px; text-align:left;
 }
+.badge-green { color:#166534; background:#dcfce7; border:1px solid #bbf7d0; }
+.badge-red { color:#991b1b; background:#fee2e2; border:1px solid #fecaca; }
+.badge-orange { color:#9a3412; background:#ffedd5; border:1px solid #fed7aa; }
 
-.row-body {
-  border-top:1px solid var(--line2);
-  padding:5px 10px 6px;
+.hidden { display:none !important; }
+
+@media (max-width: 1600px) {
+  .grid-compact { grid-template-columns:repeat(5, minmax(120px, 1fr)); }
+  .grid-detailed { grid-template-columns:repeat(4, minmax(150px, 1fr)); }
 }
-
-.compact-grid {
-  display:grid;
-  gap:5px;
-  grid-template-columns:repeat(10, minmax(84px, 1fr));
-  align-items:end;
-}
-
 @media (max-width: 1200px) {
-  .row-head {
-    grid-template-columns:1fr;
-  }
-  .row-actions {
-    justify-content:flex-start;
-    flex-wrap:wrap;
-  }
+  .toolbar-grid { grid-template-columns:repeat(4, minmax(140px, 1fr)); }
+  .row-head { grid-template-columns:1fr; }
+  .row-actions { justify-content:flex-start; flex-wrap:wrap; }
+  .grid-compact { grid-template-columns:repeat(3, minmax(120px, 1fr)); }
+  .grid-detailed { grid-template-columns:repeat(3, minmax(150px, 1fr)); }
 }
-
 @media (max-width: 780px) {
-  .titlebox {
-    flex-direction:column;
-    align-items:flex-start;
-    gap:4px;
-  }
-  .addr-line {
-    align-items:flex-start;
-  }
+  .wrap { padding:6px; }
+  .toolbar-grid { grid-template-columns:repeat(2, minmax(120px, 1fr)); }
+  .titlebox { flex-direction:column; align-items:flex-start; gap:4px; }
+  .addr-line { align-items:flex-start; }
+  .grid-compact, .grid-detailed { grid-template-columns:repeat(2, minmax(120px, 1fr)); }
 }
 </style>
 </head>
@@ -300,7 +169,7 @@ input[type="text"]:focus, select:focus, textarea:focus {
   <header>
     <div>
       <h1>Master Properties</h1>
-      <div class="sub">Generated: 2026-03-20 03:27 · Output: https://techbeats.com.au/props/master</div>
+      <div class="sub">Generated: 2026-03-20 03:39 · Output: https://techbeats.com.au/props/master</div>
     </div>
     <div></div>
   </header>
@@ -348,11 +217,8 @@ input[type="text"]:focus, select:focus, textarea:focus {
         <button class="btn btn-soft" id="recalcBtn" type="button">Preview balance</button>
       </div>
     </div>
-
     <div class="meta-row" id="summaryRow"></div>
-    <div class="small-note">
-      Compact rows show the most-used fields in one or two rows. Detailed mode shows all configured fields.
-    </div>
+    <div class="small-note">Compact rows and Detailed edit both show all fields. Notes always uses the full row.</div>
     <div class="small-note" id="firebaseStatus">Firebase: checking…</div>
   </div>
 
@@ -366,19 +232,15 @@ input[type="text"]:focus, select:focus, textarea:focus {
 </div>
 
 <script>
-window.__MASTER_PROPS_DATA__ = {"sourceRows": [{"propId": "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5", "property": "https://www.realestate.com.au/property/246-sutton-st-warragul-vic-3820/", "address": "246 Sutton Street, Warragul, Vic 3820", "addressNorm": "246 sutton street, warragul, vic 3820", "sourceStatus": "Available"}, {"propId": "0f1205ed01aa1e421b0471ca328ec7834d2a8c00", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150566848", "address": "67 Burke Street, Maryborough, Vic 3465", "addressNorm": "67 burke street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "94ef50f878eb35c61db93a11a0cdda99beedb722", "property": "https://www.realestate.com.au/property-house-nsw-mount+austin-150608380", "address": "16 Adjin Street, Mount Austin, NSW 2650", "addressNorm": "16 adjin street, mount austin, nsw 2650", "sourceStatus": "Available"}, {"propId": "cfdb949c20da33be9e4b5b046274180047342e5d", "property": "https://www.realestate.com.au/property-house-vic-stratford-150605220", "address": "29 Fitzroy Street, Stratford, Vic 3862", "addressNorm": "29 fitzroy street, stratford, vic 3862", "sourceStatus": "Available"}, {"propId": "d930c817ec36af66817f7decfcc7d97908a5b17b", "property": "https://www.realestate.com.au/property/28-royes-st-mareeba-qld-4880", "address": "28 Royes Street, Mareeba, QLD 4880", "addressNorm": "28 royes street, mareeba, qld 4880", "sourceStatus": "Available"}, {"propId": "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9", "property": "https://www.realestate.com.au/property/9-cedar-st-sale-vic-3850/", "address": "9 Cedar Street, Sale, VIC 3850", "addressNorm": "9 cedar street, sale, vic 3850", "sourceStatus": "Available"}, {"propId": "c04766d5026325275485315a5033c9d867f4de18", "property": "https://www.realestate.com.au/property-house-sa-waikerie-150603836", "address": "20 Kirby Street, Waikerie, SA 5330", "addressNorm": "20 kirby street, waikerie, sa 5330", "sourceStatus": "Available"}, {"propId": "fcfff58d0e4068c0dbdcc86a7254a81001a9b843", "property": "https://www.realestate.com.au/property-house-vic-hoppers+crossing-150590712", "address": "15 Courtney Avenue, Hoppers Crossing, Vic 3029", "addressNorm": "15 courtney avenue, hoppers crossing, vic 3029", "sourceStatus": "Available"}, {"propId": "29698ca37248b2464c30d62a658496762b344f52", "property": "https://www.realestate.com.au/property-house-vic-lakes+entrance-150603448", "address": "61 Lakeview Drive, Lakes Entrance, Vic 3909", "addressNorm": "61 lakeview drive, lakes entrance, vic 3909", "sourceStatus": "Available"}, {"propId": "4a4e57ed0741a1543db7c85228f02d56f63e0fa1", "property": "https://www.realestate.com.au/property-house-vic-bannockburn-150602708", "address": "10 Victor Street, Bannockburn, Vic 3331", "addressNorm": "10 victor street, bannockburn, vic 3331", "sourceStatus": "Available"}, {"propId": "4b168f1be2eafded3caa74d9af306f03bf5ea172", "property": "https://www.realestate.com.au/property-house-sa-edithburgh-150612052", "address": "1 Grace Street, Edithburgh, SA 5583", "addressNorm": "1 grace street, edithburgh, sa 5583", "sourceStatus": "Available"}, {"propId": "a094161e87190ba9e917e18cd23df43046fca67b", "property": "https://www.realestate.com.au/property-house-vic-portland-150611272", "address": "145 Garden Street, Portland, Vic 3305", "addressNorm": "145 garden street, portland, vic 3305", "sourceStatus": "Available"}, {"propId": "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e", "property": "https://www.realestate.com.au/property-house-vic-winter+valley-150074132", "address": "64 Snowbird Road, Winter Valley, Vic 3358", "addressNorm": "64 snowbird road, winter valley, vic 3358", "sourceStatus": "Available"}, {"propId": "87910f5bde777af1dca0ebe64b45cf16e94d77e9", "property": "https://www.realestate.com.au/property-house-qld-atherton-150628056", "address": "19 Ellwood Close, Atherton, Qld 4883", "addressNorm": "19 ellwood close, atherton, qld 4883", "sourceStatus": "Available"}, {"propId": "3cc3738d950f174b78c276257c7b2d033b50c63f", "property": "https://www.realestate.com.au/property-house-nsw-mudgee-150627376", "address": "4 Headley Place, Mudgee, NSW 2850", "addressNorm": "4 headley place, mudgee, nsw 2850", "sourceStatus": "Available"}, {"propId": "d3e99d69db0e351230bca74b85bbe1b23726fc3c", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150625296", "address": "12 Barkly Street, Maryborough, Vic 3465", "addressNorm": "12 barkly street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "4925921cd6d3638b6d7e925811f069127116825f", "property": "https://www.realestate.com.au/property-house-wa-somerville-150608532", "address": "11B Rourke Cove, Somerville, WA 6430", "addressNorm": "11b rourke cove, somerville, wa 6430", "sourceStatus": "Available"}, {"propId": "52a88ca28741f6da4191d6dd3900729d790278cb", "property": "https://www.realestate.com.au/property-house-sa-goolwa+beach-150624464", "address": "33 Port Elliot Road, Goolwa Beach, SA 5214", "addressNorm": "33 port elliot road, goolwa beach, sa 5214", "sourceStatus": "Available"}, {"propId": "598fae186444d5d9e7e759db82ed5cb76c2f5fce", "property": "https://www.realestate.com.au/property-house-vic-benalla-148571812", "address": "2 Exton Crescent, Benalla, Vic 3672", "addressNorm": "2 exton crescent, benalla, vic 3672", "sourceStatus": "Available"}, {"propId": "54b8bae2dab3a331d6fc7a6b303e464bbc7828df", "property": "https://www.realestate.com.au/property-house-vic-timboon-150516768", "address": "1 Dawson Street, Timboon, Vic 3268", "addressNorm": "1 dawson street, timboon, vic 3268", "sourceStatus": "Available"}, {"propId": "1a0c37b479ec9cdac3fec9d937f47dea69e54340", "property": "https://www.realestate.com.au/property-house-nt-braitling-146754388", "address": "2 Priest Street, Braitling, NT 0870", "addressNorm": "2 priest street, braitling, nt 0870", "sourceStatus": "Available"}, {"propId": "58a4647f402e868a34a3eb18b376ec5c50f77f56", "property": "https://www.realestate.com.au/property-house-sa-mannum-150524200", "address": "80 Adelaide Road, Mannum, SA 5238", "addressNorm": "80 adelaide road, mannum, sa 5238", "sourceStatus": "Available"}, {"propId": "d5c0b447295555bb8e44c4b406aefcab09104874", "property": "https://www.realestate.com.au/property-house-vic-penshurst-150485880", "address": "21 French Street, Penshurst, Vic 3289", "addressNorm": "21 french street, penshurst, vic 3289", "sourceStatus": "Available"}], "initialAssignments": {"54b8bae2dab3a331d6fc7a6b303e464bbc7828df": "aneesh", "4b168f1be2eafded3caa74d9af306f03bf5ea172": "anto", "4a4e57ed0741a1543db7c85228f02d56f63e0fa1": "bibin", "4925921cd6d3638b6d7e925811f069127116825f": "john", "d3e99d69db0e351230bca74b85bbe1b23726fc3c": "aneesh", "a094161e87190ba9e917e18cd23df43046fca67b": "anto", "fcfff58d0e4068c0dbdcc86a7254a81001a9b843": "bibin", "94ef50f878eb35c61db93a11a0cdda99beedb722": "john", "87910f5bde777af1dca0ebe64b45cf16e94d77e9": "aneesh", "598fae186444d5d9e7e759db82ed5cb76c2f5fce": "anto", "1a0c37b479ec9cdac3fec9d937f47dea69e54340": "bibin", "c04766d5026325275485315a5033c9d867f4de18": "john", "d5c0b447295555bb8e44c4b406aefcab09104874": "aneesh", "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5": "anto", "d930c817ec36af66817f7decfcc7d97908a5b17b": "bibin", "cfdb949c20da33be9e4b5b046274180047342e5d": "john", "52a88ca28741f6da4191d6dd3900729d790278cb": "aneesh", "3cc3738d950f174b78c276257c7b2d033b50c63f": "anto", "29698ca37248b2464c30d62a658496762b344f52": "bibin", "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e": "john", "0f1205ed01aa1e421b0471ca328ec7834d2a8c00": "aneesh", "58a4647f402e868a34a3eb18b376ec5c50f77f56": "anto", "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9": "bibin"}, "owners": [{"key": "anto", "name": "Anto", "join_date": "2026-03-20", "color": "#eef2f7"}, {"key": "bibin", "name": "Bibin", "join_date": "2026-03-20", "color": "#f2f5f3"}, {"key": "aneesh", "name": "Aneesh", "join_date": "2026-03-20", "color": "#f8f5ef"}, {"key": "john", "name": "John", "join_date": "2026-03-20", "color": "#f4f2f8"}], "fields": [{"key": "agent", "label": "Agent", "type": "text", "compact": true, "width": "m"}, {"key": "availability", "label": "Availability", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}, "compact": true, "width": "s"}, {"key": "multiple_offer_situation", "label": "Multiple offer", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "orange", "No": "green"}, "compact": true, "width": "s"}, {"key": "occupancy", "label": "Occupancy", "type": "select", "options": ["", "Owner occupied", "Tenanted", "Vacant"], "compact": true, "width": "m"}, {"key": "current_rent", "label": "Current Rent", "type": "money", "compact": true, "width": "s"}, {"key": "rental_appraisal", "label": "Rental Appraisal", "type": "money", "compact": true, "width": "s"}, {"key": "written_offers", "label": "Written offers?", "type": "text", "compact": true, "width": "m"}, {"key": "price_expectation", "label": "Price expectation", "type": "text", "compact": true, "width": "m"}, {"key": "decision_date_on_offers", "label": "Decision date", "type": "text", "compact": true, "width": "s"}, {"key": "okey_for_email_offer", "label": "Email Offer?", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}, "compact": true, "width": "s"}, {"key": "is_agent_chasing", "label": "Agent chasing?", "type": "text", "compact": false, "width": "m"}, {"key": "notes", "label": "Notes", "type": "textarea", "compact": false, "width": "l"}], "firebaseConfig": {"apiKey": "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk", "authDomain": "techbeatsrealty.firebaseapp.com", "projectId": "techbeatsrealty", "storageBucket": "techbeatsrealty.firebasestorage.app", "messagingSenderId": "11824236488", "appId": "1:11824236488:web:8c9d56501f191566a222fd", "measurementId": "G-HLN70BQKFJ"}, "collectionName": "master_props", "generatedAt": "2026-03-20 03:27"};
+window.__MASTER_PROPS_DATA__ = {"sourceRows": [{"propId": "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5", "property": "https://www.realestate.com.au/property/246-sutton-st-warragul-vic-3820/", "address": "246 Sutton Street, Warragul, Vic 3820", "addressNorm": "246 sutton street, warragul, vic 3820", "sourceStatus": "Available"}, {"propId": "0f1205ed01aa1e421b0471ca328ec7834d2a8c00", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150566848", "address": "67 Burke Street, Maryborough, Vic 3465", "addressNorm": "67 burke street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "94ef50f878eb35c61db93a11a0cdda99beedb722", "property": "https://www.realestate.com.au/property-house-nsw-mount+austin-150608380", "address": "16 Adjin Street, Mount Austin, NSW 2650", "addressNorm": "16 adjin street, mount austin, nsw 2650", "sourceStatus": "Available"}, {"propId": "cfdb949c20da33be9e4b5b046274180047342e5d", "property": "https://www.realestate.com.au/property-house-vic-stratford-150605220", "address": "29 Fitzroy Street, Stratford, Vic 3862", "addressNorm": "29 fitzroy street, stratford, vic 3862", "sourceStatus": "Available"}, {"propId": "d930c817ec36af66817f7decfcc7d97908a5b17b", "property": "https://www.realestate.com.au/property/28-royes-st-mareeba-qld-4880", "address": "28 Royes Street, Mareeba, QLD 4880", "addressNorm": "28 royes street, mareeba, qld 4880", "sourceStatus": "Available"}, {"propId": "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9", "property": "https://www.realestate.com.au/property/9-cedar-st-sale-vic-3850/", "address": "9 Cedar Street, Sale, VIC 3850", "addressNorm": "9 cedar street, sale, vic 3850", "sourceStatus": "Available"}, {"propId": "c04766d5026325275485315a5033c9d867f4de18", "property": "https://www.realestate.com.au/property-house-sa-waikerie-150603836", "address": "20 Kirby Street, Waikerie, SA 5330", "addressNorm": "20 kirby street, waikerie, sa 5330", "sourceStatus": "Available"}, {"propId": "fcfff58d0e4068c0dbdcc86a7254a81001a9b843", "property": "https://www.realestate.com.au/property-house-vic-hoppers+crossing-150590712", "address": "15 Courtney Avenue, Hoppers Crossing, Vic 3029", "addressNorm": "15 courtney avenue, hoppers crossing, vic 3029", "sourceStatus": "Available"}, {"propId": "29698ca37248b2464c30d62a658496762b344f52", "property": "https://www.realestate.com.au/property-house-vic-lakes+entrance-150603448", "address": "61 Lakeview Drive, Lakes Entrance, Vic 3909", "addressNorm": "61 lakeview drive, lakes entrance, vic 3909", "sourceStatus": "Available"}, {"propId": "4a4e57ed0741a1543db7c85228f02d56f63e0fa1", "property": "https://www.realestate.com.au/property-house-vic-bannockburn-150602708", "address": "10 Victor Street, Bannockburn, Vic 3331", "addressNorm": "10 victor street, bannockburn, vic 3331", "sourceStatus": "Available"}, {"propId": "4b168f1be2eafded3caa74d9af306f03bf5ea172", "property": "https://www.realestate.com.au/property-house-sa-edithburgh-150612052", "address": "1 Grace Street, Edithburgh, SA 5583", "addressNorm": "1 grace street, edithburgh, sa 5583", "sourceStatus": "Available"}, {"propId": "a094161e87190ba9e917e18cd23df43046fca67b", "property": "https://www.realestate.com.au/property-house-vic-portland-150611272", "address": "145 Garden Street, Portland, Vic 3305", "addressNorm": "145 garden street, portland, vic 3305", "sourceStatus": "Available"}, {"propId": "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e", "property": "https://www.realestate.com.au/property-house-vic-winter+valley-150074132", "address": "64 Snowbird Road, Winter Valley, Vic 3358", "addressNorm": "64 snowbird road, winter valley, vic 3358", "sourceStatus": "Available"}, {"propId": "87910f5bde777af1dca0ebe64b45cf16e94d77e9", "property": "https://www.realestate.com.au/property-house-qld-atherton-150628056", "address": "19 Ellwood Close, Atherton, Qld 4883", "addressNorm": "19 ellwood close, atherton, qld 4883", "sourceStatus": "Available"}, {"propId": "3cc3738d950f174b78c276257c7b2d033b50c63f", "property": "https://www.realestate.com.au/property-house-nsw-mudgee-150627376", "address": "4 Headley Place, Mudgee, NSW 2850", "addressNorm": "4 headley place, mudgee, nsw 2850", "sourceStatus": "Available"}, {"propId": "d3e99d69db0e351230bca74b85bbe1b23726fc3c", "property": "https://www.realestate.com.au/property-house-vic-maryborough-150625296", "address": "12 Barkly Street, Maryborough, Vic 3465", "addressNorm": "12 barkly street, maryborough, vic 3465", "sourceStatus": "Available"}, {"propId": "4925921cd6d3638b6d7e925811f069127116825f", "property": "https://www.realestate.com.au/property-house-wa-somerville-150608532", "address": "11B Rourke Cove, Somerville, WA 6430", "addressNorm": "11b rourke cove, somerville, wa 6430", "sourceStatus": "Available"}, {"propId": "52a88ca28741f6da4191d6dd3900729d790278cb", "property": "https://www.realestate.com.au/property-house-sa-goolwa+beach-150624464", "address": "33 Port Elliot Road, Goolwa Beach, SA 5214", "addressNorm": "33 port elliot road, goolwa beach, sa 5214", "sourceStatus": "Available"}, {"propId": "598fae186444d5d9e7e759db82ed5cb76c2f5fce", "property": "https://www.realestate.com.au/property-house-vic-benalla-148571812", "address": "2 Exton Crescent, Benalla, Vic 3672", "addressNorm": "2 exton crescent, benalla, vic 3672", "sourceStatus": "Available"}, {"propId": "54b8bae2dab3a331d6fc7a6b303e464bbc7828df", "property": "https://www.realestate.com.au/property-house-vic-timboon-150516768", "address": "1 Dawson Street, Timboon, Vic 3268", "addressNorm": "1 dawson street, timboon, vic 3268", "sourceStatus": "Available"}, {"propId": "1a0c37b479ec9cdac3fec9d937f47dea69e54340", "property": "https://www.realestate.com.au/property-house-nt-braitling-146754388", "address": "2 Priest Street, Braitling, NT 0870", "addressNorm": "2 priest street, braitling, nt 0870", "sourceStatus": "Available"}, {"propId": "58a4647f402e868a34a3eb18b376ec5c50f77f56", "property": "https://www.realestate.com.au/property-house-sa-mannum-150524200", "address": "80 Adelaide Road, Mannum, SA 5238", "addressNorm": "80 adelaide road, mannum, sa 5238", "sourceStatus": "Available"}, {"propId": "d5c0b447295555bb8e44c4b406aefcab09104874", "property": "https://www.realestate.com.au/property-house-vic-penshurst-150485880", "address": "21 French Street, Penshurst, Vic 3289", "addressNorm": "21 french street, penshurst, vic 3289", "sourceStatus": "Available"}], "initialAssignments": {"54b8bae2dab3a331d6fc7a6b303e464bbc7828df": "anto", "4b168f1be2eafded3caa74d9af306f03bf5ea172": "bibin", "4a4e57ed0741a1543db7c85228f02d56f63e0fa1": "aneesh", "4925921cd6d3638b6d7e925811f069127116825f": "john", "d3e99d69db0e351230bca74b85bbe1b23726fc3c": "anto", "a094161e87190ba9e917e18cd23df43046fca67b": "bibin", "fcfff58d0e4068c0dbdcc86a7254a81001a9b843": "aneesh", "94ef50f878eb35c61db93a11a0cdda99beedb722": "anto", "87910f5bde777af1dca0ebe64b45cf16e94d77e9": "john", "598fae186444d5d9e7e759db82ed5cb76c2f5fce": "bibin", "1a0c37b479ec9cdac3fec9d937f47dea69e54340": "anto", "c04766d5026325275485315a5033c9d867f4de18": "aneesh", "d5c0b447295555bb8e44c4b406aefcab09104874": "bibin", "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5": "john", "d930c817ec36af66817f7decfcc7d97908a5b17b": "anto", "cfdb949c20da33be9e4b5b046274180047342e5d": "aneesh", "52a88ca28741f6da4191d6dd3900729d790278cb": "bibin", "3cc3738d950f174b78c276257c7b2d033b50c63f": "anto", "29698ca37248b2464c30d62a658496762b344f52": "john", "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e": "aneesh", "0f1205ed01aa1e421b0471ca328ec7834d2a8c00": "bibin", "58a4647f402e868a34a3eb18b376ec5c50f77f56": "anto", "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9": "anto"}, "owners": [{"key": "anto", "name": "Anto", "join_date": "2025-01-01", "color": "#eef2f7"}, {"key": "bibin", "name": "Bibin", "join_date": "2025-05-01", "color": "#f2f5f3"}, {"key": "aneesh", "name": "Aneesh", "join_date": "2025-08-15", "color": "#f8f5ef"}, {"key": "john", "name": "John", "join_date": "2025-11-01", "color": "#f4f2f8"}], "fields": [{"key": "agent", "label": "Agent", "type": "text", "width": "m"}, {"key": "availability", "label": "Availability", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}, "width": "s"}, {"key": "multiple_offer_situation", "label": "Multiple offer", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "orange", "No": "green"}, "width": "s"}, {"key": "occupancy", "label": "Occupancy", "type": "select", "options": ["", "Owner occupied", "Tenanted", "Vacant"], "width": "m"}, {"key": "current_rent", "label": "Current Rent", "type": "money", "width": "s"}, {"key": "rental_appraisal", "label": "Rental Appraisal", "type": "money", "width": "s"}, {"key": "written_offers", "label": "Written offers?", "type": "text", "width": "m"}, {"key": "price_expectation", "label": "Price expectation", "type": "text", "width": "m"}, {"key": "decision_date_on_offers", "label": "Decision date", "type": "text", "width": "s"}, {"key": "okey_for_email_offer", "label": "Email Offer?", "type": "select", "options": ["", "Yes", "No"], "badge_colors": {"Yes": "green", "No": "red"}, "width": "s"}, {"key": "is_agent_chasing", "label": "Agent chasing?", "type": "text", "width": "m"}, {"key": "notes", "label": "Notes", "type": "textarea", "width": "full"}], "firebaseConfig": {"apiKey": "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk", "authDomain": "techbeatsrealty.firebaseapp.com", "projectId": "techbeatsrealty", "storageBucket": "techbeatsrealty.firebasestorage.app", "messagingSenderId": "11824236488", "appId": "1:11824236488:web:8c9d56501f191566a222fd", "measurementId": "G-HLN70BQKFJ"}, "collectionName": "master_props", "generatedAt": "2026-03-20 03:39"};
 </script>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import {
-  getFirestore, collection, doc, getDocs, setDoc, serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import { getFirestore, collection, doc, getDocs, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 const CFG = window.__MASTER_PROPS_DATA__;
 const app = initializeApp(CFG.firebaseConfig);
-const auth = getAuth(app);
 const db = getFirestore(app);
 
 const collectionName = CFG.collectionName;
@@ -429,26 +291,18 @@ function currentOwnerName() {
   return ownerMap[state.currentOwner]?.name || state.currentOwner || "";
 }
 
-function compactFields() {
-  return fields.filter(f => !!f.compact);
-}
-
-function detailedFields() {
-  return fields;
-}
-
-function fieldWidthClass(field) {
-  const w = field.width || "m";
-  if (w === "s") return "fld-s";
-  if (w === "l") return "fld-l";
-  return "fld-m";
-}
-
 function updateFirebaseStatus(text, good=true) {
   const el = document.getElementById("firebaseStatus");
   if (!el) return;
   el.textContent = "Firebase: " + text;
   el.style.color = good ? "#166534" : "#991b1b";
+}
+
+function fieldWidthClass(field) {
+  const w = field.width || "m";
+  if (w === "s") return "width-s";
+  if (w === "full") return "width-full";
+  return "width-m";
 }
 
 function getComputedDoc(propId) {
@@ -485,7 +339,7 @@ function buildOwnerSelect(docData) {
 function fieldInputHtml(propId, field, value) {
   const v = value ?? "";
   const dataAttr = `data-prop="${esc(propId)}" data-field="${esc(field.key)}"`;
-  const wrapClass = fieldWidthClass(field);
+  const wrapClass = field.key === "notes" ? "notes-full" : fieldWidthClass(field);
 
   if (field.type === "textarea") {
     return `<div class="fld-wrap ${wrapClass}"><label>${esc(field.label)}</label><textarea ${dataAttr} class="fld">${esc(v)}</textarea></div>`;
@@ -506,7 +360,7 @@ function displayFieldBadge(field, value) {
   if (!value) return "";
   const colorKey = ((field.badge_colors || {})[value] || "").toLowerCase();
   const cls = colorKey ? `pill badge-${colorKey}` : "pill";
-  return `<span class="${cls}">${esc(field.label)}: ${esc(value)}</span>`;
+  return `<span class="${cls}">${esc(value)}</span>`;
 }
 
 function renderSummary() {
@@ -552,17 +406,15 @@ function visibleDocs() {
 function renderRow(docData) {
   const archived = !!docData.archived;
   const readOnly = state.currentOwner !== docData.ownerKey && state.adminMode !== "on";
-  const usedFields = state.viewMode === "compact" ? compactFields() : detailedFields();
-  const fieldHtml = usedFields.map(f => fieldInputHtml(docData.propId, f, docData.formData?.[f.key] || "")).join("");
+  const gridClass = state.viewMode === "compact" ? "grid-compact" : "grid-detailed";
+  const fieldHtml = fields.map(f => fieldInputHtml(docData.propId, f, docData.formData?.[f.key] || "")).join("");
 
   const availabilityField = fieldMap["availability"];
   const availabilityValue = docData.formData?.availability || "";
-  const availabilityBadge = availabilityValue
-    ? displayFieldBadge(availabilityField, availabilityValue)
-    : "";
+  const availabilityBadge = availabilityValue ? displayFieldBadge(availabilityField, availabilityValue) : "";
 
   return `
-  <div class="row ${archived ? "archived-row" : ""} ${state.viewMode === "compact" ? "compact" : "detail"}" data-prop="${esc(docData.propId)}">
+  <div class="row ${archived ? "archived-row" : ""}" data-prop="${esc(docData.propId)}">
     <div class="row-head" style="${ownerBadgeStyle(docData.ownerKey)}">
       <div class="titlebox">
         <a class="property-link" href="${esc(docData.property)}" target="_blank" rel="noopener">${esc(docData.property || "Listing")}</a>
@@ -583,7 +435,7 @@ function renderRow(docData) {
     </div>
 
     <div class="row-body">
-      <div class="${state.viewMode === "compact" ? "compact-grid" : "detail-grid"}">
+      <div class="${gridClass}">
         ${fieldHtml}
       </div>
       <div class="small-note" style="margin-top:3px;">
@@ -620,17 +472,9 @@ function render() {
 }
 
 async function ensureFirebaseReady() {
-  try {
-    await signInAnonymously(auth);
-    state.firebaseReady = true;
-    state.firebaseError = "";
-    updateFirebaseStatus("connected", true);
-  } catch (err) {
-    state.firebaseReady = false;
-    state.firebaseError = err?.message || String(err);
-    updateFirebaseStatus("auth failed - " + state.firebaseError, false);
-    throw err;
-  }
+  state.firebaseReady = true;
+  state.firebaseError = "";
+  updateFirebaseStatus("connected", true);
 }
 
 async function loadDb() {
@@ -823,14 +667,13 @@ function attachEvents() {
 (async () => {
   initToolbar();
   render();
-
   try {
     await ensureFirebaseReady();
     await loadDb();
   } catch (err) {
     console.error(err);
+    updateFirebaseStatus("failed - " + (err?.message || err), false);
   }
-
   render();
   attachEvents();
 })();
