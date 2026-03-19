@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Master - Agent Follow-ups</title>
+<style>
+:root {--bg:#f8fafc;--fg:#0f172a;--line:#e2e8f0;--chip:#f1f5f9}
+body.dark {--bg:#0f172a;--fg:#e2e8f0;--line:#334155;--chip:#1e2937}
+body{margin:0;font-family:system-ui;background:var(--bg);color:var(--fg);padding:20px}
+.wrap{max-width:1400px;margin:0 auto}
+header{background:linear-gradient(135deg,#0f766e,#134e4a);color:white;border-radius:16px;padding:20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+h1{margin:0;font-size:24px;font-weight:900}
+table{width:100%;border-collapse:collapse;background:white;border-radius:12px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.08)}
+body.dark table{background:#1e2937}
+th{background:#f1f5f9;padding:12px;text-align:left;font-weight:900;font-size:13px;border-bottom:2px solid #e2e8f0}
+body.dark th{background:#334155}
+td{padding:10px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:hover{background:#f8fafc}
+body.dark tr:hover{background:#334155}
+.owner-cell{font-weight:900;padding:4px 10px;border-radius:999px;display:inline-block}
+.input-cell input,.input-cell select,.input-cell textarea{width:100%;border:1px solid var(--line);border-radius:8px;padding:8px;background:transparent;color:inherit}
+.input-cell textarea{height:80px;resize:vertical}
+.btn{padding:6px 12px;border-radius:8px;font-weight:900;cursor:pointer;border:none}
+.btn-save{background:#16a34a;color:white}
+.btn-archive{background:#dc2626;color:white}
+.archive-section{margin-top:40px}
+.archive-section h2{color:#dc2626}
+.dragover{background:#fef3c7 !important}
+.status-taken{text-decoration:line-through;opacity:0.6}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div>
+    <h1>Master - Agent Follow-ups</h1>
+    <div style="font-size:13px;opacity:0.9">Updated: 2026-03-20 02:29 • Fair workload sharing</div>
+  </div>
+  <div style="display:flex;gap:15px;align-items:center">
+    <label style="font-weight:900">I am: 
+      <select id="currentOwner" style="padding:8px;border-radius:8px"></select>
+    </label>
+    <button onclick="autoAllocate()" class="btn" style="background:#1e40af;color:white">Auto-Allocate New</button>
+  </div>
+</header>
+
+<table id="masterTable">
+<thead><tr>
+  <th>Property</th>
+  <th>Address</th>
+  <th>Owner</th>
+  <th>Agent</th><th>Availability</th><th>Multiple offer situation</th><th>Occupancy</th><th>Current Rent</th><th>Rental appraisal</th><th>Have you got any written offers?</th><th>Price expectation</th><th>Decision date on Offers?</th><th>Okey for Email Offer?</th><th>Is agent chasing?</th><th>Notes</th>
+  <th>Actions</th>
+</tr></thead>
+<tbody id="tableBody"></tbody>
+</table>
+
+<div class="archive-section">
+  <h2>📦 Archives</h2>
+  <div id="archiveBox" style="background:var(--chip);padding:20px;border-radius:12px;min-height:100px"></div>
+</div>
+</div>
+
+<script>
+// ---------------- CONFIG INJECTED ----------------
+const PROPERTIES = [{"propId": "d1b3f3db53a20c22baf43b0348c03a1ac38a9ef5", "Property": "https://www.realestate.com.au/property/246-sutton-st-warragul-vic-3820/", "Address": "246 Sutton Street, Warragul, Vic 3820", "Status": ""}, {"propId": "0f1205ed01aa1e421b0471ca328ec7834d2a8c00", "Property": "https://www.realestate.com.au/property-house-vic-maryborough-150566848", "Address": "67 Burke Street, Maryborough, Vic 3465", "Status": ""}, {"propId": "94ef50f878eb35c61db93a11a0cdda99beedb722", "Property": "https://www.realestate.com.au/property-house-nsw-mount+austin-150608380", "Address": "16 Adjin Street, Mount Austin, NSW 2650", "Status": ""}, {"propId": "cfdb949c20da33be9e4b5b046274180047342e5d", "Property": "https://www.realestate.com.au/property-house-vic-stratford-150605220", "Address": "29 Fitzroy Street, Stratford, Vic 3862", "Status": ""}, {"propId": "d930c817ec36af66817f7decfcc7d97908a5b17b", "Property": "https://www.realestate.com.au/property/28-royes-st-mareeba-qld-4880", "Address": "28 Royes Street, Mareeba, QLD 4880", "Status": ""}, {"propId": "82ab9ed9e2984bc085a4e3f568416e19e87ff9b9", "Property": "https://www.realestate.com.au/property/9-cedar-st-sale-vic-3850/", "Address": "9 Cedar Street, Sale, VIC 3850", "Status": ""}, {"propId": "c04766d5026325275485315a5033c9d867f4de18", "Property": "https://www.realestate.com.au/property-house-sa-waikerie-150603836", "Address": "20 Kirby Street, Waikerie, SA 5330", "Status": ""}, {"propId": "fcfff58d0e4068c0dbdcc86a7254a81001a9b843", "Property": "https://www.realestate.com.au/property-house-vic-hoppers+crossing-150590712", "Address": "15 Courtney Avenue, Hoppers Crossing, Vic 3029", "Status": ""}, {"propId": "29698ca37248b2464c30d62a658496762b344f52", "Property": "https://www.realestate.com.au/property-house-vic-lakes+entrance-150603448", "Address": "61 Lakeview Drive, Lakes Entrance, Vic 3909", "Status": ""}, {"propId": "4a4e57ed0741a1543db7c85228f02d56f63e0fa1", "Property": "https://www.realestate.com.au/property-house-vic-bannockburn-150602708", "Address": "10 Victor Street, Bannockburn, Vic 3331", "Status": ""}, {"propId": "4b168f1be2eafded3caa74d9af306f03bf5ea172", "Property": "https://www.realestate.com.au/property-house-sa-edithburgh-150612052", "Address": "1 Grace Street, Edithburgh, SA 5583", "Status": ""}, {"propId": "a094161e87190ba9e917e18cd23df43046fca67b", "Property": "https://www.realestate.com.au/property-house-vic-portland-150611272", "Address": "145 Garden Street, Portland, Vic 3305", "Status": ""}, {"propId": "d1312e61747d4b8acdd83c7b1c14aca5b96ba37e", "Property": "https://www.realestate.com.au/property-house-vic-winter+valley-150074132", "Address": "64 Snowbird Road, Winter Valley, Vic 3358", "Status": ""}, {"propId": "87910f5bde777af1dca0ebe64b45cf16e94d77e9", "Property": "https://www.realestate.com.au/property-house-qld-atherton-150628056", "Address": "19 Ellwood Close, Atherton, Qld 4883", "Status": ""}, {"propId": "3cc3738d950f174b78c276257c7b2d033b50c63f", "Property": "https://www.realestate.com.au/property-house-nsw-mudgee-150627376", "Address": "4 Headley Place, Mudgee, NSW 2850", "Status": ""}, {"propId": "d3e99d69db0e351230bca74b85bbe1b23726fc3c", "Property": "https://www.realestate.com.au/property-house-vic-maryborough-150625296", "Address": "12 Barkly Street, Maryborough, Vic 3465", "Status": ""}, {"propId": "4925921cd6d3638b6d7e925811f069127116825f", "Property": "https://www.realestate.com.au/property-house-wa-somerville-150608532", "Address": "11B Rourke Cove, Somerville, WA 6430", "Status": ""}, {"propId": "52a88ca28741f6da4191d6dd3900729d790278cb", "Property": "https://www.realestate.com.au/property-house-sa-goolwa+beach-150624464", "Address": "33 Port Elliot Road, Goolwa Beach, SA 5214", "Status": ""}, {"propId": "598fae186444d5d9e7e759db82ed5cb76c2f5fce", "Property": "https://www.realestate.com.au/property-house-vic-benalla-148571812", "Address": "2 Exton Crescent, Benalla, Vic 3672", "Status": ""}, {"propId": "54b8bae2dab3a331d6fc7a6b303e464bbc7828df", "Property": "https://www.realestate.com.au/property-house-vic-timboon-150516768", "Address": "1 Dawson Street, Timboon, Vic 3268", "Status": ""}, {"propId": "1a0c37b479ec9cdac3fec9d937f47dea69e54340", "Property": "https://www.realestate.com.au/property-house-nt-braitling-146754388", "Address": "2 Priest Street, Braitling, NT 0870", "Status": ""}, {"propId": "58a4647f402e868a34a3eb18b376ec5c50f77f56", "Property": "https://www.realestate.com.au/property-house-sa-mannum-150524200", "Address": "80 Adelaide Road, Mannum, SA 5238", "Status": ""}, {"propId": "d5c0b447295555bb8e44c4b406aefcab09104874", "Property": "https://www.realestate.com.au/property-house-vic-penshurst-150485880", "Address": "21 French Street, Penshurst, Vic 3289", "Status": ""}];
+const OWNERS = [{"id": "alice", "name": "Alice Smith", "joined": "2023-01-01", "color": "#e6f7ec"}, {"id": "bob", "name": "Bob Johnson", "joined": "2023-06-01", "color": "#e6f0ff"}, {"id": "charlie", "name": "Charlie Brown", "joined": "2024-02-01", "color": "#fff9db"}];
+const FIELDS = [{"key": "Agent", "label": "Agent", "type": "text"}, {"key": "Availability", "label": "Availability", "type": "dropdown", "options": ["Yes", "No"], "color_map": {"Yes": "#16a34a", "No": "#dc2626"}}, {"key": "Multiple offer situation", "label": "Multiple offer situation", "type": "dropdown", "options": ["Yes", "No"], "color_map": {"Yes": "#f59e0b", "No": "#16a34a"}}, {"key": "Occupancy", "label": "Occupancy", "type": "dropdown", "options": ["Owner occupied", "Tenanted", "Vacant"]}, {"key": "Current Rent", "label": "Current Rent", "type": "money"}, {"key": "Rental appraisal", "label": "Rental appraisal", "type": "money"}, {"key": "Have you got any written offers?", "label": "Have you got any written offers?", "type": "text"}, {"key": "Price expectation", "label": "Price expectation", "type": "text"}, {"key": "Decision date on Offers?", "label": "Decision date on Offers?", "type": "text"}, {"key": "Okey for Email Offer?", "label": "Okey for Email Offer?", "type": "dropdown", "options": ["Yes", "No"]}, {"key": "Is agent chasing?", "label": "Is agent chasing?", "type": "text"}, {"key": "Notes", "label": "Notes", "type": "textarea"}];
+const FIREBASE_CONFIG = {apiKey:"AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk",authDomain:"techbeatsrealty.firebaseapp.com",projectId:"techbeatsrealty",storageBucket:"techbeatsrealty.firebasestorage.app",messagingSenderId:"11824236488",appId:"1:11824236488:web:8c9d56501f191566a222fd"};
+
+// ---------------- FIREBASE (same as original) ----------------
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { getFirestore, doc, setDoc, getDocs, collection, query, where, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+const app = initializeApp(FIREBASE_CONFIG);
+const db = getFirestore(app);
+
+let currentOwnerId = OWNERS[0].id;
+
+// Populate owner selector
+const ownerSelect = document.getElementById("currentOwner");
+OWNERS.forEach(o => {
+  const opt = document.createElement("option");
+  opt.value = o.id;
+  opt.textContent = o.name;
+  ownerSelect.appendChild(opt);
+});
+ownerSelect.onchange = () => { currentOwnerId = ownerSelect.value; renderTable(); };
+
+// ---------------- RENDER TABLE ----------------
+async function loadData() {
+  const data = {};
+  const q = query(collection(db, "property_master"));
+  const snaps = await getDocs(q);
+  snaps.forEach(s => { data[s.id] = s.data(); });
+  return data;
+}
+
+function getOwnerColor(ownerId) {
+  const o = OWNERS.find(x => x.id === ownerId);
+  return o ? o.color : "#f3f4f6";
+}
+
+async function renderTable() {
+  const dbData = await loadData();
+  const tbody = document.getElementById("tableBody");
+  tbody.innerHTML = "";
+
+  PROPERTIES.forEach(prop => {
+    const dbRow = dbData[prop.propId] || {};
+    const ownerId = dbRow.owner || "";
+    const archived = !!dbRow.archived;
+
+    if (archived) return; // shown in archive only
+
+    const tr = document.createElement("tr");
+    tr.draggable = true;
+    tr.dataset.propId = prop.propId;
+    tr.style.background = getOwnerColor(ownerId);
+
+    // Property + Address
+    tr.innerHTML += `<td>${html_escape(prop.Property)}</td><td>${html_escape(prop.Address)}</td>`;
+
+    // Owner dropdown (locked unless current user OR manual reassign)
+    let ownerHtml = `<td><select onchange="changeOwner('${prop.propId}', this.value)" style="background:${getOwnerColor(ownerId)};width:100%;padding:6px;border-radius:8px">`;
+    OWNERS.forEach(o => {
+      const sel = o.id === ownerId ? "selected" : "";
+      ownerHtml += `<option value="${o.id}" ${sel}>${o.name}</option>`;
+    });
+    ownerHtml += `</select></td>`;
+    tr.innerHTML += ownerHtml;
+
+    // Dynamic fields
+    FIELDS.forEach(f => {
+      const val = (dbRow.data && dbRow.data[f.key]) || "";
+      let cell = `<td class="input-cell">`;
+
+      if (f.type === "dropdown") {
+        cell += `<select onchange="saveField('${prop.propId}','${f.key}',this.value)" style="width:100%">`;
+        (f.options || []).forEach(opt => {
+          const sel = opt === val ? "selected" : "";
+          const col = (f.color_map && f.color_map[opt]) || "";
+          cell += `<option value="${opt}" ${sel} style="background:${col}">${opt}</option>`;
+        });
+        cell += `</select>`;
+      } else if (f.type === "money") {
+        cell += `<input type="text" value="${val}" onblur="saveField('${prop.propId}','${f.key}',this.value)" placeholder="$0">`;
+      } else if (f.type === "textarea") {
+        cell += `<textarea onblur="saveField('${prop.propId}','${f.key}',this.value)">${val}</textarea>`;
+      } else {
+        cell += `<input type="text" value="${val}" onblur="saveField('${prop.propId}','${f.key}',this.value)">`;
+      }
+      cell += `</td>`;
+      tr.innerHTML += cell;
+    });
+
+    // Actions
+    tr.innerHTML += `
+      <td>
+        <button class="btn btn-save" onclick="saveRow('${prop.propId}')">💾 Save</button>
+        <button class="btn btn-archive" onclick="archiveRow('${prop.propId}')">📦 Archive</button>
+      </td>`;
+
+    tbody.appendChild(tr);
+  });
+
+  renderArchive(dbData);
+}
+
+function html_escape(s) { return (s || "").replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[m]); }
+
+// ---------------- SAVE HELPERS ----------------
+async function saveToFirebase(propId, updates) {
+  await setDoc(doc(db, "property_master", propId), {
+    ...updates,
+    updatedAt: serverTimestamp()
+  }, { merge: true });
+}
+
+async function saveField(propId, key, value) {
+  const dbData = await loadData();
+  const current = dbData[propId] || { owner: currentOwnerId, data: {} };
+  if (!current.data) current.data = {};
+  current.data[key] = value;
+  await saveToFirebase(propId, current);
+  renderTable();
+}
+
+async function saveRow(propId) {
+  alert("✅ Row saved to Firebase");
+  renderTable();
+}
+
+async function changeOwner(propId, newOwnerId) {
+  await saveToFirebase(propId, { owner: newOwnerId });
+  renderTable();
+}
+
+async function archiveRow(propId) {
+  if (!confirm("Move to Archives?")) return;
+  await saveToFirebase(propId, { archived: true });
+  renderTable();
+}
+
+// ---------------- ARCHIVE + DRAG/DROP ----------------
+function renderArchive(dbData) {
+  const box = document.getElementById("archiveBox");
+  box.innerHTML = "";
+  Object.keys(dbData).forEach(pid => {
+    const d = dbData[pid];
+    if (!d.archived) return;
+    const div = document.createElement("div");
+    div.style = "background:white;padding:12px;margin:6px;border-radius:8px;display:flex;justify-content:space-between";
+    div.innerHTML = `<span>${d.data && d.data.Address ? d.data.Address : "Unknown"}</span>
+                     <button class="btn" onclick="unarchive('${pid}')">Restore</button>`;
+    box.appendChild(div);
+  });
+}
+
+async function unarchive(pid) {
+  await saveToFirebase(pid, { archived: false });
+  renderTable();
+}
+
+// Drag & drop to archive
+document.addEventListener("dragstart", e => {
+  if (e.target.dataset.propId) e.dataTransfer.setData("text", e.target.dataset.propId);
+});
+document.getElementById("archiveBox").addEventListener("dragover", e => { e.preventDefault(); e.target.classList.add("dragover"); });
+document.getElementById("archiveBox").addEventListener("dragleave", e => e.target.classList.remove("dragover"));
+document.getElementById("archiveBox").addEventListener("drop", async e => {
+  e.preventDefault();
+  const pid = e.dataTransfer.getData("text");
+  if (pid) await archiveRow(pid);
+});
+
+// ---------------- AUTO ALLOCATION ----------------
+async function autoAllocate() {
+  const dbData = await loadData();
+  const unassigned = PROPERTIES.filter(p => !dbData[p.propId] || !dbData[p.propId].owner);
+
+  if (!unassigned.length) { alert("All properties already allocated!"); return; }
+
+  // Count current load
+  const counts = {};
+  OWNERS.forEach(o => counts[o.id] = 0);
+  Object.values(dbData).forEach(d => {
+    if (d.owner && !d.archived) counts[d.owner] = (counts[d.owner] || 0) + 1;
+  });
+
+  // Sort owners: newer joined get slight priority when counts equal
+  const sortedOwners = [...OWNERS].sort((a,b) => new Date(b.joined) - new Date(a.joined));
+
+  unassigned.forEach(p => {
+    // Find owner with least properties
+    let best = sortedOwners[0].id;
+    let minCount = counts[best] || 0;
+    sortedOwners.forEach(o => {
+      const c = counts[o.id] || 0;
+      if (c < minCount || (c === minCount && new Date(o.joined) > new Date(OWNERS.find(x=>x.id===best).joined))) {
+        minCount = c;
+        best = o.id;
+      }
+    });
+    counts[best] = (counts[best] || 0) + 1;
+    saveToFirebase(p.propId, { owner: best, data: {} });
+  });
+
+  alert(`✅ ${unassigned.length} new properties auto-allocated fairly!`);
+  renderTable();
+}
+
+// Init
+(async () => {
+  await renderTable();
+})();
+</script>
+</body>
+</html>
