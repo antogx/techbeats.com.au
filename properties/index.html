@@ -274,7 +274,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-03-22 18:02</div>
+    <div class="sub">Updated: 2026-03-22 19:01</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -2054,29 +2054,38 @@ document.addEventListener("touchstart", (e) => {
           for (const it of evComments) {
             const t = String(it && it.text ? it.text : "").trim();
             if (!t) continue;
-            const who = (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer");
-            lines.push(who + ": " + t);
+            lines.push({
+              who: (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer"),
+              role: (it.byRole || "").toUpperCase(),
+              text: t
+            });
           }
         } else if (commentsArr.length) {
           const sorted = commentsArr
             .slice()
-            .sort((a, b) => (b.atMs || 0) - (a.atMs || 0));
+            .sort((a, b) => (a.atMs || 0) - (b.atMs || 0)); // oldest first
 
           for (const it of sorted) {
             const t = (it && it.text ? String(it.text) : "").trim();
             if (!t) continue;
-            const who = (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer");
-            lines.push(who + ": " + t);
+            lines.push({
+              who: (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer"),
+              role: (it.byRole || "").toUpperCase(),
+              text: t
+            });
           }
         } else if (comment) {
-          const who = (x.commentByRole === "ADMIN") ? "Admin" : (x.commentByName || "Buyer");
-          lines.push(who + ": " + comment);
+          lines.push({
+            who: (x.commentByRole === "ADMIN") ? "Admin" : (x.commentByName || "Buyer"),
+            role: (x.commentByRole || "").toUpperCase(),
+            text: comment
+          });
         }
 
         if (lines.length) {
           const badge = document.createElement("div");
           badge.className = "cmt-badge";
-          badge.textContent = "💬 " + lines[0];
+          badge.textContent = "💬 " + lines[0].who + ": " + lines[0].text;
           card.appendChild(badge);
         }
 
@@ -2089,7 +2098,21 @@ document.addEventListener("touchstart", (e) => {
 
         const body = document.createElement("div");
         body.className = "cmt-text";
-        body.textContent = lines.join(" | ");
+
+        lines.forEach((it) => {
+          const row2 = document.createElement("div");
+          row2.style.marginBottom = "6px";
+
+          if (it.role === "ADMIN") {
+            row2.style.marginLeft = "20px";
+            row2.style.paddingLeft = "10px";
+            row2.style.borderLeft = "2px solid var(--line)";
+          }
+
+          row2.textContent = it.who + ": " + it.text;
+          body.appendChild(row2);
+        });
+
         det.appendChild(body);
 
         const row = document.createElement("div");
