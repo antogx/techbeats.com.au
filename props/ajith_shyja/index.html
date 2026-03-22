@@ -245,6 +245,25 @@ body.dark .qk{color:var(--fg)}
 .badge-acc{color:var(--ok)}
 .badge-rej{color:var(--bad)}
 .badge-cmt{color:var(--blue)}
+.replybtn{
+  margin-top:8px;
+  min-height:34px;
+  padding:7px 10px;
+  border-radius:10px;
+  border:1px solid var(--btnbd);
+  background:var(--btnbg);
+  color:var(--blue);
+  font-weight:900;
+  font-size:12px;
+  cursor:pointer;
+}
+.ev-meta{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  align-items:center;
+  margin-top:4px;
+}
 @media(min-width:920px){
   .admin-wrap{grid-template-columns: 340px 1fr}
 }
@@ -255,7 +274,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Ajith &amp; Shyja</h1>
-    <div class="sub">Updated: 2026-03-21 20:17</div>
+    <div class="sub">Updated: 2026-03-22 19:06</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -493,9 +512,76 @@ document.addEventListener("touchstart", (e) => {
       addressNorm: normAddr(address),
       buyerId: BUYER_ID || "unknown",
       buyerName: BUYER_NAME || BUYER_ID || "unknown",
+
+      actorId: BUYER_ID || "unknown",
+      actorName: BUYER_NAME || BUYER_ID || "unknown",
+      actorRole: "BUYER",
+
       comment,
+      notifyAdmin: true,
+      unreadByAdmin: true,
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp()
+    });
+  }
+
+  async function writeAdminReplyEvent(targetBuyerId, targetBuyerName, propId, address, comment) {
+    const replyEventId = safeId(
+      (targetBuyerId || "unknown") + "__ADMIN_REPLY__" + (propId || "") + "__" + Date.now()
+    );
+
+    await setDoc(doc(db, "events", replyEventId), {
+      type: "ADMIN_REPLY",
+      propId,
+      address,
+      addressNorm: normAddr(address),
+      buyerId: targetBuyerId || "unknown",
+      buyerName: targetBuyerName || targetBuyerId || "unknown",
+
+      actorId: "admin",
+      actorName: "Admin",
+      actorRole: "ADMIN",
+
+      comment,
+      notifyBuyer: true,
+      unreadByBuyer: true,
+      createdAt: serverTimestamp(),
+      updatedAt: serverTimestamp()
+    });
+  }
+
+  async function appendCommentToDecision(targetBuyerId, targetBuyerName, propId, address, comment, actorRole, actorId, actorName) {
+    const ref = doc(db, "buyer_decisions", targetBuyerId, "props", propId);
+
+    await runTransaction(db, async (tx) => {
+      const snap = await tx.get(ref);
+      const cur = snap.exists() ? (snap.data() || {}) : {};
+
+      const arr = Array.isArray(cur.comments) ? cur.comments.slice() : [];
+      arr.push({
+        text: String(comment || "").trim(),
+        atMs: Date.now(),
+        byRole: actorRole || "",
+        byId: actorId || "",
+        byName: actorName || ""
+      });
+
+      tx.set(ref, {
+        buyerId: targetBuyerId,
+        buyerName: targetBuyerName || targetBuyerId,
+        propId,
+        address,
+        addressNorm: normAddr(address),
+
+        comments: arr,
+        comment: String(comment || "").trim(),
+        commentAt: serverTimestamp(),
+        commentByRole: actorRole || "",
+        commentById: actorId || "",
+        commentByName: actorName || "",
+
+        updatedAt: serverTimestamp()
+      }, { merge: true });
     });
   }
 
@@ -557,80 +643,6 @@ document.addEventListener("touchstart", (e) => {
     return count < 3;
   }
 
-  async function setComment(propId, address, comment) {
-    const ref = doc(db, "buyer_decisions", BUYER_ID, "props", propId);
-
-    await runTransaction(db, async (tx) => {
-      const snap = await tx.get(ref);
-      const cur = snap.exists() ? (snap.data() || {}) : {};
-
-      const arr = Array.isArray(cur.comments) ? cur.comments.slice() : [];
-      arr.push({
-        text: String(comment || "").trim(),
-        atMs: Date.now()
-      });
-
-      tx.set(ref, {
-        buyerId: BUYER_ID,
-        buyerName: BUYER_NAME || BUYER_ID,
-        propId,
-        address,
-        addressNorm: normAddr(address),
-
-        // ✅ history
-        comments: arr,
-
-        // ✅ keep latest also (optional, but handy)
-        comment: String(comment || "").trim(),
-        commentAt: serverTimestamp(),
-
-        updatedAt: serverTimestamp()
-      }, { merge: true });
-    });
-  }
-
-  async function acceptHold(propId, address) {
-    const myRef = doc(db, "property_states", propertyStateId(propId));
-
-    const qHold = query(
-      collection(db, "property_states"),
-      where("propId", "==", propId)
-    );
-
-    const existingSnaps = await getDocs(qHold);
-
-    let blocked = false;
-
-    existingSnaps.forEach((s) => {
-      const d = s.data() || {};
-      const heldBy = (d.holdBy || "").toString().trim();
-      const status = (d.status || "").toString().trim();
-
-      if (status === "Hold" && heldBy && heldBy !== BUYER_ID) {
-        blocked = true;
-      }
-    });
-
-    if (blocked) return false;
-
-    await setDoc(myRef, {
-      propId,
-      address,
-      addressNorm: normAddr(address),
-      buyerId: BUYER_ID,
-      buyerName: BUYER_NAME || BUYER_ID,
-      status: "Hold",
-      holdBy: BUYER_ID,
-      holdByName: BUYER_NAME || BUYER_ID,
-      updatedAt: serverTimestamp()
-    }, { merge: true });
-
-    await writeEvent("ACCEPT", propId, address, "");
-    await setDecision(propId, address, "ACCEPT");
-
-    return true;
-  }
-
   async function comment(propId, address) {
     const text = prompt("Comment");
     if (text === null) return;
@@ -639,9 +651,40 @@ document.addEventListener("touchstart", (e) => {
     if (!msg) return;
 
     await writeCommentEvent(propId, address, msg);
-    await setComment(propId, address, msg);
+    await appendCommentToDecision(
+      BUYER_ID,
+      BUYER_NAME || BUYER_ID,
+      propId,
+      address,
+      msg,
+      "BUYER",
+      BUYER_ID,
+      BUYER_NAME || BUYER_ID
+    );
 
     alert("Comment saved 💬");
+  }
+
+  async function adminReply(targetBuyerId, targetBuyerName, propId, address) {
+    const text = prompt("Reply to buyer");
+    if (text === null) return;
+
+    const msg = text.trim();
+    if (!msg) return;
+
+    await writeAdminReplyEvent(targetBuyerId, targetBuyerName, propId, address, msg);
+    await appendCommentToDecision(
+      targetBuyerId,
+      targetBuyerName || targetBuyerId,
+      propId,
+      address,
+      msg,
+      "ADMIN",
+      "admin",
+      "Admin"
+    );
+
+    alert("Reply sent to buyer 💬");
   }
 
   async function refreshHoldBadges() {
@@ -755,7 +798,7 @@ document.addEventListener("touchstart", (e) => {
 
     // Load buyer decisions + comment history from EVENTS (so old comments also show)
     let snaps;
-    const commentsByProp = new Map(); // propId -> [comment strings newest-first]
+    const commentsByProp = new Map(); // propId -> [{text, byName, byRole, atMs}]
 
     // 1) Always try to load buyer decisions first (this drives Selected/Rejected)
     try {
@@ -765,12 +808,11 @@ document.addEventListener("touchstart", (e) => {
       return; // without decisions we can't build Selected/Rejected
     }
 
-    // 2) Try to load COMMENT events (optional). If it fails (missing index), still continue.
+    // 2) Load COMMENT + ADMIN_REPLY events for this buyer
     try {
       const evQ = query(
         collection(db, "events"),
         where("buyerId", "==", BUYER_ID),
-        where("type", "==", "COMMENT"),
         orderBy("createdAt", "desc"),
         limit(1000)
       );
@@ -778,16 +820,23 @@ document.addEventListener("touchstart", (e) => {
 
       evSnap.forEach((d) => {
         const e = d.data() || {};
+        const typ = (e.type || "").toString().trim();
+        if (typ !== "COMMENT" && typ !== "ADMIN_REPLY") return;
+
         const pid2 = (e.propId || "").toString().trim();
         const c = (e.comment || "").toString().trim();
         if (!pid2 || !c) return;
+
         if (!commentsByProp.has(pid2)) commentsByProp.set(pid2, []);
-        commentsByProp.get(pid2).push(c);
+        commentsByProp.get(pid2).push({
+          text: c,
+          byName: (e.actorName || e.buyerName || "").toString().trim(),
+          byRole: (e.actorRole || "").toString().trim(),
+          atMs: Date.now()
+        });
       });
     } catch (e) {
-      // This commonly fails if Firestore needs a composite index.
-      console.warn("Could not load COMMENT events (continuing without event history):", e);
-      // Continue with empty commentsByProp
+      console.warn("Could not load comment/reply events:", e);
     }
 
     // Map by propId and by addressNorm (for safety)
@@ -834,53 +883,75 @@ document.addEventListener("touchstart", (e) => {
         nRej += 1;
       }
 
-      // Always show comments (even if ACCEPT or REJECT)
+      // Always show comments/replies (even if ACCEPT or REJECT)
       if (comment || commentsArr.length || evComments.length) {
+        const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
 
-        // Card badge shows latest comment only
-        if (comment) {
-          const badge = document.createElement("div");
-          badge.className = "cmt-badge";
-          badge.textContent = "💬 " + comment;
-          card.appendChild(badge);
+        const lines = [];
+
+        if (evComments.length) {
+          for (const it of evComments) {
+            const t = String(it && it.text ? it.text : "").trim();
+            if (!t) continue;
+            lines.push({
+              who: (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer"),
+              role: (it.byRole || "").toUpperCase(),
+              text: t
+            });
+          }
+        } else if (commentsArr.length) {
+          const sorted = commentsArr
+            .slice()
+            .sort((a, b) => (a.atMs || 0) - (b.atMs || 0)); // oldest first
+
+          for (const it of sorted) {
+            const t = (it && it.text ? String(it.text) : "").trim();
+            if (!t) continue;
+            lines.push({
+              who: (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer"),
+              role: (it.byRole || "").toUpperCase(),
+              text: t
+            });
+          }
+        } else if (comment) {
+          lines.push({
+            who: (x.commentByRole === "ADMIN") ? "Admin" : (x.commentByName || "Buyer"),
+            role: (x.commentByRole || "").toUpperCase(),
+            text: comment
+          });
         }
 
-        const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
+        if (lines.length) {
+          const badge = document.createElement("div");
+          badge.className = "cmt-badge";
+          badge.textContent = "💬 " + lines[0].who + ": " + lines[0].text;
+          card.appendChild(badge);
+        }
 
         const det = document.createElement("details");
         det.className = "cmt-line";
 
         const sum = document.createElement("summary");
-        sum.textContent = "Comment";
+        sum.textContent = "Comments / Replies";
         det.appendChild(sum);
 
         const body = document.createElement("div");
         body.className = "cmt-text";
 
-        // Build full history text
-        const lines = [];
+        lines.forEach((it) => {
+          const row2 = document.createElement("div");
+          row2.style.marginBottom = "6px";
 
-        // Prefer comments array history (newest first)
-        // Prefer EVENTS history (shows old comments too), else buyer_decisions.comments[], else latest comment
-        if (evComments.length) {
-          for (const t0 of evComments) {
-            const t = String(t0 || "").trim();
-            if (t) lines.push(t);
+          if (it.role === "ADMIN") {
+            row2.style.marginLeft = "20px";
+            row2.style.paddingLeft = "10px";
+            row2.style.borderLeft = "2px solid var(--line)";
           }
-        } else if (commentsArr.length) {
-          const sorted = commentsArr
-            .slice()
-            .sort((a, b) => (b.atMs || 0) - (a.atMs || 0));
 
-          for (const it of sorted) {
-            const t = (it && it.text ? String(it.text) : "").trim();
-            if (t) lines.push(t);
-          }
-        } else if (comment) {
-          lines.push(comment);
-        }
+          row2.textContent = it.who + ": " + it.text;
+          body.appendChild(row2);
+        });
 
-        body.textContent = lines.join(" | ");
         det.appendChild(body);
 
         const row = document.createElement("div");
@@ -923,6 +994,9 @@ document.addEventListener("touchstart", (e) => {
         id: d.id,
         buyerId: x.buyerId || "unknown",
         buyerName: normBuyerName(x.buyerName || x.buyerId || "unknown"),
+        actorId: x.actorId || "",
+        actorName: normBuyerName(x.actorName || ""),
+        actorRole: x.actorRole || "",
         type: x.type || "",
         propId: x.propId || "",
         address: x.address || "",
@@ -931,7 +1005,7 @@ document.addEventListener("touchstart", (e) => {
       });
     });
 
-    const map = new Map(); // buyerId -> id,name,lastTs
+    const map = new Map();
     for (const e of events) {
       if (!e.buyerId || e.buyerId === "admin") continue;
       const cur = map.get(e.buyerId);
@@ -977,20 +1051,18 @@ document.addEventListener("touchstart", (e) => {
 
       let list = events.filter((x) => x.buyerId === bid);
 
-      // Dedupe ACCEPT/REJECT for same property (keep latest only)
       const seen = new Set();
       list = list.filter((e) => {
-      const pid = (e.propId || "").trim();
-      const an  = normAddr(e.address || "");
-      const keyBase = pid ? ("pid:" + pid) : ("addr:" + an);
+        const pid = (e.propId || "").trim();
+        const an  = normAddr(e.address || "");
+        const keyBase = pid ? ("pid:" + pid) : ("addr:" + an);
 
-      // Only dedupe action clicks; keep all comments
-      if (e.type === "ACCEPT" || e.type === "REJECT") {
+        if (e.type === "ACCEPT" || e.type === "REJECT") {
           const key = e.buyerId + "|" + e.type + "|" + keyBase;
           if (seen.has(key)) return false;
           seen.add(key);
-      }
-      return true;
+        }
+        return true;
       });
 
       if (!list.length) {
@@ -999,24 +1071,35 @@ document.addEventListener("touchstart", (e) => {
       }
 
       panel.innerHTML = list.map((e) => {
-      const ts = fmtTs(e.createdAt) || "";
-      const c = (e.comment || "").trim();
-      const typeCls = badgeClass(e.type);
-      const addr = e.address || "";
+        const ts = fmtTs(e.createdAt) || "";
+        const c = (e.comment || "").trim();
+        const typeCls = badgeClass(e.type);
+        const addr = e.address || "";
+        const showReply = (e.type === "COMMENT");
 
-      let line = ''
+        let line = ''
           + '<div class="ev-line">'
-          +   '<span class="ev-type ' + typeCls + '">' + (e.type || '') + '</span> '
-          +   '<span class="ev-addr">' + addr + '</span>';
+          +   '<div><span class="ev-type ' + typeCls + '">' + (e.type || '') + '</span> '
+          +   '<span class="ev-addr">' + addr + '</span></div>';
 
-      if (c) {
-          line += ' <span class="ev-cmt">💬 ' + c + '</span>';
-      }
+        if (c) {
+          line += '<div class="ev-cmt">💬 ' + c + '</div>';
+        }
 
-      line += ' <span class="ev-date">' + ts + '</span>'
-              + '</div>';
+        line += '<div class="ev-meta">'
+          + '<span class="ev-date">' + ts + '</span>';
 
-      return line;
+        if (showReply) {
+          line += '<button class="replybtn js-admin-reply"'
+            + ' type="button"'
+            + ' data-buyer-id="' + (e.buyerId || '') + '"'
+            + ' data-buyer-name="' + (e.buyerName || '') + '"'
+            + ' data-prop="' + (e.propId || '') + '"'
+            + ' data-addr="' + (e.address || '') + '">Reply</button>';
+        }
+
+        line += '</div></div>';
+        return line;
       }).join("");
     }
 
@@ -1038,6 +1121,18 @@ document.addEventListener("touchstart", (e) => {
       const a = e.target.closest(".js-acc");
       const r = e.target.closest(".js-rej");
       const c = e.target.closest(".js-cmt");
+      const ar = e.target.closest(".js-admin-reply");
+
+      if (ar) {
+        const targetBuyerId = ar.getAttribute("data-buyer-id") || "";
+        const targetBuyerName = ar.getAttribute("data-buyer-name") || "";
+        const propId = ar.getAttribute("data-prop") || "";
+        const addr = ar.getAttribute("data-addr") || "";
+
+        await adminReply(targetBuyerId, targetBuyerName, propId, addr);
+        await loadAdminUI();
+        return;
+      }
 
       if (a) {
         if (a.classList.contains("btn-dis") || a.disabled) return;
