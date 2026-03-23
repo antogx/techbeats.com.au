@@ -274,7 +274,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-03-23 18:26</div>
+    <div class="sub">Updated: 2026-03-24 00:56</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -2733,6 +2733,43 @@ document.addEventListener("touchstart", (e) => {
     return safeId((BUYER_ID || "unknown") + "__" + (propId || ""));
   }
 
+  async function acceptHold(propId, address) {
+    const stateRef = doc(db, "property_states", propertyStateId(propId));
+
+    const ok = await runTransaction(db, async (tx) => {
+      const snap = await tx.get(stateRef);
+      const cur = snap.exists() ? (snap.data() || {}) : {};
+
+      const curStatus = (cur.status || "").toString().trim();
+      const curHoldBy = (cur.holdBy || "").toString().trim();
+
+      // Already held by another buyer
+      if (curStatus === "Hold" && curHoldBy && curHoldBy !== BUYER_ID) {
+        return false;
+      }
+
+      tx.set(stateRef, {
+        propId,
+        address,
+        addressNorm: normAddr(address),
+        buyerId: BUYER_ID,
+        buyerName: BUYER_NAME || BUYER_ID,
+        status: "Hold",
+        holdBy: BUYER_ID,
+        holdByName: BUYER_NAME || BUYER_ID,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      return true;
+    });
+
+    if (!ok) return false;
+
+    await writeEvent("ACCEPT", propId, address, "");
+    await setDecision(propId, address, "ACCEPT");
+    return true;
+  }
+  
   async function reject(propId, address) {
     // Remove hold if this buyer held it
     const stateRef = doc(db, "property_states", propertyStateId(propId));
