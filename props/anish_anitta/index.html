@@ -274,7 +274,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Anish &amp; Anitta</h1>
-    <div class="sub">Updated: 2026-03-29 21:00</div>
+    <div class="sub">Updated: 2026-03-29 21:18</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -639,46 +639,42 @@ document.addEventListener("touchstart", (e) => {
     );
   }
 
-  async function canAcceptAnother(propId) {
-    if (!BUYER_ID || IS_ADMIN) return true;
+async function canAcceptAnother(propId) {
+  if (!BUYER_ID || IS_ADMIN) return true;
 
-    // If this specific property is already accepted by this buyer, allow
-    const decSnap = await getDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId));
-    if (decSnap.exists()) {
-      const d = decSnap.data() || {};
-      if ((d.decision || "").toString().trim() === "ACCEPT") return true;
-    }
-
-    // Get properties currently visible on the page
-    const visibleProps = new Set();
-    document.querySelectorAll(".item[data-prop]").forEach((el) => {
-      const pid = (el.getAttribute("data-prop") || "").trim();
-      if (pid) visibleProps.add(pid);
-    });
-
-    // Query accepted properties from Firestore
-    const qAcc = query(
-      collection(db, "buyer_decisions", BUYER_ID, "props"),
-      where("decision", "==", "ACCEPT")
-    );
-
-    const accSnaps = await getDocs(qAcc);
-
-    let count = 0;
-
-    accSnaps.forEach((docSnap) => {
-      const d = docSnap.data() || {};
-      const pid = (d.propId || "").toString().trim();
-
-      // Count only if property still exists on page
-      if (visibleProps.has(pid)) {
-        count += 1;
-      }
-    });
-
-    // Limit = 3 properties
-    return count < 3;
+  // If this same property is already accepted by this buyer, allow
+  const decSnap = await getDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId));
+  if (decSnap.exists()) {
+    const d = decSnap.data() || {};
+    if ((d.decision || "").toString().trim() === "ACCEPT") return true;
   }
+
+  // Current properties from the current input sheet / current buyer page only
+  const visibleProps = new Set();
+  document.querySelectorAll(".item[data-prop]").forEach((el) => {
+    const pid = (el.getAttribute("data-prop") || "").trim();
+    if (pid) visibleProps.add(pid);
+  });
+
+  // Count only ACCEPTed properties that are still in current input sheet
+  const qAcc = query(
+    collection(db, "buyer_decisions", BUYER_ID, "props"),
+    where("decision", "==", "ACCEPT")
+  );
+
+  const accSnaps = await getDocs(qAcc);
+
+  let count = 0;
+  accSnaps.forEach((docSnap) => {
+    const d = docSnap.data() || {};
+    const pid = (d.propId || "").toString().trim();
+    if (pid && visibleProps.has(pid)) {
+      count += 1;
+    }
+  });
+
+  return count < 3;
+}
 
   async function comment(propId, address) {
     const text = prompt("Comment");
