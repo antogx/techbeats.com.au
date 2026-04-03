@@ -440,7 +440,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Aldrine &amp; Anoopa</h1>
-    <div class="sub">Updated: 2026-04-03 20:55</div>
+    <div class="sub">Updated: 2026-04-03 21:03</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -622,12 +622,20 @@ document.addEventListener("touchstart", (e) => {
     return (s || "x").toString().replace(/[^a-zA-Z0-9_-]/g, "_").slice(0, 500);
   }
 
-  function propertyStateId(propId) {
-    return safeId(propId || "");
+  function propertyStateId(propId, address) {
+    const buyer = (BUYER_ID || "unknown").toString().trim();
+    const addr = (address || "").toString().trim().toLowerCase();
+    const combined = (buyer + "_" + addr)
+      .replace(/\s+/g, "_")          // spaces to _
+      .replace(/,+/g, "_")           // commas to _
+      .replace(/[^a-z0-9_-]/g, "_")  // safe chars only
+      .replace(/_+/g, "_")           // collapse multiple _
+      .replace(/^_+|_+$/g, "");      // trim underscores
+    return combined || safeId(propId || "");
   }
   
   async function acceptHold(propId, address) {
-    const stateRef = doc(db, "property_states", propertyStateId(propId));
+    const stateRef = doc(db, "property_states", propertyStateId(propId, address));
 
     const ok = await runTransaction(db, async (tx) => {
       const snap = await tx.get(stateRef);
@@ -665,7 +673,7 @@ document.addEventListener("touchstart", (e) => {
 
   async function reject(propId, address) {
     // Remove hold if this buyer held it
-    const stateRef = doc(db, "property_states", propertyStateId(propId));
+    const stateRef = doc(db, "property_states", propertyStateId(propId, address));
 
     await runTransaction(db, async (tx) => {
       const snap = await tx.get(stateRef);
