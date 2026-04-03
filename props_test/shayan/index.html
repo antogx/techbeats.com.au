@@ -440,7 +440,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Shayan Datta</h1>
-    <div class="sub">Updated: 2026-04-03 21:03</div>
+    <div class="sub">Updated: 2026-04-03 21:11</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -1397,14 +1397,14 @@ document.addEventListener("touchstart", (e) => {
   }
 
   function propertyStateId(propId, address) {
-    const buyer = (BUYER_ID || "unknown").toString().trim();
+    const buyer = (BUYER_NAME || BUYER_ID || "unknown").toString().trim().toLowerCase();
     const addr = (address || "").toString().trim().toLowerCase();
     const combined = (buyer + "_" + addr)
-      .replace(/\s+/g, "_")          // spaces to _
-      .replace(/,+/g, "_")           // commas to _
-      .replace(/[^a-z0-9_-]/g, "_")  // safe chars only
-      .replace(/_+/g, "_")           // collapse multiple _
-      .replace(/^_+|_+$/g, "");      // trim underscores
+      .replace(/\s+/g, "_")
+      .replace(/,+/g, "_")
+      .replace(/[^a-z0-9_-]/g, "_")
+      .replace(/_+/g, "_")
+      .replace(/^_+|_+$/g, "");
     return combined || safeId(propId || "");
   }
   
