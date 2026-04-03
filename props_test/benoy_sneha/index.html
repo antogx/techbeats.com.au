@@ -10,8 +10,8 @@
   --chip:#eef2ff; --ok:#16a34a; --bad:#dc2626; --blue:#1e3a8a;
   --btnbg:#ffffff; --btnbd:#e2e8f0; --hold:#f59e0b;
 }
-.buckets{margin-top:12px;display:grid;gap:12px}
-.bucket{background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:10px}
+.buckets{margin-top:12px;display:grid;gap:12px;min-width:0}
+.bucket{background:var(--btnbg);border:1px solid var(--line);border-radius:12px;padding:10px;min-width:0;overflow:hidden}
 /* Buyer bucket colors (light mode) */
 .bucket-selected{
   background:#e6f7ec;      /* light green */
@@ -68,12 +68,22 @@ body.dark .bucket-commented{
   display:flex;
   justify-content:space-between;
   align-items:center;
+  gap:8px;
+  width:100%;
   font-weight:950;
   font-size:18px;          /* Bigger than address (16px) */
   color:#4b2e1e;           /* Dark brown */
+  min-width:0;
+  flex-wrap:wrap;
 }
+.bucket-toggle{cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.bucket-toggle::after{content:"▾";margin-left:auto;color:var(--muted);font-size:14px}
+.details-bucket[open] > .bucket-toggle::after{content:"▴"}
+.bucket-panel{padding-top:8px;min-width:0}
+.bucket-title-wrap{display:flex;align-items:center;gap:8px;min-width:0;flex:1 1 auto;flex-wrap:wrap}
+.bucket-title-text{min-width:0;word-break:break-word}
 .bcount{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;font-weight:950}
-.bucket .item{padding:6px 2px}
+.bucket .item{padding:6px 2px;min-width:0}
 .cmt-badge{margin-top:6px;font-size:12px;font-weight:900;color:var(--muted)}
 .comm-alert{
   width:10px;
@@ -384,6 +394,26 @@ body.dark .qk{color:var(--fg)}
   align-items:center;
   margin-top:4px;
 }
+
+#bucketSelected, #bucketRejected, #bucketCommented{min-width:0}
+#bucketSelected .item, #bucketRejected .item{width:100%;max-width:100%;overflow:hidden}
+#bucketSelected .top, #bucketRejected .top{min-width:0;flex-wrap:wrap}
+#bucketSelected .ap, #bucketRejected .ap{min-width:0;flex:1 1 260px}
+#bucketSelected .actions, #bucketRejected .actions{width:100%;min-width:0}
+#bucketSelected .btn, #bucketRejected .btn{max-width:100%}
+@media(max-width:700px){
+  .wrap{padding:10px}
+  .bucket{padding:8px}
+  .bhead{font-size:16px}
+  .bcount{font-size:11px;padding:2px 7px}
+  #bucketSelected .actions, #bucketRejected .actions{gap:8px}
+  #bucketSelected .btn, #bucketRejected .btn{flex:1 1 calc(50% - 8px);min-width:0;padding:10px 10px;font-size:14px}
+  #bucketSelected .btn span, #bucketRejected .btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .comm-summary{padding:11px 12px}
+  .comm-body{padding:10px}
+  .msg{max-width:92%;font-size:12px}
+}
+
 @media(min-width:920px){
   .admin-wrap{grid-template-columns: 340px 1fr}
 }
@@ -394,7 +424,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Benoy &amp; Sneha</h1>
-    <div class="sub">Updated: 2026-04-03 20:13</div>
+    <div class="sub">Updated: 2026-04-03 20:24</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -409,15 +439,19 @@ body.dark .qk{color:var(--fg)}
 
 
 <div id="buyerBuckets" class="buckets" hidden>
-  <div class="bucket bucket-commented" id="communicationHubBucket">
-    <div class="bhead">Communication Hub <span class="bcount" id="cntCommented">0</span><span id="commHubAlert" class="comm-alert" hidden></span></div>
-    <div id="bucketCommented"></div>
-  </div>
+  <details class="bucket bucket-commented details-bucket" id="communicationHubBucket" open>
+    <summary class="bhead bucket-toggle">
+      <span class="bucket-title-wrap"><span class="bucket-title-text">Communication Hub</span><span class="bcount" id="cntCommented">0</span><span id="commHubAlert" class="comm-alert" hidden></span></span>
+    </summary>
+    <div class="bucket-panel" id="bucketCommented"></div>
+  </details>
 
-  <div class="bucket bucket-selected">
-    <div class="bhead">You Selected <span class="bcount" id="cntSelected">0</span></div>
-    <div id="bucketSelected"></div>
-  </div>
+  <details class="bucket bucket-selected details-bucket" id="selectedBucket" open>
+    <summary class="bhead bucket-toggle">
+      <span class="bucket-title-wrap"><span class="bucket-title-text">You Selected</span><span class="bcount" id="cntSelected">0</span></span>
+    </summary>
+    <div class="bucket-panel" id="bucketSelected"></div>
+  </details>
 </div>
 
 <div id="list">
@@ -1242,10 +1276,12 @@ body.dark .qk{color:var(--fg)}
 
 <!-- Rejected at bottom -->
 <div id="buyerBucketsBottom" class="buckets" hidden>
-  <div class="bucket bucket-rejected">
-    <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
-    <div id="bucketRejected"></div>
-  </div>
+  <details class="bucket bucket-rejected details-bucket" id="rejectedBucket" open>
+    <summary class="bhead bucket-toggle">
+      <span class="bucket-title-wrap"><span class="bucket-title-text">You Rejected</span><span class="bcount" id="cntRejected">0</span></span>
+    </summary>
+    <div class="bucket-panel" id="bucketRejected"></div>
+  </details>
 </div>
 
 <script>
