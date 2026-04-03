@@ -193,12 +193,20 @@ body.dark .msg-agent{
   background:rgba(59,130,246,.16);
   color:#dbeafe;
 }
-.msg-meta{
+.msg-line{
   display:block;
-  margin-bottom:4px;
+  line-height:1.35;
+  word-break:break-word;
+}
+.msg-meta{
+  display:inline;
+  margin:0 4px 0 0;
   font-size:11px;
   font-weight:950;
   opacity:.9;
+}
+.msg-text{
+  display:inline;
 }
 .comm-thread.has-new{
   border-color:rgba(220,38,38,.45);
@@ -424,7 +432,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Baiju &amp; Soni</h1>
-    <div class="sub">Updated: 2026-04-03 20:31</div>
+    <div class="sub">Updated: 2026-04-03 20:39</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -1153,15 +1161,20 @@ async function canAcceptAnother(propId) {
             const isAgent = it.role === "ADMIN";
             bubble.className = "msg " + (isAgent ? "msg-agent" : "msg-buyer");
 
+            const line = document.createElement("div");
+            line.className = "msg-line";
+
             const meta = document.createElement("span");
             meta.className = "msg-meta";
             meta.textContent = (isAgent ? "Agent:" : "Buyer:");
 
-            const txt = document.createElement("div");
+            const txt = document.createElement("span");
+            txt.className = "msg-text";
             txt.textContent = it.text;
 
-            bubble.appendChild(meta);
-            bubble.appendChild(txt);
+            line.appendChild(meta);
+            line.appendChild(txt);
+            bubble.appendChild(line);
             body.appendChild(bubble);
           });
 
