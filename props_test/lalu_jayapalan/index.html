@@ -417,7 +417,13 @@ body.dark .qk{color:var(--fg)}
   .bhead{font-size:16px}
   .bcount{font-size:11px;padding:2px 7px}
   #bucketSelected .actions, #bucketRejected .actions{gap:8px}
-  #bucketSelected .btn, #bucketRejected .btn{flex:1 1 calc(50% - 8px);min-width:0;padding:10px 10px;font-size:14px}
+  #bucketSelected .btn, #bucketRejected .btn{flex:0 0 calc(33.333% - 6px);min-width:0;padding:10px 8px;font-size:13px}
+  #bucketSelected .btn:nth-child(4),
+  #bucketSelected .btn:nth-child(5),
+  #bucketRejected .btn:nth-child(4),
+  #bucketRejected .btn:nth-child(5){
+    flex:1 1 calc(50% - 4px);
+  }
   #bucketSelected .btn span, #bucketRejected .btn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   .comm-summary{padding:11px 12px}
   .comm-body{padding:10px}
@@ -434,7 +440,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Lalu Jayapalan</h1>
-    <div class="sub">Updated: 2026-04-03 20:44</div>
+    <div class="sub">Updated: 2026-04-03 20:55</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
