@@ -49,81 +49,6 @@ body.dark .cmt-line{
   background:#fff9db;        /* light yellow */
   border-color:#ffe58a;
 }
-.bucket-communication{
-  background:#fff7f7;
-  border-color:#fecaca;
-}
-.comm-alert-dot{
-  width:12px;
-  height:12px;
-  border-radius:999px;
-  background:#dc2626;
-  display:inline-block;
-  box-shadow:0 0 0 3px rgba(220,38,38,.18);
-  margin-left:8px;
-}
-.comm-thread{
-  border:1px solid var(--line);
-  border-radius:14px;
-  background:rgba(255,255,255,.65);
-  margin-top:10px;
-  overflow:hidden;
-}
-.comm-thread.unread{
-  border-color:#ef4444;
-  box-shadow:0 0 0 2px rgba(239,68,68,.12);
-}
-.comm-thread summary{
-  list-style:none;
-  cursor:pointer;
-  padding:12px 14px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-}
-.comm-thread summary::-webkit-details-marker{display:none}
-.comm-head-left{min-width:0}
-.comm-addr{font-weight:950;font-size:15px;word-break:break-word}
-.comm-meta{margin-top:4px;font-size:12px;color:var(--muted);font-weight:850}
-.comm-pill{
-  flex:0 0 auto;
-  min-width:10px;
-  height:10px;
-  border-radius:999px;
-  background:#dc2626;
-  box-shadow:0 0 0 3px rgba(220,38,38,.15);
-}
-.comm-body{
-  padding:0 14px 14px;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  background:linear-gradient(180deg, rgba(148,163,184,.05), rgba(148,163,184,.02));
-}
-.msg-row{display:flex}
-.msg-row.msg-agent{justify-content:flex-start}
-.msg-row.msg-buyer{justify-content:flex-end}
-.msg-bubble{
-  max-width:min(82%, 720px);
-  padding:10px 12px;
-  border-radius:16px;
-  border:1px solid var(--line);
-  font-size:14px;
-  line-height:1.45;
-  word-break:break-word;
-}
-.msg-agent .msg-bubble{
-  background:#ffffff;
-  border-top-left-radius:6px;
-}
-.msg-buyer .msg-bubble{
-  background:#dcfce7;
-  border-color:#bbf7d0;
-  border-top-right-radius:6px;
-}
-.msg-label{display:block;font-size:11px;font-weight:950;margin-bottom:4px;color:var(--muted)}
-.msg-text{font-weight:850;color:var(--fg)}
 
 /* Dark mode adjustments */
 body.dark .bucket-selected{
@@ -138,20 +63,6 @@ body.dark .bucket-commented{
   background:rgba(250,204,21,.18);
   border-color:rgba(250,204,21,.40);
 }
-body.dark .bucket-communication{
-  background:rgba(127,29,29,.18);
-  border-color:rgba(248,113,113,.38);
-}
-body.dark .comm-thread{
-  background:rgba(234,240,255,.04);
-}
-body.dark .msg-agent .msg-bubble{
-  background:rgba(234,240,255,.08);
-}
-body.dark .msg-buyer .msg-bubble{
-  background:rgba(34,197,94,.16);
-  border-color:rgba(34,197,94,.35);
-}
 
 .bhead{
   display:flex;
@@ -164,6 +75,126 @@ body.dark .msg-buyer .msg-bubble{
 .bcount{background:var(--chip);border:1px solid var(--line);border-radius:999px;padding:2px 8px;font-size:12px;font-weight:950}
 .bucket .item{padding:6px 2px}
 .cmt-badge{margin-top:6px;font-size:12px;font-weight:900;color:var(--muted)}
+.comm-alert{
+  width:10px;
+  height:10px;
+  border-radius:999px;
+  background:#dc2626;
+  display:inline-block;
+  box-shadow:0 0 0 3px rgba(220,38,38,.16);
+  margin-left:8px;
+}
+.comm-thread{
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--btnbg);
+  overflow:hidden;
+}
+.comm-thread + .comm-thread{margin-top:10px}
+.comm-summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 14px;
+  font-weight:950;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.comm-summary::-webkit-details-marker{display:none}
+.comm-summary::after{
+  content:"▾";
+  color:var(--muted);
+  font-size:14px;
+}
+.comm-thread[open] .comm-summary::after{
+  content:"▴";
+}
+.comm-summary-main{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+.comm-address{
+  font-size:15px;
+  font-weight:950;
+  word-break:break-word;
+}
+.comm-preview{
+  color:var(--muted);
+  font-size:12px;
+  font-weight:850;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  max-width:100%;
+}
+.comm-summary-side{
+  flex:0 0 auto;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.comm-dot{
+  width:9px;
+  height:9px;
+  border-radius:999px;
+  background:#dc2626;
+  box-shadow:0 0 0 3px rgba(220,38,38,.12);
+}
+.comm-body{
+  border-top:1px solid var(--line);
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:rgba(255,255,255,.35);
+}
+body.dark .comm-body{
+  background:rgba(234,240,255,.03);
+}
+.msg{
+  max-width:82%;
+  padding:10px 12px;
+  border-radius:16px;
+  line-height:1.4;
+  font-size:13px;
+  font-weight:850;
+  word-break:break-word;
+}
+.msg-buyer{
+  align-self:flex-end;
+  background:#dcfce7;
+  color:#14532d;
+  border-bottom-right-radius:6px;
+}
+.msg-agent{
+  align-self:flex-start;
+  background:#eff6ff;
+  color:#1e3a8a;
+  border-bottom-left-radius:6px;
+}
+body.dark .msg-buyer{
+  background:rgba(34,197,94,.16);
+  color:#d1fae5;
+}
+body.dark .msg-agent{
+  background:rgba(59,130,246,.16);
+  color:#dbeafe;
+}
+.msg-meta{
+  display:block;
+  margin-bottom:4px;
+  font-size:11px;
+  font-weight:950;
+  opacity:.9;
+}
+.comm-thread.has-new{
+  border-color:rgba(220,38,38,.45);
+  box-shadow:0 0 0 2px rgba(220,38,38,.08);
+}
+
 body.dark {
   --bg:#0b1220; --fg:#eaf0ff; --muted:rgba(234,240,255,.75); --line:rgba(234,240,255,.16);
   --chip:rgba(45,212,191,.12); --ok:#22c55e; --bad:#ef4444; --blue:#93c5fd;
@@ -363,7 +394,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Ushas &amp; Smitha</h1>
-    <div class="sub">Updated: 2026-04-03 20:05</div>
+    <div class="sub">Updated: 2026-04-03 20:13</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -378,9 +409,9 @@ body.dark .qk{color:var(--fg)}
 
 
 <div id="buyerBuckets" class="buckets" hidden>
-  <div class="bucket bucket-communication" id="communicationHubBucket">
-    <div class="bhead bhead-comm">Communication Hub <span class="comm-alert-dot" id="commAlertDot" hidden></span><span class="bcount" id="cntCommunication">0</span></div>
-    <div id="bucketCommunication"></div>
+  <div class="bucket bucket-commented" id="communicationHubBucket">
+    <div class="bhead">Communication Hub <span class="bcount" id="cntCommented">0</span><span id="commHubAlert" class="comm-alert" hidden></span></div>
+    <div id="bucketCommented"></div>
   </div>
 
   <div class="bucket bucket-selected">
@@ -1940,7 +1971,7 @@ body.dark .qk{color:var(--fg)}
 </div>
 </div>
 
-<!-- Rejected at very bottom -->
+<!-- Rejected at bottom -->
 <div id="buyerBucketsBottom" class="buckets" hidden>
   <div class="bucket bucket-rejected">
     <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
@@ -2170,7 +2201,7 @@ document.addEventListener("touchstart", (e) => {
       buyerName: targetBuyerName || targetBuyerId || "unknown",
 
       actorId: "admin",
-      actorName: "Agent",
+      actorName: "Admin",
       actorRole: "ADMIN",
 
       comment,
@@ -2308,7 +2339,7 @@ async function canAcceptAnother(propId) {
       msg,
       "ADMIN",
       "admin",
-      "Agent"
+      "Admin"
     );
 
     alert("Reply sent to buyer 💬");
@@ -2412,30 +2443,27 @@ async function canAcceptAnother(propId) {
     const cntSel = document.getElementById("cntSelected");
     const cntRej = document.getElementById("cntRejected");
     const cntCmt = document.getElementById("cntCommented");
+    const commHubAlert = document.getElementById("commHubAlert");
     const list = document.getElementById("list");
 
     if (!bucketsWrap || !selBox || !rejBox || !cmtBox || !list) return;
 
-    // Show the buckets UI for buyer pages
     bucketsWrap.hidden = false;
     if (bucketsBottom) bucketsBottom.hidden = false;
     selBox.innerHTML = "";
     rejBox.innerHTML = "";
     cmtBox.innerHTML = "";
 
-    // Load buyer decisions + comment history from EVENTS (so old comments also show)
     let snaps;
-    const commentsByProp = new Map(); // propId -> [{text, byName, byRole, atMs}]
+    const commentsByProp = new Map();
 
-    // 1) Always try to load buyer decisions first (this drives Selected/Rejected)
     try {
       snaps = await getDocs(collection(db, "buyer_decisions", BUYER_ID, "props"));
     } catch (e) {
       console.error("Failed to load buyer_decisions:", e);
-      return; // without decisions we can't build Selected/Rejected
+      return;
     }
 
-    // 2) Load COMMENT + ADMIN_REPLY events for this buyer
     try {
       const evQ = query(
         collection(db, "events"),
@@ -2459,16 +2487,16 @@ async function canAcceptAnother(propId) {
           text: c,
           byName: (e.actorName || e.buyerName || "").toString().trim(),
           byRole: (e.actorRole || "").toString().trim(),
-          atMs: Date.now()
+          atMs: e.createdAt && e.createdAt.toDate ? e.createdAt.toDate().getTime() : Date.now(),
+          unreadByBuyer: !!e.unreadByBuyer
         });
       });
     } catch (e) {
       console.warn("Could not load comment/reply events:", e);
     }
 
-    // Map by propId and by addressNorm (for safety)
-    const byProp = new Map();   // propId -> doc
-    const byAddr = new Map();   // addressNorm -> doc
+    const byProp = new Map();
+    const byAddr = new Map();
     snaps.forEach((d) => {
       const x = d.data() || {};
       const pid = (x.propId || "").toString().trim();
@@ -2478,9 +2506,9 @@ async function canAcceptAnother(propId) {
     });
 
     const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
-
-    let nSel = 0, nRej = 0, nComm = 0, unreadComm = 0;
-    const threads = [];
+    let nSel = 0, nRej = 0, nCmt = 0;
+    let hasAnyNew = false;
+    const commRows = [];
 
     for (const card of cards) {
       const pid = (card.getAttribute("data-prop") || "").trim();
@@ -2492,7 +2520,7 @@ async function canAcceptAnother(propId) {
       const decision = (x.decision || "").toString().trim();
       const comment = (x.comment || "").toString().trim();
       const commentsArr = Array.isArray(x.comments) ? x.comments : [];
-      const evComments = (commentsByProp.get(pid) || []).slice();
+      const evComments = commentsByProp.get(pid) || [];
 
       const oldBadge = card.querySelector(".cmt-badge");
       if (oldBadge) oldBadge.remove();
@@ -2505,129 +2533,126 @@ async function canAcceptAnother(propId) {
         nRej += 1;
       }
 
-      const lines = [];
+      if (comment || commentsArr.length || evComments.length) {
+        const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
+        let lines = [];
 
-      if (evComments.length) {
-        const sortedEv = evComments.slice().reverse(); // oldest first for chat view
-        for (const it of sortedEv) {
-          const t = String(it && it.text ? it.text : "").trim();
-          if (!t) continue;
-          lines.push({
-            who: (it.byRole === "ADMIN") ? "Agent" : "You",
-            role: (it.byRole || "").toUpperCase(),
-            text: t,
-            atMs: Number(it.atMs || 0)
-          });
+        if (evComments.length) {
+          lines = evComments
+            .slice()
+            .sort((a, b) => (a.atMs || 0) - (b.atMs || 0))
+            .map((it) => ({
+              who: (String(it.byRole || "").toUpperCase() === "ADMIN") ? "Agent" : (it.byName || "Buyer"),
+              role: String(it.byRole || "").toUpperCase(),
+              text: String(it.text || "").trim(),
+              atMs: it.atMs || 0,
+              unreadByBuyer: !!it.unreadByBuyer
+            }))
+            .filter((it) => it.text);
+        } else if (commentsArr.length) {
+          lines = commentsArr
+            .slice()
+            .sort((a, b) => (a.atMs || 0) - (b.atMs || 0))
+            .map((it) => ({
+              who: (String(it.byRole || "").toUpperCase() === "ADMIN") ? "Agent" : (it.byName || "Buyer"),
+              role: String(it.byRole || "").toUpperCase(),
+              text: String(it.text || "").trim(),
+              atMs: it.atMs || 0,
+              unreadByBuyer: false
+            }))
+            .filter((it) => it.text);
+        } else if (comment) {
+          lines = [{
+            who: (String(x.commentByRole || "").toUpperCase() === "ADMIN") ? "Agent" : (x.commentByName || "Buyer"),
+            role: String(x.commentByRole || "").toUpperCase(),
+            text: comment,
+            atMs: Date.now(),
+            unreadByBuyer: false
+          }];
         }
-      } else if (commentsArr.length) {
-        const sorted = commentsArr.slice().sort((a, b) => (a.atMs || 0) - (b.atMs || 0));
-        for (const it of sorted) {
-          const t = (it && it.text ? String(it.text) : "").trim();
-          if (!t) continue;
-          lines.push({
-            who: (it.byRole === "ADMIN") ? "Agent" : "You",
-            role: (it.byRole || "").toUpperCase(),
-            text: t,
-            atMs: Number(it.atMs || 0)
+
+        if (lines.length) {
+          const latest = lines[lines.length - 1];
+          const hasNew = lines.some((it) => it.role === "ADMIN" && it.unreadByBuyer);
+          if (hasNew) hasAnyNew = true;
+
+          const badge = document.createElement("div");
+          badge.className = "cmt-badge";
+          badge.textContent = "💬 " + latest.who + ": " + latest.text;
+          card.appendChild(badge);
+
+          const thread = document.createElement("details");
+          thread.className = "comm-thread" + (hasNew ? " has-new" : "");
+          thread.open = !!hasNew;
+
+          const summary = document.createElement("summary");
+          summary.className = "comm-summary";
+
+          const summaryMain = document.createElement("div");
+          summaryMain.className = "comm-summary-main";
+
+          const addrLine = document.createElement("div");
+          addrLine.className = "comm-address";
+          addrLine.textContent = addrText || "Unknown address";
+
+          const preview = document.createElement("div");
+          preview.className = "comm-preview";
+          preview.textContent = latest.who + ": " + latest.text;
+
+          summaryMain.appendChild(addrLine);
+          summaryMain.appendChild(preview);
+
+          const summarySide = document.createElement("div");
+          summarySide.className = "comm-summary-side";
+          if (hasNew) {
+            const dot = document.createElement("span");
+            dot.className = "comm-dot";
+            summarySide.appendChild(dot);
+          }
+
+          summary.appendChild(summaryMain);
+          summary.appendChild(summarySide);
+          thread.appendChild(summary);
+
+          const body = document.createElement("div");
+          body.className = "comm-body";
+
+          lines.forEach((it) => {
+            const bubble = document.createElement("div");
+            const isAgent = it.role === "ADMIN";
+            bubble.className = "msg " + (isAgent ? "msg-agent" : "msg-buyer");
+
+            const meta = document.createElement("span");
+            meta.className = "msg-meta";
+            meta.textContent = (isAgent ? "Agent:" : "Buyer:");
+
+            const txt = document.createElement("div");
+            txt.textContent = it.text;
+
+            bubble.appendChild(meta);
+            bubble.appendChild(txt);
+            body.appendChild(bubble);
           });
+
+          thread.appendChild(body);
+
+          commRows.push({
+            node: thread,
+            latestAt: latest.atMs || 0
+          });
+          nCmt += 1;
         }
-      } else if (comment) {
-        lines.push({
-          who: (x.commentByRole === "ADMIN") ? "Agent" : "You",
-          role: (x.commentByRole || "").toUpperCase(),
-          text: comment,
-          atMs: 0
-        });
-      }
-
-      if (lines.length) {
-        const latest = lines[lines.length - 1] || null;
-        const lastText = latest ? latest.text : "";
-        const badge = document.createElement("div");
-        badge.className = "cmt-badge";
-        badge.textContent = "💬 " + ((latest && latest.who) || "You") + ": " + lastText;
-        card.appendChild(badge);
-
-        const unread = lines.some((m) => m.role === "ADMIN");
-        if (unread) unreadComm += 1;
-
-        threads.push({
-          propId: pid,
-          address: (x.address || card.getAttribute("data-addr") || "").toString().trim(),
-          latestText: lastText,
-          latestAt: Number((latest && latest.atMs) || 0),
-          unread,
-          lines
-        });
-        nComm += 1;
       }
     }
 
-    threads.sort((a, b) => (b.latestAt || 0) - (a.latestAt || 0));
+    commRows
+      .sort((a, b) => (b.latestAt || 0) - (a.latestAt || 0))
+      .forEach((row) => cmtBox.appendChild(row.node));
 
-    for (const th of threads) {
-      const wrap = document.createElement("details");
-      wrap.className = "comm-thread" + (th.unread ? " unread" : "");
-
-      const summary = document.createElement("summary");
-      const left = document.createElement("div");
-      left.className = "comm-head-left";
-
-      const addrLine = document.createElement("div");
-      addrLine.className = "comm-addr";
-      addrLine.textContent = th.address || "Unknown address";
-
-      const meta = document.createElement("div");
-      meta.className = "comm-meta";
-      meta.textContent = th.latestText || "Messages";
-
-      left.appendChild(addrLine);
-      left.appendChild(meta);
-      summary.appendChild(left);
-
-      if (th.unread) {
-        const pill = document.createElement("span");
-        pill.className = "comm-pill";
-        summary.appendChild(pill);
-      }
-
-      wrap.appendChild(summary);
-
-      const body = document.createElement("div");
-      body.className = "comm-body";
-
-      th.lines.forEach((it) => {
-        const row = document.createElement("div");
-        row.className = "msg-row " + (it.role === "ADMIN" ? "msg-agent" : "msg-buyer");
-
-        const bubble = document.createElement("div");
-        bubble.className = "msg-bubble";
-
-        const label = document.createElement("span");
-        label.className = "msg-label";
-        label.textContent = (it.role === "ADMIN" ? "Agent:" : "You:");
-
-        const txt = document.createElement("div");
-        txt.className = "msg-text";
-        txt.textContent = it.text;
-
-        bubble.appendChild(label);
-        bubble.appendChild(txt);
-        row.appendChild(bubble);
-        body.appendChild(row);
-      });
-
-      wrap.appendChild(body);
-      commBox.appendChild(wrap);
-    }
-    // Update counts
-    if (cntComm) cntComm.textContent = String(nComm);
     if (cntSel) cntSel.textContent = String(nSel);
     if (cntRej) cntRej.textContent = String(nRej);
-    if (commAlertDot) commAlertDot.hidden = unreadComm <= 0;
-    if (commBucket) commBucket.classList.toggle("unread", unreadComm > 0);
-
-    // Keep the remaining cards in All Properties.
+    if (cntCmt) cntCmt.textContent = String(nCmt);
+    if (commHubAlert) commHubAlert.hidden = !hasAnyNew;
   }
 
   async function loadAdminUI() {
