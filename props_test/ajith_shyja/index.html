@@ -49,6 +49,81 @@ body.dark .cmt-line{
   background:#fff9db;        /* light yellow */
   border-color:#ffe58a;
 }
+.bucket-communication{
+  background:#fff7f7;
+  border-color:#fecaca;
+}
+.comm-alert-dot{
+  width:12px;
+  height:12px;
+  border-radius:999px;
+  background:#dc2626;
+  display:inline-block;
+  box-shadow:0 0 0 3px rgba(220,38,38,.18);
+  margin-left:8px;
+}
+.comm-thread{
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:rgba(255,255,255,.65);
+  margin-top:10px;
+  overflow:hidden;
+}
+.comm-thread.unread{
+  border-color:#ef4444;
+  box-shadow:0 0 0 2px rgba(239,68,68,.12);
+}
+.comm-thread summary{
+  list-style:none;
+  cursor:pointer;
+  padding:12px 14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.comm-thread summary::-webkit-details-marker{display:none}
+.comm-head-left{min-width:0}
+.comm-addr{font-weight:950;font-size:15px;word-break:break-word}
+.comm-meta{margin-top:4px;font-size:12px;color:var(--muted);font-weight:850}
+.comm-pill{
+  flex:0 0 auto;
+  min-width:10px;
+  height:10px;
+  border-radius:999px;
+  background:#dc2626;
+  box-shadow:0 0 0 3px rgba(220,38,38,.15);
+}
+.comm-body{
+  padding:0 14px 14px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  background:linear-gradient(180deg, rgba(148,163,184,.05), rgba(148,163,184,.02));
+}
+.msg-row{display:flex}
+.msg-row.msg-agent{justify-content:flex-start}
+.msg-row.msg-buyer{justify-content:flex-end}
+.msg-bubble{
+  max-width:min(82%, 720px);
+  padding:10px 12px;
+  border-radius:16px;
+  border:1px solid var(--line);
+  font-size:14px;
+  line-height:1.45;
+  word-break:break-word;
+}
+.msg-agent .msg-bubble{
+  background:#ffffff;
+  border-top-left-radius:6px;
+}
+.msg-buyer .msg-bubble{
+  background:#dcfce7;
+  border-color:#bbf7d0;
+  border-top-right-radius:6px;
+}
+.msg-label{display:block;font-size:11px;font-weight:950;margin-bottom:4px;color:var(--muted)}
+.msg-text{font-weight:850;color:var(--fg)}
 
 /* Dark mode adjustments */
 body.dark .bucket-selected{
@@ -62,6 +137,20 @@ body.dark .bucket-rejected{
 body.dark .bucket-commented{
   background:rgba(250,204,21,.18);
   border-color:rgba(250,204,21,.40);
+}
+body.dark .bucket-communication{
+  background:rgba(127,29,29,.18);
+  border-color:rgba(248,113,113,.38);
+}
+body.dark .comm-thread{
+  background:rgba(234,240,255,.04);
+}
+body.dark .msg-agent .msg-bubble{
+  background:rgba(234,240,255,.08);
+}
+body.dark .msg-buyer .msg-bubble{
+  background:rgba(34,197,94,.16);
+  border-color:rgba(34,197,94,.35);
 }
 
 .bhead{
@@ -274,7 +363,7 @@ body.dark .qk{color:var(--fg)}
 <header>
   <div class="lefthead">
     <h1>Properties for Ajith &amp; Shyja</h1>
-    <div class="sub">Updated: 2026-03-22 19:01</div>
+    <div class="sub">Updated: 2026-04-03 20:05</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -289,6 +378,11 @@ body.dark .qk{color:var(--fg)}
 
 
 <div id="buyerBuckets" class="buckets" hidden>
+  <div class="bucket bucket-communication" id="communicationHubBucket">
+    <div class="bhead bhead-comm">Communication Hub <span class="comm-alert-dot" id="commAlertDot" hidden></span><span class="bcount" id="cntCommunication">0</span></div>
+    <div id="bucketCommunication"></div>
+  </div>
+
   <div class="bucket bucket-selected">
     <div class="bhead">You Selected <span class="bcount" id="cntSelected">0</span></div>
     <div id="bucketSelected"></div>
@@ -341,16 +435,11 @@ body.dark .qk{color:var(--fg)}
 </div>
 </div>
 
-<!-- Rejected + Comments at very bottom -->
+<!-- Rejected at very bottom -->
 <div id="buyerBucketsBottom" class="buckets" hidden>
   <div class="bucket bucket-rejected">
     <div class="bhead">You Rejected <span class="bcount" id="cntRejected">0</span></div>
     <div id="bucketRejected"></div>
-  </div>
-
-  <div class="bucket bucket-commented">
-    <div class="bhead">Your Comments <span class="bcount" id="cntCommented">0</span></div>
-    <div id="bucketCommented"></div>
   </div>
 </div>
 
@@ -451,7 +540,44 @@ document.addEventListener("touchstart", (e) => {
   }
 
   function propertyStateId(propId) {
-    return safeId((BUYER_ID || "unknown") + "__" + (propId || ""));
+    return safeId(propId || "");
+  }
+  
+  async function acceptHold(propId, address) {
+    const stateRef = doc(db, "property_states", propertyStateId(propId));
+
+    const ok = await runTransaction(db, async (tx) => {
+      const snap = await tx.get(stateRef);
+      const cur = snap.exists() ? (snap.data() || {}) : {};
+
+      const curStatus = (cur.status || "").toString().trim();
+      const curHoldBy = (cur.holdBy || "").toString().trim();
+
+      // Already held by another buyer
+      if (curStatus === "Hold" && curHoldBy && curHoldBy !== BUYER_ID) {
+        return false;
+      }
+
+      tx.set(stateRef, {
+        propId,
+        address,
+        addressNorm: normAddr(address),
+        buyerId: BUYER_ID,
+        buyerName: BUYER_NAME || BUYER_ID,
+        status: "Hold",
+        holdBy: BUYER_ID,
+        holdByName: BUYER_NAME || BUYER_ID,
+        updatedAt: serverTimestamp()
+      }, { merge: true });
+
+      return true;
+    });
+
+    if (!ok) return false;
+
+    await writeEvent("ACCEPT", propId, address, "");
+    await setDecision(propId, address, "ACCEPT");
+    return true;
   }
 
   async function reject(propId, address) {
@@ -539,7 +665,7 @@ document.addEventListener("touchstart", (e) => {
       buyerName: targetBuyerName || targetBuyerId || "unknown",
 
       actorId: "admin",
-      actorName: "Admin",
+      actorName: "Agent",
       actorRole: "ADMIN",
 
       comment,
@@ -602,46 +728,42 @@ document.addEventListener("touchstart", (e) => {
     );
   }
 
-  async function canAcceptAnother(propId) {
-    if (!BUYER_ID || IS_ADMIN) return true;
+async function canAcceptAnother(propId) {
+  if (!BUYER_ID || IS_ADMIN) return true;
 
-    // If this specific property is already accepted by this buyer, allow
-    const decSnap = await getDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId));
-    if (decSnap.exists()) {
-      const d = decSnap.data() || {};
-      if ((d.decision || "").toString().trim() === "ACCEPT") return true;
-    }
-
-    // Get properties currently visible on the page
-    const visibleProps = new Set();
-    document.querySelectorAll(".item[data-prop]").forEach((el) => {
-      const pid = (el.getAttribute("data-prop") || "").trim();
-      if (pid) visibleProps.add(pid);
-    });
-
-    // Query accepted properties from Firestore
-    const qAcc = query(
-      collection(db, "buyer_decisions", BUYER_ID, "props"),
-      where("decision", "==", "ACCEPT")
-    );
-
-    const accSnaps = await getDocs(qAcc);
-
-    let count = 0;
-
-    accSnaps.forEach((docSnap) => {
-      const d = docSnap.data() || {};
-      const pid = (d.propId || "").toString().trim();
-
-      // Count only if property still exists on page
-      if (visibleProps.has(pid)) {
-        count += 1;
-      }
-    });
-
-    // Limit = 3 properties
-    return count < 3;
+  // If this same property is already accepted by this buyer, allow
+  const decSnap = await getDoc(doc(db, "buyer_decisions", BUYER_ID, "props", propId));
+  if (decSnap.exists()) {
+    const d = decSnap.data() || {};
+    if ((d.decision || "").toString().trim() === "ACCEPT") return true;
   }
+
+  // Current properties from the current input sheet / current buyer page only
+  const visibleProps = new Set();
+  document.querySelectorAll(".item[data-prop]").forEach((el) => {
+    const pid = (el.getAttribute("data-prop") || "").trim();
+    if (pid) visibleProps.add(pid);
+  });
+
+  // Count only ACCEPTed properties that are still in current input sheet
+  const qAcc = query(
+    collection(db, "buyer_decisions", BUYER_ID, "props"),
+    where("decision", "==", "ACCEPT")
+  );
+
+  const accSnaps = await getDocs(qAcc);
+
+  let count = 0;
+  accSnaps.forEach((docSnap) => {
+    const d = docSnap.data() || {};
+    const pid = (d.propId || "").toString().trim();
+    if (pid && visibleProps.has(pid)) {
+      count += 1;
+    }
+  });
+
+  return count < 3;
+}
 
   async function comment(propId, address) {
     const text = prompt("Comment");
@@ -681,7 +803,7 @@ document.addEventListener("touchstart", (e) => {
       msg,
       "ADMIN",
       "admin",
-      "Admin"
+      "Agent"
     );
 
     alert("Reply sent to buyer 💬");
@@ -852,7 +974,8 @@ document.addEventListener("touchstart", (e) => {
 
     const cards = Array.from(document.querySelectorAll(".item[data-prop]"));
 
-    let nSel = 0, nRej = 0, nCmt = 0;
+    let nSel = 0, nRej = 0, nComm = 0, unreadComm = 0;
+    const threads = [];
 
     for (const card of cards) {
       const pid = (card.getAttribute("data-prop") || "").trim();
@@ -864,17 +987,11 @@ document.addEventListener("touchstart", (e) => {
       const decision = (x.decision || "").toString().trim();
       const comment = (x.comment || "").toString().trim();
       const commentsArr = Array.isArray(x.comments) ? x.comments : [];
-      const evComments = commentsByProp.get(pid) || [];
+      const evComments = (commentsByProp.get(pid) || []).slice();
 
-      // Clean any old comment badge
       const oldBadge = card.querySelector(".cmt-badge");
       if (oldBadge) oldBadge.remove();
 
-      // Priority:
-      // 1) ACCEPT -> You Selected
-      // 2) REJECT -> You Rejected
-      // 3) comment only -> Your Comments
-      // Put into Selected / Rejected buckets
       if (decision === "ACCEPT") {
         selBox.appendChild(card);
         nSel += 1;
@@ -883,99 +1000,129 @@ document.addEventListener("touchstart", (e) => {
         nRej += 1;
       }
 
-      // Always show comments/replies (even if ACCEPT or REJECT)
-      if (comment || commentsArr.length || evComments.length) {
-        const addrText = (x.address || card.getAttribute("data-addr") || "").toString().trim();
+      const lines = [];
 
-        const lines = [];
-
-        if (evComments.length) {
-          for (const it of evComments) {
-            const t = String(it && it.text ? it.text : "").trim();
-            if (!t) continue;
-            lines.push({
-              who: (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer"),
-              role: (it.byRole || "").toUpperCase(),
-              text: t
-            });
-          }
-        } else if (commentsArr.length) {
-          const sorted = commentsArr
-            .slice()
-            .sort((a, b) => (a.atMs || 0) - (b.atMs || 0)); // oldest first
-
-          for (const it of sorted) {
-            const t = (it && it.text ? String(it.text) : "").trim();
-            if (!t) continue;
-            lines.push({
-              who: (it.byRole === "ADMIN") ? "Admin" : (it.byName || "Buyer"),
-              role: (it.byRole || "").toUpperCase(),
-              text: t
-            });
-          }
-        } else if (comment) {
+      if (evComments.length) {
+        const sortedEv = evComments.slice().reverse(); // oldest first for chat view
+        for (const it of sortedEv) {
+          const t = String(it && it.text ? it.text : "").trim();
+          if (!t) continue;
           lines.push({
-            who: (x.commentByRole === "ADMIN") ? "Admin" : (x.commentByName || "Buyer"),
-            role: (x.commentByRole || "").toUpperCase(),
-            text: comment
+            who: (it.byRole === "ADMIN") ? "Agent" : "You",
+            role: (it.byRole || "").toUpperCase(),
+            text: t,
+            atMs: Number(it.atMs || 0)
           });
         }
-
-        if (lines.length) {
-          const badge = document.createElement("div");
-          badge.className = "cmt-badge";
-          badge.textContent = "💬 " + lines[0].who + ": " + lines[0].text;
-          card.appendChild(badge);
+      } else if (commentsArr.length) {
+        const sorted = commentsArr.slice().sort((a, b) => (a.atMs || 0) - (b.atMs || 0));
+        for (const it of sorted) {
+          const t = (it && it.text ? String(it.text) : "").trim();
+          if (!t) continue;
+          lines.push({
+            who: (it.byRole === "ADMIN") ? "Agent" : "You",
+            role: (it.byRole || "").toUpperCase(),
+            text: t,
+            atMs: Number(it.atMs || 0)
+          });
         }
-
-        const det = document.createElement("details");
-        det.className = "cmt-line";
-
-        const sum = document.createElement("summary");
-        sum.textContent = "Comments / Replies";
-        det.appendChild(sum);
-
-        const body = document.createElement("div");
-        body.className = "cmt-text";
-
-        lines.forEach((it) => {
-          const row2 = document.createElement("div");
-          row2.style.marginBottom = "6px";
-
-          if (it.role === "ADMIN") {
-            row2.style.marginLeft = "20px";
-            row2.style.paddingLeft = "10px";
-            row2.style.borderLeft = "2px solid var(--line)";
-          }
-
-          row2.textContent = it.who + ": " + it.text;
-          body.appendChild(row2);
+      } else if (comment) {
+        lines.push({
+          who: (x.commentByRole === "ADMIN") ? "Agent" : "You",
+          role: (x.commentByRole || "").toUpperCase(),
+          text: comment,
+          atMs: 0
         });
+      }
 
-        det.appendChild(body);
+      if (lines.length) {
+        const latest = lines[lines.length - 1] || null;
+        const lastText = latest ? latest.text : "";
+        const badge = document.createElement("div");
+        badge.className = "cmt-badge";
+        badge.textContent = "💬 " + ((latest && latest.who) || "You") + ": " + lastText;
+        card.appendChild(badge);
 
-        const row = document.createElement("div");
-        row.className = "cmt-row";
+        const unread = lines.some((m) => m.role === "ADMIN");
+        if (unread) unreadComm += 1;
 
-        const addrLine = document.createElement("div");
-        addrLine.className = "cmt-addr";
-        addrLine.textContent = addrText || "Unknown address";
-
-        row.appendChild(addrLine);
-        row.appendChild(det);
-
-        cmtBox.appendChild(row);
-        nCmt += 1;
+        threads.push({
+          propId: pid,
+          address: (x.address || card.getAttribute("data-addr") || "").toString().trim(),
+          latestText: lastText,
+          latestAt: Number((latest && latest.atMs) || 0),
+          unread,
+          lines
+        });
+        nComm += 1;
       }
     }
 
+    threads.sort((a, b) => (b.latestAt || 0) - (a.latestAt || 0));
+
+    for (const th of threads) {
+      const wrap = document.createElement("details");
+      wrap.className = "comm-thread" + (th.unread ? " unread" : "");
+
+      const summary = document.createElement("summary");
+      const left = document.createElement("div");
+      left.className = "comm-head-left";
+
+      const addrLine = document.createElement("div");
+      addrLine.className = "comm-addr";
+      addrLine.textContent = th.address || "Unknown address";
+
+      const meta = document.createElement("div");
+      meta.className = "comm-meta";
+      meta.textContent = th.latestText || "Messages";
+
+      left.appendChild(addrLine);
+      left.appendChild(meta);
+      summary.appendChild(left);
+
+      if (th.unread) {
+        const pill = document.createElement("span");
+        pill.className = "comm-pill";
+        summary.appendChild(pill);
+      }
+
+      wrap.appendChild(summary);
+
+      const body = document.createElement("div");
+      body.className = "comm-body";
+
+      th.lines.forEach((it) => {
+        const row = document.createElement("div");
+        row.className = "msg-row " + (it.role === "ADMIN" ? "msg-agent" : "msg-buyer");
+
+        const bubble = document.createElement("div");
+        bubble.className = "msg-bubble";
+
+        const label = document.createElement("span");
+        label.className = "msg-label";
+        label.textContent = (it.role === "ADMIN" ? "Agent:" : "You:");
+
+        const txt = document.createElement("div");
+        txt.className = "msg-text";
+        txt.textContent = it.text;
+
+        bubble.appendChild(label);
+        bubble.appendChild(txt);
+        row.appendChild(bubble);
+        body.appendChild(row);
+      });
+
+      wrap.appendChild(body);
+      commBox.appendChild(wrap);
+    }
     // Update counts
+    if (cntComm) cntComm.textContent = String(nComm);
     if (cntSel) cntSel.textContent = String(nSel);
     if (cntRej) cntRej.textContent = String(nRej);
-    if (cntCmt) cntCmt.textContent = String(nCmt);
+    if (commAlertDot) commAlertDot.hidden = unreadComm <= 0;
+    if (commBucket) commBucket.classList.toggle("unread", unreadComm > 0);
 
-    // Keep the remaining cards in All Properties (already in #list).
-    // (We moved selected/rejected/commented cards out, so #list now naturally becomes All Properties.)
+    // Keep the remaining cards in All Properties.
   }
 
   async function loadAdminUI() {
