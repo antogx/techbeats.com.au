@@ -305,7 +305,7 @@ function renderT(fl=''){
   $('tb').innerHTML=rows.map(e=>{
     const b=(e.buyers||[]).map(b=>[b.firstName,b.lastName].filter(Boolean).join(' ')).join(', ');
     const edited=fmtDate(e.updatedAt||e.createdAt);
-    const af=e.buyersAgentFee||0;const sr=(e.serviceRatePercent||40)/100;const sfee=af*sr;const sGst=sfee*0.10;const sFeeTotal=sfee+sGst;
+    const af=e.buyersAgentFee||0;const sr=(e.serviceRatePercent||40)/100;const sfee=Math.max(af*sr,3000);const sGst=sfee*0.10;const sFeeTotal=sfee+sGst;
     return`<tr data-eid="${esc(e.id)}"><td><b>${esc(e.engagementId||e.id)}</b><span class="enote">edited ${edited}</span></td><td>${esc(e.engagementDate||'')}</td><td><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></td><td class="bc-cell" title="${esc(b)}">${esc(b||'\u2014')}</td><td>${esc(e.purchasingEntityName||'\u2014')}</td><td>${af?fm(af):'\u2014'}</td><td>${af?fm(sFeeTotal):'\u2014'}</td></tr>`}).join('');
 }
 $('sb').addEventListener('input',e=>renderT(e.target.value));
