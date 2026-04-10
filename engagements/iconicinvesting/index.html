@@ -3,833 +3,339 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Iconic Investing — New Engagement</title>
+<title>Iconic Investing — Engagements</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Fraunces:wght@600;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --bg: #f8f9fc;
-  --surface: #ffffff;
-  --surface-alt: #f1f3f8;
-  --fg: #1a1d2e;
-  --fg-muted: #6b7185;
-  --accent: #1b4a6e;
-  --accent-light: #e8f0f7;
-  --accent-dark: #0f2e47;
-  --border: #e0e3eb;
-  --border-focus: #1b4a6e;
-  --radius: 10px;
-  --radius-lg: 16px;
-  --shadow-sm: 0 1px 3px rgba(26,29,46,.06);
-  --shadow-md: 0 4px 16px rgba(26,29,46,.08);
-  --shadow-lg: 0 8px 32px rgba(26,29,46,.10);
-  --green: #1a8754;
-  --green-bg: #e6f5ed;
-  --blue: #1b4a6e;
-  --blue-bg: #e8f0f7;
-  --orange: #c57213;
-  --orange-bg: #fef3e2;
-  --red: #c0392b;
-  --red-bg: #fde8e6;
-  --font-display: 'Playfair Display', Georgia, serif;
-  --font-body: 'DM Sans', system-ui, sans-serif;
-  --transition: .2s ease;
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#eef1f5;--sf:#fff;--sf2:#f5f7fa;--fg:#1c2033;--mt:#7a7f94;
+  --ac:#16425b;--ac2:#2a7ab5;--al:#dbeaf5;
+  --bd:#d8dce6;--bd2:#c5cad6;--r:5px;--rl:8px;
+  --gn:#168a52;--gnb:#e1f5ec;--bl:#1a5fa0;--blb:#e3eef8;
+  --or:#b86e13;--orb:#fef0db;--rd:#c23a2a;--rdb:#fce8e6;
+  --sh:0 1px 3px rgba(0,0,0,.05);--sh2:0 2px 10px rgba(0,0,0,.08);
+  --fd:'Fraunces',Georgia,serif;--fb:'Outfit',system-ui,sans-serif;
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: var(--font-body);
-  background: var(--bg);
-  color: var(--fg);
-  min-height: 100dvh;
-  -webkit-font-smoothing: antialiased;
+html{font-size:12px}
+body{font-family:var(--fb);background:var(--bg);color:var(--fg);min-height:100dvh;overflow-x:hidden}
+.hdr{background:var(--ac);color:#fff;padding:0 12px;height:34px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 1px 6px rgba(0,0,0,.15)}
+.brand{font-family:var(--fd);font-weight:700;font-size:1.1rem;color:#fff;text-decoration:none;letter-spacing:-.02em}
+.brand b{color:#7ec8e3}
+.hdr-tag{font-size:.6rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.app{max-width:1320px;margin:0 auto;padding:6px 8px 20px}
+.pnl{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}
+.pnl+.pnl{margin-top:6px}
+.pbar{display:flex;align-items:center;justify-content:space-between;padding:4px 10px;background:var(--sf2);border-bottom:1px solid var(--bd);gap:6px;flex-wrap:wrap;min-height:30px}
+.pt{font-family:var(--fd);font-weight:700;font-size:.92rem;color:var(--ac);white-space:nowrap}
+.pill{font-size:.62rem;font-weight:600;padding:1px 7px;border-radius:20px;background:var(--ac);color:#fff;margin-left:4px}
+.sbox{padding:3px 8px;border:1px solid var(--bd);border-radius:var(--r);font-family:var(--fb);font-size:.82rem;width:170px;outline:none}
+.sbox:focus{border-color:var(--ac2)}
+.bn{padding:3px 12px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-family:var(--fb);font-weight:600;font-size:.78rem;cursor:pointer;transition:all .12s;white-space:nowrap}
+.bn:hover{background:var(--ac2)}
+.tw{overflow-x:auto;max-height:42vh;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:.78rem}
+thead{position:sticky;top:0;z-index:5}
+th{background:var(--ac);color:#fff;padding:4px 8px;text-align:left;font-weight:600;font-size:.66rem;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
+td{padding:3px 8px;border-bottom:1px solid var(--bd);white-space:nowrap;vertical-align:middle}
+tbody tr:hover td{background:var(--al)}
+tbody tr{cursor:pointer}
+.st{display:inline-block;padding:0 6px;border-radius:8px;font-size:.65rem;font-weight:600;line-height:1.6}
+.st-ns{background:var(--orb);color:var(--or)}
+.st-ip{background:var(--blb);color:var(--bl)}
+.st-co{background:var(--gnb);color:var(--gn)}
+.empty-row{text-align:center;color:var(--mt);padding:16px;font-style:italic;font-size:.8rem}
+.bc-cell{max-width:140px;overflow:hidden;text-overflow:ellipsis}
+.fp{display:none}.fp.open{display:block}
+.fb{padding:6px 10px 10px}
+.fcb{display:flex;align-items:center;justify-content:space-between;padding:4px 10px;background:var(--sf2);border-bottom:1px solid var(--bd)}
+.bcf{background:none;border:1px solid var(--bd2);border-radius:var(--r);padding:2px 10px;font-size:.72rem;font-weight:600;cursor:pointer;color:var(--mt);transition:all .12s}
+.bcf:hover{border-color:var(--rd);color:var(--rd)}
+.g{display:grid;gap:4px 8px}
+.g2{grid-template-columns:1fr 1fr}
+.g3{grid-template-columns:1fr 1fr 1fr}
+.g4{grid-template-columns:1fr 1fr 1fr 1fr}
+.g5{grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+.g6{grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
+.gf{grid-column:1/-1}
+.f{display:flex;flex-direction:column;gap:1px}
+.f label{font-weight:600;font-size:.62rem;letter-spacing:.03em;text-transform:uppercase;color:var(--mt);line-height:1.3}
+.f label .rq{color:var(--rd)}
+.f input,.f select,.f textarea{font-family:var(--fb);font-size:.82rem;padding:3px 6px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--fg);outline:none;transition:border-color .12s}
+.f input:focus,.f select:focus,.f textarea:focus{border-color:var(--ac2);box-shadow:0 0 0 1.5px rgba(42,122,181,.1)}
+.f textarea{resize:vertical;min-height:32px}
+.f .hn{font-size:.58rem;color:var(--mt);font-style:italic}
+.ss select.st-ns{background:var(--orb);border-color:var(--or);color:var(--or);font-weight:600}
+.ss select.st-ip{background:var(--blb);border-color:var(--bl);color:var(--bl);font-weight:600}
+.ss select.st-co{background:var(--gnb);border-color:var(--gn);color:var(--gn);font-weight:600}
+.sl{font-family:var(--fd);font-weight:700;font-size:.74rem;color:var(--ac);padding:5px 0 2px;border-bottom:1px solid var(--bd);margin:4px 0 3px;display:flex;align-items:center;gap:4px}
+.sl:first-child{margin-top:0}
+.brow{display:flex;gap:6px;flex-wrap:wrap;align-items:flex-end}
+.bcard{flex:1;min-width:280px;border:1px solid var(--bd);border-radius:var(--r);padding:5px 7px;background:var(--sf2)}
+.bcard-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:3px}
+.bcard-n{font-weight:700;font-size:.72rem;color:var(--ac)}
+.brm{background:none;border:1px solid var(--rd);color:var(--rd);border-radius:3px;padding:0 6px;font-size:.6rem;font-weight:600;cursor:pointer;line-height:1.5}
+.brm:hover{background:var(--rd);color:#fff}
+.bab{padding:3px 10px;border:1.5px dashed var(--ac);border-radius:var(--r);background:transparent;color:var(--ac);font-family:var(--fb);font-size:.7rem;font-weight:600;cursor:pointer;margin-top:2px}
+.bab:hover{background:var(--al)}
+.frow{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.fbox{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:4px 6px;text-align:center}
+.fbox.hl{background:var(--ac);border-color:var(--ac);color:#fff}
+.flb{font-size:.56rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--mt);margin-bottom:1px}
+.fbox.hl .flb{color:rgba(255,255,255,.55)}
+.fvl{font-family:var(--fd);font-weight:700;font-size:.88rem}
+.sbar{display:flex;gap:6px;justify-content:flex-end;margin-top:6px;padding-top:5px;border-top:1px solid var(--bd)}
+.bsub{padding:5px 22px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-family:var(--fb);font-size:.84rem;font-weight:700;cursor:pointer;transition:all .12s}
+.bsub:hover{background:var(--ac2);box-shadow:var(--sh2)}
+.bsub:disabled{opacity:.4;cursor:not-allowed}
+.brst{padding:5px 14px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--mt);font-family:var(--fb);font-size:.8rem;font-weight:600;cursor:pointer}
+.brst:hover{border-color:var(--rd);color:var(--rd)}
+.twp{position:fixed;top:40px;right:10px;z-index:9999;display:flex;flex-direction:column;gap:4px}
+.tst{padding:6px 14px;border-radius:var(--r);font-weight:600;font-size:.75rem;box-shadow:var(--sh2);animation:tin .25s ease;max-width:280px}
+.tst.ok{background:var(--gn);color:#fff}
+.tst.err{background:var(--rd);color:#fff}
+.tst.inf{background:var(--ac);color:#fff}
+@keyframes tin{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:translateX(0)}}
+.ov{position:fixed;inset:0;background:rgba(28,32,51,.25);backdrop-filter:blur(2px);z-index:10000;display:none;align-items:center;justify-content:center}
+.ov.on{display:flex}
+.sp{width:30px;height:30px;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spn .6s linear infinite}
+@keyframes spn{to{transform:rotate(360deg)}}
+.dov{position:fixed;inset:0;background:rgba(28,32,51,.35);backdrop-filter:blur(2px);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:40px 12px}
+.dov.open{display:flex}
+.dc{background:var(--sf);border-radius:var(--rl);box-shadow:var(--sh2);max-width:660px;width:100%;max-height:82vh;overflow-y:auto;padding:12px 16px;position:relative}
+.dc h3{font-family:var(--fd);font-size:1rem;color:var(--ac);margin-bottom:8px}
+.dg{display:grid;grid-template-columns:120px 1fr;gap:2px 10px;font-size:.78rem}
+.dg dt{font-weight:600;color:var(--mt);text-align:right}
+.dg dd{color:var(--fg)}
+.dx{position:absolute;top:8px;right:12px;background:none;border:none;font-size:1.1rem;cursor:pointer;color:var(--mt)}
+.ds{margin-top:8px;padding-top:6px;border-top:1px solid var(--bd)}
+.ds h4{font-size:.7rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+@media(max-width:768px){
+  .g3,.g4,.g5,.g6{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr 1fr}
+  .tw{max-height:36vh}
+  .sbox{width:120px}
+  .bcard{min-width:100%}
 }
-.site-header {
-  background: var(--accent-dark);
-  color: #fff;
-  padding: 0 24px;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 2px 12px rgba(0,0,0,.15);
-}
-.header-inner {
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  height: 64px;
-}
-.brand {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.35rem;
-  letter-spacing: -.01em;
-  color: #fff;
-  text-decoration: none;
-}
-.brand span { color: #7cb9d8; }
-.header-tag {
-  font-size: .75rem;
-  font-weight: 500;
-  letter-spacing: .04em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.55);
-}
-.main-wrap {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 32px 20px 80px;
-}
-.page-title {
-  font-family: var(--font-display);
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--accent-dark);
-  margin-bottom: 4px;
-}
-.page-subtitle {
-  color: var(--fg-muted);
-  font-size: .92rem;
-  margin-bottom: 28px;
-}
-.section {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 28px 24px;
-  margin-bottom: 20px;
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow var(--transition);
-}
-.section:hover { box-shadow: var(--shadow-md); }
-.section-head {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--border);
-}
-.section-icon {
-  width: 36px;
-  height: 36px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
-  flex-shrink: 0;
-}
-.section-icon.engagement { background: var(--blue-bg); color: var(--blue); }
-.section-icon.buyer { background: var(--green-bg); color: var(--green); }
-.section-icon.entity { background: var(--orange-bg); color: var(--orange); }
-.section-icon.property { background: var(--accent-light); color: var(--accent); }
-.section-icon.purchase { background: var(--red-bg); color: var(--red); }
-.section-icon.fees { background: #f3e8ff; color: #7c3aed; }
-.section-title {
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.15rem;
-  color: var(--accent-dark);
-}
-.field-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.field-grid .full { grid-column: 1 / -1; }
-.field { display: flex; flex-direction: column; gap: 5px; }
-.field label {
-  font-weight: 600;
-  font-size: .8rem;
-  letter-spacing: .02em;
-  text-transform: uppercase;
-  color: var(--fg-muted);
-}
-.field label .req { color: var(--red); margin-left: 2px; }
-.field input,
-.field select,
-.field textarea {
-  font-family: var(--font-body);
-  font-size: .95rem;
-  padding: 10px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--fg);
-  outline: none;
-  transition: border-color var(--transition), box-shadow var(--transition);
-}
-.field input:focus,
-.field select:focus,
-.field textarea:focus {
-  border-color: var(--border-focus);
-  box-shadow: 0 0 0 3px rgba(27,74,110,.12);
-}
-.field textarea { resize: vertical; min-height: 80px; }
-.field .hint {
-  font-size: .78rem;
-  color: var(--fg-muted);
-  font-style: italic;
-}
-.status-select { position: relative; }
-.status-select select {
-  appearance: none;
-  padding-right: 38px;
-  font-weight: 600;
-}
-.status-select::after {
-  content: '▾';
-  position: absolute;
-  right: 14px;
-  bottom: 12px;
-  pointer-events: none;
-  color: var(--fg-muted);
-}
-.status-select select.st-not-started { background: var(--orange-bg); border-color: var(--orange); color: var(--orange); }
-.status-select select.st-in-progress { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); }
-.status-select select.st-completed { background: var(--green-bg); border-color: var(--green); color: var(--green); }
-.buyers-list { display: flex; flex-direction: column; gap: 14px; }
-.buyer-card {
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  padding: 18px 16px;
-  background: var(--surface-alt);
-  position: relative;
-  transition: border-color var(--transition);
-}
-.buyer-card:hover { border-color: var(--accent); }
-.buyer-card-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-}
-.buyer-num {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--accent);
-}
-.btn-remove-buyer {
-  background: none;
-  border: 1.5px solid var(--red);
-  color: var(--red);
-  border-radius: 6px;
-  padding: 4px 12px;
-  font-size: .78rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-.btn-remove-buyer:hover { background: var(--red); color: #fff; }
-.btn-add-buyer {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  margin-top: 14px;
-  padding: 10px 20px;
-  border: 2px dashed var(--accent);
-  border-radius: var(--radius);
-  background: transparent;
-  color: var(--accent);
-  font-family: var(--font-body);
-  font-size: .9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-.btn-add-buyer:hover { background: var(--accent-light); }
-.actions-bar {
-  display: flex;
-  gap: 12px;
-  margin-top: 8px;
-  justify-content: flex-end;
-  flex-wrap: wrap;
-}
-.btn-submit {
-  padding: 14px 36px;
-  border: none;
-  border-radius: var(--radius);
-  background: var(--accent);
-  color: #fff;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all var(--transition);
-  box-shadow: var(--shadow-md);
-  letter-spacing: .02em;
-}
-.btn-submit:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
-.btn-submit:active { transform: translateY(0); }
-.btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
-.btn-reset {
-  padding: 14px 28px;
-  border: 1.5px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--fg-muted);
-  font-family: var(--font-body);
-  font-size: .95rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition);
-}
-.btn-reset:hover { border-color: var(--red); color: var(--red); }
-.fee-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-.fee-item {
-  background: var(--surface-alt);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 14px;
-}
-.fee-item.highlight {
-  background: var(--accent-dark);
-  border-color: var(--accent-dark);
-  color: #fff;
-  grid-column: 1 / -1;
-}
-.fee-label {
-  font-size: .78rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: .04em;
-  color: var(--fg-muted);
-  margin-bottom: 4px;
-}
-.fee-item.highlight .fee-label { color: rgba(255,255,255,.65); }
-.fee-value {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.15rem;
-}
-.fee-item.highlight .fee-value { font-size: 1.4rem; }
-.toast-wrap {
-  position: fixed;
-  top: 80px;
-  right: 20px;
-  z-index: 9999;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-.toast {
-  padding: 14px 20px;
-  border-radius: var(--radius);
-  font-weight: 600;
-  font-size: .9rem;
-  box-shadow: var(--shadow-lg);
-  animation: toastIn .35s ease;
-  max-width: 360px;
-}
-.toast.success { background: var(--green); color: #fff; }
-.toast.error { background: var(--red); color: #fff; }
-.toast.info { background: var(--accent); color: #fff; }
-@keyframes toastIn {
-  from { opacity: 0; transform: translateX(30px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-.loading-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(26,29,46,.35);
-  backdrop-filter: blur(4px);
-  z-index: 10000;
-  display: none;
-  align-items: center;
-  justify-content: center;
-}
-.loading-overlay.active { display: flex; }
-.spinner {
-  width: 48px;
-  height: 48px;
-  border: 4px solid rgba(255,255,255,.3);
-  border-top-color: #fff;
-  border-radius: 50%;
-  animation: spin .8s linear infinite;
-}
-@keyframes spin { to { transform: rotate(360deg); } }
-.gen-stamp {
-  text-align: center;
-  margin-top: 32px;
-  font-size: .75rem;
-  color: var(--fg-muted);
-}
-@media (max-width: 640px) {
-  .field-grid { grid-template-columns: 1fr; }
-  .fee-grid { grid-template-columns: 1fr; }
-  .section { padding: 20px 16px; }
-  .main-wrap { padding: 20px 12px 60px; }
-  .page-title { font-size: 1.3rem; }
-  .actions-bar { flex-direction: column; }
-  .btn-submit, .btn-reset { width: 100%; text-align: center; }
-  .header-inner { height: 56px; }
-  .brand { font-size: 1.15rem; }
+@media(max-width:480px){
+  .g2,.g3,.g4,.g5,.g6{grid-template-columns:1fr}
+  .frow{grid-template-columns:1fr}
+  html{font-size:11px}
+  .app{padding:4px 4px 16px}
 }
 </style>
 </head>
 <body>
-<header class="site-header">
-  <div class="header-inner">
-    <a class="brand" href="https://techbeats.com.au">Iconic<span>Investing</span></a>
-    <span class="header-tag">Engagement Portal</span>
-  </div>
+
+<header class="hdr">
+  <a class="brand" href="https://techbeats.com.au">Iconic<b>Investing</b></a>
+  <span class="hdr-tag">Engagement Portal</span>
 </header>
-<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
-<div class="toast-wrap" id="toastWrap"></div>
-<main class="main-wrap">
-  <h1 class="page-title">New Buyer Engagement</h1>
-  <p class="page-subtitle">Submit engagement details to begin the property finder process.</p>
 
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon engagement">&#128203;</div>
-      <h2 class="section-title">Engagement Details</h2>
+<div class="ov" id="ov"><div class="sp"></div></div>
+<div class="twp" id="tw"></div>
+
+<div class="dov" id="dov">
+  <div class="dc" id="dc">
+    <button class="dx" id="dx">&times;</button>
+    <div id="dd"></div>
+  </div>
+</div>
+
+<div class="app">
+
+  <!-- TOP: ENGAGEMENTS LIST -->
+  <div class="pnl">
+    <div class="pbar">
+      <div style="display:flex;align-items:center;gap:4px">
+        <span class="pt">Engagements</span>
+        <span class="pill" id="cnt">0</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <input type="text" class="sbox" id="sb" placeholder="Search…">
+        <button class="bn" id="btnN">&#65291; New</button>
+      </div>
     </div>
-    <div class="field-grid">
-      <div class="field">
-        <label>Engagement ID</label>
-        <input type="text" id="engagementId" placeholder="Auto-generated from buyer name(s)">
-        <span class="hint">Auto-generated &middot; editable</span>
+    <div class="tw" id="tw2">
+      <table>
+        <thead><tr>
+          <th>ID</th><th>Date</th><th>Status</th><th>Buyers</th><th>Entity</th><th>Type</th><th>Region</th><th>Budget</th><th>Purchase</th>
+        </tr></thead>
+        <tbody id="tb">
+          <tr><td colspan="9" class="empty-row">Loading&hellip;</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- BOTTOM: NEW FORM -->
+  <div class="pnl fp" id="fp">
+    <div class="fcb">
+      <span class="pt">New Engagement</span>
+      <button class="bcf" id="btnX">&#10005; Close</button>
+    </div>
+    <div class="fb">
+
+      <div class="sl">&#128203; Engagement</div>
+      <div class="g g3">
+        <div class="f"><label>Engagement ID</label><input type="text" id="eId" placeholder="Auto-generated"><span class="hn">Auto &middot; editable</span></div>
+        <div class="f"><label>Date <span class="rq">*</span></label><input type="date" id="eDate"></div>
+        <div class="f ss"><label>Status <span class="rq">*</span></label><select id="eSt"><option value="Not started">Not Started</option><option value="In progress">In Progress</option><option value="Completed">Completed</option></select></div>
       </div>
-      <div class="field">
-        <label>Engagement Date <span class="req">*</span></label>
-        <input type="date" id="engagementDate" required>
+
+      <div class="sl">&#128100; Buyers <button class="bab" id="addB" type="button" style="margin-left:auto">&#65291; Add</button></div>
+      <div class="brow" id="bL"></div>
+
+      <div class="sl">&#127970; Entity &nbsp;&middot;&nbsp; &#127968; Property</div>
+      <div class="g g5">
+        <div class="f"><label>Entity Name</label><input type="text" id="eN" placeholder="Smith Family Trust"></div>
+        <div class="f"><label>Property Type</label><select id="pT"><option value="">&mdash;</option><option>House</option><option>Unit</option><option>Townhouse</option><option>Villa</option><option>Land</option><option>Other</option></select></div>
+        <div class="f"><label>State/Region</label><select id="pR"><option value="Any">Any</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option><option>NT</option><option>ACT</option></select></div>
+        <div class="f"><label>Budget ($)</label><input type="number" id="pB" placeholder="550000" min="0" step="1000"></div>
+        <div class="f"><label>Min Beds</label><select id="pBd"><option value="Any">Any</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
       </div>
-      <div class="field status-select">
-        <label>Engagement Status <span class="req">*</span></label>
-        <select id="engagementStatus" required>
-          <option value="Not started">Not Started</option>
-          <option value="In progress">In Progress</option>
-          <option value="Completed">Completed</option>
-        </select>
+      <div class="g" style="margin-top:3px">
+        <div class="f"><label>Client Notes</label><textarea id="pN" placeholder="Additional preferences&hellip;" rows="1"></textarea></div>
+      </div>
+
+      <div class="sl">&#128176; Purchase &amp; Fees</div>
+      <div class="g g3">
+        <div class="f"><label>Purchase Price ($)</label><input type="number" id="xP" placeholder="520000" min="0" step="1000"></div>
+        <div class="f"><label>Total Charged ($)</label><input type="number" id="xC" placeholder="15000" min="0" step="100"></div>
+        <div class="f"><label>Service Rate (%)</label><input type="number" id="xR" value="40" min="0" max="100" step="1"></div>
+      </div>
+      <div class="frow" style="margin-top:5px">
+        <div class="fbox"><div class="flb">Service Fee</div><div class="fvl" id="fS">$0</div></div>
+        <div class="fbox"><div class="flb">GST 10%</div><div class="fvl" id="fG">$0</div></div>
+        <div class="fbox"><div class="flb">Total Payable</div><div class="fvl" id="fT">$0</div></div>
+        <div class="fbox hl"><div class="flb">Outstanding</div><div class="fvl" id="fO">$0</div></div>
+      </div>
+
+      <div class="sbar">
+        <button type="button" class="brst" id="btnR">Reset</button>
+        <button type="button" class="bsub" id="btnS">Submit Engagement</button>
       </div>
     </div>
   </div>
 
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon buyer">&#128100;</div>
-      <h2 class="section-title">Buyer Details</h2>
-    </div>
-    <div class="field" style="margin-bottom:16px;max-width:180px;">
-      <label>Number of Buyers</label>
-      <select id="numBuyers">
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-      </select>
-    </div>
-    <div class="buyers-list" id="buyersList"></div>
-    <button type="button" class="btn-add-buyer" id="addBuyerBtn">&#65291; Add Buyer</button>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon entity">&#127970;</div>
-      <h2 class="section-title">Entity Details</h2>
-    </div>
-    <div class="field-grid">
-      <div class="field full">
-        <label>Purchasing Entity Name</label>
-        <input type="text" id="entityName" placeholder="e.g. Smith Family Trust">
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon property">&#127968;</div>
-      <h2 class="section-title">Property Requirements</h2>
-    </div>
-    <div class="field-grid">
-      <div class="field">
-        <label>Property Type</label>
-        <select id="propertyType">
-          <option value="">&mdash; Select &mdash;</option>
-          <option value="House">House</option>
-          <option value="Unit">Unit</option>
-          <option value="Townhouse">Townhouse</option>
-          <option value="Villa">Villa</option>
-          <option value="Land">Land</option>
-          <option value="Other">Other</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Preferred State / Region</label>
-        <select id="preferredRegion">
-          <option value="Any">Any</option>
-          <option value="NSW">NSW</option>
-          <option value="VIC">VIC</option>
-          <option value="QLD">QLD</option>
-          <option value="SA">SA</option>
-          <option value="WA">WA</option>
-          <option value="TAS">TAS</option>
-          <option value="NT">NT</option>
-          <option value="ACT">ACT</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Budget ($)</label>
-        <input type="number" id="budget" placeholder="e.g. 550000" min="0" step="1000">
-      </div>
-      <div class="field">
-        <label>Minimum Bedrooms</label>
-        <select id="minBedrooms">
-          <option value="Any">Any</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5+</option>
-        </select>
-      </div>
-      <div class="field full">
-        <label>Client Notes</label>
-        <textarea id="clientNotes" placeholder="Any additional preferences or notes&hellip;"></textarea>
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon purchase">&#128176;</div>
-      <h2 class="section-title">Purchase Details</h2>
-    </div>
-    <div class="field-grid">
-      <div class="field">
-        <label>Purchase Price ($)</label>
-        <input type="number" id="purchasePrice" placeholder="e.g. 520000" min="0" step="1000">
-      </div>
-      <div class="field">
-        <label>Total Amount Charged to Client ($)</label>
-        <input type="number" id="totalCharged" placeholder="e.g. 15000" min="0" step="100">
-      </div>
-    </div>
-  </div>
-
-  <div class="section">
-    <div class="section-head">
-      <div class="section-icon fees">&#128202;</div>
-      <h2 class="section-title">Fee Calculations</h2>
-    </div>
-    <div class="field-grid" style="margin-bottom:20px;">
-      <div class="field">
-        <label>Property Finder Service Rate (%)</label>
-        <input type="number" id="serviceRate" value="40" min="0" max="100" step="1">
-        <span class="hint">Default: 40%</span>
-      </div>
-    </div>
-    <div class="fee-grid" id="feeGrid">
-      <div class="fee-item">
-        <div class="fee-label">Property Finder Service Fee</div>
-        <div class="fee-value" id="feeServiceFee">$0.00</div>
-      </div>
-      <div class="fee-item">
-        <div class="fee-label">GST Amount (10%)</div>
-        <div class="fee-value" id="feeGST">$0.00</div>
-      </div>
-      <div class="fee-item">
-        <div class="fee-label">Total Fee Payable</div>
-        <div class="fee-value" id="feeTotalPayable">$0.00</div>
-      </div>
-      <div class="fee-item highlight">
-        <div class="fee-label">Outstanding Balance</div>
-        <div class="fee-value" id="feeOutstanding">$0.00</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="actions-bar">
-    <button type="button" class="btn-reset" id="resetBtn">Reset Form</button>
-    <button type="button" class="btn-submit" id="submitBtn">Submit Engagement</button>
-  </div>
-
-  <div class="gen-stamp">Generated 2026-04-10 21:22</div>
-</main>
+</div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-  import {
-    getFirestore, doc, setDoc, collection, serverTimestamp
-  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import{getFirestore,doc,setDoc,collection,query,orderBy,onSnapshot,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk",
-    authDomain: "techbeatsrealty.firebaseapp.com",
-    projectId: "techbeatsrealty",
-    storageBucket: "techbeatsrealty.firebasestorage.app",
-    messagingSenderId: "11824236488",
-    appId: "1:11824236488:web:8c9d56501f191566a222fd",
-    measurementId: "G-HLN70BQKFJ"
-  };
+const app=initializeApp({apiKey:"AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk",authDomain:"techbeatsrealty.firebaseapp.com",projectId:"techbeatsrealty",storageBucket:"techbeatsrealty.firebasestorage.app",messagingSenderId:"11824236488",appId:"1:11824236488:web:8c9d56501f191566a222fd",measurementId:"G-HLN70BQKFJ"});
+const db=getFirestore(app);
 
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
+const $=id=>document.getElementById(id);
+const toast=(m,t='inf')=>{const d=document.createElement('div');d.className=`tst ${t}`;d.textContent=m;$('tw').appendChild(d);setTimeout(()=>{d.style.opacity='0';d.style.transition='opacity .2s';setTimeout(()=>d.remove(),200)},2500)};
+const setL=on=>$('ov').classList.toggle('on',on);
+const fm=n=>(n==null||isNaN(n))?'\u2014':'$'+Math.round(n).toLocaleString('en-AU');
+const sc=v=>{if(!v)return'st-ns';const l=v.toLowerCase();return l.includes('progress')?'st-ip':l.includes('complete')?'st-co':'st-ns'};
+const esc=s=>s?String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'):'';
 
-  function toast(msg, type = 'info') {
-    const wrap = document.getElementById('toastWrap');
-    const t = document.createElement('div');
-    t.className = `toast ${type}`;
-    t.textContent = msg;
-    wrap.appendChild(t);
-    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
-  }
+/* == LIVE TABLE == */
+let all=[];
+const q2=query(collection(db,'engagements'),orderBy('createdAt','desc'));
+onSnapshot(q2,snap=>{
+  all=[];snap.forEach(d=>all.push({id:d.id,...d.data()}));renderT();
+},err=>{console.error(err);$('tb').innerHTML='<tr><td colspan="9" class="empty-row">Error loading</td></tr>'});
 
-  function setLoading(on) {
-    document.getElementById('loadingOverlay').classList.toggle('active', on);
-  }
+function renderT(fl=''){
+  const f=fl.toLowerCase();
+  const rows=f?all.filter(e=>[e.engagementId,e.engagementStatus,e.purchasingEntityName,e.propertyType,e.preferredRegion,...(e.buyers||[]).map(b=>`${b.firstName} ${b.middleName} ${b.lastName}`)].join(' ').toLowerCase().includes(f)):all;
+  $('cnt').textContent=rows.length;
+  if(!rows.length){$('tb').innerHTML='<tr><td colspan="9" class="empty-row">No engagements</td></tr>';return}
+  $('tb').innerHTML=rows.map(e=>{
+    const b=(e.buyers||[]).map(b=>[b.firstName,b.lastName].filter(Boolean).join(' ')).join(', ');
+    return`<tr data-eid="${esc(e.id)}"><td><b>${esc(e.engagementId||e.id)}</b></td><td>${esc(e.engagementDate||'')}</td><td><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></td><td class="bc-cell" title="${esc(b)}">${esc(b||'\u2014')}</td><td>${esc(e.purchasingEntityName||'\u2014')}</td><td>${esc(e.propertyType||'\u2014')}</td><td>${esc(e.preferredRegion||'\u2014')}</td><td>${e.budget?fm(e.budget):'\u2014'}</td><td>${e.purchasePrice?fm(e.purchasePrice):'\u2014'}</td></tr>`}).join('');
+}
+$('sb').addEventListener('input',e=>renderT(e.target.value));
 
-  document.getElementById('engagementDate').value = new Date().toISOString().split('T')[0];
+/* Row -> detail */
+$('tb').addEventListener('click',e=>{const tr=e.target.closest('tr[data-eid]');if(!tr)return;const eng=all.find(x=>x.id===tr.dataset.eid);if(eng)showD(eng)});
 
-  const statusSel = document.getElementById('engagementStatus');
-  function updateStatusStyle() {
-    statusSel.classList.remove('st-not-started', 'st-in-progress', 'st-completed');
-    const v = statusSel.value;
-    if (v === 'Not started') statusSel.classList.add('st-not-started');
-    else if (v === 'In progress') statusSel.classList.add('st-in-progress');
-    else if (v === 'Completed') statusSel.classList.add('st-completed');
-  }
-  statusSel.addEventListener('change', updateStatusStyle);
-  updateStatusStyle();
+function showD(e){
+  const buyers=(e.buyers||[]).map((b,i)=>`<div style="margin-bottom:3px"><b>Buyer ${i+1}:</b> ${esc([b.firstName,b.middleName,b.lastName].filter(Boolean).join(' '))}${b.mobile?' \u00b7 '+esc(b.mobile):''}${b.email?' \u00b7 '+esc(b.email):''}</div>`).join('');
+  const rate=e.serviceRatePercent||40,ch=e.totalAmountCharged||0,sv=ch*(rate/100),g=sv*.10,tp=sv+g,ou=ch-tp;
+  $('dd').innerHTML=`<h3>${esc(e.engagementId||e.id)}</h3>
+<div class="dg"><dt>Date</dt><dd>${esc(e.engagementDate||'\u2014')}</dd><dt>Status</dt><dd><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus)}</span></dd><dt>Entity</dt><dd>${esc(e.purchasingEntityName||'\u2014')}</dd></div>
+<div class="ds"><h4>Buyers</h4>${buyers||'<span style="color:var(--mt)">None</span>'}</div>
+<div class="ds"><h4>Property</h4><div class="dg"><dt>Type</dt><dd>${esc(e.propertyType||'\u2014')}</dd><dt>Region</dt><dd>${esc(e.preferredRegion||'\u2014')}</dd><dt>Budget</dt><dd>${e.budget?fm(e.budget):'\u2014'}</dd><dt>Min Beds</dt><dd>${esc(e.minBedrooms||'\u2014')}</dd></div>${e.clientNotes?`<div style="margin-top:4px;font-size:.78rem;color:var(--mt)"><b>Notes:</b> ${esc(e.clientNotes)}</div>`:''}</div>
+<div class="ds"><h4>Fees</h4><div class="dg"><dt>Purchase</dt><dd>${e.purchasePrice?fm(e.purchasePrice):'\u2014'}</dd><dt>Charged</dt><dd>${ch?fm(ch):'\u2014'}</dd><dt>Rate</dt><dd>${rate}%</dd><dt>Service Fee</dt><dd>${fm(sv)}</dd><dt>GST</dt><dd>${fm(g)}</dd><dt>Total</dt><dd>${fm(tp)}</dd><dt><b>Outstanding</b></dt><dd><b>${fm(ou)}</b></dd></div></div>`;
+  $('dov').classList.add('open');
+}
+$('dx').onclick=()=>$('dov').classList.remove('open');
+$('dov').onclick=e=>{if(e.target===$('dov'))$('dov').classList.remove('open')};
 
-  const buyersList = document.getElementById('buyersList');
-  const numBuyersSel = document.getElementById('numBuyers');
-  const addBuyerBtn = document.getElementById('addBuyerBtn');
-  let buyerCount = 0;
+/* == FORM == */
+$('btnN').onclick=()=>{$('fp').classList.add('open');$('fp').scrollIntoView({behavior:'smooth',block:'start'})};
+$('btnX').onclick=()=>$('fp').classList.remove('open');
+$('eDate').value=new Date().toISOString().split('T')[0];
 
-  function createBuyerCard(idx) {
-    const n = idx + 1;
-    const card = document.createElement('div');
-    card.className = 'buyer-card';
-    card.dataset.buyerIdx = idx;
-    card.innerHTML = `
-      <div class="buyer-card-head">
-        <span class="buyer-num">Buyer ${n}</span>
-        ${idx > 0 ? '<button type="button" class="btn-remove-buyer" data-remove="' + idx + '">Remove</button>' : ''}
-      </div>
-      <div class="field-grid">
-        <div class="field">
-          <label>First Name <span class="req">*</span></label>
-          <input type="text" class="buyer-first" placeholder="First name" required>
-        </div>
-        <div class="field">
-          <label>Middle Name</label>
-          <input type="text" class="buyer-middle" placeholder="Middle name">
-        </div>
-        <div class="field">
-          <label>Last Name <span class="req">*</span></label>
-          <input type="text" class="buyer-last" placeholder="Last name" required>
-        </div>
-        <div class="field">
-          <label>Mobile Number</label>
-          <input type="tel" class="buyer-mobile" placeholder="e.g. 0412 345 678">
-        </div>
-        <div class="field full">
-          <label>Email Address</label>
-          <input type="email" class="buyer-email" placeholder="email@example.com">
-        </div>
-      </div>
-    `;
-    return card;
-  }
+const eS=$('eSt');
+function uSt(){eS.classList.remove('st-ns','st-ip','st-co');const v=eS.value.toLowerCase();eS.classList.add(v.includes('progress')?'st-ip':v.includes('complete')?'st-co':'st-ns')}
+eS.onchange=uSt;uSt();
 
-  function renderBuyers(count) {
-    const existing = buyersList.querySelectorAll('.buyer-card');
-    const currentCount = existing.length;
-    if (count > currentCount) {
-      for (let i = currentCount; i < count; i++) buyersList.appendChild(createBuyerCard(i));
-    } else if (count < currentCount) {
-      for (let i = currentCount - 1; i >= count; i--) existing[i].remove();
-    }
-    buyerCount = count;
-    numBuyersSel.value = String(count);
-    updateEngagementId();
-  }
+/* BUYERS */
+let bC=0;
+function mkB(i){
+  const c=document.createElement('div');c.className='bcard';c.dataset.bi=i;
+  c.innerHTML=`<div class="bcard-h"><span class="bcard-n">Buyer ${i+1}</span>${i>0?`<button type="button" class="brm" data-ri="${i}">\u2715</button>`:''}</div>
+<div class="g g5"><div class="f"><label>First <span class="rq">*</span></label><input type="text" class="bf" placeholder="First"></div><div class="f"><label>Middle</label><input type="text" class="bm" placeholder="Middle"></div><div class="f"><label>Last <span class="rq">*</span></label><input type="text" class="bl" placeholder="Last"></div><div class="f"><label>Mobile</label><input type="tel" class="bph" placeholder="0412 345 678"></div><div class="f"><label>Email</label><input type="email" class="bem" placeholder="email@example.com"></div></div>`;
+  return c;
+}
+function rB(n){
+  const l=$('bL'),cur=l.querySelectorAll('.bcard').length;
+  if(n>cur){for(let i=cur;i<n;i++)l.appendChild(mkB(i))}
+  else if(n<cur){const cs=l.querySelectorAll('.bcard');for(let i=cur-1;i>=n;i--)cs[i].remove()}
+  bC=n;riB();uEID();
+}
+function riB(){$('bL').querySelectorAll('.bcard').forEach((c,i)=>{c.dataset.bi=i;c.querySelector('.bcard-n').textContent=`Buyer ${i+1}`;const rm=c.querySelector('.brm');if(i===0&&rm)rm.remove();if(rm)rm.dataset.ri=i})}
+$('addB').onclick=()=>{if(bC>=4){toast('Max 4','err');return}rB(bC+1)};
+$('bL').addEventListener('click',e=>{const b=e.target.closest('.brm');if(!b)return;const cs=$('bL').querySelectorAll('.bcard');const i=parseInt(b.dataset.ri);if(cs[i])cs[i].remove();bC=$('bL').querySelectorAll('.bcard').length;riB();uEID()});
 
-  numBuyersSel.addEventListener('change', () => renderBuyers(parseInt(numBuyersSel.value)));
+function uEID(){
+  const cs=$('bL').querySelectorAll('.bcard'),fs=[],ls=[];
+  cs.forEach(c=>{const f=(c.querySelector('.bf')?.value||'').trim().toLowerCase(),l=(c.querySelector('.bl')?.value||'').trim().toLowerCase();if(f)fs.push(f);if(l)ls.push(l)});
+  let id='';if(fs.length>=2)id=fs.slice(0,2).join('_');else if(fs.length===1&&ls.length>=1){id=fs[0]+'_'+(ls[0].length>4?ls[0].slice(0,5):ls[0])}
+  id=id.replace(/[^a-z0-9_]/g,'');const f=$('eId');if(!f._ue)f.value=id;
+}
+$('eId').oninput=function(){this._ue=true};
+$('bL').addEventListener('input',e=>{if(e.target.classList.contains('bf')||e.target.classList.contains('bl'))uEID()});
+rB(1);
 
-  addBuyerBtn.addEventListener('click', () => {
-    if (buyerCount >= 4) { toast('Maximum 4 buyers allowed', 'error'); return; }
-    renderBuyers(buyerCount + 1);
-  });
+/* FEES */
+function rc(){
+  const ch=parseFloat($('xC').value)||0,r=(parseFloat($('xR').value)||0)/100;
+  const sv=ch*r,g=sv*.10,tp=sv+g,ou=ch-tp;
+  $('fS').textContent=fm(sv);$('fG').textContent=fm(g);$('fT').textContent=fm(tp);$('fO').textContent=fm(ou);
+}
+$('xC').oninput=rc;$('xR').oninput=rc;$('xP').oninput=rc;
 
-  buyersList.addEventListener('click', (e) => {
-    const btn = e.target.closest('.btn-remove-buyer');
-    if (!btn) return;
-    const idx = parseInt(btn.dataset.remove);
-    const cards = buyersList.querySelectorAll('.buyer-card');
-    if (cards[idx]) cards[idx].remove();
-    const remaining = buyersList.querySelectorAll('.buyer-card');
-    remaining.forEach((card, i) => {
-      card.dataset.buyerIdx = i;
-      card.querySelector('.buyer-num').textContent = `Buyer ${i + 1}`;
-      const rmBtn = card.querySelector('.btn-remove-buyer');
-      if (i === 0 && rmBtn) rmBtn.remove();
-      if (rmBtn) rmBtn.dataset.remove = i;
-    });
-    buyerCount = remaining.length;
-    numBuyersSel.value = String(buyerCount);
-    updateEngagementId();
-  });
+/* SUBMIT */
+$('btnS').onclick=async()=>{
+  const buyers=[];$('bL').querySelectorAll('.bcard').forEach(c=>{buyers.push({firstName:(c.querySelector('.bf')?.value||'').trim(),middleName:(c.querySelector('.bm')?.value||'').trim(),lastName:(c.querySelector('.bl')?.value||'').trim(),mobile:(c.querySelector('.bph')?.value||'').trim(),email:(c.querySelector('.bem')?.value||'').trim()})});
+  const eId=$('eId').value.trim(),eDate=$('eDate').value,errs=[];
+  if(!eId)errs.push('Engagement ID required');if(!eDate)errs.push('Date required');
+  buyers.forEach((b,i)=>{if(!b.firstName)errs.push(`Buyer ${i+1}: First Name required`);if(!b.lastName)errs.push(`Buyer ${i+1}: Last Name required`)});
+  if(errs.length){errs.forEach(e=>toast(e,'err'));return}
 
-  function updateEngagementId() {
-    const cards = buyersList.querySelectorAll('.buyer-card');
-    const firsts = [];
-    const lasts = [];
-    cards.forEach(card => {
-      const f = (card.querySelector('.buyer-first')?.value || '').trim().toLowerCase();
-      const l = (card.querySelector('.buyer-last')?.value || '').trim().toLowerCase();
-      if (f) firsts.push(f);
-      if (l) lasts.push(l);
-    });
-    let id = '';
-    if (firsts.length >= 2) {
-      id = firsts.slice(0, 2).join('_');
-    } else if (firsts.length === 1 && lasts.length >= 1) {
-      const lastPart = lasts[0].length > 4 ? lasts[0].slice(0, 5) : lasts[0];
-      id = firsts[0] + '_' + lastPart;
-    }
-    id = id.replace(/[^a-z0-9_]/g, '');
-    const field = document.getElementById('engagementId');
-    if (!field._userEdited) field.value = id;
-  }
+  const ch=parseFloat($('xC').value)||0,r=(parseFloat($('xR').value)||0)/100;
+  const sv=ch*r,g=sv*.10,tp=sv+g,ou=ch-tp;
+  const data={engagementId:eId,engagementDate:eDate,engagementStatus:$('eSt').value,numberOfBuyers:buyers.length,buyers,purchasingEntityName:$('eN').value.trim(),propertyType:$('pT').value,preferredRegion:$('pR').value,budget:parseFloat($('pB').value)||null,minBedrooms:$('pBd').value,clientNotes:$('pN').value.trim(),purchasePrice:parseFloat($('xP').value)||null,totalAmountCharged:ch||null,serviceRatePercent:parseFloat($('xR').value)||40,serviceFee:Math.round(sv*100)/100,gstAmount:Math.round(g*100)/100,totalFeePayable:Math.round(tp*100)/100,outstandingBalance:Math.round(ou*100)/100};
 
-  document.getElementById('engagementId').addEventListener('input', function () { this._userEdited = true; });
-  buyersList.addEventListener('input', (e) => {
-    if (e.target.classList.contains('buyer-first') || e.target.classList.contains('buyer-last')) updateEngagementId();
-  });
+  setL(true);
+  try{await setDoc(doc(db,'engagements',eId),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});toast('Engagement saved!','ok');rsF();$('fp').classList.remove('open')}catch(e){console.error(e);toast('Error saving','err')}finally{setL(false)}
+};
 
-  const totalChargedInput = document.getElementById('totalCharged');
-  const serviceRateInput = document.getElementById('serviceRate');
-  const purchasePriceInput = document.getElementById('purchasePrice');
-
-  function recalcFees() {
-    const totalCharged = parseFloat(totalChargedInput.value) || 0;
-    const rate = (parseFloat(serviceRateInput.value) || 0) / 100;
-    const serviceFee = totalCharged * rate;
-    const gst = serviceFee * 0.10;
-    const totalPayable = serviceFee + gst;
-    const outstanding = totalCharged - totalPayable;
-    const fmt = (n) => '$' + n.toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    document.getElementById('feeServiceFee').textContent = fmt(serviceFee);
-    document.getElementById('feeGST').textContent = fmt(gst);
-    document.getElementById('feeTotalPayable').textContent = fmt(totalPayable);
-    document.getElementById('feeOutstanding').textContent = fmt(outstanding);
-  }
-
-  totalChargedInput.addEventListener('input', recalcFees);
-  serviceRateInput.addEventListener('input', recalcFees);
-  purchasePriceInput.addEventListener('input', recalcFees);
-
-  function collectFormData() {
-    const buyers = [];
-    buyersList.querySelectorAll('.buyer-card').forEach(card => {
-      buyers.push({
-        firstName: (card.querySelector('.buyer-first')?.value || '').trim(),
-        middleName: (card.querySelector('.buyer-middle')?.value || '').trim(),
-        lastName: (card.querySelector('.buyer-last')?.value || '').trim(),
-        mobile: (card.querySelector('.buyer-mobile')?.value || '').trim(),
-        email: (card.querySelector('.buyer-email')?.value || '').trim(),
-      });
-    });
-    const totalCharged = parseFloat(totalChargedInput.value) || 0;
-    const rate = (parseFloat(serviceRateInput.value) || 0) / 100;
-    const serviceFee = totalCharged * rate;
-    const gst = serviceFee * 0.10;
-    const totalPayable = serviceFee + gst;
-    const outstanding = totalCharged - totalPayable;
-    return {
-      engagementId: document.getElementById('engagementId').value.trim(),
-      engagementDate: document.getElementById('engagementDate').value,
-      engagementStatus: document.getElementById('engagementStatus').value,
-      numberOfBuyers: buyers.length,
-      buyers,
-      purchasingEntityName: document.getElementById('entityName').value.trim(),
-      propertyType: document.getElementById('propertyType').value,
-      preferredRegion: document.getElementById('preferredRegion').value,
-      budget: parseFloat(document.getElementById('budget').value) || null,
-      minBedrooms: document.getElementById('minBedrooms').value,
-      clientNotes: document.getElementById('clientNotes').value.trim(),
-      purchasePrice: parseFloat(purchasePriceInput.value) || null,
-      totalAmountCharged: totalCharged || null,
-      serviceRatePercent: parseFloat(serviceRateInput.value) || 40,
-      serviceFee: Math.round(serviceFee * 100) / 100,
-      gstAmount: Math.round(gst * 100) / 100,
-      totalFeePayable: Math.round(totalPayable * 100) / 100,
-      outstandingBalance: Math.round(outstanding * 100) / 100,
-    };
-  }
-
-  function validate(data) {
-    const errors = [];
-    if (!data.engagementId) errors.push('Engagement ID is required.');
-    if (!data.engagementDate) errors.push('Engagement Date is required.');
-    if (!data.buyers.length) errors.push('At least one buyer is required.');
-    data.buyers.forEach((b, i) => {
-      if (!b.firstName) errors.push(`Buyer ${i + 1}: First Name is required.`);
-      if (!b.lastName) errors.push(`Buyer ${i + 1}: Last Name is required.`);
-    });
-    return errors;
-  }
-
-  document.getElementById('submitBtn').addEventListener('click', async () => {
-    const data = collectFormData();
-    const errors = validate(data);
-    if (errors.length) { errors.forEach(e => toast(e, 'error')); return; }
-    setLoading(true);
-    try {
-      const docId = data.engagementId || ('eng_' + Date.now());
-      await setDoc(doc(db, 'engagements', docId), {
-        ...data,
-        createdAt: serverTimestamp(),
-        updatedAt: serverTimestamp(),
-      });
-      toast('Engagement submitted successfully!', 'success');
-      setTimeout(() => {
-        if (confirm('Engagement saved. Would you like to start a new engagement?')) resetForm();
-      }, 500);
-    } catch (err) {
-      console.error('Submit error:', err);
-      toast('Error submitting engagement. Please try again.', 'error');
-    } finally {
-      setLoading(false);
-    }
-  });
-
-  function resetForm() {
-    document.getElementById('engagementId').value = '';
-    document.getElementById('engagementId')._userEdited = false;
-    document.getElementById('engagementDate').value = new Date().toISOString().split('T')[0];
-    document.getElementById('engagementStatus').value = 'Not started';
-    updateStatusStyle();
-    numBuyersSel.value = '1';
-    renderBuyers(1);
-    document.getElementById('entityName').value = '';
-    document.getElementById('propertyType').value = '';
-    document.getElementById('preferredRegion').value = 'Any';
-    document.getElementById('budget').value = '';
-    document.getElementById('minBedrooms').value = 'Any';
-    document.getElementById('clientNotes').value = '';
-    purchasePriceInput.value = '';
-    totalChargedInput.value = '';
-    serviceRateInput.value = '40';
-    recalcFees();
-  }
-
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (confirm('Reset all fields?')) resetForm();
-  });
-
-  renderBuyers(1);
-  recalcFees();
+function rsF(){
+  $('eId').value='';$('eId')._ue=false;$('eDate').value=new Date().toISOString().split('T')[0];
+  $('eSt').value='Not started';uSt();rB(1);
+  $('eN').value='';$('pT').value='';$('pR').value='Any';$('pB').value='';$('pBd').value='Any';$('pN').value='';
+  $('xP').value='';$('xC').value='';$('xR').value='40';rc();
+}
+$('btnR').onclick=()=>{if(confirm('Reset?'))rsF()};
 </script>
 </body>
 </html>
