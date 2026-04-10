@@ -78,6 +78,13 @@ tbody tr{cursor:pointer}
 .brm:hover{background:var(--rd);color:#fff}
 .bab{padding:6px 16px;border:1.5px dashed var(--ac);border-radius:var(--r);background:transparent;color:var(--ac);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;margin-top:4px;min-height:34px}
 .bab:hover{background:var(--al)}
+.frow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.fbox{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:6px 8px;text-align:center}
+.fbox.hl{background:var(--ac);border-color:var(--ac);color:#fff}
+.flb{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--mt);margin-bottom:2px}
+.fbox.hl .flb{color:rgba(255,255,255,.6)}
+.fvl{font-family:var(--fd);font-weight:700;font-size:.95rem}
+.enote{font-size:.6rem;color:var(--mt);font-weight:400;font-style:italic;display:block;margin-top:1px;line-height:1.3}
 .sbar{display:flex;gap:10px;justify-content:flex-end;margin-top:10px;padding-top:8px;border-top:1px solid var(--bd)}
 .bsub{padding:9px 28px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-family:var(--fb);font-size:.95rem;font-weight:700;cursor:pointer;transition:all .12s;min-height:42px}
 .bsub:hover{background:var(--ac2);box-shadow:var(--sh2)}
@@ -106,6 +113,7 @@ tbody tr{cursor:pointer}
 .ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
 @media(max-width:768px){
   .g3,.g4,.g5{grid-template-columns:1fr 1fr}
+  .frow{grid-template-columns:1fr 1fr}
   .tw{max-height:36vh}
   .sbox{width:140px}
   .dov{padding:20px 8px}
@@ -165,10 +173,10 @@ tbody tr{cursor:pointer}
     <div class="tw" id="tw2">
       <table>
         <thead><tr>
-          <th>ID</th><th>Date</th><th>Status</th><th>Buyers</th><th>Entity</th><th>Type</th><th>Region</th><th>Budget</th><th>Agent Fee</th><th>Last Edited</th>
+          <th>ID</th><th>Date</th><th>Status</th><th>Buyers</th><th>Entity</th><th>Type</th><th>Region</th><th>Budget</th><th>Agent Fee</th>
         </tr></thead>
         <tbody id="tb">
-          <tr><td colspan="10" class="empty-row">Loading&hellip;</td></tr>
+          <tr><td colspan="9" class="empty-row">Loading&hellip;</td></tr>
         </tbody>
       </table>
     </div>
@@ -201,8 +209,20 @@ tbody tr{cursor:pointer}
       </div>
       <div class="g g3" style="margin-top:4px">
         <div class="f"><label>Min Bedrooms</label><select id="pBd"><option value="Any">Any</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
+        <div class="f gf"><label>Client Notes</label><textarea id="pN" placeholder="Additional preferences&hellip;" rows="1"></textarea></div>
+      </div>
+
+      <div class="sl">&#128176; Fees</div>
+      <div class="g g3">
         <div class="f"><label>Buyers Agent Fee Charged ($)</label><input type="number" id="xC" placeholder="e.g. 15000" min="0" step="100"></div>
-        <div class="f"><label>Client Notes</label><textarea id="pN" placeholder="Additional preferences&hellip;" rows="1"></textarea></div>
+        <div class="f"><label>Property Finder Service Rate (%)</label><input type="number" id="xR" value="40" min="0" max="100" step="1"><span class="hn">Default: 40%</span></div>
+        <div class="f"></div>
+      </div>
+      <div class="frow" style="margin-top:6px">
+        <div class="fbox"><div class="flb">Service Fee</div><div class="fvl" id="fS">$0</div></div>
+        <div class="fbox"><div class="flb">GST 10%</div><div class="fvl" id="fG">$0</div></div>
+        <div class="fbox"><div class="flb">Total Payable</div><div class="fvl" id="fT">$0</div></div>
+        <div class="fbox hl"><div class="flb">Outstanding</div><div class="fvl" id="fO">$0</div></div>
       </div>
 
       <div class="sbar">
@@ -247,17 +267,17 @@ let all=[];
 const q2=query(collection(db,'engagements'),orderBy('createdAt','desc'));
 onSnapshot(q2,snap=>{
   all=[];snap.forEach(d=>all.push({id:d.id,...d.data()}));renderT();
-},err=>{console.error(err);$('tb').innerHTML='<tr><td colspan="10" class="empty-row">Error loading</td></tr>'});
+},err=>{console.error(err);$('tb').innerHTML='<tr><td colspan="9" class="empty-row">Error loading</td></tr>'});
 
 function renderT(fl=''){
   const f=fl.toLowerCase();
   const rows=f?all.filter(e=>[e.engagementId,e.engagementStatus,e.purchasingEntityName,e.propertyType,e.preferredRegion,...(e.buyers||[]).map(b=>`${b.firstName} ${b.middleName} ${b.lastName}`)].join(' ').toLowerCase().includes(f)):all;
   $('cnt').textContent=rows.length;
-  if(!rows.length){$('tb').innerHTML='<tr><td colspan="10" class="empty-row">No engagements</td></tr>';return}
+  if(!rows.length){$('tb').innerHTML='<tr><td colspan="9" class="empty-row">No engagements</td></tr>';return}
   $('tb').innerHTML=rows.map(e=>{
     const b=(e.buyers||[]).map(b=>[b.firstName,b.lastName].filter(Boolean).join(' ')).join(', ');
     const edited=fmtDate(e.updatedAt||e.createdAt);
-    return`<tr data-eid="${esc(e.id)}"><td><b>${esc(e.engagementId||e.id)}</b></td><td>${esc(e.engagementDate||'')}</td><td><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></td><td class="bc-cell" title="${esc(b)}">${esc(b||'\u2014')}</td><td>${esc(e.purchasingEntityName||'\u2014')}</td><td>${esc(e.propertyType||'\u2014')}</td><td>${esc(e.preferredRegion||'\u2014')}</td><td>${e.budget?fm(e.budget):'\u2014'}</td><td>${e.buyersAgentFee?fm(e.buyersAgentFee):'\u2014'}</td><td class="edited">${edited}</td></tr>`}).join('');
+    return`<tr data-eid="${esc(e.id)}"><td><b>${esc(e.engagementId||e.id)}</b><span class="enote">edited ${edited}</span></td><td>${esc(e.engagementDate||'')}</td><td><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></td><td class="bc-cell" title="${esc(b)}">${esc(b||'\u2014')}</td><td>${esc(e.purchasingEntityName||'\u2014')}</td><td>${esc(e.propertyType||'\u2014')}</td><td>${esc(e.preferredRegion||'\u2014')}</td><td>${e.budget?fm(e.budget):'\u2014'}</td><td>${e.buyersAgentFee?fm(e.buyersAgentFee):'\u2014'}</td></tr>`}).join('');
 }
 $('sb').addEventListener('input',e=>renderT(e.target.value));
 
@@ -273,10 +293,18 @@ function showD(e){
     line+='</div>';return line;
   }).join('');
   const edited=fmtDate(e.updatedAt||e.createdAt);
+  const fee=e.buyersAgentFee||0;
+  const rate=e.serviceRatePercent||40;
+  const sv=fee*(rate/100);
+  const gst=sv*0.10;
+  const tp=sv+gst;
+  const ou=fee-tp;
   $('dd').innerHTML=`<h3>${esc(e.engagementId||e.id)}</h3>
-<div class="dg"><dt>Date</dt><dd>${esc(e.engagementDate||'\u2014')}</dd><dt>Status</dt><dd><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus)}</span></dd><dt>Entity</dt><dd>${esc(e.purchasingEntityName||'\u2014')}</dd><dt>Last Edited</dt><dd>${edited}</dd></div>
+<div class="dg"><dt>Date</dt><dd>${esc(e.engagementDate||'\u2014')}</dd><dt>Status</dt><dd><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus)}</span></dd><dt>Entity</dt><dd>${esc(e.purchasingEntityName||'\u2014')}</dd></div>
+<div style="margin-top:4px;font-size:.6rem;color:var(--mt);font-style:italic">Last edited: ${edited}</div>
 <div class="ds"><h4>Buyers</h4>${buyers||'<span style="color:var(--mt)">None</span>'}</div>
-<div class="ds"><h4>Property Requirements</h4><div class="dg"><dt>Type</dt><dd>${esc(e.propertyType||'\u2014')}</dd><dt>Region</dt><dd>${esc(e.preferredRegion||'\u2014')}</dd><dt>Budget</dt><dd>${e.budget?fm(e.budget):'\u2014'}</dd><dt>Min Beds</dt><dd>${esc(e.minBedrooms||'\u2014')}</dd><dt>Agent Fee</dt><dd>${e.buyersAgentFee?fm(e.buyersAgentFee):'\u2014'}</dd></div>${e.clientNotes?`<div style="margin-top:6px;font-size:.88rem;color:var(--mt)"><b>Notes:</b> ${esc(e.clientNotes)}</div>`:''}</div>`;
+<div class="ds"><h4>Property Requirements</h4><div class="dg"><dt>Type</dt><dd>${esc(e.propertyType||'\u2014')}</dd><dt>Region</dt><dd>${esc(e.preferredRegion||'\u2014')}</dd><dt>Budget</dt><dd>${e.budget?fm(e.budget):'\u2014'}</dd><dt>Min Beds</dt><dd>${esc(e.minBedrooms||'\u2014')}</dd></div>${e.clientNotes?`<div style="margin-top:6px;font-size:.88rem;color:var(--mt)"><b>Notes:</b> ${esc(e.clientNotes)}</div>`:''}</div>
+<div class="ds"><h4>Fees</h4><div class="dg"><dt>Agent Fee</dt><dd>${fee?fm(fee):'\u2014'}</dd><dt>Service Rate</dt><dd>${rate}%</dd><dt>Service Fee</dt><dd>${fm(sv)}</dd><dt>GST (10%)</dt><dd>${fm(gst)}</dd><dt>Total Payable</dt><dd>${fm(tp)}</dd><dt><b>Outstanding</b></dt><dd><b>${fm(ou)}</b></dd></div></div>`;
   $('dov').classList.add('open');
 }
 $('dx').onclick=()=>$('dov').classList.remove('open');
@@ -310,19 +338,23 @@ function riB(){$('bL').querySelectorAll('.bcard').forEach((c,i)=>{c.dataset.bi=i
 $('addB').onclick=()=>{if(bC>=4){toast('Max 4 buyers','err');return}rB(bC+1)};
 $('bL').addEventListener('click',e=>{const b=e.target.closest('.brm');if(!b)return;const cs=$('bL').querySelectorAll('.bcard');const i=parseInt(b.dataset.ri);if(cs[i])cs[i].remove();bC=$('bL').querySelectorAll('.bcard').length;riB();uEID()});
 
-/* Engagement ID: 1 buyer = firstname_lastname, 2+ buyers = first1_first2 */
+/* Engagement ID: 1 buyer = firstname_laststring, 2+ buyers = first1_first2 */
+/* e.g. "Anto Geonivas Xavier" -> first="anto", last="xavier" (last word) -> "anto_xavier" */
 function uEID(){
-  const cs=$('bL').querySelectorAll('.bcard'),fs=[],ls=[];
+  const cs=$('bL').querySelectorAll('.bcard'),fs=[],lastStrings=[];
   cs.forEach(c=>{
     const f=(c.querySelector('.bf')?.value||'').trim().toLowerCase();
-    const l=(c.querySelector('.bl')?.value||'').trim().toLowerCase();
-    if(f)fs.push(f);if(l)ls.push(l);
+    const lRaw=(c.querySelector('.bl')?.value||'').trim().toLowerCase();
+    const lParts=lRaw.split(/\s+/).filter(Boolean);
+    const lastStr=lParts.length?lParts[lParts.length-1]:'';
+    if(f)fs.push(f);
+    if(lastStr)lastStrings.push(lastStr);
   });
   let id='';
   if(fs.length>=2){
     id=fs[0]+'_'+fs[1];
-  }else if(fs.length===1&&ls.length>=1){
-    id=fs[0]+'_'+ls[0];
+  }else if(fs.length===1&&lastStrings.length>=1){
+    id=fs[0]+'_'+lastStrings[0];
   }
   id=id.replace(/[^a-z0-9_]/g,'');
   const f=$('eId');if(!f._ue)f.value=id;
@@ -330,6 +362,18 @@ function uEID(){
 $('eId').oninput=function(){this._ue=true};
 $('bL').addEventListener('input',e=>{if(e.target.classList.contains('bf')||e.target.classList.contains('bl'))uEID()});
 rB(1);
+
+/* FEES auto-calc */
+function rc(){
+  const fee=parseFloat($('xC').value)||0;
+  const rate=(parseFloat($('xR').value)||0)/100;
+  const sv=fee*rate;
+  const gst=sv*0.10;
+  const tp=sv+gst;
+  const ou=fee-tp;
+  $('fS').textContent=fm(sv);$('fG').textContent=fm(gst);$('fT').textContent=fm(tp);$('fO').textContent=fm(ou);
+}
+$('xC').oninput=rc;$('xR').oninput=rc;
 
 /* SUBMIT */
 $('btnS').onclick=async()=>{
@@ -339,7 +383,14 @@ $('btnS').onclick=async()=>{
   buyers.forEach((b,i)=>{if(!b.firstName)errs.push(`Buyer ${i+1}: First Name required`);if(!b.lastName)errs.push(`Buyer ${i+1}: Last Name required`)});
   if(errs.length){errs.forEach(e=>toast(e,'err'));return}
 
-  const data={engagementId:eId,engagementDate:eDate,engagementStatus:$('eSt').value,numberOfBuyers:buyers.length,buyers,purchasingEntityName:$('eN').value.trim(),propertyType:$('pT').value,preferredRegion:$('pR').value,budget:parseFloat($('pB').value)||null,minBedrooms:$('pBd').value,clientNotes:$('pN').value.trim(),buyersAgentFee:parseFloat($('xC').value)||null};
+  const fee=parseFloat($('xC').value)||0;
+  const rate=parseFloat($('xR').value)||40;
+  const sv=fee*(rate/100);
+  const gst=sv*0.10;
+  const tp=sv+gst;
+  const ou=fee-tp;
+
+  const data={engagementId:eId,engagementDate:eDate,engagementStatus:$('eSt').value,numberOfBuyers:buyers.length,buyers,purchasingEntityName:$('eN').value.trim(),propertyType:$('pT').value,preferredRegion:$('pR').value,budget:parseFloat($('pB').value)||null,minBedrooms:$('pBd').value,clientNotes:$('pN').value.trim(),buyersAgentFee:fee||null,serviceRatePercent:rate,serviceFee:Math.round(sv*100)/100,gstAmount:Math.round(gst*100)/100,totalFeePayable:Math.round(tp*100)/100,outstandingBalance:Math.round(ou*100)/100};
 
   setL(true);
   try{await setDoc(doc(db,'engagements',eId),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});toast('Engagement saved!','ok');rsF();$('fp').classList.remove('open')}catch(e){console.error(e);toast('Error saving. Check console.','err')}finally{setL(false)}
@@ -348,7 +399,7 @@ $('btnS').onclick=async()=>{
 function rsF(){
   $('eId').value='';$('eId')._ue=false;$('eDate').value=new Date().toISOString().split('T')[0];
   $('eSt').value='Not started';uSt();rB(1);
-  $('eN').value='';$('pT').value='';$('pR').value='Any';$('pB').value='';$('pBd').value='Any';$('pN').value='';$('xC').value='';
+  $('eN').value='';$('pT').value='';$('pR').value='Any';$('pB').value='';$('pBd').value='Any';$('pN').value='';$('xC').value='';$('xR').value='40';rc();
 }
 $('btnR').onclick=()=>{if(confirm('Reset all fields?'))rsF()};
 </script>
