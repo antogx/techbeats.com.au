@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iconic Investing — New Engagement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f9fc;
+  --surface: #ffffff;
+  --surface-alt: #f1f3f8;
+  --fg: #1a1d2e;
+  --fg-muted: #6b7185;
+  --accent: #1b4a6e;
+  --accent-light: #e8f0f7;
+  --accent-dark: #0f2e47;
+  --border: #e0e3eb;
+  --border-focus: #1b4a6e;
+  --radius: 10px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 3px rgba(26,29,46,.06);
+  --shadow-md: 0 4px 16px rgba(26,29,46,.08);
+  --shadow-lg: 0 8px 32px rgba(26,29,46,.10);
+  --green: #1a8754;
+  --green-bg: #e6f5ed;
+  --blue: #1b4a6e;
+  --blue-bg: #e8f0f7;
+  --orange: #c57213;
+  --orange-bg: #fef3e2;
+  --red: #c0392b;
+  --red-bg: #fde8e6;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --transition: .2s ease;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--fg);
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+}
+.site-header {
+  background: var(--accent-dark);
+  color: #fff;
+  padding: 0 24px;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+.brand {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.35rem;
+  letter-spacing: -.01em;
+  color: #fff;
+  text-decoration: none;
+}
+.brand span { color: #7cb9d8; }
+.header-tag {
+  font-size: .75rem;
+  font-weight: 500;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.55);
+}
+.main-wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 32px 20px 80px;
+}
+.page-title {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--accent-dark);
+  margin-bottom: 4px;
+}
+.page-subtitle {
+  color: var(--fg-muted);
+  font-size: .92rem;
+  margin-bottom: 28px;
+}
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 28px 24px;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition);
+}
+.section:hover { box-shadow: var(--shadow-md); }
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.section-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+.section-icon.engagement { background: var(--blue-bg); color: var(--blue); }
+.section-icon.buyer { background: var(--green-bg); color: var(--green); }
+.section-icon.entity { background: var(--orange-bg); color: var(--orange); }
+.section-icon.property { background: var(--accent-light); color: var(--accent); }
+.section-icon.purchase { background: var(--red-bg); color: var(--red); }
+.section-icon.fees { background: #f3e8ff; color: #7c3aed; }
+.section-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--accent-dark);
+}
+.field-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.field-grid .full { grid-column: 1 / -1; }
+.field { display: flex; flex-direction: column; gap: 5px; }
+.field label {
+  font-weight: 600;
+  font-size: .8rem;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+.field label .req { color: var(--red); margin-left: 2px; }
+.field input,
+.field select,
+.field textarea {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  padding: 10px 14px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--fg);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+}
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(27,74,110,.12);
+}
+.field textarea { resize: vertical; min-height: 80px; }
+.field .hint {
+  font-size: .78rem;
+  color: var(--fg-muted);
+  font-style: italic;
+}
+.status-select { position: relative; }
+.status-select select {
+  appearance: none;
+  padding-right: 38px;
+  font-weight: 600;
+}
+.status-select::after {
+  content: '▾';
+  position: absolute;
+  right: 14px;
+  bottom: 12px;
+  pointer-events: none;
+  color: var(--fg-muted);
+}
+.status-select select.st-not-started { background: var(--orange-bg); border-color: var(--orange); color: var(--orange); }
+.status-select select.st-in-progress { background: var(--blue-bg); border-color: var(--blue); color: var(--blue); }
+.status-select select.st-completed { background: var(--green-bg); border-color: var(--green); color: var(--green); }
+.buyers-list { display: flex; flex-direction: column; gap: 14px; }
+.buyer-card {
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 18px 16px;
+  background: var(--surface-alt);
+  position: relative;
+  transition: border-color var(--transition);
+}
+.buyer-card:hover { border-color: var(--accent); }
+.buyer-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.buyer-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--accent);
+}
+.btn-remove-buyer {
+  background: none;
+  border: 1.5px solid var(--red);
+  color: var(--red);
+  border-radius: 6px;
+  padding: 4px 12px;
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-remove-buyer:hover { background: var(--red); color: #fff; }
+.btn-add-buyer {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 14px;
+  padding: 10px 20px;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--font-body);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-add-buyer:hover { background: var(--accent-light); }
+.actions-bar {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+.btn-submit {
+  padding: 14px 36px;
+  border: none;
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all var(--transition);
+  box-shadow: var(--shadow-md);
+  letter-spacing: .02em;
+}
+.btn-submit:hover { background: var(--accent-dark); transform: translateY(-1px); box-shadow: var(--shadow-lg); }
+.btn-submit:active { transform: translateY(0); }
+.btn-submit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+.btn-reset {
+  padding: 14px 28px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--fg-muted);
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.btn-reset:hover { border-color: var(--red); color: var(--red); }
+.fee-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.fee-item {
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+}
+.fee-item.highlight {
+  background: var(--accent-dark);
+  border-color: var(--accent-dark);
+  color: #fff;
+  grid-column: 1 / -1;
+}
+.fee-label {
+  font-size: .78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  color: var(--fg-muted);
+  margin-bottom: 4px;
+}
+.fee-item.highlight .fee-label { color: rgba(255,255,255,.65); }
+.fee-value {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+}
+.fee-item.highlight .fee-value { font-size: 1.4rem; }
+.toast-wrap {
+  position: fixed;
+  top: 80px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.toast {
+  padding: 14px 20px;
+  border-radius: var(--radius);
+  font-weight: 600;
+  font-size: .9rem;
+  box-shadow: var(--shadow-lg);
+  animation: toastIn .35s ease;
+  max-width: 360px;
+}
+.toast.success { background: var(--green); color: #fff; }
+.toast.error { background: var(--red); color: #fff; }
+.toast.info { background: var(--accent); color: #fff; }
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26,29,46,.35);
+  backdrop-filter: blur(4px);
+  z-index: 10000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.loading-overlay.active { display: flex; }
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid rgba(255,255,255,.3);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.gen-stamp {
+  text-align: center;
+  margin-top: 32px;
+  font-size: .75rem;
+  color: var(--fg-muted);
+}
+@media (max-width: 640px) {
+  .field-grid { grid-template-columns: 1fr; }
+  .fee-grid { grid-template-columns: 1fr; }
+  .section { padding: 20px 16px; }
+  .main-wrap { padding: 20px 12px 60px; }
+  .page-title { font-size: 1.3rem; }
+  .actions-bar { flex-direction: column; }
+  .btn-submit, .btn-reset { width: 100%; text-align: center; }
+  .header-inner { height: 56px; }
+  .brand { font-size: 1.15rem; }
+}
+</style>
+</head>
+<body>
+<header class="site-header">
+  <div class="header-inner">
+    <a class="brand" href="https://techbeats.com.au">Iconic<span>Investing</span></a>
+    <span class="header-tag">Engagement Portal</span>
+  </div>
+</header>
+<div class="loading-overlay" id="loadingOverlay"><div class="spinner"></div></div>
+<div class="toast-wrap" id="toastWrap"></div>
+<main class="main-wrap">
+  <h1 class="page-title">New Buyer Engagement</h1>
+  <p class="page-subtitle">Submit engagement details to begin the property finder process.</p>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon engagement">&#128203;</div>
+      <h2 class="section-title">Engagement Details</h2>
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <label>Engagement ID</label>
+        <input type="text" id="engagementId" placeholder="Auto-generated from buyer name(s)">
+        <span class="hint">Auto-generated &middot; editable</span>
+      </div>
+      <div class="field">
+        <label>Engagement Date <span class="req">*</span></label>
+        <input type="date" id="engagementDate" required>
+      </div>
+      <div class="field status-select">
+        <label>Engagement Status <span class="req">*</span></label>
+        <select id="engagementStatus" required>
+          <option value="Not started">Not Started</option>
+          <option value="In progress">In Progress</option>
+          <option value="Completed">Completed</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon buyer">&#128100;</div>
+      <h2 class="section-title">Buyer Details</h2>
+    </div>
+    <div class="field" style="margin-bottom:16px;max-width:180px;">
+      <label>Number of Buyers</label>
+      <select id="numBuyers">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+      </select>
+    </div>
+    <div class="buyers-list" id="buyersList"></div>
+    <button type="button" class="btn-add-buyer" id="addBuyerBtn">&#65291; Add Buyer</button>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon entity">&#127970;</div>
+      <h2 class="section-title">Entity Details</h2>
+    </div>
+    <div class="field-grid">
+      <div class="field full">
+        <label>Purchasing Entity Name</label>
+        <input type="text" id="entityName" placeholder="e.g. Smith Family Trust">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon property">&#127968;</div>
+      <h2 class="section-title">Property Requirements</h2>
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <label>Property Type</label>
+        <select id="propertyType">
+          <option value="">&mdash; Select &mdash;</option>
+          <option value="House">House</option>
+          <option value="Unit">Unit</option>
+          <option value="Townhouse">Townhouse</option>
+          <option value="Villa">Villa</option>
+          <option value="Land">Land</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Preferred State / Region</label>
+        <select id="preferredRegion">
+          <option value="Any">Any</option>
+          <option value="NSW">NSW</option>
+          <option value="VIC">VIC</option>
+          <option value="QLD">QLD</option>
+          <option value="SA">SA</option>
+          <option value="WA">WA</option>
+          <option value="TAS">TAS</option>
+          <option value="NT">NT</option>
+          <option value="ACT">ACT</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Budget ($)</label>
+        <input type="number" id="budget" placeholder="e.g. 550000" min="0" step="1000">
+      </div>
+      <div class="field">
+        <label>Minimum Bedrooms</label>
+        <select id="minBedrooms">
+          <option value="Any">Any</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5+</option>
+        </select>
+      </div>
+      <div class="field full">
+        <label>Client Notes</label>
+        <textarea id="clientNotes" placeholder="Any additional preferences or notes&hellip;"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon purchase">&#128176;</div>
+      <h2 class="section-title">Purchase Details</h2>
+    </div>
+    <div class="field-grid">
+      <div class="field">
+        <label>Purchase Price ($)</label>
+        <input type="number" id="purchasePrice" placeholder="e.g. 520000" min="0" step="1000">
+      </div>
+      <div class="field">
+        <label>Total Amount Charged to Client ($)</label>
+        <input type="number" id="totalCharged" placeholder="e.g. 15000" min="0" step="100">
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <div class="section-icon fees">&#128202;</div>
+      <h2 class="section-title">Fee Calculations</h2>
+    </div>
+    <div class="field-grid" style="margin-bottom:20px;">
+      <div class="field">
+        <label>Property Finder Service Rate (%)</label>
+        <input type="number" id="serviceRate" value="40" min="0" max="100" step="1">
+        <span class="hint">Default: 40%</span>
+      </div>
+    </div>
+    <div class="fee-grid" id="feeGrid">
+      <div class="fee-item">
+        <div class="fee-label">Property Finder Service Fee</div>
+        <div class="fee-value" id="feeServiceFee">$0.00</div>
+      </div>
+      <div class="fee-item">
+        <div class="fee-label">GST Amount (10%)</div>
+        <div class="fee-value" id="feeGST">$0.00</div>
+      </div>
+      <div class="fee-item">
+        <div class="fee-label">Total Fee Payable</div>
+        <div class="fee-value" id="feeTotalPayable">$0.00</div>
+      </div>
+      <div class="fee-item highlight">
+        <div class="fee-label">Outstanding Balance</div>
+        <div class="fee-value" id="feeOutstanding">$0.00</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="actions-bar">
+    <button type="button" class="btn-reset" id="resetBtn">Reset Form</button>
+    <button type="button" class="btn-submit" id="submitBtn">Submit Engagement</button>
+  </div>
+
+  <div class="gen-stamp">Generated 2026-04-10 21:22</div>
+</main>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+  import {
+    getFirestore, doc, setDoc, collection, serverTimestamp
+  } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk",
+    authDomain: "techbeatsrealty.firebaseapp.com",
+    projectId: "techbeatsrealty",
+    storageBucket: "techbeatsrealty.firebasestorage.app",
+    messagingSenderId: "11824236488",
+    appId: "1:11824236488:web:8c9d56501f191566a222fd",
+    measurementId: "G-HLN70BQKFJ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  function toast(msg, type = 'info') {
+    const wrap = document.getElementById('toastWrap');
+    const t = document.createElement('div');
+    t.className = `toast ${type}`;
+    t.textContent = msg;
+    wrap.appendChild(t);
+    setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .3s'; setTimeout(() => t.remove(), 300); }, 3500);
+  }
+
+  function setLoading(on) {
+    document.getElementById('loadingOverlay').classList.toggle('active', on);
+  }
+
+  document.getElementById('engagementDate').value = new Date().toISOString().split('T')[0];
+
+  const statusSel = document.getElementById('engagementStatus');
+  function updateStatusStyle() {
+    statusSel.classList.remove('st-not-started', 'st-in-progress', 'st-completed');
+    const v = statusSel.value;
+    if (v === 'Not started') statusSel.classList.add('st-not-started');
+    else if (v === 'In progress') statusSel.classList.add('st-in-progress');
+    else if (v === 'Completed') statusSel.classList.add('st-completed');
+  }
+  statusSel.addEventListener('change', updateStatusStyle);
+  updateStatusStyle();
+
+  const buyersList = document.getElementById('buyersList');
+  const numBuyersSel = document.getElementById('numBuyers');
+  const addBuyerBtn = document.getElementById('addBuyerBtn');
+  let buyerCount = 0;
+
+  function createBuyerCard(idx) {
+    const n = idx + 1;
+    const card = document.createElement('div');
+    card.className = 'buyer-card';
+    card.dataset.buyerIdx = idx;
+    card.innerHTML = `
+      <div class="buyer-card-head">
+        <span class="buyer-num">Buyer ${n}</span>
+        ${idx > 0 ? '<button type="button" class="btn-remove-buyer" data-remove="' + idx + '">Remove</button>' : ''}
+      </div>
+      <div class="field-grid">
+        <div class="field">
+          <label>First Name <span class="req">*</span></label>
+          <input type="text" class="buyer-first" placeholder="First name" required>
+        </div>
+        <div class="field">
+          <label>Middle Name</label>
+          <input type="text" class="buyer-middle" placeholder="Middle name">
+        </div>
+        <div class="field">
+          <label>Last Name <span class="req">*</span></label>
+          <input type="text" class="buyer-last" placeholder="Last name" required>
+        </div>
+        <div class="field">
+          <label>Mobile Number</label>
+          <input type="tel" class="buyer-mobile" placeholder="e.g. 0412 345 678">
+        </div>
+        <div class="field full">
+          <label>Email Address</label>
+          <input type="email" class="buyer-email" placeholder="email@example.com">
+        </div>
+      </div>
+    `;
+    return card;
+  }
+
+  function renderBuyers(count) {
+    const existing = buyersList.querySelectorAll('.buyer-card');
+    const currentCount = existing.length;
+    if (count > currentCount) {
+      for (let i = currentCount; i < count; i++) buyersList.appendChild(createBuyerCard(i));
+    } else if (count < currentCount) {
+      for (let i = currentCount - 1; i >= count; i--) existing[i].remove();
+    }
+    buyerCount = count;
+    numBuyersSel.value = String(count);
+    updateEngagementId();
+  }
+
+  numBuyersSel.addEventListener('change', () => renderBuyers(parseInt(numBuyersSel.value)));
+
+  addBuyerBtn.addEventListener('click', () => {
+    if (buyerCount >= 4) { toast('Maximum 4 buyers allowed', 'error'); return; }
+    renderBuyers(buyerCount + 1);
+  });
+
+  buyersList.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-remove-buyer');
+    if (!btn) return;
+    const idx = parseInt(btn.dataset.remove);
+    const cards = buyersList.querySelectorAll('.buyer-card');
+    if (cards[idx]) cards[idx].remove();
+    const remaining = buyersList.querySelectorAll('.buyer-card');
+    remaining.forEach((card, i) => {
+      card.dataset.buyerIdx = i;
+      card.querySelector('.buyer-num').textContent = `Buyer ${i + 1}`;
+      const rmBtn = card.querySelector('.btn-remove-buyer');
+      if (i === 0 && rmBtn) rmBtn.remove();
+      if (rmBtn) rmBtn.dataset.remove = i;
+    });
+    buyerCount = remaining.length;
+    numBuyersSel.value = String(buyerCount);
+    updateEngagementId();
+  });
+
+  function updateEngagementId() {
+    const cards = buyersList.querySelectorAll('.buyer-card');
+    const firsts = [];
+    const lasts = [];
+    cards.forEach(card => {
+      const f = (card.querySelector('.buyer-first')?.value || '').trim().toLowerCase();
+      const l = (card.querySelector('.buyer-last')?.value || '').trim().toLowerCase();
+      if (f) firsts.push(f);
+      if (l) lasts.push(l);
+    });
+    let id = '';
+    if (firsts.length >= 2) {
+      id = firsts.slice(0, 2).join('_');
+    } else if (firsts.length === 1 && lasts.length >= 1) {
+      const lastPart = lasts[0].length > 4 ? lasts[0].slice(0, 5) : lasts[0];
+      id = firsts[0] + '_' + lastPart;
+    }
+    id = id.replace(/[^a-z0-9_]/g, '');
+    const field = document.getElementById('engagementId');
+    if (!field._userEdited) field.value = id;
+  }
+
+  document.getElementById('engagementId').addEventListener('input', function () { this._userEdited = true; });
+  buyersList.addEventListener('input', (e) => {
+    if (e.target.classList.contains('buyer-first') || e.target.classList.contains('buyer-last')) updateEngagementId();
+  });
+
+  const totalChargedInput = document.getElementById('totalCharged');
+  const serviceRateInput = document.getElementById('serviceRate');
+  const purchasePriceInput = document.getElementById('purchasePrice');
+
+  function recalcFees() {
+    const totalCharged = parseFloat(totalChargedInput.value) || 0;
+    const rate = (parseFloat(serviceRateInput.value) || 0) / 100;
+    const serviceFee = totalCharged * rate;
+    const gst = serviceFee * 0.10;
+    const totalPayable = serviceFee + gst;
+    const outstanding = totalCharged - totalPayable;
+    const fmt = (n) => '$' + n.toLocaleString('en-AU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    document.getElementById('feeServiceFee').textContent = fmt(serviceFee);
+    document.getElementById('feeGST').textContent = fmt(gst);
+    document.getElementById('feeTotalPayable').textContent = fmt(totalPayable);
+    document.getElementById('feeOutstanding').textContent = fmt(outstanding);
+  }
+
+  totalChargedInput.addEventListener('input', recalcFees);
+  serviceRateInput.addEventListener('input', recalcFees);
+  purchasePriceInput.addEventListener('input', recalcFees);
+
+  function collectFormData() {
+    const buyers = [];
+    buyersList.querySelectorAll('.buyer-card').forEach(card => {
+      buyers.push({
+        firstName: (card.querySelector('.buyer-first')?.value || '').trim(),
+        middleName: (card.querySelector('.buyer-middle')?.value || '').trim(),
+        lastName: (card.querySelector('.buyer-last')?.value || '').trim(),
+        mobile: (card.querySelector('.buyer-mobile')?.value || '').trim(),
+        email: (card.querySelector('.buyer-email')?.value || '').trim(),
+      });
+    });
+    const totalCharged = parseFloat(totalChargedInput.value) || 0;
+    const rate = (parseFloat(serviceRateInput.value) || 0) / 100;
+    const serviceFee = totalCharged * rate;
+    const gst = serviceFee * 0.10;
+    const totalPayable = serviceFee + gst;
+    const outstanding = totalCharged - totalPayable;
+    return {
+      engagementId: document.getElementById('engagementId').value.trim(),
+      engagementDate: document.getElementById('engagementDate').value,
+      engagementStatus: document.getElementById('engagementStatus').value,
+      numberOfBuyers: buyers.length,
+      buyers,
+      purchasingEntityName: document.getElementById('entityName').value.trim(),
+      propertyType: document.getElementById('propertyType').value,
+      preferredRegion: document.getElementById('preferredRegion').value,
+      budget: parseFloat(document.getElementById('budget').value) || null,
+      minBedrooms: document.getElementById('minBedrooms').value,
+      clientNotes: document.getElementById('clientNotes').value.trim(),
+      purchasePrice: parseFloat(purchasePriceInput.value) || null,
+      totalAmountCharged: totalCharged || null,
+      serviceRatePercent: parseFloat(serviceRateInput.value) || 40,
+      serviceFee: Math.round(serviceFee * 100) / 100,
+      gstAmount: Math.round(gst * 100) / 100,
+      totalFeePayable: Math.round(totalPayable * 100) / 100,
+      outstandingBalance: Math.round(outstanding * 100) / 100,
+    };
+  }
+
+  function validate(data) {
+    const errors = [];
+    if (!data.engagementId) errors.push('Engagement ID is required.');
+    if (!data.engagementDate) errors.push('Engagement Date is required.');
+    if (!data.buyers.length) errors.push('At least one buyer is required.');
+    data.buyers.forEach((b, i) => {
+      if (!b.firstName) errors.push(`Buyer ${i + 1}: First Name is required.`);
+      if (!b.lastName) errors.push(`Buyer ${i + 1}: Last Name is required.`);
+    });
+    return errors;
+  }
+
+  document.getElementById('submitBtn').addEventListener('click', async () => {
+    const data = collectFormData();
+    const errors = validate(data);
+    if (errors.length) { errors.forEach(e => toast(e, 'error')); return; }
+    setLoading(true);
+    try {
+      const docId = data.engagementId || ('eng_' + Date.now());
+      await setDoc(doc(db, 'engagements', docId), {
+        ...data,
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      });
+      toast('Engagement submitted successfully!', 'success');
+      setTimeout(() => {
+        if (confirm('Engagement saved. Would you like to start a new engagement?')) resetForm();
+      }, 500);
+    } catch (err) {
+      console.error('Submit error:', err);
+      toast('Error submitting engagement. Please try again.', 'error');
+    } finally {
+      setLoading(false);
+    }
+  });
+
+  function resetForm() {
+    document.getElementById('engagementId').value = '';
+    document.getElementById('engagementId')._userEdited = false;
+    document.getElementById('engagementDate').value = new Date().toISOString().split('T')[0];
+    document.getElementById('engagementStatus').value = 'Not started';
+    updateStatusStyle();
+    numBuyersSel.value = '1';
+    renderBuyers(1);
+    document.getElementById('entityName').value = '';
+    document.getElementById('propertyType').value = '';
+    document.getElementById('preferredRegion').value = 'Any';
+    document.getElementById('budget').value = '';
+    document.getElementById('minBedrooms').value = 'Any';
+    document.getElementById('clientNotes').value = '';
+    purchasePriceInput.value = '';
+    totalChargedInput.value = '';
+    serviceRateInput.value = '40';
+    recalcFees();
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('Reset all fields?')) resetForm();
+  });
+
+  renderBuyers(1);
+  recalcFees();
+</script>
+</body>
+</html>
