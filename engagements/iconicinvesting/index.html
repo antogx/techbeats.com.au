@@ -370,7 +370,7 @@ function rc(){
   const sv=fee*rate;
   const gst=sv*0.10;
   const tp=sv+gst;
-  const ou=fee-tp;
+  const ou=tp;
   $('fS').textContent=fm(sv);$('fG').textContent=fm(gst);$('fT').textContent=fm(tp);$('fO').textContent=fm(ou);
 }
 $('xC').oninput=rc;$('xR').oninput=rc;
