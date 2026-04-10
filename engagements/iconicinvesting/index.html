@@ -111,6 +111,8 @@ tbody tr{cursor:pointer}
 .dx{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--mt);padding:4px;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center}
 .dedit{display:inline-flex;align-items:center;gap:4px;padding:6px 16px;border:1.5px solid var(--ac);border-radius:var(--r);background:transparent;color:var(--ac);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;margin-top:10px;min-height:34px;transition:all .12s}
 .dedit:hover{background:var(--ac);color:#fff}
+.ddel{display:inline-flex;align-items:center;gap:4px;padding:6px 16px;border:1.5px solid var(--rd);border-radius:var(--r);background:transparent;color:var(--rd);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;margin-top:10px;min-height:34px;transition:all .12s}
+.ddel:hover{background:var(--rdb)}
 .ds{margin-top:12px;padding-top:10px;border-top:1px solid var(--bd)}
 .ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
 @media(max-width:768px){
@@ -307,9 +309,10 @@ function showD(e){
 <div class="ds"><h4>Buyers</h4>${buyers||'<span style="color:var(--mt)">None</span>'}</div>
 <div class="ds"><h4>Property Requirements</h4><div class="dg"><dt>Type</dt><dd>${esc(e.propertyType||'\u2014')}</dd><dt>Region</dt><dd>${esc(e.preferredRegion||'\u2014')}</dd><dt>Budget</dt><dd>${e.budget?fm(e.budget):'\u2014'}</dd><dt>Min Beds</dt><dd>${esc(e.minBedrooms||'\u2014')}</dd></div>${e.clientNotes?`<div style="margin-top:6px;font-size:.88rem;color:var(--mt)"><b>Notes:</b> ${esc(e.clientNotes)}</div>`:''}</div>
 <div class="ds"><h4>Fees</h4><div class="dg"><dt>Agent Fee</dt><dd>${fee?fm(fee):'\u2014'}</dd><dt>Service Rate</dt><dd>${rate}%</dd><dt>Service Fee</dt><dd>${fm(sv)}</dd><dt>GST (10%)</dt><dd>${fm(gst)}</dd><dt>Total Payable</dt><dd>${fm(tp)}</dd><dt><b>Outstanding</b></dt><dd><b>${fm(ou)}</b></dd></div></div>
-<button class="dedit" onclick="editEng('${esc(e.id)}')">&#9998; Edit Engagement</button>`;
+<button class="dedit" onclick="editEng('${esc(e.id)}')">&#9998; Edit Engagement</button> <button class="ddel" onclick="delEng()">&#128465; Delete Engagement</button>`;
   $('dov').classList.add('open');
 }
+window.delEng=function(){alert('Please contact Techbeats to delete an engagement.')};
 $('dx').onclick=()=>$('dov').classList.remove('open');
 $('dov').onclick=e=>{if(e.target===$('dov'))$('dov').classList.remove('open')};
 
