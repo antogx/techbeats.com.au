@@ -109,6 +109,8 @@ tbody tr{cursor:pointer}
 .dg dt{font-weight:600;color:var(--mt);text-align:right}
 .dg dd{color:var(--fg)}
 .dx{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--mt);padding:4px;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center}
+.dedit{display:inline-flex;align-items:center;gap:4px;padding:6px 16px;border:1.5px solid var(--ac);border-radius:var(--r);background:transparent;color:var(--ac);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;margin-top:10px;min-height:34px;transition:all .12s}
+.dedit:hover{background:var(--ac);color:#fff}
 .ds{margin-top:12px;padding-top:10px;border-top:1px solid var(--bd)}
 .ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
 @media(max-width:768px){
@@ -185,7 +187,7 @@ tbody tr{cursor:pointer}
   <!-- BOTTOM: NEW FORM -->
   <div class="pnl fp" id="fp">
     <div class="fcb">
-      <span class="pt">New Engagement</span>
+      <span class="pt" id="fpTitle">New Engagement</span>
       <button class="bcf" id="btnX">&#10005; Close</button>
     </div>
     <div class="fb">
@@ -298,21 +300,76 @@ function showD(e){
   const sv=fee*(rate/100);
   const gst=sv*0.10;
   const tp=sv+gst;
-  const ou=fee-tp;
+  const ou=tp;
   $('dd').innerHTML=`<h3>${esc(e.engagementId||e.id)}</h3>
 <div class="dg"><dt>Date</dt><dd>${esc(e.engagementDate||'\u2014')}</dd><dt>Status</dt><dd><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus)}</span></dd><dt>Entity</dt><dd>${esc(e.purchasingEntityName||'\u2014')}</dd></div>
 <div style="margin-top:4px;font-size:.6rem;color:var(--mt);font-style:italic">Last edited: ${edited}</div>
 <div class="ds"><h4>Buyers</h4>${buyers||'<span style="color:var(--mt)">None</span>'}</div>
 <div class="ds"><h4>Property Requirements</h4><div class="dg"><dt>Type</dt><dd>${esc(e.propertyType||'\u2014')}</dd><dt>Region</dt><dd>${esc(e.preferredRegion||'\u2014')}</dd><dt>Budget</dt><dd>${e.budget?fm(e.budget):'\u2014'}</dd><dt>Min Beds</dt><dd>${esc(e.minBedrooms||'\u2014')}</dd></div>${e.clientNotes?`<div style="margin-top:6px;font-size:.88rem;color:var(--mt)"><b>Notes:</b> ${esc(e.clientNotes)}</div>`:''}</div>
-<div class="ds"><h4>Fees</h4><div class="dg"><dt>Agent Fee</dt><dd>${fee?fm(fee):'\u2014'}</dd><dt>Service Rate</dt><dd>${rate}%</dd><dt>Service Fee</dt><dd>${fm(sv)}</dd><dt>GST (10%)</dt><dd>${fm(gst)}</dd><dt>Total Payable</dt><dd>${fm(tp)}</dd><dt><b>Outstanding</b></dt><dd><b>${fm(ou)}</b></dd></div></div>`;
+<div class="ds"><h4>Fees</h4><div class="dg"><dt>Agent Fee</dt><dd>${fee?fm(fee):'\u2014'}</dd><dt>Service Rate</dt><dd>${rate}%</dd><dt>Service Fee</dt><dd>${fm(sv)}</dd><dt>GST (10%)</dt><dd>${fm(gst)}</dd><dt>Total Payable</dt><dd>${fm(tp)}</dd><dt><b>Outstanding</b></dt><dd><b>${fm(ou)}</b></dd></div></div>
+<button class="dedit" onclick="editEng('${esc(e.id)}')">&#9998; Edit Engagement</button>`;
   $('dov').classList.add('open');
 }
 $('dx').onclick=()=>$('dov').classList.remove('open');
 $('dov').onclick=e=>{if(e.target===$('dov'))$('dov').classList.remove('open')};
 
+/* == EDIT MODE == */
+let editMode=false;
+let editDocId=null;
+let editCreatedAt=null;
+
+window.editEng=function(id){
+  const e=all.find(x=>x.id===id);
+  if(!e)return;
+  $('dov').classList.remove('open');
+  loadToForm(e);
+  $('fp').classList.add('open');
+  $('fp').scrollIntoView({behavior:'smooth',block:'start'});
+};
+
+function loadToForm(e){
+  editMode=true;
+  editDocId=e.id;
+  editCreatedAt=e.createdAt||null;
+  $('fpTitle').textContent='Edit Engagement';
+  $('eId').value=e.engagementId||e.id;
+  $('eId')._ue=true;
+  $('eId').setAttribute('readonly','');
+  $('eDate').value=e.engagementDate||'';
+  $('eSt').value=e.engagementStatus||'Not started';uSt();
+  /* buyers */
+  const buyers=e.buyers||[];
+  rB(Math.max(buyers.length,1));
+  const cards=$('bL').querySelectorAll('.bcard');
+  buyers.forEach((b,i)=>{
+    if(!cards[i])return;
+    const c=cards[i];
+    c.querySelector('.bf').value=b.firstName||'';
+    c.querySelector('.bm').value=b.middleName||'';
+    c.querySelector('.bl').value=b.lastName||'';
+    c.querySelector('.bph').value=b.mobile||'';
+    c.querySelector('.bem').value=b.email||'';
+    c.querySelector('.bpa').value=b.postalAddress||'';
+  });
+  $('eN').value=e.purchasingEntityName||'';
+  $('pT').value=e.propertyType||'';
+  $('pR').value=e.preferredRegion||'Any';
+  $('pB').value=e.budget||'';
+  $('pBd').value=e.minBedrooms||'Any';
+  $('pN').value=e.clientNotes||'';
+  $('xC').value=e.buyersAgentFee||'';
+  $('xR').value=e.serviceRatePercent||40;
+  rc();
+  $('btnS').textContent='Update Engagement';
+}
+
 /* == FORM == */
-$('btnN').onclick=()=>{$('fp').classList.add('open');$('fp').scrollIntoView({behavior:'smooth',block:'start'})};
-$('btnX').onclick=()=>$('fp').classList.remove('open');
+$('btnN').onclick=()=>{
+  if(editMode)rsF();
+  $('fp').classList.add('open');
+  $('fp').scrollIntoView({behavior:'smooth',block:'start'});
+};
+$('btnX').onclick=()=>{$('fp').classList.remove('open');if(editMode)rsF()};
 $('eDate').value=new Date().toISOString().split('T')[0];
 
 const eS=$('eSt');
@@ -388,16 +445,27 @@ $('btnS').onclick=async()=>{
   const sv=fee*(rate/100);
   const gst=sv*0.10;
   const tp=sv+gst;
-  const ou=fee-tp;
+  const ou=tp;
 
   const data={engagementId:eId,engagementDate:eDate,engagementStatus:$('eSt').value,numberOfBuyers:buyers.length,buyers,purchasingEntityName:$('eN').value.trim(),propertyType:$('pT').value,preferredRegion:$('pR').value,budget:parseFloat($('pB').value)||null,minBedrooms:$('pBd').value,clientNotes:$('pN').value.trim(),buyersAgentFee:fee||null,serviceRatePercent:rate,serviceFee:Math.round(sv*100)/100,gstAmount:Math.round(gst*100)/100,totalFeePayable:Math.round(tp*100)/100,outstandingBalance:Math.round(ou*100)/100};
 
   setL(true);
-  try{await setDoc(doc(db,'engagements',eId),{...data,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});toast('Engagement saved!','ok');rsF();$('fp').classList.remove('open')}catch(e){console.error(e);toast('Error saving. Check console.','err')}finally{setL(false)}
+  try{
+    const saveData={...data,updatedAt:serverTimestamp()};
+    if(!editMode)saveData.createdAt=serverTimestamp();
+    else if(editCreatedAt)saveData.createdAt=editCreatedAt;
+    await setDoc(doc(db,'engagements',eId),saveData,{merge:true});
+    toast(editMode?'Engagement updated!':'Engagement saved!','ok');
+    rsF();$('fp').classList.remove('open');
+  }catch(e){console.error(e);toast('Error saving. Check console.','err')}finally{setL(false)}
 };
 
 function rsF(){
-  $('eId').value='';$('eId')._ue=false;$('eDate').value=new Date().toISOString().split('T')[0];
+  editMode=false;editDocId=null;editCreatedAt=null;
+  $('fpTitle').textContent='New Engagement';
+  $('btnS').textContent='Submit Engagement';
+  $('eId').value='';$('eId')._ue=false;$('eId').removeAttribute('readonly');
+  $('eDate').value=new Date().toISOString().split('T')[0];
   $('eSt').value='Not started';uSt();rB(1);
   $('eN').value='';$('pT').value='';$('pR').value='Any';$('pB').value='';$('pBd').value='Any';$('pN').value='';$('xC').value='';$('xR').value='40';rc();
 }
