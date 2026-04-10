@@ -317,9 +317,9 @@ function showD(e){
   const edited=fmtDate(e.updatedAt||e.createdAt);
   const fee=e.buyersAgentFee||0;
   const rate=e.serviceRatePercent||40;
-  const sv=fee*(rate/100);
+  const sv=Math.max(fee*(rate/100),3000);
   const gst=sv*0.10;
-  const tp=Math.max(sv+gst,3000);
+  const tp=sv+gst;
   const ou=tp;
   const cpSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
   const cpBtn=(val)=>val&&val!=='\u2014'?`<button class="cpic" onclick="copyVal(this,'${esc(val).replace(/'/g,"\\&#39;")}')" title="Copy">${cpSvg}</button>`:'';
@@ -499,7 +499,7 @@ rB(1);
 function rc(){
   const fee=parseDfmt($('xC').value);
   const rate=(parseFloat($('xR').value)||0)/100;
-  const sv=fee*rate;
+  const sv=Math.max(fee*rate,3000);
   const gst=sv*0.10;
   const tp=sv+gst;
   const ou=tp;
@@ -517,7 +517,7 @@ $('btnS').onclick=async()=>{
 
   const fee=parseDfmt($('xC').value);
   const rate=parseFloat($('xR').value)||40;
-  const sv=fee*(rate/100);
+  const sv=Math.max(fee*(rate/100),3000);
   const gst=sv*0.10;
   const tp=sv+gst;
   const ou=tp;
