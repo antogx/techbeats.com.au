@@ -177,10 +177,10 @@ tbody tr{cursor:pointer}
     <div class="tw" id="tw2">
       <table>
         <thead><tr>
-          <th>ID</th><th>Date</th><th>Status</th><th>Buyers</th><th>Entity</th><th>Type</th><th>Region</th><th>Budget</th><th>Agent Fee</th>
+          <th>ID</th><th>Date</th><th>Status</th><th>Buyers</th><th>Entity</th><th>Agent Fee</th><th>Service Fee</th>
         </tr></thead>
         <tbody id="tb">
-          <tr><td colspan="9" class="empty-row">Loading&hellip;</td></tr>
+          <tr><td colspan="7" class="empty-row">Loading&hellip;</td></tr>
         </tbody>
       </table>
     </div>
@@ -271,17 +271,18 @@ let all=[];
 const q2=query(collection(db,'engagements'),orderBy('createdAt','desc'));
 onSnapshot(q2,snap=>{
   all=[];snap.forEach(d=>all.push({id:d.id,...d.data()}));renderT();
-},err=>{console.error(err);$('tb').innerHTML='<tr><td colspan="9" class="empty-row">Error loading</td></tr>'});
+},err=>{console.error(err);$('tb').innerHTML='<tr><td colspan="7" class="empty-row">Error loading</td></tr>'});
 
 function renderT(fl=''){
   const f=fl.toLowerCase();
   const rows=f?all.filter(e=>[e.engagementId,e.engagementStatus,e.purchasingEntityName,e.propertyType,e.preferredRegion,...(e.buyers||[]).map(b=>`${b.firstName} ${b.middleName} ${b.lastName}`)].join(' ').toLowerCase().includes(f)):all;
   $('cnt').textContent=rows.length;
-  if(!rows.length){$('tb').innerHTML='<tr><td colspan="9" class="empty-row">No engagements</td></tr>';return}
+  if(!rows.length){$('tb').innerHTML='<tr><td colspan="7" class="empty-row">No engagements</td></tr>';return}
   $('tb').innerHTML=rows.map(e=>{
     const b=(e.buyers||[]).map(b=>[b.firstName,b.lastName].filter(Boolean).join(' ')).join(', ');
     const edited=fmtDate(e.updatedAt||e.createdAt);
-    return`<tr data-eid="${esc(e.id)}"><td><b>${esc(e.engagementId||e.id)}</b><span class="enote">edited ${edited}</span></td><td>${esc(e.engagementDate||'')}</td><td><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></td><td class="bc-cell" title="${esc(b)}">${esc(b||'\u2014')}</td><td>${esc(e.purchasingEntityName||'\u2014')}</td><td>${esc(e.propertyType||'\u2014')}</td><td>${esc(e.preferredRegion||'\u2014')}</td><td>${e.budget?fm(e.budget):'\u2014'}</td><td>${e.buyersAgentFee?fm(e.buyersAgentFee):'\u2014'}</td></tr>`}).join('');
+    const af=e.buyersAgentFee||0;const sr=(e.serviceRatePercent||40)/100;const sfee=af*sr;const sGst=sfee*0.10;const sFeeTotal=sfee+sGst;
+    return`<tr data-eid="${esc(e.id)}"><td><b>${esc(e.engagementId||e.id)}</b><span class="enote">edited ${edited}</span></td><td>${esc(e.engagementDate||'')}</td><td><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></td><td class="bc-cell" title="${esc(b)}">${esc(b||'\u2014')}</td><td>${esc(e.purchasingEntityName||'\u2014')}</td><td>${af?fm(af):'\u2014'}</td><td>${af?fm(sFeeTotal):'\u2014'}</td></tr>`}).join('');
 }
 $('sb').addEventListener('input',e=>renderT(e.target.value));
 
