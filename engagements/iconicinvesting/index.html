@@ -118,10 +118,11 @@ tbody tr{cursor:pointer}
 .ddel{display:inline-flex;align-items:center;gap:4px;padding:6px 16px;border:1.5px solid var(--rd);border-radius:var(--r);background:transparent;color:var(--rd);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;min-height:34px;transition:all .12s}
 .ddel:hover{background:var(--rdb)}
 .ds{margin-top:14px;padding-top:10px;border-top:1.5px solid var(--bd)}
-.ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
-.bcopy{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf2);color:var(--mt);font-family:var(--fb);font-size:.68rem;font-weight:600;cursor:pointer;text-transform:none;letter-spacing:0;min-height:24px;transition:all .12s}
-.bcopy:hover{border-color:var(--ac);color:var(--ac);background:var(--al)}
-.bcopy.copied{border-color:var(--gn);color:var(--gn);background:var(--gnb)}
+.ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px}
+.cpic{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border:none;background:none;color:var(--mt);cursor:pointer;padding:0;margin-left:5px;vertical-align:middle;opacity:.45;transition:opacity .15s;flex-shrink:0}
+.cpic:hover{opacity:1;color:var(--ac)}
+.cpic svg{width:13px;height:13px}
+.cpic.ok{opacity:1;color:var(--gn)}
 @media(max-width:768px){
   .g3,.g4,.g5{grid-template-columns:1fr 1fr}
   .g6{grid-template-columns:1fr 1fr 1fr}
@@ -304,31 +305,37 @@ function showD(e){
   const gst=sv*0.10;
   const tp=sv+gst;
   const ou=tp;
+  const cpSvg='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+  const cpBtn=(val)=>val&&val!=='\u2014'?`<button class="cpic" onclick="copyVal(this,'${esc(val).replace(/'/g,"\\&#39;")}')" title="Copy">${cpSvg}</button>`:'';
 
   let buyerHtml='';
   (e.buyers||[]).forEach((b,i)=>{
-    buyerHtml+=`<div class="dl"><span class="dl-k">Name</span><span class="dl-v">${esc([b.firstName,b.middleName,b.lastName].filter(Boolean).join(' '))||'\u2014'}</span></div>`;
-    buyerHtml+=`<div class="dl"><span class="dl-k">Mobile</span><span class="dl-v">${esc(b.mobile)||'\u2014'}</span></div>`;
-    buyerHtml+=`<div class="dl"><span class="dl-k">Email</span><span class="dl-v">${esc(b.email)||'\u2014'}</span></div>`;
-    buyerHtml+=`<div class="dl"><span class="dl-k">Postal Address</span><span class="dl-v">${esc(b.postalAddress)||'\u2014'}</span></div>`;
+    const nm=esc([b.firstName,b.middleName,b.lastName].filter(Boolean).join(' '))||'\u2014';
+    const mob=esc(b.mobile)||'\u2014';
+    const em=esc(b.email)||'\u2014';
+    const pa=esc(b.postalAddress)||'\u2014';
+    buyerHtml+=`<div class="dl"><span class="dl-k">Name</span><span class="dl-v">${nm}${cpBtn([b.firstName,b.middleName,b.lastName].filter(Boolean).join(' '))}</span></div>`;
+    buyerHtml+=`<div class="dl"><span class="dl-k">Mobile</span><span class="dl-v">${mob}${cpBtn(b.mobile)}</span></div>`;
+    buyerHtml+=`<div class="dl"><span class="dl-k">Email</span><span class="dl-v">${em}${cpBtn(b.email)}</span></div>`;
+    buyerHtml+=`<div class="dl"><span class="dl-k">Postal Address</span><span class="dl-v">${pa}${cpBtn(b.postalAddress)}</span></div>`;
     if(i<(e.buyers||[]).length-1)buyerHtml+=`<div style="border-bottom:1px dashed var(--bd);margin:6px 0"></div>`;
   });
 
   $('dd').innerHTML=`<h3>${esc(e.engagementId||e.id)}</h3>
 <div style="font-size:.6rem;color:var(--mt);font-style:italic;margin-bottom:10px">Last edited: ${edited}</div>
 
-<div class="ds" id="sec-eng"><h4>Engagement <button class="bcopy" onclick="copySection('sec-eng')">&#128203; Copy</button></h4>
+<div class="ds"><h4>Engagement</h4>
 <div class="dl"><span class="dl-k">Engagement ID</span><span class="dl-v">${esc(e.engagementId||e.id)}</span></div>
 <div class="dl"><span class="dl-k">Date</span><span class="dl-v">${esc(e.engagementDate||'\u2014')}</span></div>
 <div class="dl"><span class="dl-k">Status</span><span class="dl-v"><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></span></div>
 </div>
 
-<div class="ds" id="sec-buy"><h4>Buyers <button class="bcopy" onclick="copySection('sec-buy')">&#128203; Copy</button></h4>
+<div class="ds"><h4>Buyers</h4>
 ${buyerHtml||'<div class="dl"><span class="dl-v" style="color:var(--mt)">No buyers</span></div>'}
 </div>
 
-<div class="ds" id="sec-prop"><h4>Entity &amp; Property <button class="bcopy" onclick="copySection('sec-prop')">&#128203; Copy</button></h4>
-<div class="dl"><span class="dl-k">Entity Name</span><span class="dl-v">${esc(e.purchasingEntityName||'\u2014')}</span></div>
+<div class="ds"><h4>Entity &amp; Property</h4>
+<div class="dl"><span class="dl-k">Entity Name</span><span class="dl-v">${esc(e.purchasingEntityName||'\u2014')}${cpBtn(e.purchasingEntityName)}</span></div>
 <div class="dl"><span class="dl-k">Property Type</span><span class="dl-v">${esc(e.propertyType||'\u2014')}</span></div>
 <div class="dl"><span class="dl-k">State / Region</span><span class="dl-v">${esc(e.preferredRegion||'\u2014')}</span></div>
 <div class="dl"><span class="dl-k">Budget</span><span class="dl-v">${e.budget?fm(e.budget):'\u2014'}</span></div>
@@ -336,7 +343,7 @@ ${buyerHtml||'<div class="dl"><span class="dl-v" style="color:var(--mt)">No buye
 ${e.clientNotes?`<div class="dl"><span class="dl-k">Client Notes</span><span class="dl-v">${esc(e.clientNotes)}</span></div>`:''}
 </div>
 
-<div class="ds" id="sec-fee"><h4>Fees <button class="bcopy" onclick="copySection('sec-fee')">&#128203; Copy</button></h4>
+<div class="ds"><h4>Fees</h4>
 <div class="dl"><span class="dl-k">Agent Fee</span><span class="dl-v">${fee?fm(fee):'\u2014'}</span></div>
 <div class="dl"><span class="dl-k">Service Rate</span><span class="dl-v">${rate}%</span></div>
 <div class="dl"><span class="dl-k">Service Fee</span><span class="dl-v">${fm(sv)}</span></div>
@@ -346,28 +353,19 @@ ${e.clientNotes?`<div class="dl"><span class="dl-k">Client Notes</span><span cla
 </div>
 
 <div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
-<button class="bcopy" style="font-size:.76rem;padding:5px 14px;min-height:30px" onclick="copySection('dd')">&#128203; Copy All</button>
 <button class="dedit" onclick="editEng('${esc(e.id)}')">&#9998; Edit</button>
 <button class="ddel" onclick="delEng()">&#128465; Delete</button>
 </div>`;
   $('dov').classList.add('open');
 }
 
-window.copySection=function(id){
-  const el=$(id);if(!el)return;
-  const lines=[];
-  el.querySelectorAll('.dl').forEach(row=>{
-    const k=row.querySelector('.dl-k');
-    const v=row.querySelector('.dl-v');
-    if(k&&v)lines.push(k.textContent.trim()+': '+v.textContent.trim());
-    else if(v)lines.push(v.textContent.trim());
-  });
-  const text=lines.join('\n');
+window.copyVal=function(btn,text){
+  if(!text)return;
   navigator.clipboard.writeText(text).then(()=>{
-    const btn=el.querySelector('.bcopy');
-    if(btn){btn.classList.add('copied');btn.innerHTML='&#10003; Copied';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='&#128203; Copy'},1500)}
+    btn.classList.add('ok');setTimeout(()=>btn.classList.remove('ok'),1200);
   }).catch(()=>{
     const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+    btn.classList.add('ok');setTimeout(()=>btn.classList.remove('ok'),1200);
   });
 };
 window.delEng=function(){alert('Please contact Techbeats to delete an engagement.')};
