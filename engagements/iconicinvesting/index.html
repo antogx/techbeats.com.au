@@ -20,8 +20,8 @@
 html{font-size:14px}
 body{font-family:var(--fb);background:var(--bg);color:var(--fg);min-height:100dvh;overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .hdr{background:var(--ac);color:#fff;padding:0 16px;height:44px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 1px 6px rgba(0,0,0,.15)}
-.brand{font-family:var(--fb);font-weight:600;font-size:1.1rem;color:#fff;text-decoration:none;letter-spacing:0}
-.brand b{color:#fff;font-weight:600}
+.brand{font-family:var(--fd);font-weight:700;font-size:1.25rem;color:#fff;text-decoration:none;letter-spacing:-.02em}
+.brand b{color:#7ec8e3}
 .hdr-tag{font-size:.72rem;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.55)}
 .app{max-width:1320px;margin:0 auto;padding:10px 12px 28px}
 .pnl{background:var(--sf);border:1px solid var(--bd);border-radius:var(--rl);box-shadow:var(--sh);overflow:hidden}
@@ -106,18 +106,22 @@ tbody tr{cursor:pointer}
 @keyframes spn{to{transform:rotate(360deg)}}
 .dov{position:fixed;inset:0;background:rgba(28,32,51,.35);backdrop-filter:blur(2px);z-index:300;display:none;align-items:flex-start;justify-content:center;padding:40px 14px}
 .dov.open{display:flex}
-.dc{background:var(--sf);border-radius:var(--rl);box-shadow:var(--sh2);max-width:700px;width:100%;max-height:85vh;overflow-y:auto;padding:18px 22px;position:relative}
-.dc h3{font-family:var(--fd);font-size:1.15rem;color:var(--ac);margin-bottom:12px}
-.dg{display:grid;grid-template-columns:130px 1fr;gap:4px 14px;font-size:.9rem}
-.dg dt{font-weight:600;color:var(--mt);text-align:right}
-.dg dd{color:var(--fg)}
+.dc{background:var(--sf);border-radius:var(--rl);box-shadow:var(--sh2);max-width:720px;width:100%;max-height:85vh;overflow-y:auto;padding:20px 24px;position:relative}
+.dc h3{font-family:var(--fd);font-size:1.15rem;color:var(--ac);margin-bottom:6px;padding-bottom:8px;border-bottom:1.5px solid var(--bd)}
+.dl{display:flex;padding:5px 0;border-bottom:1px solid #f0f1f4;font-size:.9rem;line-height:1.5;gap:8px}
+.dl:last-child{border-bottom:none}
+.dl-k{flex:0 0 155px;font-weight:700;color:var(--mt);letter-spacing:.02em}
+.dl-v{flex:1;color:var(--fg);font-weight:500;word-break:break-word}
 .dx{position:absolute;top:12px;right:16px;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--mt);padding:4px;min-width:36px;min-height:36px;display:flex;align-items:center;justify-content:center}
 .dedit{display:inline-flex;align-items:center;gap:4px;padding:6px 16px;border:1.5px solid var(--ac);border-radius:var(--r);background:transparent;color:var(--ac);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;margin-top:10px;min-height:34px;transition:all .12s}
 .dedit:hover{background:var(--ac);color:#fff}
 .ddel{display:inline-flex;align-items:center;gap:4px;padding:6px 16px;border:1.5px solid var(--rd);border-radius:var(--r);background:transparent;color:var(--rd);font-family:var(--fb);font-size:.82rem;font-weight:600;cursor:pointer;margin-top:10px;min-height:34px;transition:all .12s}
 .ddel:hover{background:var(--rdb)}
-.ds{margin-top:12px;padding-top:10px;border-top:1px solid var(--bd)}
-.ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
+.ds{margin-top:14px;padding-top:10px;border-top:1.5px solid var(--bd)}
+.ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;display:flex;align-items:center;justify-content:space-between}
+.bcopy{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf2);color:var(--mt);font-family:var(--fb);font-size:.68rem;font-weight:600;cursor:pointer;text-transform:none;letter-spacing:0;min-height:24px;transition:all .12s}
+.bcopy:hover{border-color:var(--ac);color:var(--ac);background:var(--al)}
+.bcopy.copied{border-color:var(--gn);color:var(--gn);background:var(--gnb)}
 @media(max-width:768px){
   .g3,.g4,.g5{grid-template-columns:1fr 1fr}
   .g6{grid-template-columns:1fr 1fr 1fr}
@@ -126,7 +130,7 @@ tbody tr{cursor:pointer}
   .sbox{width:140px}
   .dov{padding:20px 8px}
   .dc{padding:14px 14px}
-  .dg{grid-template-columns:110px 1fr}
+  .dl-k{flex:0 0 120px}
 }
 @media(max-width:480px){
   html{font-size:15px}
@@ -143,8 +147,10 @@ tbody tr{cursor:pointer}
   .fb{padding:10px 8px 14px}
   .tw{max-height:32vh}
   .dov{padding:10px 4px}
-  .dc{max-height:90vh;border-radius:var(--r)}
-  .dg{grid-template-columns:100px 1fr;font-size:.88rem}
+  .dc{max-height:90vh;border-radius:var(--r);padding:12px 10px}
+  .dl{flex-direction:column;gap:1px}
+  .dl-k{flex:none;font-size:.78rem}
+  .dl-v{font-size:.88rem}
 }
 </style>
 </head>
@@ -201,7 +207,7 @@ tbody tr{cursor:pointer}
 
       <div class="sl">&#128203; Engagement</div>
       <div class="g g3">
-        <div class="f"><label>Engagement ID <span class="hn" style="text-transform:none;font-weight:400">(auto &middot; editable)</span></label><input type="text" id="eId" placeholder="Auto-generated"></div>
+        <div class="f"><label>Engagement ID</label><input type="text" id="eId" placeholder="Auto-generated"><span class="hn">Auto &middot; editable</span></div>
         <div class="f"><label>Date <span class="rq">*</span></label><input type="date" id="eDate"></div>
         <div class="f ss"><label>Status <span class="rq">*</span></label><select id="eSt"><option value="Not started">Not Started</option><option value="In progress">In Progress</option><option value="Completed">Completed</option></select></div>
       </div>
@@ -210,14 +216,14 @@ tbody tr{cursor:pointer}
       <div class="brow" id="bL"></div>
 
       <div class="sl">&#127970; Entity &nbsp;&middot;&nbsp; &#127968; Property</div>
-      <div class="g g5">
+      <div class="g g4">
         <div class="f"><label>Purchasing Entity Name</label><input type="text" id="eN" placeholder="e.g. Smith Family Trust"></div>
         <div class="f"><label>Property Type</label><select id="pT"><option value="">&mdash; Select &mdash;</option><option>House</option><option>Unit</option><option>Townhouse</option><option>Villa</option><option>Land</option><option>Other</option></select></div>
         <div class="f"><label>Budget ($)</label><input type="number" id="pB" placeholder="550000" min="0" step="1000"></div>
         <div class="f"><label>Min Bedrooms</label><select id="pBd"><option value="Any">Any</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
-        <div class="f"><label>State / Region</label><select id="pR"><option value="Any">Any</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option><option>NT</option><option>ACT</option></select></div>
       </div>
-      <div class="g" style="margin-top:4px">
+      <div class="g g2" style="margin-top:4px">
+        <div class="f"><label>State / Region</label><select id="pR"><option value="Any">Any</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option><option>NT</option><option>ACT</option></select></div>
         <div class="f"><label>Client Notes</label><textarea id="pN" placeholder="Additional preferences&hellip;" rows="1"></textarea></div>
       </div>
 
@@ -292,13 +298,6 @@ $('sb').addEventListener('input',e=>renderT(e.target.value));
 $('tb').addEventListener('click',e=>{const tr=e.target.closest('tr[data-eid]');if(!tr)return;const eng=all.find(x=>x.id===tr.dataset.eid);if(eng)showD(eng)});
 
 function showD(e){
-  const buyers=(e.buyers||[]).map((b,i)=>{
-    let line=`<div style="margin-bottom:6px"><b>Buyer ${i+1}:</b> ${esc([b.firstName,b.middleName,b.lastName].filter(Boolean).join(' '))}`;
-    if(b.mobile)line+=` \u00b7 ${esc(b.mobile)}`;
-    if(b.email)line+=` \u00b7 ${esc(b.email)}`;
-    if(b.postalAddress)line+=`<br><span style="color:var(--mt);font-size:.85rem">\u2709 ${esc(b.postalAddress)}</span>`;
-    line+='</div>';return line;
-  }).join('');
   const edited=fmtDate(e.updatedAt||e.createdAt);
   const fee=e.buyersAgentFee||0;
   const rate=e.serviceRatePercent||40;
@@ -306,13 +305,72 @@ function showD(e){
   const gst=sv*0.10;
   const tp=sv+gst;
   const ou=tp;
+
+  let buyerHtml='';
+  (e.buyers||[]).forEach((b,i)=>{
+    buyerHtml+=`<div class="dl"><span class="dl-k">Name</span><span class="dl-v">${esc([b.firstName,b.middleName,b.lastName].filter(Boolean).join(' '))||'\u2014'}</span></div>`;
+    buyerHtml+=`<div class="dl"><span class="dl-k">Mobile</span><span class="dl-v">${esc(b.mobile)||'\u2014'}</span></div>`;
+    buyerHtml+=`<div class="dl"><span class="dl-k">Email</span><span class="dl-v">${esc(b.email)||'\u2014'}</span></div>`;
+    buyerHtml+=`<div class="dl"><span class="dl-k">Postal Address</span><span class="dl-v">${esc(b.postalAddress)||'\u2014'}</span></div>`;
+    if(i<(e.buyers||[]).length-1)buyerHtml+=`<div style="border-bottom:1px dashed var(--bd);margin:6px 0"></div>`;
+  });
+
   $('dd').innerHTML=`<h3>${esc(e.engagementId||e.id)}</h3>
-<div class="dg"><dt>Date</dt><dd>${esc(e.engagementDate||'\u2014')}</dd><dt>Status</dt><dd><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus)}</span></dd><dt>Entity</dt><dd>${esc(e.purchasingEntityName||'\u2014')}</dd></div>
-<div style="margin-top:4px;font-size:.6rem;color:var(--mt);font-style:italic">Last edited: ${edited}</div>
-<div class="ds"><h4>Buyers</h4>${buyers||'<span style="color:var(--mt)">None</span>'}</div>
-<div class="ds"><h4>Property Requirements</h4><div class="dg"><dt>Type</dt><dd>${esc(e.propertyType||'\u2014')}</dd><dt>Region</dt><dd>${esc(e.preferredRegion||'\u2014')}</dd><dt>Budget</dt><dd>${e.budget?fm(e.budget):'\u2014'}</dd><dt>Min Beds</dt><dd>${esc(e.minBedrooms||'\u2014')}</dd></div>${e.clientNotes?`<div style="margin-top:6px;font-size:.88rem;color:var(--mt)"><b>Notes:</b> ${esc(e.clientNotes)}</div>`:''}</div>
-<div class="ds"><h4>Fees</h4><div class="dg"><dt>Agent Fee</dt><dd>${fee?fm(fee):'\u2014'}</dd><dt>Service Rate</dt><dd>${rate}%</dd><dt>Service Fee</dt><dd>${fm(sv)}</dd><dt>GST (10%)</dt><dd>${fm(gst)}</dd><dt>Total Payable</dt><dd>${fm(tp)}</dd><dt><b>Outstanding</b></dt><dd><b>${fm(ou)}</b></dd></div></div>
-<button class="dedit" onclick="editEng('${esc(e.id)}')">&#9998; Edit Engagement</button> <button class="ddel" onclick="delEng()">&#128465; Delete Engagement</button>`;
+<div style="font-size:.6rem;color:var(--mt);font-style:italic;margin-bottom:10px">Last edited: ${edited}</div>
+
+<div class="ds" id="sec-eng"><h4>Engagement <button class="bcopy" onclick="copySection('sec-eng')">&#128203; Copy</button></h4>
+<div class="dl"><span class="dl-k">Engagement ID</span><span class="dl-v">${esc(e.engagementId||e.id)}</span></div>
+<div class="dl"><span class="dl-k">Date</span><span class="dl-v">${esc(e.engagementDate||'\u2014')}</span></div>
+<div class="dl"><span class="dl-k">Status</span><span class="dl-v"><span class="st ${sc(e.engagementStatus)}">${esc(e.engagementStatus||'Not started')}</span></span></div>
+</div>
+
+<div class="ds" id="sec-buy"><h4>Buyers <button class="bcopy" onclick="copySection('sec-buy')">&#128203; Copy</button></h4>
+${buyerHtml||'<div class="dl"><span class="dl-v" style="color:var(--mt)">No buyers</span></div>'}
+</div>
+
+<div class="ds" id="sec-prop"><h4>Entity &amp; Property <button class="bcopy" onclick="copySection('sec-prop')">&#128203; Copy</button></h4>
+<div class="dl"><span class="dl-k">Entity Name</span><span class="dl-v">${esc(e.purchasingEntityName||'\u2014')}</span></div>
+<div class="dl"><span class="dl-k">Property Type</span><span class="dl-v">${esc(e.propertyType||'\u2014')}</span></div>
+<div class="dl"><span class="dl-k">State / Region</span><span class="dl-v">${esc(e.preferredRegion||'\u2014')}</span></div>
+<div class="dl"><span class="dl-k">Budget</span><span class="dl-v">${e.budget?fm(e.budget):'\u2014'}</span></div>
+<div class="dl"><span class="dl-k">Min Bedrooms</span><span class="dl-v">${esc(e.minBedrooms||'\u2014')}</span></div>
+${e.clientNotes?`<div class="dl"><span class="dl-k">Client Notes</span><span class="dl-v">${esc(e.clientNotes)}</span></div>`:''}
+</div>
+
+<div class="ds" id="sec-fee"><h4>Fees <button class="bcopy" onclick="copySection('sec-fee')">&#128203; Copy</button></h4>
+<div class="dl"><span class="dl-k">Agent Fee</span><span class="dl-v">${fee?fm(fee):'\u2014'}</span></div>
+<div class="dl"><span class="dl-k">Service Rate</span><span class="dl-v">${rate}%</span></div>
+<div class="dl"><span class="dl-k">Service Fee</span><span class="dl-v">${fm(sv)}</span></div>
+<div class="dl"><span class="dl-k">GST (10%)</span><span class="dl-v">${fm(gst)}</span></div>
+<div class="dl"><span class="dl-k">Total Payable</span><span class="dl-v">${fm(tp)}</span></div>
+<div class="dl"><span class="dl-k">Outstanding</span><span class="dl-v" style="font-weight:700">${fm(ou)}</span></div>
+</div>
+
+<div style="margin-top:14px;display:flex;gap:8px;flex-wrap:wrap">
+<button class="bcopy" style="font-size:.76rem;padding:5px 14px;min-height:30px" onclick="copySection('dd')">&#128203; Copy All</button>
+<button class="dedit" onclick="editEng('${esc(e.id)}')">&#9998; Edit</button>
+<button class="ddel" onclick="delEng()">&#128465; Delete</button>
+</div>`;
+  $('dov').classList.add('open');
+}
+
+window.copySection=function(id){
+  const el=$(id);if(!el)return;
+  const lines=[];
+  el.querySelectorAll('.dl').forEach(row=>{
+    const k=row.querySelector('.dl-k');
+    const v=row.querySelector('.dl-v');
+    if(k&&v)lines.push(k.textContent.trim()+': '+v.textContent.trim());
+    else if(v)lines.push(v.textContent.trim());
+  });
+  const text=lines.join('\n');
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn=el.querySelector('.bcopy');
+    if(btn){btn.classList.add('copied');btn.innerHTML='&#10003; Copied';setTimeout(()=>{btn.classList.remove('copied');btn.innerHTML='&#128203; Copy'},1500)}
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);
+  });
+};
   $('dov').classList.add('open');
 }
 window.delEng=function(){alert('Please contact Techbeats to delete an engagement.')};
