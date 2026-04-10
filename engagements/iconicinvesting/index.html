@@ -9,7 +9,7 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#eef1f5;--sf:#fff;--sf2:#f5f7fa;--fg:#1c2033;--mt:#6b7185;
+  --bg:#eef1f5;--sf:#fff;--sf2:#f5f7fa;--fg:#111827;--mt:#4b5068;
   --ac:#16425b;--ac2:#2a7ab5;--al:#dbeaf5;
   --bd:#d8dce6;--bd2:#c5cad6;--r:6px;--rl:10px;
   --gn:#168a52;--gnb:#e1f5ec;--bl:#1a5fa0;--blb:#e3eef8;
@@ -18,7 +18,7 @@
   --fd:'Fraunces',Georgia,serif;--fb:'Outfit',system-ui,sans-serif;
 }
 html{font-size:14px}
-body{font-family:var(--fb);background:var(--bg);color:var(--fg);min-height:100dvh;overflow-x:hidden;line-height:1.5}
+body{font-family:var(--fb);background:var(--bg);color:var(--fg);min-height:100dvh;overflow-x:hidden;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 .hdr{background:var(--ac);color:#fff;padding:0 16px;height:44px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;box-shadow:0 1px 6px rgba(0,0,0,.15)}
 .brand{font-family:var(--fd);font-weight:700;font-size:1.25rem;color:#fff;text-decoration:none;letter-spacing:-.02em}
 .brand b{color:#7ec8e3}
@@ -34,10 +34,10 @@ body{font-family:var(--fb);background:var(--bg);color:var(--fg);min-height:100dv
 .bn{padding:7px 16px;border:none;border-radius:var(--r);background:var(--ac);color:#fff;font-family:var(--fb);font-weight:600;font-size:.88rem;cursor:pointer;transition:all .12s;white-space:nowrap;min-height:36px}
 .bn:hover{background:var(--ac2)}
 .tw{overflow-x:auto;max-height:42vh;overflow-y:auto}
-table{width:100%;border-collapse:collapse;font-size:.88rem}
+table{width:100%;border-collapse:collapse;font-size:.88rem;font-weight:500}
 thead{position:sticky;top:0;z-index:5}
-th{background:var(--ac);color:#fff;padding:7px 10px;text-align:left;font-weight:600;font-size:.74rem;letter-spacing:.04em;text-transform:uppercase;white-space:nowrap}
-td{padding:6px 10px;border-bottom:1px solid var(--bd);white-space:nowrap;vertical-align:middle}
+th{background:var(--ac);color:#fff;padding:7px 10px;text-align:left;font-weight:700;font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap}
+td{padding:6px 10px;border-bottom:1px solid var(--bd);white-space:nowrap;vertical-align:middle;color:var(--fg)}
 tbody tr:hover td{background:var(--al)}
 tbody tr{cursor:pointer}
 .st{display:inline-block;padding:2px 9px;border-radius:8px;font-size:.74rem;font-weight:600;line-height:1.7}
@@ -57,18 +57,21 @@ tbody tr{cursor:pointer}
 .g3{grid-template-columns:1fr 1fr 1fr}
 .g4{grid-template-columns:1fr 1fr 1fr 1fr}
 .g5{grid-template-columns:1fr 1fr 1fr 1fr 1fr}
+.g6{grid-template-columns:1fr 1fr 1fr 1fr 1fr 1fr}
 .gf{grid-column:1/-1}
+.fee-line{align-items:end}
+.fbox.fi{display:flex;flex-direction:column;justify-content:center;min-height:58px}
 .f{display:flex;flex-direction:column;gap:3px}
-.f label{font-weight:600;font-size:.76rem;letter-spacing:.03em;text-transform:uppercase;color:var(--mt);line-height:1.4}
+.f label{font-weight:700;font-size:.76rem;letter-spacing:.05em;text-transform:uppercase;color:var(--mt);line-height:1.4}
 .f label .rq{color:var(--rd)}
-.f input,.f select,.f textarea{font-family:var(--fb);font-size:.95rem;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--fg);outline:none;transition:border-color .12s;min-height:38px}
+.f input,.f select,.f textarea{font-family:var(--fb);font-size:.95rem;font-weight:500;padding:7px 10px;border:1px solid var(--bd);border-radius:var(--r);background:var(--sf);color:var(--fg);outline:none;transition:border-color .12s;min-height:38px}
 .f input:focus,.f select:focus,.f textarea:focus{border-color:var(--ac2);box-shadow:0 0 0 2px rgba(42,122,181,.12)}
 .f textarea{resize:vertical;min-height:40px}
 .f .hn{font-size:.7rem;color:var(--mt);font-style:italic}
 .ss select.st-ns{background:var(--orb);border-color:var(--or);color:var(--or);font-weight:600}
 .ss select.st-ip{background:var(--blb);border-color:var(--bl);color:var(--bl);font-weight:600}
 .ss select.st-co{background:var(--gnb);border-color:var(--gn);color:var(--gn);font-weight:600}
-.sl{font-family:var(--fd);font-weight:700;font-size:.88rem;color:var(--ac);padding:8px 0 4px;border-bottom:1px solid var(--bd);margin:8px 0 6px;display:flex;align-items:center;gap:6px}
+.sl{font-family:var(--fd);font-weight:700;font-size:.88rem;color:#0f2e47;padding:8px 0 4px;border-bottom:1.5px solid var(--bd);margin:8px 0 6px;display:flex;align-items:center;gap:6px}
 .sl:first-child{margin-top:0}
 .brow{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-start}
 .bcard{flex:1;min-width:100%;border:1px solid var(--bd);border-radius:var(--r);padding:10px 12px;background:var(--sf2)}
@@ -81,7 +84,7 @@ tbody tr{cursor:pointer}
 .frow{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
 .fbox{background:var(--sf2);border:1px solid var(--bd);border-radius:var(--r);padding:6px 8px;text-align:center}
 .fbox.hl{background:var(--ac);border-color:var(--ac);color:#fff}
-.flb{font-size:.65rem;font-weight:600;text-transform:uppercase;letter-spacing:.04em;color:var(--mt);margin-bottom:2px}
+.flb{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--mt);margin-bottom:2px}
 .fbox.hl .flb{color:rgba(255,255,255,.6)}
 .fvl{font-family:var(--fd);font-weight:700;font-size:.95rem}
 .enote{font-size:.6rem;color:var(--mt);font-weight:400;font-style:italic;display:block;margin-top:1px;line-height:1.3}
@@ -117,6 +120,7 @@ tbody tr{cursor:pointer}
 .ds h4{font-size:.82rem;font-weight:700;color:var(--ac);text-transform:uppercase;letter-spacing:.04em;margin-bottom:6px}
 @media(max-width:768px){
   .g3,.g4,.g5{grid-template-columns:1fr 1fr}
+  .g6{grid-template-columns:1fr 1fr 1fr}
   .frow{grid-template-columns:1fr 1fr}
   .tw{max-height:36vh}
   .sbox{width:140px}
@@ -127,6 +131,7 @@ tbody tr{cursor:pointer}
 @media(max-width:480px){
   html{font-size:15px}
   .g2,.g3,.g4,.g5{grid-template-columns:1fr}
+  .g6{grid-template-columns:1fr 1fr}
   .app{padding:6px 6px 20px}
   .pbar{padding:8px 10px;gap:6px}
   .sbox{width:100%;order:3;flex-basis:100%}
@@ -208,25 +213,22 @@ tbody tr{cursor:pointer}
       <div class="g g4">
         <div class="f"><label>Purchasing Entity Name</label><input type="text" id="eN" placeholder="e.g. Smith Family Trust"></div>
         <div class="f"><label>Property Type</label><select id="pT"><option value="">&mdash; Select &mdash;</option><option>House</option><option>Unit</option><option>Townhouse</option><option>Villa</option><option>Land</option><option>Other</option></select></div>
-        <div class="f"><label>State / Region</label><select id="pR"><option value="Any">Any</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option><option>NT</option><option>ACT</option></select></div>
         <div class="f"><label>Budget ($)</label><input type="number" id="pB" placeholder="550000" min="0" step="1000"></div>
-      </div>
-      <div class="g g3" style="margin-top:4px">
         <div class="f"><label>Min Bedrooms</label><select id="pBd"><option value="Any">Any</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option></select></div>
-        <div class="f gf"><label>Client Notes</label><textarea id="pN" placeholder="Additional preferences&hellip;" rows="1"></textarea></div>
+      </div>
+      <div class="g g2" style="margin-top:4px">
+        <div class="f"><label>State / Region</label><select id="pR"><option value="Any">Any</option><option>NSW</option><option>VIC</option><option>QLD</option><option>SA</option><option>WA</option><option>TAS</option><option>NT</option><option>ACT</option></select></div>
+        <div class="f"><label>Client Notes</label><textarea id="pN" placeholder="Additional preferences&hellip;" rows="1"></textarea></div>
       </div>
 
       <div class="sl">&#128176; Fees</div>
-      <div class="g g3">
-        <div class="f"><label>Buyers Agent Fee Charged ($)</label><input type="number" id="xC" placeholder="e.g. 15000" min="0" step="100"></div>
-        <div class="f"><label>Property Finder Service Rate (%)</label><input type="number" id="xR" value="40" min="0" max="100" step="1"><span class="hn">Default: 40%</span></div>
-        <div class="f"></div>
-      </div>
-      <div class="frow" style="margin-top:6px">
-        <div class="fbox"><div class="flb">Service Fee</div><div class="fvl" id="fS">$0</div></div>
-        <div class="fbox"><div class="flb">GST 10%</div><div class="fvl" id="fG">$0</div></div>
-        <div class="fbox"><div class="flb">Total Payable</div><div class="fvl" id="fT">$0</div></div>
-        <div class="fbox hl"><div class="flb">Outstanding</div><div class="fvl" id="fO">$0</div></div>
+      <div class="g g6 fee-line">
+        <div class="f"><label>Agent Fee ($)</label><input type="number" id="xC" placeholder="e.g. 15000" min="0" step="100"></div>
+        <div class="f"><label>Service Rate (%)</label><input type="number" id="xR" value="40" min="0" max="100" step="1"><span class="hn">Default: 40%</span></div>
+        <div class="fbox fi"><div class="flb">Service Fee</div><div class="fvl" id="fS">$0</div></div>
+        <div class="fbox fi"><div class="flb">GST 10%</div><div class="fvl" id="fG">$0</div></div>
+        <div class="fbox fi"><div class="flb">Total Payable</div><div class="fvl" id="fT">$0</div></div>
+        <div class="fbox fi hl"><div class="flb">Outstanding</div><div class="fvl" id="fO">$0</div></div>
       </div>
 
       <div class="sbar">
