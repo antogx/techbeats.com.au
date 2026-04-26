@@ -311,7 +311,7 @@ body.dark .qk{color:var(--fg)}
 .qv{color:var(--ok)}
 .muted{color:var(--muted);font-weight:800;font-size:12px}
 
-.actions{margin-top:8px;display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;position:relative;z-index:5}
+.actions{margin-top:8px;display:flex;gap:8px;flex-wrap:wrap;align-items:stretch;position:relative;z-index:5;width:100%}
 .btn{
   min-height:46px; padding:10px 14px; border-radius:14px;
   border:1px solid var(--btnbd); background:var(--btnbg); color:var(--fg);
@@ -520,6 +520,22 @@ body.dark .hicon{
   .comm-summary{padding:11px 12px}
   .comm-body{padding:10px}
   .msg{max-width:92%;font-size:12px}
+
+  /* Main listing: 3 buttons per row on mobile, all equal size */
+  .actions{gap:8px}
+  .actions .btn{
+    flex:0 0 calc(33.333% - 6px);
+    min-width:0;
+    padding:10px 6px;
+    font-size:13px;
+    justify-content:center;
+    min-height:44px;
+  }
+  .actions .btn span{
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
 }
 
 @media(min-width:920px){
@@ -532,7 +548,7 @@ body.dark .hicon{
 <header>
   <div class="lefthead">
     <h1>Properties for Jithin &amp; Sreekutty</h1>
-    <div class="sub">Updated: 2026-04-26 18:37</div>
+    <div class="sub">Updated: 2026-04-26 18:47</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
