@@ -356,6 +356,17 @@ body.dark .dgroup-dsr     {background:rgba(167,139,250,.08);border-color:rgba(16
   .dgroup{grid-template-columns:1fr 1fr}
 }
 
+/* Inside a tinted group, let the group's tint show through the rows
+   instead of covering it with solid white. */
+.dgroup .drow{
+  background:transparent;
+  border-color:rgba(15,23,42,.08);   /* very subtle hairline */
+}
+body.dark .dgroup .drow{
+  background:transparent;
+  border-color:rgba(234,240,255,.12);
+}
+
 /* ---- Highlights (beautiful list style) ---- */
 .btn-hl{color:#0f766e}
 body.dark .btn-hl{color:#5eead4}
@@ -566,7 +577,7 @@ body.dark .hicon{
 <header>
   <div class="lefthead">
     <h1>Properties</h1>
-    <div class="sub">Updated: 2026-05-16 16:05</div>
+    <div class="sub">Updated: 2026-05-16 16:13</div>
   </div>
   <div class="right">
     <button class="tbtn" id="themeBtn" type="button" aria-label="Toggle theme"><svg class="tico" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
