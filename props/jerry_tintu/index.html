@@ -563,15 +563,30 @@ body.dark .hicon{
 .help-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-start;justify-content:center;padding:24px 16px;overflow-y:auto}
 .help-modal[hidden]{display:none}
 .help-backdrop{position:fixed;inset:0;background:rgba(15,23,42,.55);backdrop-filter:blur(2px)}
-.help-panel{position:relative;z-index:1;background:var(--bg);color:var(--fg);border:1px solid var(--line);border-radius:16px;width:min(720px,100%);max-height:calc(100vh - 48px);display:flex;flex-direction:column;box-shadow:0 20px 60px rgba(15,23,42,.25)}
+.help-panel{
+  position:relative;z-index:1;
+  background:var(--bg);color:var(--fg);
+  border:1px solid var(--line);border-radius:16px;
+  width:min(720px,100%);
+  max-height:calc(100vh - 48px);
+  max-height:calc(100dvh - 48px);   /* iOS Safari: real visible height */
+  display:flex;flex-direction:column;
+  box-shadow:0 20px 60px rgba(15,23,42,.25);
+}
 .help-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:14px 16px;border-bottom:1px solid var(--line)}
 .help-head h2{margin:0;font-size:18px;font-weight:950}
-.help-close{font-size:16px;line-height:1}
+.help-close{width:44px;height:44px;font-size:18px;line-height:1}   /* Apple-recommended 44px tap target */
 .help-search-wrap{padding:12px 16px 0 16px}
-.help-search{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--btnbd);background:var(--btnbg);color:var(--fg);font-size:14px;font-weight:700}
-.help-search:focus{outline:2px solid var(--blue);outline-offset:1px}
+.help-search{
+  width:100%;padding:10px 12px;
+  border-radius:10px;border:1px solid var(--btnbd);
+  background:var(--btnbg);color:var(--fg);
+  font-size:16px;       /* prevents iOS auto-zoom on focus */
+  font-weight:700;
+}
 .help-body{padding:8px 16px 16px 16px;overflow-y:auto}
 .help-dl{margin:0}
+.help-search:focus{outline:2px solid var(--blue);outline-offset:1px}
 .help-item{padding:10px 0;border-bottom:1px dashed var(--line)}
 .help-item:last-child{border-bottom:0}
 .help-item dt{font-weight:950;font-size:14px;color:var(--fg);margin-bottom:4px}
@@ -586,7 +601,7 @@ body.dark .help-backdrop{background:rgba(0,0,0,.65)}
 <header>
   <div class="lefthead">
     <h1>Properties for Jerry &amp; Tintu</h1>
-    <div class="sub">Updated: 2026-05-16 21:13</div>
+    <div class="sub">Updated: 2026-05-16 21:20</div>
   </div>
   <div class="right">
     <button class="tbtn" id="helpBtn" type="button" aria-label="Property Indicators Explained" title="Property Indicators Explained">
