@@ -694,7 +694,7 @@ body.dark .help-section-title{color:#d2b48c}
 <header>
   <div class="lefthead">
     <h1>Properties for Jayamohan &amp; Parvathy</h1>
-    <div class="sub">Updated: 2026-07-15 15:25</div>
+    <div class="sub">Updated: 2026-07-15 15:32</div>
   </div>
   <div class="right">
     <button class="tbtn" id="helpBtn" type="button" aria-label="Property Indicators Explained" title="Property Indicators Explained">
@@ -3891,13 +3891,18 @@ async function canAcceptAnother(propId) {
       wrap.innerHTML = ''
         + '<div class="help-backdrop"></div>'
         + '<div class="help-panel" role="dialog" aria-modal="true" aria-label="Confirm Property Acceptance"'
-        +   ' style="width:min(440px,100%);padding:20px 22px;gap:12px;">'
+        +   ' style="width:min(460px,100%);padding:20px 22px;gap:12px;">'
         +   '<h3 style="margin:0;font-size:17px;font-weight:950;">Confirm Property Acceptance</h3>'
-        +   '<p style="margin:0;font-size:14px;line-height:1.55;">Please review all information under <b>Details</b> and <b>Listing</b> before accepting.</p>'
-        +   '<p style="margin:0;font-size:14px;line-height:1.55;">By clicking <b>Accept</b>, you authorise us to submit and negotiate an offer on your behalf.</p>'
+        +   '<p style="margin:0;font-size:14px;line-height:1.55;">Please review all information under <b>Details</b> and <b>Listing</b> carefully.</p>'
+        +   '<p style="margin:0;font-size:14px;line-height:1.55;">By clicking <b>Accept</b>, you authorise us to submit and negotiate an offer on your behalf. Our team will act on this immediately.</p>'
+        +   '<p style="margin:0;font-size:14px;line-height:1.55;">Only proceed if you are <b>100% ready to move forward</b> — withdrawing after an offer is submitted may affect your standing with the selling agent and future opportunities.</p>'
+        +   '<label style="display:flex;align-items:flex-start;gap:8px;font-size:14px;line-height:1.5;cursor:pointer;">'
+        +     '<input type="checkbox" class="js-confirm-chk" style="margin-top:3px;width:16px;height:16px;flex:0 0 auto;" />'
+        +     '<span>I have reviewed the <b>Details</b> and <b>Listing</b>, and I\'m ready to proceed.</span>'
+        +   '</label>'
         +   '<div style="display:flex;justify-content:flex-end;gap:10px;margin-top:6px;">'
         +     '<button type="button" class="btn js-confirm-cancel">Cancel</button>'
-        +     '<button type="button" class="btn btn-acc js-confirm-accept">Accept</button>'
+        +     '<button type="button" class="btn btn-acc js-confirm-accept" disabled style="opacity:.45;pointer-events:none;">Accept</button>'
         +   '</div>'
         + '</div>';
 
@@ -3908,9 +3913,21 @@ async function canAcceptAnother(propId) {
         resolve(val);
       };
 
+      // ▼ the block you asked about goes HERE ▼
+      const chk = wrap.querySelector(".js-confirm-chk");
+      const accBtn = wrap.querySelector(".js-confirm-accept");
+
+      chk.addEventListener("change", () => {
+        accBtn.disabled = !chk.checked;
+        accBtn.style.opacity = chk.checked ? "1" : ".45";
+        accBtn.style.pointerEvents = chk.checked ? "auto" : "none";
+      });
+
       wrap.querySelector(".js-confirm-cancel").addEventListener("click", () => done(false));
-      wrap.querySelector(".js-confirm-accept").addEventListener("click", () => done(true));
+      accBtn.addEventListener("click", () => done(true));
       wrap.querySelector(".help-backdrop").addEventListener("click", () => done(false));
+      // ▲ end of that block ▲
+
       document.addEventListener("keydown", onKey);
 
       document.body.appendChild(wrap);
