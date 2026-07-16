@@ -174,8 +174,10 @@ details.examples summary::-webkit-details-marker{display:none}
 details.examples summary::before{content:"▸";color:var(--gold);transition:transform .15s}
 details.examples[open] summary::before{transform:rotate(90deg)}
 details.examples .ex-body{padding:2px 14px 12px;border-top:1px solid var(--line)}
-details.examples .ex-block{white-space:pre-wrap;font-size:12.5px;color:var(--text);
-  padding:8px 0}
+details.examples .ex-block{position:relative;font-size:12.5px;color:var(--text);
+  padding:8px 64px 8px 0}
+details.examples .ex-text{white-space:pre-wrap}
+.ex-copy{position:absolute;top:8px;right:0}
 details.examples .ex-block + .ex-block{border-top:1px dashed var(--line)}
 
 mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px}
@@ -235,6 +237,7 @@ body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
   ul.checks input:checked + span{color:#111;text-decoration:none}
   .progress,.check-meta{display:none}
   details.examples{background:#fafafa;border-color:#ccc}
+  .ex-copy{display:none!important}
   details.examples .ex-block{color:#222}
   a{color:#111}
 }
@@ -266,7 +269,7 @@ body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
       <a href="#building-and-pest-inspection"><span class="num">01</span><span>Building and Pest Inspection</span><span class="prog"></span></a>
     </nav>
     <div class="side-foot">
-      1 procedures · Updated 16 Jul 2026, 10:40 PM AEST<br>
+      1 procedures · Updated 16 Jul 2026, 10:45 PM AEST<br>
       <a href="https://docs.google.com/spreadsheets/d/1JHFmbGcJud5bukBh9bc-X8yux8ixscbew0k3MNwdNss/edit" target="_blank" rel="noopener">Edit source sheet ↗</a>
     </div>
   </aside>
@@ -277,7 +280,7 @@ body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
       <div class="sub">Iconic Investing · Techbeats operating procedures</div>
       <div class="meta">
         <span class="chip">1 procedures</span>
-        <span class="chip">Updated 16 Jul 2026, 10:40 PM AEST</span>
+        <span class="chip">Updated 16 Jul 2026, 10:45 PM AEST</span>
       </div>
     </header>
     <div class="toolbar">
@@ -339,7 +342,7 @@ body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
 </ul></div>
 <div class="sec"><div class="sec-label">Examples</div>
 <details class="examples"><summary>Show example (1)</summary><div class="ex-body">
-<div class="ex-block">Subject: Building and Pest Inspection – {Property Address}
+<div class="ex-block"><button class="iconbtn ex-copy" title="Copy this example">Copy</button><div class="ex-text">Subject: Building and Pest Inspection – {Property Address}
 
 Hi {Buyer 1} and {Buyer 2},
 I would like to introduce you to {Inspector Name} from {Inspection Company}, who can assist with the pre-purchase building and pest inspection for your property purchase.
@@ -377,7 +380,7 @@ Office Address: {Sales Agent Office Address}
 Please keep all parties copied into any booking confirmation or inspection-related communication.
 
 Kind regards,
-{Your Name}</div>
+{Your Name}</div></div>
 </div></details></div>
 </div></article>
 
@@ -591,6 +594,29 @@ Kind regards,
     applyTheme(cur === 'dark' ? 'light' : 'dark');
   }));
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+
+  /* ---- example copy buttons (the ONLY sanctioned copy path) ---- */
+  $$('.ex-copy').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const t = btn.parentElement.querySelector('.ex-text');
+      const text = t ? t.innerText : '';
+      const ok = ()=>{ btn.textContent='Copied ✓'; setTimeout(()=>btn.textContent='Copy',1400); };
+      if (navigator.clipboard && navigator.clipboard.writeText){
+        navigator.clipboard.writeText(text).then(ok).catch(()=>fallbackCopy(text, ok));
+      } else {
+        fallbackCopy(text, ok);
+      }
+    });
+  });
+  function fallbackCopy(text, ok){
+    const ta = document.createElement('textarea');
+    ta.value = text;
+    ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta);
+    ta.select();
+    try{ document.execCommand('copy'); ok(); }catch(e){}
+    document.body.removeChild(ta);
+  }
 
   /* ---- copy deterrent (client-side only; not real protection) ---- */
   if (document.body.classList.contains('nocopy')){
