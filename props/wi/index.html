@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Techbeats · Work Instructions</title>
+<style>
+:root{
+  --bg:#14161b; --panel:#1c1f26; --panel2:#22262f; --line:#2e333e;
+  --gold:#d4af37; --gold-dim:#a8892b; --text:#e9e7e1; --muted:#9aa0ac;
+  --good:#4cc38a; --radius:14px; --sidebar:300px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);
+  font:15px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ---------- layout ---------- */
+.layout{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);flex:0 0 var(--sidebar);background:var(--panel);
+  border-right:1px solid var(--line);position:sticky;top:0;height:100vh;
+  overflow-y:auto;padding:22px 18px;display:flex;flex-direction:column;gap:14px}
+.main{flex:1;min-width:0;padding:34px 42px 90px}
+
+.brand{display:flex;align-items:center;gap:10px}
+.brand .mark{width:36px;height:36px;border-radius:9px;
+  background:linear-gradient(135deg,var(--gold),#8a6d1f);
+  display:flex;align-items:center;justify-content:center;
+  font-weight:800;color:#14161b;font-size:17px;letter-spacing:.5px}
+.brand .t1{font-weight:700;font-size:15px}
+.brand .t2{font-size:11.5px;color:var(--muted);letter-spacing:.6px;text-transform:uppercase}
+
+.search{position:relative}
+.search input{width:100%;padding:10px 12px 10px 36px;border-radius:10px;
+  border:1px solid var(--line);background:var(--panel2);color:var(--text);
+  font-size:14px;outline:none}
+.search input:focus{border-color:var(--gold-dim)}
+.search .ico{position:absolute;left:11px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:14px}
+
+.navlist{display:flex;flex-direction:column;gap:2px;margin-top:2px}
+.navlist a{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:9px;
+  color:var(--text);font-size:13.5px}
+.navlist a:hover{background:var(--panel2);text-decoration:none}
+.navlist a.active{background:var(--panel2);color:var(--gold);font-weight:600}
+.navlist .num{color:var(--muted);font-size:11.5px;min-width:20px}
+.navlist a .prog{margin-left:auto;font-size:11px;color:var(--muted)}
+.navlist a .prog.done{color:var(--good)}
+
+.side-foot{margin-top:auto;font-size:11.5px;color:var(--muted);
+  border-top:1px solid var(--line);padding-top:12px}
+
+/* ---------- header ---------- */
+.pagehead h1{margin:0 0 4px;font-size:26px;letter-spacing:.2px}
+.pagehead .sub{color:var(--muted);font-size:14px}
+.pagehead .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:10px;font-size:12.5px;color:var(--muted)}
+.pagehead .meta .chip{background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:4px 12px}
+.toolbar{margin:18px 0 6px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{background:var(--panel);border:1px solid var(--line);color:var(--text);
+  padding:8px 14px;border-radius:10px;font-size:13px;cursor:pointer}
+.btn:hover{border-color:var(--gold-dim);color:var(--gold)}
+.btn.gold{background:linear-gradient(135deg,var(--gold),#b6932c);color:#14161b;
+  border:none;font-weight:700}
+
+/* ---------- cards ---------- */
+.sop{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);
+  padding:26px 28px;margin:26px 0;scroll-margin-top:24px}
+.sop.hidden{display:none}
+.sop-head{display:flex;align-items:flex-start;gap:14px}
+.sop-num{flex:0 0 auto;width:34px;height:34px;border-radius:9px;background:var(--panel2);
+  border:1px solid var(--line);color:var(--gold);font-weight:700;font-size:14px;
+  display:flex;align-items:center;justify-content:center;margin-top:2px}
+.sop-title{margin:0;font-size:19px;flex:1}
+.sop-actions{display:flex;gap:8px}
+.iconbtn{background:none;border:1px solid var(--line);color:var(--muted);
+  border-radius:8px;padding:5px 9px;font-size:12px;cursor:pointer}
+.iconbtn:hover{color:var(--gold);border-color:var(--gold-dim)}
+
+.sec{margin-top:20px}
+.sec > .sec-label{font-size:11.5px;font-weight:700;letter-spacing:1.2px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:10px;
+  display:flex;align-items:center;gap:8px}
+.sec > .sec-label::after{content:"";flex:1;height:1px;background:var(--line)}
+
+ol.steps{margin:0;padding-left:0;list-style:none;counter-reset:step}
+ol.steps li{counter-increment:step;position:relative;padding:7px 0 7px 40px;font-size:14.5px}
+ol.steps li::before{content:counter(step);position:absolute;left:0;top:7px;
+  width:24px;height:24px;border-radius:50%;background:var(--panel2);
+  border:1px solid var(--line);color:var(--muted);font-size:12px;font-weight:600;
+  display:flex;align-items:center;justify-content:center}
+
+/* checklist */
+.progress{height:6px;background:var(--panel2);border-radius:99px;overflow:hidden;margin-bottom:14px}
+.progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--good));
+  transition:width .25s}
+ul.checks{margin:0;padding:0;list-style:none}
+ul.checks li{padding:2px 0}
+ul.checks label{display:flex;gap:11px;align-items:flex-start;cursor:pointer;
+  padding:7px 10px;border-radius:9px;font-size:14.5px}
+ul.checks label:hover{background:var(--panel2)}
+ul.checks input{appearance:none;flex:0 0 auto;width:19px;height:19px;margin-top:2px;
+  border:2px solid var(--gold-dim);border-radius:6px;background:transparent;
+  cursor:pointer;position:relative}
+ul.checks input:checked{background:var(--gold);border-color:var(--gold)}
+ul.checks input:checked::after{content:"✓";position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  color:#14161b;font-size:13px;font-weight:800}
+ul.checks input:checked + span{color:var(--muted);text-decoration:line-through}
+.check-meta{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.check-meta .count{font-size:12.5px;color:var(--muted)}
+.check-meta .count.done{color:var(--good);font-weight:600}
+
+/* examples */
+details.examples{border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
+details.examples summary{cursor:pointer;padding:11px 14px;font-size:13.5px;
+  color:var(--muted);list-style:none;display:flex;align-items:center;gap:8px}
+details.examples summary::before{content:"▸";color:var(--gold);transition:transform .15s}
+details.examples[open] summary::before{transform:rotate(90deg)}
+details.examples .ex-body{padding:4px 16px 14px;border-top:1px solid var(--line)}
+details.examples .ex-block{white-space:pre-wrap;font-size:13.5px;color:var(--text);
+  padding:10px 0}
+details.examples .ex-block + .ex-block{border-top:1px dashed var(--line)}
+
+mark{background:var(--gold);color:#14161b;border-radius:3px;padding:0 2px}
+.noresults{display:none;text-align:center;color:var(--muted);padding:60px 0;font-size:15px}
+.noresults.show{display:block}
+
+/* ---------- mobile ---------- */
+.menu-toggle{display:none}
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:50;transform:translateX(-100%);
+    transition:transform .22s;width:min(84vw,320px);box-shadow:6px 0 30px rgba(0,0,0,.5)}
+  .sidebar.open{transform:translateX(0)}
+  .main{padding:20px 16px 80px}
+  .menu-toggle{display:flex;position:fixed;bottom:18px;right:18px;z-index:60;
+    width:52px;height:52px;border-radius:50%;align-items:center;justify-content:center;
+    background:linear-gradient(135deg,var(--gold),#b6932c);color:#14161b;border:none;
+    font-size:21px;box-shadow:0 6px 20px rgba(0,0,0,.45);cursor:pointer}
+  .sop{padding:20px 16px}
+}
+
+/* ---------- print ---------- */
+@media print{
+  body{background:#fff;color:#111}
+  .sidebar,.toolbar,.menu-toggle,.sop-actions{display:none!important}
+  .main{padding:0}
+  .sop{background:#fff;border:1px solid #bbb;break-inside:avoid;margin:14px 0;color:#111}
+  .sop-title{color:#111}
+  .sec > .sec-label{color:#7a651c}.sec > .sec-label::after{background:#ccc}
+  ol.steps li::before{background:#eee;border-color:#bbb;color:#333}
+  ul.checks input{border-color:#555;background:#fff!important}
+  ul.checks input:checked::after{color:#111}
+  ul.checks input:checked + span{color:#111;text-decoration:none}
+  .progress,.check-meta{display:none}
+  details.examples{background:#fafafa;border-color:#ccc}
+  details.examples .ex-block{color:#222}
+  a{color:#111}
+}
+</style>
+</head>
+<body>
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="mark">TB</div>
+      <div><div class="t1">Techbeats</div><div class="t2">Work Instructions</div></div>
+    </div>
+    <div class="search">
+      <span class="ico">⌕</span>
+      <input id="search" type="search" placeholder="Search SOPs… (Esc to clear)" autocomplete="off">
+    </div>
+    <nav class="navlist">
+      <a href="#building-and-pest-inspection"><span class="num">01</span><span>Building and Pest Inspection</span><span class="prog"></span></a>
+    </nav>
+    <div class="side-foot">
+      1 procedures · Updated 16 Jul 2026, 10:01 PM AEST<br>
+      <a href="https://docs.google.com/spreadsheets/d/1JHFmbGcJud5bukBh9bc-X8yux8ixscbew0k3MNwdNss/edit" target="_blank" rel="noopener">Edit source sheet ↗</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="pagehead">
+      <h1>Work Instructions &amp; SOPs</h1>
+      <div class="sub">Iconic Investing · Techbeats operating procedures</div>
+      <div class="meta">
+        <span class="chip">1 procedures</span>
+        <span class="chip">Updated 16 Jul 2026, 10:01 PM AEST</span>
+        <span class="chip">Checklist progress saved on this device</span>
+      </div>
+    </header>
+    <div class="toolbar">
+      <button class="btn gold" onclick="window.print()">Print / Save PDF</button>
+      <button class="btn" id="reset-all">Reset all checklists</button>
+      <a class="btn" href="https://docs.google.com/spreadsheets/d/1JHFmbGcJud5bukBh9bc-X8yux8ixscbew0k3MNwdNss/edit" target="_blank" rel="noopener">Open source sheet</a>
+    </div>
+
+    <article class="sop" id="building-and-pest-inspection">
+<div class="sop-head">
+<div class="sop-num">1</div>
+<h2 class="sop-title">Building and Pest Inspection</h2>
+<div class="sop-actions">
+<button class="iconbtn copylink" data-slug="building-and-pest-inspection" title="Copy link to this SOP">Link</button>
+<button class="iconbtn reset-checks" title="Untick all items in this checklist">Reset</button>
+</div></div>
+<div class="sec"><div class="sec-label">What to do</div>
+<ol class="steps">
+<li>Confirm whether the buyer will arrange the building and pest inspection.</li>
+<li>If the buyer wants us to arrange it:</li>
+<li>Confirm the inspection clause expiry date in the contract.</li>
+<li>Ask the sales agent whether they have a recommended local inspector who can complete the inspection before the deadline.</li>
+<li>Search for qualified local building and pest inspectors.</li>
+<li>Confirm the inspector’s availability, pricing and expected report delivery time.</li>
+<li>Verify that the inspector holds the required licence, accreditation and insurance.</li>
+<li>Provide the inspector’s details and quotation to the buyer.</li>
+<li>Obtain the buyer’s approval before confirming the inspection.</li>
+<li>Introduce the buyer, inspector and sales agent by email.</li>
+<li>Confirm that the inspection has been booked within the contract deadline.</li>
+<li>Follow up until the building and pest reports are received.</li>
+<li>Save the reports and notify the responsible team member of any major defects or concerns.</li>
+</ol></div>
+<div class="sec"><div class="sec-label">Checklist</div>
+<div class="check-meta"><span class="count">0 / 0 complete</span></div>
+<div class="progress"><div class="bar"></div></div>
+<ul class="checks">
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:3bc10d14e8a7"><span>Checked whether the buyer is arranging the inspection.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:3108cbaa5534"><span>Confirmed the building and pest clause expiry date.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:2a2b93833a31"><span>Asked the sales agent for a recommended inspector.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:366ad5368c8e"><span>Contacted qualified local inspectors.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:427e9ad1d96f"><span>Confirmed the inspector’s availability.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:0188d97f0120"><span>Confirmed the inspection fee.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:ccec6c052458"><span>Confirmed the expected report delivery date.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:324a8c088eca"><span>Verified the inspector’s licence or accreditation.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:6b9b89979d6b"><span>Verified that both building and pest inspections are included.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:558bf01f5c05"><span>Obtained the buyer’s approval.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:1f6858c343db"><span>Introduced the buyer, inspector and sales agent.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:e17da6be7a70"><span>Confirmed the inspection booking.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:bf81a684362f"><span>Received and saved the building report.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:633b2b7f4a95"><span>Received and saved the pest report.</span></label></li>
+<li><label><input type="checkbox" data-k="building-and-pest-inspection:f688747b1cd3"><span>Escalated any major defects or safety concerns.</span></label></li>
+</ul></div>
+<div class="sec"><div class="sec-label">Examples</div>
+<details class="examples"><summary>Show example (1)</summary><div class="ex-body">
+<div class="ex-block">Subject: Building and Pest Inspection – {Property Address}
+
+Hi {Buyer 1} and {Buyer 2},
+I would like to introduce you to {Inspector Name} from {Inspection Company}, who can assist with the pre-purchase building and pest inspection for your property purchase.
+{Inspector Name} has confirmed that the inspection can be completed within {Number of Days} days after receiving your confirmation.
+Please contact the inspector directly to confirm the inspection, payment and a suitable appointment time.
+
+Property to Be Inspected
+Address: {Property Address}
+
+Building and Pest Inspector
+Name: {Inspector Name}
+Company: {Inspection Company}
+Phone: {Phone Number}
+Email: {Email Address}
+
+Buyer Details
+Buyer 1:
+Name: {Buyer 1 Name}
+Email: {Buyer 1 Email}
+Mobile: {Buyer 1 Phone}
+Postal Address: {Buyer 1 Postal Address}
+
+Buyer 2:
+Name: {Buyer 2 Name}
+Email: {Buyer 2 Email}
+Mobile: {Buyer 2 Phone}
+Postal Address: {Buyer 2 Postal Address}
+
+Sales Agent
+Name: {Sales Agent Name}
+Email: {Sales Agent Email}
+Phone: {Sales Agent Phone}
+Office Address: {Sales Agent Office Address}
+
+Please keep all parties copied into any booking confirmation or inspection-related communication.
+
+Kind regards,
+{Your Name}</div>
+</div></details></div>
+</article>
+
+    <div class="noresults">No procedures match your search.</div>
+  </main>
+</div>
+
+<button id="menu-toggle" class="menu-toggle" aria-label="Menu">☰</button>
+<script>
+(function(){
+  const $ = (s,el)=> (el||document).querySelector(s);
+  const $$ = (s,el)=> Array.from((el||document).querySelectorAll(s));
+
+  /* ---- checklist persistence ---- */
+  const LS_PREFIX = "twi:";
+  function key(cb){ return LS_PREFIX + cb.dataset.k; }
+  $$('ul.checks input[type=checkbox]').forEach(cb=>{
+    try { cb.checked = localStorage.getItem(key(cb)) === "1"; } catch(e){}
+    cb.addEventListener('change', ()=>{
+      try {
+        if (cb.checked) localStorage.setItem(key(cb),"1");
+        else localStorage.removeItem(key(cb));
+      } catch(e){}
+      updateCard(cb.closest('.sop'));
+    });
+  });
+
+  function updateCard(card){
+    if(!card) return;
+    const boxes = $$('ul.checks input', card);
+    if(!boxes.length) return;
+    const done = boxes.filter(b=>b.checked).length;
+    const bar = $('.progress .bar', card);
+    if (bar) bar.style.width = (100*done/boxes.length) + "%";
+    const cnt = $('.check-meta .count', card);
+    if (cnt){
+      cnt.textContent = done + " / " + boxes.length + " complete";
+      cnt.classList.toggle('done', done===boxes.length);
+    }
+    const nav = $('.navlist a[href="#'+card.id+'"] .prog');
+    if (nav){
+      nav.textContent = done + "/" + boxes.length;
+      nav.classList.toggle('done', done===boxes.length);
+    }
+  }
+  $$('.sop').forEach(updateCard);
+
+  /* reset buttons */
+  $$('.reset-checks').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const card = btn.closest('.sop');
+      $$('ul.checks input', card).forEach(cb=>{
+        cb.checked=false;
+        try{ localStorage.removeItem(key(cb)); }catch(e){}
+      });
+      updateCard(card);
+    });
+  });
+  const rall = $('#reset-all');
+  if (rall) rall.addEventListener('click', ()=>{
+    if(!confirm("Reset ALL checklists?")) return;
+    $$('ul.checks input').forEach(cb=>{
+      cb.checked=false;
+      try{ localStorage.removeItem(key(cb)); }catch(e){}
+    });
+    $$('.sop').forEach(updateCard);
+  });
+
+  /* ---- copy link ---- */
+  $$('.copylink').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const url = location.origin + location.pathname + "#" + btn.dataset.slug;
+      (navigator.clipboard ? navigator.clipboard.writeText(url) : Promise.reject())
+        .then(()=>{ btn.textContent="Copied ✓"; setTimeout(()=>btn.textContent="Link",1400); })
+        .catch(()=>{ prompt("Copy link:", url); });
+    });
+  });
+
+  /* ---- search ---- */
+  const input = $('#search');
+  const cards = $$('.sop');
+  const navLinks = $$('.navlist a');
+  const noRes = $('.noresults');
+
+  function unmark(el){
+    $$('mark', el).forEach(m=>{
+      m.replaceWith(document.createTextNode(m.textContent));
+    });
+    el.normalize && el.normalize();
+  }
+  function markText(el, q){
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode(n){
+        if (!n.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+        if (n.parentElement.closest('script,style')) return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }});
+    const nodes=[]; let n;
+    while(n=walker.nextNode()) nodes.push(n);
+    const re = new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'),'gi');
+    nodes.forEach(node=>{
+      const t = node.nodeValue;
+      if (!re.test(t)) return;
+      re.lastIndex = 0;
+      const frag = document.createDocumentFragment();
+      let last=0, m;
+      while((m=re.exec(t))){
+        frag.appendChild(document.createTextNode(t.slice(last,m.index)));
+        const mk=document.createElement('mark'); mk.textContent=m[0];
+        frag.appendChild(mk); last = m.index+m[0].length;
+      }
+      frag.appendChild(document.createTextNode(t.slice(last)));
+      node.replaceWith(frag);
+    });
+  }
+
+  function doSearch(){
+    const q = (input.value||"").trim().toLowerCase();
+    let shown = 0;
+    cards.forEach(card=>{
+      unmark(card);
+      const hit = !q || card.textContent.toLowerCase().includes(q);
+      card.classList.toggle('hidden', !hit);
+      if (hit){ shown++; if(q && q.length>=2) markText(card,q); }
+      const nav = document.querySelector('.navlist a[href="#'+card.id+'"]');
+      if (nav) nav.style.display = hit ? "" : "none";
+    });
+    if (noRes) noRes.classList.toggle('show', shown===0);
+  }
+  if (input){
+    let t; input.addEventListener('input', ()=>{ clearTimeout(t); t=setTimeout(doSearch,120); });
+    input.addEventListener('keydown', e=>{ if(e.key==='Escape'){ input.value=''; doSearch(); }});
+  }
+
+  /* ---- active nav on scroll ---- */
+  const obs = new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(!en.isIntersecting) return;
+      navLinks.forEach(a=>a.classList.toggle('active', a.getAttribute('href')==="#"+en.target.id));
+    });
+  }, {rootMargin:"-15% 0px -70% 0px"});
+  cards.forEach(c=>obs.observe(c));
+
+  /* ---- mobile drawer ---- */
+  const toggle = $('#menu-toggle'), sidebar = $('.sidebar');
+  if (toggle && sidebar){
+    toggle.addEventListener('click', ()=> sidebar.classList.toggle('open'));
+    $$('.navlist a').forEach(a=>a.addEventListener('click',()=>sidebar.classList.remove('open')));
+  }
+
+  /* ---- expand all examples when printing ---- */
+  window.addEventListener('beforeprint', ()=> $$('details.examples').forEach(d=>d.open=true));
+})();
+</script>
+</body>
+</html>
