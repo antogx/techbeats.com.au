@@ -212,6 +212,11 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
   ul.checks label{font-size:13px;padding:7px 6px}
 }
 
+/* ---------- copy deterrent ---------- */
+body.nocopy{-webkit-user-select:none;-moz-user-select:none;user-select:none}
+body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text}
+body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
+
 /* ---------- print (always light, all expanded) ---------- */
 @media print{
   body{background:#fff;color:#111}
@@ -235,7 +240,7 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
 }
 </style>
 </head>
-<body>
+<body class="nocopy">
 
 <header class="topbar">
   <button id="menu-toggle" class="tb-btn" aria-label="Menu">☰</button>
@@ -261,7 +266,7 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
       <a href="#building-and-pest-inspection"><span class="num">01</span><span>Building and Pest Inspection</span><span class="prog"></span></a>
     </nav>
     <div class="side-foot">
-      1 procedures · Updated 16 Jul 2026, 10:28 PM AEST<br>
+      1 procedures · Updated 16 Jul 2026, 10:40 PM AEST<br>
       <a href="https://docs.google.com/spreadsheets/d/1JHFmbGcJud5bukBh9bc-X8yux8ixscbew0k3MNwdNss/edit" target="_blank" rel="noopener">Edit source sheet ↗</a>
     </div>
   </aside>
@@ -272,7 +277,7 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
       <div class="sub">Iconic Investing · Techbeats operating procedures</div>
       <div class="meta">
         <span class="chip">1 procedures</span>
-        <span class="chip">Updated 16 Jul 2026, 10:28 PM AEST</span>
+        <span class="chip">Updated 16 Jul 2026, 10:40 PM AEST</span>
       </div>
     </header>
     <div class="toolbar">
@@ -586,6 +591,20 @@ Kind regards,
     applyTheme(cur === 'dark' ? 'light' : 'dark');
   }));
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+
+  /* ---- copy deterrent (client-side only; not real protection) ---- */
+  if (document.body.classList.contains('nocopy')){
+    const inField = e => e.target.closest('input,textarea');
+    ['copy','cut','dragstart'].forEach(ev=>
+      document.addEventListener(ev, e=>{ if(!inField(e)) e.preventDefault(); }));
+    document.addEventListener('contextmenu', e=>{ if(!inField(e)) e.preventDefault(); });
+    document.addEventListener('selectstart', e=>{ if(!inField(e)) e.preventDefault(); });
+    document.addEventListener('keydown', e=>{
+      const k = (e.key||'').toLowerCase();
+      if ((e.ctrlKey||e.metaKey) && ['c','x','a','u','s'].includes(k) && !inField(e))
+        e.preventDefault();
+    });
+  }
 
   /* ---- expand all cards & examples when printing ---- */
   window.addEventListener('beforeprint', ()=>{
