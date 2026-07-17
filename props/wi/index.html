@@ -6,14 +6,19 @@
 <meta name="robots" content="noindex,nofollow">
 <script>(function(){var t;try{t=localStorage.getItem('twi:theme');}catch(e){}
 if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}
-document.documentElement.setAttribute('data-theme',t);})();</script>
-<title>Techbeats · Work Instructions</title>
+document.documentElement.setAttribute('data-theme',t);
+var v;try{v=localStorage.getItem('twi:view');}catch(e){}
+if(location.hash==='#tracker')v='tracker';
+if(v==='tracker')document.documentElement.className+=' pre-tracker';})();</script>
+<style>html.pre-tracker body{visibility:hidden}</style>
+<title>Work Instructions &amp; Tracker</title>
 <style>
 :root{
   --bg:#faf8f3;
   --panel:#ffffff; --panel2:#f4f0e6; --card:#ffffff; --line:#e8e2d4;
   --gold:#a8802a; --gold-bright:#d4af37; --gold-soft:#f6efdc;
-  --text:#28251d; --muted:#837c6d; --good:#178a56;
+  --text:#28251d; --muted:#837c6d; --good:#178a56; --good-soft:#e3f3ea;
+  --warn:#b3630b; --warn-soft:#fdeeda; --bad:#b02a2a; --bad-soft:#f8dede;
   --shadow:0 1px 2px rgba(60,48,16,.06),0 8px 22px rgba(60,48,16,.07);
   --shadow-sm:0 1px 3px rgba(60,48,16,.08);
   --radius:13px; --sidebar:272px;
@@ -23,7 +28,8 @@ html[data-theme="dark"]{
   --bg:#14161b;
   --panel:#1c1f26; --panel2:#242832; --card:#1c1f26; --line:#2e333e;
   --gold:#d4af37; --gold-bright:#e6c453; --gold-soft:#2b2716;
-  --text:#e9e7e1; --muted:#9aa0ac; --good:#4cc38a;
+  --text:#e9e7e1; --muted:#9aa0ac; --good:#4cc38a; --good-soft:#173225;
+  --warn:#e8a04c; --warn-soft:#332715; --bad:#e07a7a; --bad-soft:#3a1d1d;
   --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 22px rgba(0,0,0,.35);
   --shadow-sm:0 1px 3px rgba(0,0,0,.4);
 }
@@ -39,7 +45,7 @@ body{margin:0;color:var(--text);
   transition:background .25s,color .25s}
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
-h1,h2,.brand .t1{font-family:Georgia,"Palatino Linotype",Palatino,serif}
+h1,h2{font-family:Georgia,"Palatino Linotype",Palatino,serif}
 
 /* ---------- layout ---------- */
 .layout{display:flex;min-height:100vh}
@@ -47,17 +53,20 @@ h1,h2,.brand .t1{font-family:Georgia,"Palatino Linotype",Palatino,serif}
   border-right:1px solid var(--line);position:sticky;top:0;height:100vh;
   overflow-y:auto;padding:16px 14px;display:flex;flex-direction:column;gap:12px;
   box-shadow:var(--shadow-sm)}
-.main{flex:1;min-width:0;padding:24px 32px 70px;max-width:1000px}
+.main{flex:1;min-width:0;padding:24px 32px 70px;max-width:1060px}
 
-.brand{display:flex;align-items:center;gap:9px}
-.brand .mark{width:34px;height:34px;border-radius:9px;
-  background:linear-gradient(135deg,var(--gold-bright),#8a6d1f);
-  display:flex;align-items:center;justify-content:center;
-  font-weight:800;color:#1d1a12;font-size:15px;letter-spacing:.5px;
-  box-shadow:var(--shadow-sm)}
-.brand .t1{font-weight:700;font-size:15px;line-height:1.15}
-.brand .t2{font-size:10.5px;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
-.brand .theme-toggle{margin-left:auto}
+.side-title{font-family:Georgia,serif;font-size:16px;font-weight:700;
+  padding:2px 4px;display:flex;align-items:center;gap:8px}
+.side-title .theme-toggle{margin-left:auto}
+
+/* view switch */
+.viewswitch{display:flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;
+  background:var(--panel2)}
+.viewbtn{flex:1;border:none;background:transparent;color:var(--muted);
+  padding:8px 6px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s}
+.viewbtn.active{background:linear-gradient(135deg,var(--gold-bright),var(--gold));
+  color:#1d1a12}
+.viewbtn:not(.active):hover{color:var(--gold)}
 
 .search{position:relative}
 .search input{width:100%;padding:8px 11px 8px 33px;border-radius:10px;
@@ -77,6 +86,10 @@ h1,h2,.brand .t1{font-family:Georgia,"Palatino Linotype",Palatino,serif}
 .navlist a .prog{margin-left:auto;font-size:10.5px;color:var(--muted);
   background:var(--panel2);border-radius:99px;padding:1px 6px;white-space:nowrap}
 .navlist a .prog.done{color:#fff;background:var(--good)}
+body.view-tracker .navlist,body.view-tracker #wi-tools{display:none}
+body:not(.view-tracker) .tracker-side{display:none}
+.tracker-side{font-size:12px;color:var(--muted);line-height:1.7;padding:0 4px}
+.tracker-side b{color:var(--text)}
 
 .side-foot{margin-top:auto;font-size:11px;color:var(--muted);
   border-top:1px solid var(--line);padding-top:10px;line-height:1.6}
@@ -84,7 +97,12 @@ h1,h2,.brand .t1{font-family:Georgia,"Palatino Linotype",Palatino,serif}
 /* ---------- mobile top bar ---------- */
 .topbar{display:none}
 
-/* ---------- header ---------- */
+/* ---------- view containers ---------- */
+#view-wi,#view-tracker{display:none}
+body:not(.view-tracker) #view-wi{display:block}
+body.view-tracker #view-tracker{display:block}
+
+/* ---------- page head ---------- */
 .pagehead h1{margin:0;font-size:23px;letter-spacing:.2px}
 .pagehead h1::after{content:"";display:block;width:60px;height:3px;border-radius:99px;
   margin-top:8px;background:linear-gradient(90deg,var(--gold-bright),var(--gold))}
@@ -92,16 +110,14 @@ h1,h2,.brand .t1{font-family:Georgia,"Palatino Linotype",Palatino,serif}
 .pagehead .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--muted)}
 .pagehead .meta .chip{background:var(--panel);border:1px solid var(--line);
   border-radius:999px;padding:3px 10px;box-shadow:var(--shadow-sm)}
+.pagehead .meta .chip.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent;font-weight:700}
 .toolbar{margin:14px 0 2px;display:flex;gap:8px;flex-wrap:wrap}
 .btn{background:var(--panel);border:1px solid var(--line);color:var(--text);
   padding:7px 12px;border-radius:10px;font-size:12.5px;cursor:pointer;
   box-shadow:var(--shadow-sm);transition:all .15s}
 .btn:hover{border-color:var(--gold);color:var(--gold)}
-.btn.gold{background:linear-gradient(135deg,var(--gold-bright),var(--gold));color:#1d1a12;
-  border:none;font-weight:700}
-.btn.gold:hover{filter:brightness(1.06);color:#1d1a12}
 
-/* ---------- accordion cards ---------- */
+/* ---------- SOP accordion cards ---------- */
 .sop{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
   margin:12px 0;scroll-margin-top:64px;box-shadow:var(--shadow);
   border-left:3px solid var(--gold-bright);overflow:hidden}
@@ -145,7 +161,6 @@ ol.steps li::before{content:counter(step);position:absolute;left:0;top:5px;
 ol.steps li:not(:last-child)::after{content:"";position:absolute;left:11px;top:29px;bottom:-3px;
   width:1px;background:var(--line)}
 
-/* checklist */
 .progress{height:6px;background:var(--panel2);border-radius:99px;overflow:hidden;margin-bottom:10px}
 .progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold-bright),var(--good));
   transition:width .3s}
@@ -166,7 +181,6 @@ ul.checks input:checked + span{color:var(--muted);text-decoration:line-through}
 .check-meta .count{font-size:11.5px;color:var(--muted)}
 .check-meta .count.done{color:var(--good);font-weight:700}
 
-/* examples */
 details.examples{border:1px solid var(--line);border-radius:10px;background:var(--panel2)}
 details.examples summary{cursor:pointer;padding:9px 13px;font-size:12.5px;
   color:var(--muted);list-style:none;display:flex;align-items:center;gap:8px}
@@ -192,6 +206,63 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
 .noresults{display:none;text-align:center;color:var(--muted);padding:50px 0;font-size:14px}
 .noresults.show{display:block}
 
+/* ---------- Tracker board ---------- */
+.boardwrap{margin-top:16px;background:var(--card);border:1px solid var(--line);
+  border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto}
+table.board{width:100%;border-collapse:collapse;min-width:760px;font-size:13px}
+.board th{position:sticky;top:0;background:var(--panel2);z-index:2;
+  font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
+  padding:10px 10px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+.board th:first-child{text-align:left;padding-left:16px}
+.board td{padding:10px;border-bottom:1px solid var(--line);text-align:center;
+  vertical-align:middle}
+.board tr:last-child td{border-bottom:none}
+.trow{cursor:pointer;transition:background .12s}
+.trow:hover{background:var(--gold-soft)}
+.trow.hidden,.trow-detail.hidden{display:none}
+.tcell-client{text-align:left!important;padding-left:16px!important;min-width:200px}
+.tname{font-weight:700;font-size:13.5px;line-height:1.3}
+.tprop{font-size:11.5px;color:var(--muted);margin-top:1px}
+.mcell{min-width:76px}
+.mdot{display:inline-flex;align-items:center;justify-content:center;
+  width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:800;
+  border:2px solid var(--line);background:var(--panel2);color:var(--muted)}
+.mdot.done{background:var(--good);border-color:var(--good);color:#fff}
+.mdate{display:block;font-size:10.5px;color:var(--muted);margin-top:3px;white-space:nowrap}
+.mdot.hasnote{position:relative}
+.mdot.hasnote::after{content:"";position:absolute;top:-2px;right:-2px;width:8px;height:8px;
+  border-radius:50%;background:var(--warn);border:1.5px solid var(--card)}
+.tsettle{min-width:118px}
+.sdate{font-weight:700;white-space:nowrap}
+.scount{display:block;font-size:10.5px;margin-top:3px;border-radius:99px;padding:2px 8px;
+  background:var(--good-soft);color:var(--good);font-weight:700;white-space:nowrap}
+.scount.soon{background:var(--warn-soft);color:var(--warn)}
+.scount.over{background:var(--bad-soft);color:var(--bad)}
+.tbar{width:52px;height:6px;border-radius:99px;background:var(--panel2);
+  overflow:hidden;display:inline-block;vertical-align:middle}
+.tbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-bright),var(--good))}
+.tpct{font-size:10.5px;color:var(--muted);display:block;margin-top:3px}
+.texp{color:var(--muted);font-size:11px;transition:transform .18s;display:inline-block}
+.trow.open .texp{transform:rotate(180deg);color:var(--gold)}
+
+.trow-detail>td{background:var(--panel2);text-align:left;padding:14px 16px}
+.dgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:8px 18px}
+.ditem{font-size:12.5px}
+.ditem .dl{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  color:var(--gold);display:block}
+.ditem .dv{color:var(--text)}
+.ditem .dv.empty{color:var(--muted);font-style:italic}
+.dnote{grid-column:1/-1;background:var(--card);border-left:3px solid var(--gold-bright);
+  border-radius:0 9px 9px 0;padding:9px 12px;font-size:12.5px;white-space:pre-wrap}
+.dnote .dl{font-size:10px;font-weight:800;letter-spacing:1px;text-transform:uppercase;
+  color:var(--gold);display:block;margin-bottom:3px}
+
+.legend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .mdot{width:16px;height:16px;font-size:9px}
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:44px 20px;text-align:center;color:var(--muted);margin-top:20px}
+
 /* ---------- mobile ---------- */
 @media (max-width:900px){
   .layout{flex-direction:column}
@@ -202,6 +273,9 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
     border:1px solid var(--line);background:var(--panel2);color:var(--text);
     font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
   .topbar .search{flex:1}
+  .topbar .viewbtn-mini{flex:0 0 auto;height:38px;border-radius:10px;padding:0 12px;
+    border:1px solid var(--line);background:var(--panel2);color:var(--text);
+    font-size:12px;font-weight:700;cursor:pointer}
   .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:50;transform:translateX(-100%);
     transition:transform .22s;width:min(82vw,300px);height:100vh;
     box-shadow:6px 0 30px rgba(0,0,0,.25)}
@@ -211,44 +285,19 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
   .main{padding:12px 10px 60px}
   .pagehead h1{font-size:19px}
   .pagehead .sub{display:none}
-  .pagehead .meta{margin-top:8px}
   .toolbar{gap:6px}
   .btn{padding:6px 10px;font-size:12px}
   .sop{margin:9px 0;scroll-margin-top:60px}
   .sop-head{padding:11px 12px;gap:9px}
   .sop-body{padding:0 13px 14px 13px}
   .sop-title{font-size:14.5px}
-  ol.steps li{font-size:13px}
-  ul.checks label{font-size:13px;padding:7px 6px}
+  table.board{min-width:640px;font-size:12.5px}
+  .tcell-client{min-width:160px}
 }
 
 /* ---------- copy deterrent ---------- */
 body.nocopy{-webkit-user-select:none;-moz-user-select:none;user-select:none}
 body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select:text;user-select:text}
-body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
-
-/* ---------- print (always light, all expanded) ---------- */
-@media print{
-  body{background:#fff;color:#111}
-  .sidebar,.topbar,.toolbar,.menu,.sop-actions,.chev,.scrim{display:none!important}
-  .main{padding:0;max-width:none}
-  .sop{background:#fff;border:1px solid #bbb;border-left:3px solid #a8802a;
-    break-inside:avoid;margin:12px 0;color:#111;box-shadow:none}
-  .sop-body{display:block!important;padding:0 14px 14px}
-  .sop-head{cursor:default}
-  .sop-sub{display:none!important}
-  .sop-title{color:#111}
-  .sec > .sec-label{color:#7a651c}.sec > .sec-label::after{background:#ccc}
-  ol.steps li::before{background:#f3ecd9;border-color:#bbb;color:#7a651c}
-  ul.checks input{border-color:#555;background:#fff!important}
-  ul.checks input:checked::after{color:#111}
-  ul.checks input:checked + span{color:#111;text-decoration:none}
-  .progress,.check-meta{display:none}
-  details.examples{background:#fafafa;border-color:#ccc}
-  .ex-copy{display:none!important}
-  details.examples .ex-block{color:#222}
-  a{color:#111}
-}
 </style>
 </head>
 <body class="nocopy">
@@ -256,7 +305,8 @@ body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
 <header class="topbar">
   <button id="menu-toggle" class="tb-btn" aria-label="Menu">☰</button>
   <div class="search"><span class="ico">⌕</span>
-    <input class="searchbox" type="search" placeholder="Search SOPs…" autocomplete="off"></div>
+    <input class="searchbox" type="search" placeholder="Search…" autocomplete="off"></div>
+  <button class="viewbtn-mini" id="view-mini">Tracker</button>
   <button class="tb-btn theme-toggle" data-mini="1">☾</button>
 </header>
 <div class="scrim"></div>
@@ -264,38 +314,40 @@ body.nocopy img{-webkit-user-drag:none;pointer-events:auto}
 <div class="layout">
 
   <aside class="sidebar">
-    <div class="brand">
-      <div class="mark">TB</div>
-      <div><div class="t1">Techbeats</div><div class="t2">Work Instructions</div></div>
+    <div class="side-title">Portal
       <button class="iconbtn theme-toggle">☾ Dark</button>
+    </div>
+    <div class="viewswitch">
+      <button class="viewbtn active" data-view="wi">Work Instructions</button>
+      <button class="viewbtn" data-view="tracker">Tracker</button>
     </div>
     <div class="search">
       <span class="ico">⌕</span>
-      <input class="searchbox" type="search" placeholder="Search SOPs… (Esc to clear)" autocomplete="off">
+      <input class="searchbox" type="search" placeholder="Search… (Esc to clear)" autocomplete="off">
     </div>
     <nav class="navlist">
       <a href="#building-and-pest-inspection"><span class="num">01</span><span>Building and Pest Inspection</span><span class="prog"></span></a>
     </nav>
+    <div class="tracker-side"><b>10</b> clients in settlement<br>Click a row on the board for full details.</div>
     <div class="side-foot">
-      1 procedures · Updated 16 Jul 2026, 11:04 PM AEST<br>
-      <a href="https://docs.google.com/spreadsheets/d/1JHFmbGcJud5bukBh9bc-X8yux8ixscbew0k3MNwdNss/edit" target="_blank" rel="noopener">Edit source sheet ↗</a>
+      1 procedures · 10 in settlement<br>Updated 17 Jul 2026, 11:43 AM AEST
     </div>
   </aside>
 
   <main class="main">
+
+  <section id="view-wi">
     <header class="pagehead">
       <h1>Work Instructions &amp; SOPs</h1>
-      <div class="sub">Iconic Investing · Techbeats operating procedures</div>
+      <div class="sub">Operating procedures</div>
       <div class="meta">
         <span class="chip">1 procedures</span>
-        <span class="chip">Updated 16 Jul 2026, 11:04 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 11:43 AM AEST</span>
       </div>
     </header>
-    <div class="toolbar">
+    <div class="toolbar" id="wi-tools">
       <button class="btn" id="expand-all">Expand all</button>
-      <button class="btn gold" onclick="window.print()">Print / Save PDF</button>
       <button class="btn" id="reset-all">Reset all checklists</button>
-      <a class="btn" href="https://docs.google.com/spreadsheets/d/1JHFmbGcJud5bukBh9bc-X8yux8ixscbew0k3MNwdNss/edit" target="_blank" rel="noopener">Source sheet</a>
     </div>
 
     <article class="sop" id="building-and-pest-inspection">
@@ -393,6 +445,58 @@ Kind regards,
 </div></article>
 
     <div class="noresults">No procedures match your search.</div>
+  </section>
+
+  
+  <section id="view-tracker">
+    <header class="pagehead">
+      <h1>Settlement Tracker</h1>
+      <div class="sub">Clients currently in settlement — click a row for details</div>
+      <div class="meta">
+        <span class="chip">10 clients in settlement</span>
+        <span class="chip warn" id="soon-chip" style="display:none"></span>
+        <span class="chip">Updated 17 Jul 2026, 11:43 AM AEST</span>
+      </div>
+    </header>
+    
+    <div class="boardwrap">
+    <table class="board">
+      <thead><tr><th>Client / Property</th><th>B&amp;P</th><th>Tenancy</th><th>Finance</th><th>Insurance</th><th>Pre-Settle</th>
+        <th>Settlement</th><th>Progress</th><th></th></tr></thead>
+      <tbody>
+      <tr class="trow" data-detail="det-sunny-madan-vareed-siji-varghese-puthussery-2" data-name="sunny madan vareed &amp; siji varghese puthussery 6a ilfracombe way, paynesville vic 3880"><td class="tcell-client"><div class="tname">Sunny Madan Vareed &amp; Siji Varghese Puthussery</div><div class="tprop">6A Ilfracombe Way, Paynesville Vic 3880</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot done hasnote">✓</span><span class="mdate">16-Jul-2026</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span><span class="mdate">23-Jul-2026</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="sdate">13-Aug-2026</span><span class="scount" data-settle="2026-08-13" style="display:none"></span></td><td><span class="tbar"><i style="width:20%"></i></span><span class="tpct">20%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-sunny-madan-vareed-siji-varghese-puthussery-2"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv">16-Jul-2026</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">Yes</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv">23-Jul-2026</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv">13-Aug-2026</span></div><div class="dnote"><span class="dl">B&amp;P Issues &amp; Negotiation</span>Negotiation In pogress</div></div></td></tr>
+<tr class="trow" data-detail="det-binu-manuel-jais-peter" data-name="binu manuel &amp; jais peter 1 rose drive, elliminyt, vic 3250"><td class="tcell-client"><div class="tname">Binu Manuel &amp; Jais Peter</div><div class="tprop">1 Rose Drive, Elliminyt, Vic 3250</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span><span class="mdate">20-Jul-2026</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span><span class="mdate">27-Jul-2026</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="sdate">17-Aug-2026</span><span class="scount" data-settle="2026-08-17" style="display:none"></span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-binu-manuel-jais-peter"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv">20-Jul-2026</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv">27-Jul-2026</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv">17-Aug-2026</span></div></div></td></tr>
+<tr class="trow" data-detail="det-minto-aruvalkudy-kumaran-vadake-kandy-rajisha" data-name="minto aruvalkudy kumaran &amp; vadake kandy
+rajisha 2 canterbury way churchil vic 3842"><td class="tcell-client"><div class="tname">Minto Aruvalkudy Kumaran &amp; Vadake Kandy
+Rajisha</div><div class="tprop">2 Canterbury Way Churchil VIC 3842</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span><span class="mdate">22-Jul-2026</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span><span class="mdate">30-Jul-2026</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="sdate">20-Aug-2026</span><span class="scount" data-settle="2026-08-20" style="display:none"></span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-minto-aruvalkudy-kumaran-vadake-kandy-rajisha"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv">22-Jul-2026</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv">30-Jul-2026</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv">20-Aug-2026</span></div></div></td></tr>
+<tr class="trow" data-detail="det-thankachan-vattaparamban-thomas-shaiji-thankachan" data-name="thankachan vattaparamban thomas &amp; shaiji thankachan 28 clothier crescent, east bairnsdale, vic 3875"><td class="tcell-client"><div class="tname">Thankachan Vattaparamban Thomas &amp; Shaiji Thankachan</div><div class="tprop">28 Clothier Crescent, East Bairnsdale, Vic 3875</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span><span class="mdate">29-Jul-2026</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span><span class="mdate">5-Aug-2026</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="sdate">26-Aug-2026</span><span class="scount" data-settle="2026-08-26" style="display:none"></span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-thankachan-vattaparamban-thomas-shaiji-thankachan"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv">29-Jul-2026</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv">5-Aug-2026</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv">26-Aug-2026</span></div></div></td></tr>
+<tr class="trow" data-detail="det-aldine-frank-anoopa-baby" data-name="aldine frank &amp; anoopa baby 20 george say court benalla, vic 3672"><td class="tcell-client"><div class="tname">Aldine Frank &amp; Anoopa Baby</div><div class="tprop">20 George Say Court Benalla, VIC 3672</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="mdate">TBC</span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-aldine-frank-anoopa-baby"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv empty">—</span></div></div></td></tr>
+<tr class="trow" data-detail="det-jaise-thomas-minimol-jolly" data-name="jaise thomas &amp; minimol jolly 5 mccallum drive, eastwood, vic 3875"><td class="tcell-client"><div class="tname">Jaise Thomas &amp; Minimol Jolly</div><div class="tprop">5 Mccallum Drive, Eastwood, VIC 3875</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="mdate">TBC</span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-jaise-thomas-minimol-jolly"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv empty">—</span></div></div></td></tr>
+<tr class="trow" data-detail="det-josin-kochupurakal-jose" data-name="josin kochupurakal jose"><td class="tcell-client"><div class="tname">Josin Kochupurakal Jose</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span></td><td class="mcell" title="Finance"><span class="mdot">•</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span></td><td class="tsettle"><span class="mdate">TBC</span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-josin-kochupurakal-jose"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv empty">—</span></div></div></td></tr>
+<tr class="trow" data-detail="det-manoj-chirathalattu-thomas-sherine-sunitha-stanley-kavu" data-name="manoj chirathalattu thomas &amp; sherine sunitha stanley kavu 40 hosken street, maryborough, vic 3465"><td class="tcell-client"><div class="tname">Manoj Chirathalattu Thomas &amp; Sherine Sunitha Stanley Kavu</div><div class="tprop">40 Hosken Street, Maryborough, VIC 3465</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="mdate">TBC</span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-manoj-chirathalattu-thomas-sherine-sunitha-stanley-kavu"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv empty">—</span></div></div></td></tr>
+<tr class="trow" data-detail="det-sunny-madan-vareed-siji-varghese-puthussery" data-name="sunny madan vareed &amp; siji varghese puthussery 2 chisholm street, maryborough, vic 3465"><td class="tcell-client"><div class="tname">Sunny Madan Vareed &amp; Siji Varghese Puthussery</div><div class="tprop">2 Chisholm Street, Maryborough, Vic 3465</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span><span class="mdate">Not Started</span></td><td class="mcell" title="Finance"><span class="mdot">•</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span><span class="mdate">No</span></td><td class="tsettle"><span class="mdate">TBC</span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-sunny-madan-vareed-siji-varghese-puthussery"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv">Not Started</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv">No</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv empty">—</span></div></div></td></tr>
+<tr class="trow" data-detail="det-3a52ce78" data-name="unnamed client ."><td class="tcell-client"><div class="tname">Unnamed client</div><div class="tprop">.</div></td><td class="mcell" title="Building &amp; Pest"><span class="mdot">•</span></td><td class="mcell" title="Start Tenancy Process"><span class="mdot">•</span></td><td class="mcell" title="Finance"><span class="mdot">•</span></td><td class="mcell" title="Insurance"><span class="mdot">•</span></td><td class="mcell" title="Pre-Settlement Inspection"><span class="mdot">•</span></td><td class="tsettle"><span class="mdate">TBC</span></td><td><span class="tbar"><i style="width:0%"></i></span><span class="tpct">0%</span></td><td><span class="texp">▾</span></td></tr>
+<tr class="trow-detail hidden" id="det-3a52ce78"><td colspan="9"><div class="dgrid"><div class="ditem"><span class="dl">B&amp;P Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">B&amp;P Completed?</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Start Tenancy Process</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Finance Completed?</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Date</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Insurance Completed?</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Pre-Settlement Inspection</span><span class="dv empty">—</span></div><div class="ditem"><span class="dl">Settlement Date</span><span class="dv empty">—</span></div></div></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="legend">
+      <span><span class="mdot done">✓</span> Completed</span>
+      <span><span class="mdot">•</span> Pending</span>
+      <span><span class="mdot hasnote">•</span> Has B&amp;P notes — click row</span>
+    </div>
+    <div class="noresults">No clients match your search.</div>
+  </section>
+
   </main>
 </div>
 
@@ -401,6 +505,23 @@ Kind regards,
   const $ = (s,el)=> (el||document).querySelector(s);
   const $$ = (s,el)=> Array.from((el||document).querySelectorAll(s));
   const cards = $$('.sop');
+
+  /* ---- view switch (WI <-> Tracker) ---- */
+  function setView(v, push){
+    document.body.classList.toggle('view-tracker', v === 'tracker');
+    $$('.viewbtn[data-view]').forEach(b=>
+      b.classList.toggle('active', b.dataset.view === v));
+    const mini = $('#view-mini');
+    if (mini) mini.textContent = (v === 'tracker') ? 'SOPs' : 'Tracker';
+    try{ localStorage.setItem('twi:view', v); }catch(e){}
+    if (push) history.replaceState(null,'', v === 'tracker' ? '#tracker' : location.pathname);
+    doSearch(($('.searchbox')||{}).value || '');
+  }
+  $$('.viewbtn[data-view]').forEach(b=>
+    b.addEventListener('click', ()=> setView(b.dataset.view, true)));
+  const mini = $('#view-mini');
+  if (mini) mini.addEventListener('click', ()=>
+    setView(document.body.classList.contains('view-tracker') ? 'wi' : 'tracker', true));
 
   /* ---- accordion ---- */
   function setCollapsed(card, c){
@@ -428,10 +549,9 @@ Kind regards,
   function openFromHash(){
     if (!location.hash) return;
     const c = document.getElementById(location.hash.slice(1));
-    if (c && c.classList.contains('sop')) setCollapsed(c, false);
+    if (c && c.classList.contains('sop')){ setView('wi'); setCollapsed(c, false); }
   }
   window.addEventListener('hashchange', openFromHash);
-  openFromHash();
 
   /* ---- checklist persistence ---- */
   const LS_PREFIX = "twi:";
@@ -497,10 +617,11 @@ Kind regards,
     });
   });
 
-  /* ---- search (all .searchbox inputs kept in sync) ---- */
+  /* ---- search: SOPs in WI view, client rows in Tracker view ---- */
   const inputs = $$('.searchbox');
   const navLinks = $$('.navlist a');
-  const noRes = $('.noresults');
+  const noRes = $$('.noresults');
+  const trows = $$('.trow');
 
   function unmark(el){
     $$('mark', el).forEach(m=>{
@@ -536,7 +657,19 @@ Kind regards,
 
   function doSearch(qRaw){
     const q = (qRaw||"").trim().toLowerCase();
+    const inTracker = document.body.classList.contains('view-tracker');
     let shown = 0;
+    if (inTracker){
+      trows.forEach(r=>{
+        const hit = !q || (r.dataset.name||'').includes(q);
+        r.classList.toggle('hidden', !hit);
+        const det = document.getElementById(r.dataset.detail);
+        if (det && !hit){ det.classList.add('hidden'); r.classList.remove('open'); }
+        if (hit) shown++;
+      });
+      noRes.forEach(el=>el.classList.toggle('show', shown===0 && trows.length>0));
+      return;
+    }
     cards.forEach(card=>{
       unmark(card);
       const hit = !q || card.textContent.toLowerCase().includes(q);
@@ -548,8 +681,9 @@ Kind regards,
       const nav = document.querySelector('.navlist a[href="#'+card.id+'"]');
       if (nav) nav.style.display = hit ? "" : "none";
     });
-    if (noRes) noRes.classList.toggle('show', shown===0);
+    noRes.forEach(el=>el.classList.toggle('show', shown===0));
   }
+  window.doSearch = doSearch;
   let t;
   inputs.forEach(inp=>{
     inp.addEventListener('input', ()=>{
@@ -571,9 +705,44 @@ Kind regards,
   cards.forEach(c=>obs.observe(c));
 
   navLinks.forEach(a=>a.addEventListener('click', ()=>{
+    setView('wi');
     const c = document.getElementById(a.getAttribute('href').slice(1));
     if (c) setCollapsed(c, false);
   }));
+
+  /* ---- tracker: row expand ---- */
+  trows.forEach(r=>{
+    r.addEventListener('click', ()=>{
+      const det = document.getElementById(r.dataset.detail);
+      if (!det) return;
+      det.classList.toggle('hidden');
+      r.classList.toggle('open', !det.classList.contains('hidden'));
+    });
+  });
+
+  /* ---- tracker: settlement countdown ---- */
+  const MS_DAY = 86400000;
+  function midnight(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  let soon = 0;
+  $$('[data-settle]').forEach(el=>{
+    const iso = el.dataset.settle;
+    if (!iso) return;
+    const p = iso.split('-').map(Number);
+    const days = Math.round((new Date(p[0],p[1]-1,p[2]) - midnight(new Date())) / MS_DAY);
+    let txt, cls = '';
+    if (days > 1)      { txt = days + ' days'; if (days <= 7){ cls = 'soon'; soon++; } }
+    else if (days === 1){ txt = 'Tomorrow'; cls = 'soon'; soon++; }
+    else if (days === 0){ txt = 'Today'; cls = 'soon'; soon++; }
+    else               { txt = Math.abs(days) + 'd overdue'; cls = 'over'; }
+    el.textContent = txt;
+    if (cls) el.classList.add(cls);
+    el.style.display = '';
+  });
+  const soonChip = $('#soon-chip');
+  if (soonChip && soon > 0){
+    soonChip.textContent = soon + ' settling within 7 days';
+    soonChip.style.display = '';
+  }
 
   /* ---- mobile drawer ---- */
   const toggle = $('#menu-toggle'), sidebar = $('.sidebar'), scrim = $('.scrim');
@@ -603,7 +772,7 @@ Kind regards,
   }));
   applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
 
-  /* ---- example copy buttons (the ONLY sanctioned copy path) ---- */
+  /* ---- example copy buttons ---- */
   $$('.ex-copy').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const t = btn.parentElement.querySelector('.ex-text');
@@ -626,7 +795,7 @@ Kind regards,
     document.body.removeChild(ta);
   }
 
-  /* ---- copy deterrent (client-side only; not real protection) ---- */
+  /* ---- copy deterrent ---- */
   if (document.body.classList.contains('nocopy')){
     const inField = e => e.target.closest('input,textarea');
     ['copy','cut','dragstart'].forEach(ev=>
@@ -640,11 +809,13 @@ Kind regards,
     });
   }
 
-  /* ---- expand all cards & examples when printing ---- */
-  window.addEventListener('beforeprint', ()=>{
-    cards.forEach(c=>setCollapsed(c,false));
-    $$('details.examples').forEach(d=>d.open=true);
-  });
+  /* ---- initial view ---- */
+  let v = 'wi';
+  try{ v = localStorage.getItem('twi:view') || 'wi'; }catch(e){}
+  if (location.hash === '#tracker') v = 'tracker';
+  else if (location.hash && document.getElementById(location.hash.slice(1))) v = 'wi';
+  setView(v);
+  openFromHash();
 })();
 </script>
 </body>
