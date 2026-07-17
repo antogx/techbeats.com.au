@@ -235,9 +235,9 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
 .boardwrap{margin-top:16px;background:var(--card);border:1px solid var(--line);
   border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto;
   display:inline-block;max-width:100%;vertical-align:top}
-table.board{border-collapse:collapse;font-size:12.5px}
+table.board{border-collapse:collapse;font-size:13.5px}
 .board th{position:sticky;top:0;background:var(--panel2);z-index:2;
-  font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);
+  font-size:11px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);
   padding:9px 5px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
 .board th:first-child{text-align:left;padding-left:12px}
 .board td{padding:8px 5px;border-bottom:1px solid var(--line);text-align:center;
@@ -247,15 +247,15 @@ table.board{border-collapse:collapse;font-size:12.5px}
 .trow:hover{background:var(--gold-soft)}
 .trow.hidden,.trow-detail.hidden{display:none}
 .tcell-client{text-align:left!important;padding-left:12px!important;max-width:300px}
-.tname{font-weight:700;font-size:13px;line-height:1.3;
+.tname{font-weight:700;font-size:14px;line-height:1.3;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.tprop{font-size:11px;color:var(--muted);margin-top:1px;
+.tprop{font-size:12px;color:var(--muted);margin-top:1px;
   overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mdot{display:inline-flex;align-items:center;justify-content:center;
   width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:800;
   border:2px solid var(--line);background:var(--panel2);color:var(--muted)}
 .mdot.done{background:var(--good);border-color:var(--good);color:#fff}
-.mdate{display:block;font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap}
+.mdate{display:block;font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap}
 .mdot.hasnote{position:relative}
 .mdot.hasnote::after{content:"";position:absolute;top:-2px;right:-2px;width:8px;height:8px;
   border-radius:50%;background:var(--warn);border:1.5px solid var(--card)}
@@ -265,7 +265,7 @@ table.board{border-collapse:collapse;font-size:12.5px}
 .mcell.m-warn{background:var(--warn-soft);border-radius:9px}
 .mcell.m-bad .mdot{border-color:var(--bad);color:var(--bad);background:transparent}
 .mcell.m-warn .mdot{border-color:var(--warn);color:var(--warn);background:transparent}
-.mpill{display:inline-block;font-size:9px;font-weight:800;letter-spacing:0;
+.mpill{display:inline-block;font-size:10.5px;font-weight:800;letter-spacing:0;
   line-height:1.5;border-radius:99px;padding:1px 6px;white-space:nowrap}
 .mpill.bad{background:var(--bad);color:#fff}
 .mpill.warn{background:var(--warn);color:#fff}
@@ -275,16 +275,16 @@ table.board{border-collapse:collapse;font-size:12.5px}
 @media (prefers-reduced-motion:reduce){.mpill.bad::before{animation:none}}
 .pagehead .meta .chip.bad{background:var(--bad-soft);color:var(--bad);
   border-color:transparent;font-weight:700}
-.legend .mpill{font-size:9px}
-.sdate{font-weight:700;white-space:nowrap;font-size:12px}
-.scount{display:block;font-size:10px;margin-top:2px;border-radius:99px;padding:1px 7px;
+.legend .mpill{font-size:10px}
+.sdate{font-weight:700;white-space:nowrap;font-size:13px}
+.scount{display:block;font-size:11px;margin-top:2px;border-radius:99px;padding:1px 7px;
   background:var(--good-soft);color:var(--good);font-weight:700;white-space:nowrap}
 .scount.soon{background:var(--warn-soft);color:var(--warn)}
 .scount.over{background:var(--bad-soft);color:var(--bad)}
 .tbar{width:44px;height:6px;border-radius:99px;background:var(--panel2);
   overflow:hidden;display:inline-block;vertical-align:middle}
 .tbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-bright),var(--good))}
-.tpct{font-size:10.5px;color:var(--muted);display:block;margin-top:3px}
+.tpct{font-size:11.5px;color:var(--muted);display:block;margin-top:3px}
 .texp{color:var(--muted);font-size:11px;transition:transform .18s;display:inline-block}
 .trow.open .texp{transform:rotate(180deg);color:var(--gold)}
 
@@ -334,7 +334,7 @@ table.board{border-collapse:collapse;font-size:12.5px}
   .sop-head{padding:11px 12px;gap:9px}
   .sop-body{padding:0 13px 14px 13px}
   .sop-title{font-size:14.5px}
-  table.board{font-size:12px}
+  table.board{font-size:12.5px}
   .tcell-client{max-width:200px}
 }
 
@@ -373,7 +373,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
     </nav>
     <div class="tracker-side"><b>9</b> clients in settlement<br>Click a row on the board for full details.</div>
     <div class="side-foot">
-      5 procedures · 9 in settlement<br>Updated 17 Jul 2026, 05:51 PM AEST
+      5 procedures · 9 in settlement<br>Updated 17 Jul 2026, 05:59 PM AEST
     </div>
   </aside>
 
@@ -385,7 +385,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
       <div class="sub">Operating procedures</div>
       <div class="meta">
         <span class="chip">5 procedures</span>
-        <span class="chip">Updated 17 Jul 2026, 05:51 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 05:59 PM AEST</span>
       </div>
     </header>
     <div class="toolbar" id="wi-tools">
@@ -759,7 +759,7 @@ Kind regards,
         <span class="chip">9 clients in settlement</span>
         <span class="chip bad" id="alert-chip" style="display:none"></span>
         <span class="chip warn" id="soon-chip" style="display:none"></span>
-        <span class="chip">Updated 17 Jul 2026, 05:51 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 05:59 PM AEST</span>
       </div>
     </header>
     
