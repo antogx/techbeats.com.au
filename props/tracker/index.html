@@ -1,0 +1,700 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<script>(function(){var t;try{t=localStorage.getItem('tracker:theme');}catch(e){}
+if(!t){t=(window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches)?'dark':'light';}
+document.documentElement.setAttribute('data-theme',t);})();</script>
+<title>Settlement Tracker</title>
+<style>
+:root{
+  --bg:#faf8f3;
+  --panel:#ffffff; --panel2:#f4f0e6; --card:#ffffff; --line:#e8e2d4;
+  --gold:#a8802a; --gold-bright:#d4af37; --gold-soft:#f6efdc;
+  --text:#28251d; --muted:#837c6d; --good:#178a56; --good-soft:#e3f3ea;
+  --warn:#b3630b; --warn-soft:#fdeeda;
+  --shadow:0 1px 2px rgba(60,48,16,.06),0 8px 22px rgba(60,48,16,.07);
+  --shadow-sm:0 1px 3px rgba(60,48,16,.08);
+  --radius:14px; --sidebar:264px;
+}
+html[data-theme="dark"]{
+  --bg:#14161b;
+  --panel:#1c1f26; --panel2:#242832; --card:#1c1f26; --line:#2e333e;
+  --gold:#d4af37; --gold-bright:#e6c453; --gold-soft:#2b2716;
+  --text:#e9e7e1; --muted:#9aa0ac; --good:#4cc38a; --good-soft:#173225;
+  --warn:#e8a04c; --warn-soft:#332715;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 22px rgba(0,0,0,.35);
+  --shadow-sm:0 1px 3px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;color:var(--text);
+  background:
+    radial-gradient(800px 380px at 85% -60px, rgba(212,175,55,.12), transparent 60%),
+    radial-gradient(620px 380px at -10% 25%, rgba(23,138,86,.05), transparent 60%),
+    var(--bg);
+  background-attachment:fixed;
+  font:14.5px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  transition:background .25s,color .25s}
+a{color:var(--gold);text-decoration:none}
+h1,h2,.client-name{font-family:Georgia,"Palatino Linotype",Palatino,serif}
+
+/* ---------- layout ---------- */
+.layout{display:flex;min-height:100vh}
+.sidebar{width:var(--sidebar);flex:0 0 var(--sidebar);background:var(--panel);
+  border-right:1px solid var(--line);position:sticky;top:0;height:100vh;
+  overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:12px;
+  box-shadow:var(--shadow-sm)}
+.main{flex:1;min-width:0;padding:26px 32px 70px;max-width:940px}
+
+.side-title{font-family:Georgia,serif;font-size:16px;font-weight:700;
+  padding:2px 4px;display:flex;align-items:center;gap:8px}
+.side-title .theme-toggle{margin-left:auto}
+.side-sub{font-size:10.5px;color:var(--muted);letter-spacing:1.2px;
+  text-transform:uppercase;padding:0 4px;margin-top:-8px}
+
+.search{position:relative}
+.search input{width:100%;padding:8px 11px 8px 33px;border-radius:10px;
+  border:1px solid var(--line);background:var(--panel2);color:var(--text);
+  font-size:13.5px;outline:none;transition:border-color .15s,box-shadow .15s}
+.search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
+.search .ico{position:absolute;left:10px;top:50%;transform:translateY(-50%);
+  color:var(--muted);font-size:13px}
+
+.navlist{display:flex;flex-direction:column;gap:2px}
+.navlist a{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:9px;
+  color:var(--text);font-size:13px;line-height:1.35}
+.navlist a:hover{background:var(--panel2);text-decoration:none}
+.navlist a .pct{margin-left:auto;font-size:10.5px;font-weight:700;
+  border-radius:99px;padding:2px 7px;background:var(--panel2);color:var(--muted)}
+.navlist a .pct.full{background:var(--good);color:#fff}
+
+.side-foot{margin-top:auto;font-size:11px;color:var(--muted);
+  border-top:1px solid var(--line);padding-top:10px;line-height:1.6}
+
+.iconbtn{background:var(--panel);border:1px solid var(--line);color:var(--muted);
+  border-radius:8px;padding:4px 9px;font-size:11.5px;cursor:pointer;transition:all .15s}
+.iconbtn:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ---------- mobile top bar ---------- */
+.topbar{display:none}
+
+/* ---------- page head ---------- */
+.pagehead h1{margin:0;font-size:24px;letter-spacing:.2px}
+.pagehead h1::after{content:"";display:block;width:60px;height:3px;border-radius:99px;
+  margin-top:8px;background:linear-gradient(90deg,var(--gold-bright),var(--gold))}
+.pagehead .sub{color:var(--muted);font-size:13px;margin-top:8px}
+.pagehead .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--muted)}
+.pagehead .meta .chip{background:var(--panel);border:1px solid var(--line);
+  border-radius:999px;padding:3px 10px;box-shadow:var(--shadow-sm)}
+
+/* ---------- client card ---------- */
+.client{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+  margin:16px 0;scroll-margin-top:64px;box-shadow:var(--shadow);
+  border-left:3px solid var(--gold-bright);overflow:hidden}
+.client.hidden{display:none}
+.client-head{display:flex;align-items:center;gap:14px;padding:16px 20px 12px;flex-wrap:wrap}
+.client-name{margin:0;font-size:18px;line-height:1.25;flex:1;min-width:180px}
+.badges{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{font-size:11.5px;font-weight:700;border-radius:999px;padding:4px 11px;
+  border:1px solid var(--line);background:var(--panel2);color:var(--muted);white-space:nowrap}
+.badge.settle{background:var(--gold-soft);color:var(--gold);border-color:transparent}
+.badge.count{background:var(--good-soft);color:var(--good);border-color:transparent}
+.badge.count.soon{background:var(--warn-soft);color:var(--warn)}
+.badge.count.over{background:#f8dede;color:#b02a2a}
+html[data-theme="dark"] .badge.count.over{background:#3a1d1d;color:#e07a7a}
+
+.progresswrap{padding:0 20px 4px}
+.progress{height:7px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.progress .bar{height:100%;width:0;border-radius:99px;
+  background:linear-gradient(90deg,var(--gold-bright),var(--good));transition:width .4s}
+.progress-label{font-size:11px;color:var(--muted);margin-top:5px}
+
+/* timeline */
+.timeline{list-style:none;margin:10px 0 0;padding:8px 20px 20px 20px}
+.step{position:relative;padding:0 0 18px 40px}
+.step:last-child{padding-bottom:2px}
+.step::before{content:"";position:absolute;left:13px;top:26px;bottom:-2px;width:2px;
+  background:var(--line)}
+.step:last-child::before{display:none}
+.step.done::before{background:var(--good)}
+.dot{position:absolute;left:0;top:0;width:28px;height:28px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;
+  border:2px solid var(--line);background:var(--panel2);color:var(--muted)}
+.step.done .dot{background:var(--good);border-color:var(--good);color:#fff}
+.step.flag .dot{background:var(--gold-soft);border-color:var(--gold-bright);color:var(--gold)}
+.step-title{font-weight:700;font-size:13.5px;padding-top:4px}
+.step.pending .step-title{color:var(--muted);font-weight:600}
+.step-detail{display:flex;gap:8px;flex-wrap:wrap;margin-top:5px}
+.pill{font-size:11.5px;border-radius:8px;padding:3px 9px;border:1px solid var(--line);
+  background:var(--panel2);color:var(--text)}
+.pill.ok{background:var(--good-soft);color:var(--good);border-color:transparent;font-weight:700}
+.pill.wait{background:var(--warn-soft);color:var(--warn);border-color:transparent;font-weight:700}
+.pill.date{color:var(--muted)}
+.pill.gold{background:var(--gold-soft);color:var(--gold);border-color:transparent;font-weight:700}
+.step-note{margin-top:7px;font-size:12.5px;color:var(--text);background:var(--panel2);
+  border-left:3px solid var(--gold-bright);border-radius:0 9px 9px 0;
+  padding:8px 11px;white-space:pre-wrap}
+.step-note .nlabel{display:block;font-size:10px;font-weight:800;letter-spacing:1px;
+  text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+
+.empty{background:var(--card);border:1px dashed var(--line);border-radius:var(--radius);
+  padding:44px 20px;text-align:center;color:var(--muted);margin-top:20px}
+.noresults{display:none;text-align:center;color:var(--muted);padding:50px 0;font-size:14px}
+.noresults.show{display:block}
+
+/* ---------- mobile ---------- */
+@media (max-width:900px){
+  .layout{flex-direction:column}
+  .topbar{display:flex;position:sticky;top:0;z-index:40;align-items:center;gap:8px;
+    padding:8px 10px;background:var(--panel);border-bottom:1px solid var(--line);
+    box-shadow:var(--shadow-sm)}
+  .topbar .tb-btn{flex:0 0 auto;width:38px;height:38px;border-radius:10px;
+    border:1px solid var(--line);background:var(--panel2);color:var(--text);
+    font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .topbar .search{flex:1}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;z-index:50;transform:translateX(-100%);
+    transition:transform .22s;width:min(82vw,300px);height:100vh;
+    box-shadow:6px 0 30px rgba(0,0,0,.25)}
+  .sidebar.open{transform:translateX(0)}
+  .scrim{display:none;position:fixed;inset:0;z-index:45;background:rgba(0,0,0,.35)}
+  .scrim.show{display:block}
+  .main{padding:12px 10px 60px}
+  .pagehead h1{font-size:20px}
+  .pagehead .sub{display:none}
+  .client-head{padding:13px 14px 10px;gap:10px}
+  .client-name{font-size:16px}
+  .progresswrap{padding:0 14px 4px}
+  .timeline{padding:8px 14px 16px}
+}
+
+/* ---------- copy deterrent ---------- */
+body.nocopy{-webkit-user-select:none;-moz-user-select:none;user-select:none}
+body.nocopy input{-webkit-user-select:text;-moz-user-select:text;user-select:text}
+</style>
+</head>
+<body class="nocopy">
+
+<header class="topbar">
+  <button id="menu-toggle" class="tb-btn" aria-label="Menu">☰</button>
+  <div class="search"><span class="ico">⌕</span>
+    <input class="searchbox" type="search" placeholder="Search clients…" autocomplete="off"></div>
+  <button class="tb-btn theme-toggle" data-mini="1">☾</button>
+</header>
+<div class="scrim"></div>
+
+<div class="layout">
+
+  <aside class="sidebar">
+    <div class="side-title">Settlement Tracker
+      <button class="iconbtn theme-toggle">☾ Dark</button>
+    </div>
+    <div class="side-sub">28 clients in settlement</div>
+    <div class="search">
+      <span class="ico">⌕</span>
+      <input class="searchbox" type="search" placeholder="Search clients… (Esc to clear)" autocomplete="off">
+    </div>
+    <nav class="navlist">
+      <a href="#5-mccallum-drive-eastwood-vic-3875" data-name="5 mccallum drive, eastwood, vic 3875"><span>5 Mccallum Drive, Eastwood, VIC 3875</span><span class="pct">20%</span></a><a href="#40-hosken-street-maryborough-vic-3465" data-name="40 hosken street, maryborough, vic 3465"><span>40 Hosken Street, Maryborough, VIC 3465</span><span class="pct">20%</span></a><a href="#20-george-say-court-benalla-vic-3672" data-name="20 george say court benalla, vic 3672"><span>20 George Say Court Benalla, VIC 3672</span><span class="pct">20%</span></a><a href="#28-clothier-crescent-east-bairnsdale-vic-3875" data-name="28 clothier crescent, east bairnsdale, vic 3875"><span>28 Clothier Crescent, East Bairnsdale, Vic 3875</span><span class="pct">20%</span></a><a href="#2-chisholm-street-maryborough-vic-3465" data-name="2 chisholm street, maryborough, vic 3465"><span>2 Chisholm Street, Maryborough, Vic 3465</span><span class="pct">20%</span></a><a href="#2-canterbury-way-churchil-vic-3842" data-name="2 canterbury way churchil vic 3842"><span>2 Canterbury Way Churchil VIC 3842</span><span class="pct">20%</span></a><a href="#6a-ilfracombe-way-paynesville-vic-3880" data-name="6a ilfracombe way, paynesville vic 3880"><span>6A Ilfracombe Way, Paynesville Vic 3880</span><span class="pct">40%</span></a><a href="#1-rose-drive-elliminyt-vic-3250" data-name="1 rose drive, elliminyt, vic 3250"><span>1 Rose Drive, Elliminyt, Vic 3250</span><span class="pct">20%</span></a><a href="#2-paperbark-court-broadford-vic-3658" data-name="2 paperbark court, broadford, vic 3658"><span>2 Paperbark Court, Broadford, Vic 3658</span><span class="pct">80%</span></a><a href="#74-richardson-street-wingham-nsw-2429" data-name="74 richardson street, wingham, nsw 2429"><span>74 Richardson Street, Wingham, NSW 2429</span><span class="pct">80%</span></a><a href="#171-high-street-seymour-vic-3660" data-name="171 high street, seymour, vic 3660"><span>171 High Street, Seymour, VIC 3660</span><span class="pct">80%</span></a><a href="#236g-edwards-road-loxton-sa-5333" data-name="236g edwards road, loxton sa 5333"><span>236G Edwards Road, Loxton SA 5333</span><span class="pct full">100%</span></a><a href="#11-gaskin-street-benalla-vic" data-name="11 gaskin street, benalla, vic"><span>11 Gaskin Street, Benalla, VIC</span><span class="pct">80%</span></a><a href="#55-nasmyth-street-young-nsw-2594" data-name="55 nasmyth street, young, nsw 2594"><span>55 Nasmyth Street, Young, NSW 2594</span><span class="pct">80%</span></a><a href="#12-camden-street-lucknow-vic-3875" data-name="12 camden street, lucknow, vic 3875"><span>12 Camden Street, Lucknow, VIC 3875</span><span class="pct">80%</span></a><a href="#45-mcnulty-drive-wendouree-vic-3355" data-name="45 mcnulty drive, wendouree, vic 3355"><span>45 Mcnulty Drive, Wendouree, VIC 3355</span><span class="pct">80%</span></a><a href="#72-74-william-street-cobram-vic-3644" data-name="72-74 william street, cobram vic 3644"><span>72-74 William Street, Cobram Vic 3644</span><span class="pct">80%</span></a><a href="#54-lenthall-street-aldershot-qld-4650" data-name="54 lenthall street, aldershot, qld 4650"><span>54 Lenthall Street, Aldershot, Qld 4650</span><span class="pct">80%</span></a><a href="#7-dryden-street-hamilton-vic-3300" data-name="7 dryden street, hamilton, vic 3300"><span>7 Dryden Street, Hamilton, Vic 3300</span><span class="pct">80%</span></a><a href="#118-langford-parade-paynesville-vic-3880" data-name="118 langford parade, paynesville, vic 3880"><span>118 Langford Parade, Paynesville, VIC 3880</span><span class="pct">80%</span></a><a href="#21-stringybark-avenue-wallan-vic-3756" data-name="21 stringybark avenue, wallan, vic 3756"><span>21 Stringybark Avenue, Wallan, VIC 3756</span><span class="pct full">100%</span></a><a href="#14-mills-street-heyfield-vic-3858" data-name="14 mills street, heyfield, vic 3858"><span>14 Mills Street, Heyfield, Vic 3858</span><span class="pct">80%</span></a><a href="#91-gunn-street-devonport-tasmania-7310" data-name="91 gunn street, devonport, tasmania 7310"><span>91 Gunn Street, Devonport, Tasmania 7310</span><span class="pct">80%</span></a><a href="#4-cummings-street-braitling-alice-springs-0870" data-name="4 cummings street, braitling, alice springs, 0870"><span>4 Cummings Street, Braitling, Alice Springs, 0870</span><span class="pct">80%</span></a><a href="#24-coral-street-loxton-sa-5333" data-name="24 coral street, loxton, sa 5333"><span>24 Coral Street, Loxton, SA 5333</span><span class="pct">80%</span></a><a href="#11-heath-drive-winchelsea-vic-3241" data-name="11 heath drive, winchelsea, vic 3241"><span>11 Heath Drive, Winchelsea, Vic 3241</span><span class="pct">80%</span></a><a href="#3a52ce78" data-name="."><span>.</span><span class="pct">0%</span></a><a href="#client" data-name="unnamed client"><span>Unnamed client</span><span class="pct">0%</span></a>
+    </nav>
+    <div class="side-foot">
+      Updated 17 Jul 2026, 10:44 AM AEST
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="pagehead">
+      <h1>Settlement Status</h1>
+      <div class="sub">Live purchase progress for clients currently in settlement</div>
+      <div class="meta">
+        <span class="chip">28 clients</span>
+        <span class="chip">Updated 17 Jul 2026, 10:44 AM AEST</span>
+      </div>
+    </header>
+
+    
+<article class="client" id="5-mccallum-drive-eastwood-vic-3875" data-name="5 mccallum drive, eastwood, vic 3875">
+  <div class="client-head">
+    <h2 class="client-name">5 Mccallum Drive, Eastwood, VIC 3875</h2>
+    <div class="badges"></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill wait">Date TBC</span></div></li>
+  </ul>
+</article>
+<article class="client" id="40-hosken-street-maryborough-vic-3465" data-name="40 hosken street, maryborough, vic 3465">
+  <div class="client-head">
+    <h2 class="client-name">40 Hosken Street, Maryborough, VIC 3465</h2>
+    <div class="badges"></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill wait">Date TBC</span></div></li>
+  </ul>
+</article>
+<article class="client" id="20-george-say-court-benalla-vic-3672" data-name="20 george say court benalla, vic 3672">
+  <div class="client-head">
+    <h2 class="client-name">20 George Say Court Benalla, VIC 3672</h2>
+    <div class="badges"></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill wait">Date TBC</span></div></li>
+  </ul>
+</article>
+<article class="client" id="28-clothier-crescent-east-bairnsdale-vic-3875" data-name="28 clothier crescent, east bairnsdale, vic 3875">
+  <div class="client-head">
+    <h2 class="client-name">28 Clothier Crescent, East Bairnsdale, Vic 3875</h2>
+    <div class="badges"><span class="badge settle">Settlement: 26-Aug-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 29-Jul-2026</span><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 5-Aug-2026</span><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 26-Aug-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="2-chisholm-street-maryborough-vic-3465" data-name="2 chisholm street, maryborough, vic 3465">
+  <div class="client-head">
+    <h2 class="client-name">2 Chisholm Street, Maryborough, Vic 3465</h2>
+    <div class="badges"></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill wait">Date TBC</span></div></li>
+  </ul>
+</article>
+<article class="client" id="2-canterbury-way-churchil-vic-3842" data-name="2 canterbury way churchil vic 3842">
+  <div class="client-head">
+    <h2 class="client-name">2 Canterbury Way Churchil VIC 3842</h2>
+    <div class="badges"><span class="badge settle">Settlement: 20-Aug-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 22-Jul-2026</span><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 30-Jul-2026</span><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 20-Aug-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="6a-ilfracombe-way-paynesville-vic-3880" data-name="6a ilfracombe way, paynesville vic 3880">
+  <div class="client-head">
+    <h2 class="client-name">6A Ilfracombe Way, Paynesville Vic 3880</h2>
+    <div class="badges"><span class="badge settle">Settlement: 13-Aug-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="40"></div></div>
+    <div class="progress-label">2 of 5 milestones complete · 40%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 16-Jul-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Negotiation In pogress</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 23-Jul-2026</span><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 13-Aug-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="1-rose-drive-elliminyt-vic-3250" data-name="1 rose drive, elliminyt, vic 3250">
+  <div class="client-head">
+    <h2 class="client-name">1 Rose Drive, Elliminyt, Vic 3250</h2>
+    <div class="badges"><span class="badge settle">Settlement: 17-Aug-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="20"></div></div>
+    <div class="progress-label">1 of 5 milestones complete · 20%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 20-Jul-2026</span><span class="pill wait">Pending</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Not Started</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 27-Jul-2026</span><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">No</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 17-Aug-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="2-paperbark-court-broadford-vic-3658" data-name="2 paperbark court, broadford, vic 3658">
+  <div class="client-head">
+    <h2 class="client-name">2 Paperbark Court, Broadford, Vic 3658</h2>
+    <div class="badges"><span class="badge settle">Settlement: 10-Jul-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 22-May-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 26-May-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 10-Jul-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="74-richardson-street-wingham-nsw-2429" data-name="74 richardson street, wingham, nsw 2429">
+  <div class="client-head">
+    <h2 class="client-name">74 Richardson Street, Wingham, NSW 2429</h2>
+    <div class="badges"><span class="badge settle">Settlement: 30-Jun-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 25-May-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Negotiation In pogress</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 24-Jun-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 30-Jun-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="171-high-street-seymour-vic-3660" data-name="171 high street, seymour, vic 3660">
+  <div class="client-head">
+    <h2 class="client-name">171 High Street, Seymour, VIC 3660</h2>
+    <div class="badges"><span class="badge settle">Settlement: 1-Jul-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 17-Jun-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Negotiation In pogress</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 17-Jun-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 1-Jul-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="236g-edwards-road-loxton-sa-5333" data-name="236g edwards road, loxton sa 5333">
+  <div class="client-head">
+    <h2 class="client-name">236G Edwards Road, Loxton SA 5333</h2>
+    <div class="badges"><span class="badge settle">Settlement: 16-Jun-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="100"></div></div>
+    <div class="progress-label">5 of 5 milestones complete · 100%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 15-May-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 22-May-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 16-Jun-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="11-gaskin-street-benalla-vic" data-name="11 gaskin street, benalla, vic">
+  <div class="client-head">
+    <h2 class="client-name">11 Gaskin Street, Benalla, VIC</h2>
+    <div class="badges"><span class="badge settle">Settlement: 28-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 12-May-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Vendor fixed issues</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 12-May-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 28-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="55-nasmyth-street-young-nsw-2594" data-name="55 nasmyth street, young, nsw 2594">
+  <div class="client-head">
+    <h2 class="client-name">55 Nasmyth Street, Young, NSW 2594</h2>
+    <div class="badges"><span class="badge settle">Settlement: 21-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 28-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Vendor fixed issues</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">NA</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 1-May-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 21-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="12-camden-street-lucknow-vic-3875" data-name="12 camden street, lucknow, vic 3875">
+  <div class="client-head">
+    <h2 class="client-name">12 Camden Street, Lucknow, VIC 3875</h2>
+    <div class="badges"><span class="badge settle">Settlement: 10-Jun-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 13-May-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 20-May-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 10-Jun-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="45-mcnulty-drive-wendouree-vic-3355" data-name="45 mcnulty drive, wendouree, vic 3355">
+  <div class="client-head">
+    <h2 class="client-name">45 Mcnulty Drive, Wendouree, VIC 3355</h2>
+    <div class="badges"><span class="badge settle">Settlement: 20-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 4-May-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Vendor fixed issues</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 4-May-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 20-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="72-74-william-street-cobram-vic-3644" data-name="72-74 william street, cobram vic 3644">
+  <div class="client-head">
+    <h2 class="client-name">72-74 William Street, Cobram Vic 3644</h2>
+    <div class="badges"><span class="badge settle">Settlement: 15-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 23-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>No issues found</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">NA</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 28-Apr-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 15-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="54-lenthall-street-aldershot-qld-4650" data-name="54 lenthall street, aldershot, qld 4650">
+  <div class="client-head">
+    <h2 class="client-name">54 Lenthall Street, Aldershot, Qld 4650</h2>
+    <div class="badges"><span class="badge settle">Settlement: 8-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 23-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 23-Apr-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 8-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="7-dryden-street-hamilton-vic-3300" data-name="7 dryden street, hamilton, vic 3300">
+  <div class="client-head">
+    <h2 class="client-name">7 Dryden Street, Hamilton, Vic 3300</h2>
+    <div class="badges"><span class="badge settle">Settlement: 1-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 20-Mar-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Agreed Price reduction</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">NA</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 17-Apr-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 1-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="118-langford-parade-paynesville-vic-3880" data-name="118 langford parade, paynesville, vic 3880">
+  <div class="client-head">
+    <h2 class="client-name">118 Langford Parade, Paynesville, VIC 3880</h2>
+    <div class="badges"><span class="badge settle">Settlement: 5-May-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 5-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Vendor fixed issues</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 20-Mar-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 5-May-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="21-stringybark-avenue-wallan-vic-3756" data-name="21 stringybark avenue, wallan, vic 3756">
+  <div class="client-head">
+    <h2 class="client-name">21 Stringybark Avenue, Wallan, VIC 3756</h2>
+    <div class="badges"><span class="badge settle">Settlement: 30-Apr-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="100"></div></div>
+    <div class="progress-label">5 of 5 milestones complete · 100%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 15-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>No issues found</div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 22-Apr-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 30-Apr-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="14-mills-street-heyfield-vic-3858" data-name="14 mills street, heyfield, vic 3858">
+  <div class="client-head">
+    <h2 class="client-name">14 Mills Street, Heyfield, Vic 3858</h2>
+    <div class="badges"><span class="badge settle">Settlement: 30-Apr-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 15-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>No issues found</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">NA</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 15-Apr-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 30-Apr-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="91-gunn-street-devonport-tasmania-7310" data-name="91 gunn street, devonport, tasmania 7310">
+  <div class="client-head">
+    <h2 class="client-name">91 Gunn Street, Devonport, Tasmania 7310</h2>
+    <div class="badges"><span class="badge settle">Settlement: 20-Mar-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 20-Mar-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="4-cummings-street-braitling-alice-springs-0870" data-name="4 cummings street, braitling, alice springs, 0870">
+  <div class="client-head">
+    <h2 class="client-name">4 Cummings Street, Braitling, Alice Springs, 0870</h2>
+    <div class="badges"><span class="badge settle">Settlement: 17-Apr-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 3-Apr-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">NA</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 28-Mar-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 17-Apr-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="24-coral-street-loxton-sa-5333" data-name="24 coral street, loxton, sa 5333">
+  <div class="client-head">
+    <h2 class="client-name">24 Coral Street, Loxton, SA 5333</h2>
+    <div class="badges"><span class="badge settle">Settlement: 10-Apr-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill date">📅 25-Feb-2026</span><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>Vendor fixed issues</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 10-Apr-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="11-heath-drive-winchelsea-vic-3241" data-name="11 heath drive, winchelsea, vic 3241">
+  <div class="client-head">
+    <h2 class="client-name">11 Heath Drive, Winchelsea, Vic 3241</h2>
+    <div class="badges"><span class="badge settle">Settlement: 20-Apr-2026</span></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="80"></div></div>
+    <div class="progress-label">4 of 5 milestones complete · 80%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step done"><span class="dot">✓</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill ok">Completed</span></div><div class="step-note"><span class="nlabel">Issues &amp; negotiation</span>N/A</div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">In Progress</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill date">📅 25-Mar-2026</span><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill ok">Completed</span></div></li><li class="step done"><span class="dot">✓</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill ok">Yes</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill gold">📅 20-Apr-2026</span></div></li>
+  </ul>
+</article>
+<article class="client" id="3a52ce78" data-name=".">
+  <div class="client-head">
+    <h2 class="client-name">.</h2>
+    <div class="badges"></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="0"></div></div>
+    <div class="progress-label">0 of 5 milestones complete · 0%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">Pending</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill wait">Date TBC</span></div></li>
+  </ul>
+</article>
+<article class="client" id="client" data-name="unnamed client">
+  <div class="client-head">
+    <h2 class="client-name">Unnamed client</h2>
+    <div class="badges"></div>
+  </div>
+  <div class="progresswrap">
+    <div class="progress"><div class="bar" data-pct="0"></div></div>
+    <div class="progress-label">0 of 5 milestones complete · 0%</div>
+  </div>
+  <ul class="timeline">
+    <li class="step pending"><span class="dot">•</span><div class="step-title">Building &amp; Pest</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Start Tenancy Process</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Finance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Insurance</div><div class="step-detail"><span class="pill wait">Pending</span></div></li><li class="step pending"><span class="dot">•</span><div class="step-title">Pre-Settlement Inspection</div><div class="step-detail"><span class="pill wait">Pending</span></div></li>
+    <li class="step flag"><span class="dot">⚑</span><div class="step-title">Settlement</div><div class="step-detail"><span class="pill wait">Date TBC</span></div></li>
+  </ul>
+</article>
+
+    <div class="noresults">No clients match your search.</div>
+  </main>
+</div>
+
+<script>
+(function(){
+  const $ = (s,el)=> (el||document).querySelector(s);
+  const $$ = (s,el)=> Array.from((el||document).querySelectorAll(s));
+
+  /* ---- theme ---- */
+  function applyTheme(t){
+    document.documentElement.setAttribute('data-theme', t);
+    try{ localStorage.setItem('tracker:theme', t); }catch(e){}
+    $$('.theme-toggle').forEach(b=>{
+      b.textContent = (t === 'dark') ? '☀' : '☾';
+      if (!b.dataset.mini) b.textContent += (t === 'dark') ? ' Light' : ' Dark';
+    });
+  }
+  applyTheme(document.documentElement.getAttribute('data-theme') || 'light');
+  $$('.theme-toggle').forEach(b=> b.addEventListener('click', ()=>{
+    const cur = document.documentElement.getAttribute('data-theme');
+    applyTheme(cur === 'dark' ? 'light' : 'dark');
+  }));
+
+  /* ---- mobile sidebar ---- */
+  const sb = $('.sidebar'), scrim = $('.scrim'), mt = $('#menu-toggle');
+  function closeSb(){ if(sb) sb.classList.remove('open'); if(scrim) scrim.classList.remove('show'); }
+  if (mt) mt.addEventListener('click', ()=>{
+    sb.classList.toggle('open'); scrim.classList.toggle('show', sb.classList.contains('open'));
+  });
+  if (scrim) scrim.addEventListener('click', closeSb);
+  $$('.navlist a').forEach(a=> a.addEventListener('click', closeSb));
+
+  /* ---- search (filters clients by name) ---- */
+  const cards = $$('.client');
+  const navLinks = $$('.navlist a');
+  const nores = $('.noresults');
+  function doSearch(q){
+    q = (q||'').trim().toLowerCase();
+    let shown = 0;
+    cards.forEach(c=>{
+      const hit = !q || (c.dataset.name||'').includes(q);
+      c.classList.toggle('hidden', !hit);
+      if (hit) shown++;
+    });
+    navLinks.forEach(a=>{
+      const hit = !q || (a.dataset.name||'').includes(q);
+      a.style.display = hit ? '' : 'none';
+    });
+    if (nores) nores.classList.toggle('show', shown === 0 && cards.length > 0);
+  }
+  $$('.searchbox').forEach(inp=>{
+    inp.addEventListener('input', ()=> doSearch(inp.value));
+    inp.addEventListener('keydown', e=>{ if (e.key === 'Escape'){ inp.value=''; doSearch(''); }});
+  });
+
+  /* ---- settlement countdown (live, so it stays right between builds) ---- */
+  const MS_DAY = 86400000;
+  function midnight(d){ return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+  $$('[data-settle]').forEach(el=>{
+    const iso = el.dataset.settle;
+    if (!iso) return;
+    const parts = iso.split('-').map(Number);
+    const target = new Date(parts[0], parts[1]-1, parts[2]);
+    const days = Math.round((target - midnight(new Date())) / MS_DAY);
+    let txt, cls = '';
+    if (days > 1)      { txt = days + ' days to settlement'; if (days <= 7) cls = 'soon'; }
+    else if (days === 1){ txt = 'Settles tomorrow'; cls = 'soon'; }
+    else if (days === 0){ txt = 'Settles today'; cls = 'soon'; }
+    else               { txt = Math.abs(days) + (days === -1 ? ' day' : ' days') + ' past settlement date'; cls = 'over'; }
+    el.textContent = txt;
+    if (cls) el.classList.add(cls);
+    el.style.display = '';
+  });
+
+  /* ---- animate progress bars ---- */
+  requestAnimationFrame(()=> $$('.progress .bar').forEach(b=>{
+    b.style.width = (b.dataset.pct || 0) + '%';
+  }));
+})();
+
+/* copy deterrent */
+(function(){
+  if (!document.body.classList.contains('nocopy')) return;
+  ['contextmenu','copy','cut','dragstart'].forEach(ev=>
+    document.addEventListener(ev, e=> e.preventDefault()));
+})();
+</script>
+</body>
+</html>
