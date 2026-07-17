@@ -245,9 +245,12 @@ table.board{width:100%;border-collapse:collapse;min-width:620px;font-size:12.5px
 .trow{cursor:pointer;transition:background .12s}
 .trow:hover{background:var(--gold-soft)}
 .trow.hidden,.trow-detail.hidden{display:none}
-.tcell-client{text-align:left!important;padding-left:12px!important;min-width:168px}
-.tname{font-weight:700;font-size:13.5px;line-height:1.3}
-.tprop{font-size:11.5px;color:var(--muted);margin-top:1px}
+.tcell-client{text-align:left!important;padding-left:12px!important;
+  min-width:118px;max-width:150px}
+.tname{font-weight:700;font-size:13px;line-height:1.3;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tprop{font-size:11px;color:var(--muted);margin-top:1px;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mcell{min-width:56px}
 .mdot{display:inline-flex;align-items:center;justify-content:center;
   width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:800;
@@ -334,7 +337,7 @@ table.board{width:100%;border-collapse:collapse;min-width:620px;font-size:12.5px
   .sop-body{padding:0 13px 14px 13px}
   .sop-title{font-size:14.5px}
   table.board{min-width:540px;font-size:12px}
-  .tcell-client{min-width:132px}
+  .tcell-client{min-width:92px;max-width:120px}
 }
 
 /* ---------- copy deterrent ---------- */
@@ -372,7 +375,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
     </nav>
     <div class="tracker-side"><b>9</b> clients in settlement<br>Click a row on the board for full details.</div>
     <div class="side-foot">
-      5 procedures · 9 in settlement<br>Updated 17 Jul 2026, 05:23 PM AEST
+      5 procedures · 9 in settlement<br>Updated 17 Jul 2026, 05:27 PM AEST
     </div>
   </aside>
 
@@ -384,7 +387,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
       <div class="sub">Operating procedures</div>
       <div class="meta">
         <span class="chip">5 procedures</span>
-        <span class="chip">Updated 17 Jul 2026, 05:23 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 05:27 PM AEST</span>
       </div>
     </header>
     <div class="toolbar" id="wi-tools">
@@ -758,7 +761,7 @@ Kind regards,
         <span class="chip">9 clients in settlement</span>
         <span class="chip bad" id="alert-chip" style="display:none"></span>
         <span class="chip warn" id="soon-chip" style="display:none"></span>
-        <span class="chip">Updated 17 Jul 2026, 05:23 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 05:27 PM AEST</span>
       </div>
     </header>
     
