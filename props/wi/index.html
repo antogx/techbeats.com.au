@@ -124,6 +124,8 @@ html:not([data-view="tracker"]) .tracker-side{display:none}
 #view-wi,#view-tracker{display:none}
 html:not([data-view="tracker"]) #view-wi{display:block}
 html[data-view="tracker"] #view-tracker{display:block}
+/* Tracker gets a wider canvas than the reading-width WI view */
+html[data-view="tracker"] .main{max-width:1500px;padding-left:22px;padding-right:22px}
 
 /* ---------- page head ---------- */
 .pagehead h1{margin:0;font-size:23px;letter-spacing:.2px}
@@ -232,26 +234,26 @@ mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px
 /* ---------- Tracker board ---------- */
 .boardwrap{margin-top:16px;background:var(--card);border:1px solid var(--line);
   border-radius:var(--radius);box-shadow:var(--shadow);overflow-x:auto}
-table.board{width:100%;border-collapse:collapse;min-width:760px;font-size:13px}
+table.board{width:100%;border-collapse:collapse;min-width:620px;font-size:12.5px}
 .board th{position:sticky;top:0;background:var(--panel2);z-index:2;
-  font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);
-  padding:10px 10px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
-.board th:first-child{text-align:left;padding-left:16px}
-.board td{padding:10px;border-bottom:1px solid var(--line);text-align:center;
+  font-size:10px;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);
+  padding:9px 5px;text-align:center;border-bottom:1px solid var(--line);white-space:nowrap}
+.board th:first-child{text-align:left;padding-left:12px}
+.board td{padding:8px 5px;border-bottom:1px solid var(--line);text-align:center;
   vertical-align:middle}
 .board tr:last-child td{border-bottom:none}
 .trow{cursor:pointer;transition:background .12s}
 .trow:hover{background:var(--gold-soft)}
 .trow.hidden,.trow-detail.hidden{display:none}
-.tcell-client{text-align:left!important;padding-left:16px!important;min-width:200px}
+.tcell-client{text-align:left!important;padding-left:12px!important;min-width:168px}
 .tname{font-weight:700;font-size:13.5px;line-height:1.3}
 .tprop{font-size:11.5px;color:var(--muted);margin-top:1px}
-.mcell{min-width:76px}
+.mcell{min-width:56px}
 .mdot{display:inline-flex;align-items:center;justify-content:center;
-  width:24px;height:24px;border-radius:50%;font-size:12px;font-weight:800;
+  width:20px;height:20px;border-radius:50%;font-size:11px;font-weight:800;
   border:2px solid var(--line);background:var(--panel2);color:var(--muted)}
 .mdot.done{background:var(--good);border-color:var(--good);color:#fff}
-.mdate{display:block;font-size:10.5px;color:var(--muted);margin-top:3px;white-space:nowrap}
+.mdate{display:block;font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap}
 .mdot.hasnote{position:relative}
 .mdot.hasnote::after{content:"";position:absolute;top:-2px;right:-2px;width:8px;height:8px;
   border-radius:50%;background:var(--warn);border:1.5px solid var(--card)}
@@ -261,24 +263,24 @@ table.board{width:100%;border-collapse:collapse;min-width:760px;font-size:13px}
 .mcell.m-warn{background:var(--warn-soft);border-radius:9px}
 .mcell.m-bad .mdot{border-color:var(--bad);color:var(--bad);background:transparent}
 .mcell.m-warn .mdot{border-color:var(--warn);color:var(--warn);background:transparent}
-.mpill{display:inline-block;font-size:9.5px;font-weight:800;letter-spacing:.2px;
-  line-height:1.5;border-radius:99px;padding:1px 7px;white-space:nowrap}
+.mpill{display:inline-block;font-size:9px;font-weight:800;letter-spacing:0;
+  line-height:1.5;border-radius:99px;padding:1px 6px;white-space:nowrap}
 .mpill.bad{background:var(--bad);color:#fff}
 .mpill.warn{background:var(--warn);color:#fff}
 .mpill.bad::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;
-  background:#fff;margin-right:5px;vertical-align:1px;animation:alertblink 1.2s infinite}
+  background:#fff;margin-right:4px;vertical-align:1px;animation:alertblink 1.2s infinite}
 @keyframes alertblink{0%,100%{opacity:1}50%{opacity:.3}}
 @media (prefers-reduced-motion:reduce){.mpill.bad::before{animation:none}}
 .pagehead .meta .chip.bad{background:var(--bad-soft);color:var(--bad);
   border-color:transparent;font-weight:700}
 .legend .mpill{font-size:9px}
-.tsettle{min-width:118px}
-.sdate{font-weight:700;white-space:nowrap}
-.scount{display:block;font-size:10.5px;margin-top:3px;border-radius:99px;padding:2px 8px;
+.tsettle{min-width:96px}
+.sdate{font-weight:700;white-space:nowrap;font-size:12px}
+.scount{display:block;font-size:10px;margin-top:2px;border-radius:99px;padding:1px 7px;
   background:var(--good-soft);color:var(--good);font-weight:700;white-space:nowrap}
 .scount.soon{background:var(--warn-soft);color:var(--warn)}
 .scount.over{background:var(--bad-soft);color:var(--bad)}
-.tbar{width:52px;height:6px;border-radius:99px;background:var(--panel2);
+.tbar{width:44px;height:6px;border-radius:99px;background:var(--panel2);
   overflow:hidden;display:inline-block;vertical-align:middle}
 .tbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-bright),var(--good))}
 .tpct{font-size:10.5px;color:var(--muted);display:block;margin-top:3px}
@@ -331,8 +333,8 @@ table.board{width:100%;border-collapse:collapse;min-width:760px;font-size:13px}
   .sop-head{padding:11px 12px;gap:9px}
   .sop-body{padding:0 13px 14px 13px}
   .sop-title{font-size:14.5px}
-  table.board{min-width:640px;font-size:12.5px}
-  .tcell-client{min-width:160px}
+  table.board{min-width:540px;font-size:12px}
+  .tcell-client{min-width:132px}
 }
 
 /* ---------- copy deterrent ---------- */
@@ -370,7 +372,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
     </nav>
     <div class="tracker-side"><b>9</b> clients in settlement<br>Click a row on the board for full details.</div>
     <div class="side-foot">
-      5 procedures · 9 in settlement<br>Updated 17 Jul 2026, 05:15 PM AEST
+      5 procedures · 9 in settlement<br>Updated 17 Jul 2026, 05:23 PM AEST
     </div>
   </aside>
 
@@ -382,7 +384,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
       <div class="sub">Operating procedures</div>
       <div class="meta">
         <span class="chip">5 procedures</span>
-        <span class="chip">Updated 17 Jul 2026, 05:15 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 05:23 PM AEST</span>
       </div>
     </header>
     <div class="toolbar" id="wi-tools">
@@ -756,7 +758,7 @@ Kind regards,
         <span class="chip">9 clients in settlement</span>
         <span class="chip bad" id="alert-chip" style="display:none"></span>
         <span class="chip warn" id="soon-chip" style="display:none"></span>
-        <span class="chip">Updated 17 Jul 2026, 05:15 PM AEST</span>
+        <span class="chip">Updated 17 Jul 2026, 05:23 PM AEST</span>
       </div>
     </header>
     
@@ -792,8 +794,8 @@ Rajisha</div><div class="tprop">2 Canterbury Way Churchil VIC 3842</div></td><td
       <span><span class="mdot done">✓</span> Completed</span>
       <span><span class="mdot">•</span> Pending</span>
       <span><span class="mdot hasnote">•</span> Has B&amp;P notes — click row</span>
-      <span><span class="mpill bad">3d · no contract</span> Contract not released 2+ days after offer</span>
-      <span><span class="mpill warn">19 Jul · in 2d</span> Due within 4 days, not completed</span>
+      <span><span class="mpill bad">3d·no contract</span> Contract not released 2+ days after offer</span>
+      <span><span class="mpill warn">19 Jul·in 2d</span> Due within 4 days, not completed</span>
     </div>
     <div class="noresults">No clients match your search.</div>
   </section>
@@ -1085,7 +1087,7 @@ Rajisha</div><div class="tprop">2 Canterbury Way Churchil VIC 3842</div></td><td
   $$('.trow .mcell[data-offer]').forEach(cell=>{
     const since = -isoDays(cell.dataset.offer);   // days elapsed since offer
     if (since >= CONTRACT_DAYS){
-      setPill(cell, 'bad', since + 'd \u00b7 no contract',
+      setPill(cell, 'bad', since + 'd\u00b7no contract',
         'Offer accepted ' + since + ' days ago \u2014 contract not released');
       nContract++;
     }
@@ -1095,12 +1097,12 @@ Rajisha</div><div class="tprop">2 Canterbury Way Churchil VIC 3842</div></td><td
     const days = isoDays(cell.dataset.due);
     const what = cell.title || 'Milestone';
     if (days < 0){
-      setPill(cell, 'bad', shortIso(cell.dataset.due) + ' \u00b7 ' + (-days) + 'd over',
+      setPill(cell, 'bad', shortIso(cell.dataset.due) + '\u00b7' + (-days) + 'd over',
         what + ' was due ' + (-days) + ' day(s) ago \u2014 not completed');
       nDue++;
     } else if (days <= DUE_DAYS){
       const t = days === 0 ? 'today' : (days === 1 ? 'tmrw' : 'in ' + days + 'd');
-      setPill(cell, 'warn', shortIso(cell.dataset.due) + ' \u00b7 ' + t,
+      setPill(cell, 'warn', shortIso(cell.dataset.due) + '\u00b7' + t,
         what + ' due ' + (days === 0 ? 'today' : 'in ' + days + ' day(s)') + ' \u2014 not completed');
       nDue++;
     }
