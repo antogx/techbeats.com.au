@@ -34,45 +34,40 @@ document.documentElement.setAttribute(
 <title>Work Instructions &amp; Tracker</title>
 <style>
 :root{
-  --bg:#edece7;
-  --grid:rgba(23,24,26,.045);
-  --panel:#f7f6f2; --panel2:#eceae3; --card:#ffffff; --line:#e2e1d9;
-  --gold:#1e7a4c; --gold-bright:#279158; --gold-soft:#e2f0e8;
-  --text:#17181a; --muted:#75756e; --good:#1e7a4c; --good-soft:#e2f0e8;
-  --warn:#b3630b; --warn-soft:#faeeda; --bad:#c03434; --bad-soft:#fae3e3;
-  --p1:#2f4fe0; --p2:#7a4fa3; --p3:#1e7a4c; --p4:#b45f24;
-  --shadow:0 1px 2px rgba(23,24,26,.05),0 8px 22px rgba(23,24,26,.06);
-  --shadow-sm:0 1px 3px rgba(23,24,26,.07);
-  --radius:14px; --sidebar:272px;
-  --tick:#ffffff;
+  --bg:#faf8f3;
+  --panel:#ffffff; --panel2:#f4f0e6; --card:#ffffff; --line:#e8e2d4;
+  --gold:#a8802a; --gold-bright:#d4af37; --gold-soft:#f6efdc;
+  --text:#28251d; --muted:#837c6d; --good:#178a56; --good-soft:#e3f3ea;
+  --warn:#b3630b; --warn-soft:#fdeeda; --bad:#b02a2a; --bad-soft:#f8dede;
+  --p1:#2c6f8f; --p2:#7a4fa3; --p3:#23805f; --p4:#b45f24;
+  --shadow:0 1px 2px rgba(60,48,16,.06),0 8px 22px rgba(60,48,16,.07);
+  --shadow-sm:0 1px 3px rgba(60,48,16,.08);
+  --radius:13px; --sidebar:272px;
+  --tick:#1d1a12;
 }
 html[data-theme="dark"]{
-  --bg:#15171a;
-  --grid:rgba(255,255,255,.035);
-  --panel:#1d2024; --panel2:#25282d; --card:#1d2024; --line:#31353b;
-  --gold:#3fae76; --gold-bright:#4cc38a; --gold-soft:#1b2f25;
-  --text:#e9e8e4; --muted:#9aa0a6; --good:#4cc38a; --good-soft:#173225;
+  --bg:#14161b;
+  --panel:#1c1f26; --panel2:#242832; --card:#1c1f26; --line:#2e333e;
+  --gold:#d4af37; --gold-bright:#e6c453; --gold-soft:#2b2716;
+  --text:#e9e7e1; --muted:#9aa0ac; --good:#4cc38a; --good-soft:#173225;
   --warn:#e8a04c; --warn-soft:#332715; --bad:#e07a7a; --bad-soft:#3a1d1d;
-  --p1:#7a92f0; --p2:#a97fd4; --p3:#4cc38a; --p4:#dc8953;
+  --p1:#5aa3c4; --p2:#a97fd4; --p3:#52b894; --p4:#dc8953;
   --shadow:0 1px 2px rgba(0,0,0,.45),0 8px 22px rgba(0,0,0,.35);
   --shadow-sm:0 1px 3px rgba(0,0,0,.4);
-  --tick:#0e2418;
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;color:var(--text);
-  background-color:var(--bg);
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size:42px 42px;
+  background:
+    radial-gradient(800px 380px at 85% -60px, rgba(212,175,55,.12), transparent 60%),
+    radial-gradient(620px 380px at -10% 25%, rgba(23,138,86,.05), transparent 60%),
+    var(--bg);
   background-attachment:fixed;
-  font:13.5px/1.6 Verdana,Geneva,"DejaVu Sans",Tahoma,sans-serif;
-  transition:background-color .25s,color .25s}
+  font:14.5px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  transition:background .25s,color .25s}
 a{color:var(--gold);text-decoration:none}
 a:hover{text-decoration:underline}
-h1,h2{font-family:Verdana,Geneva,"DejaVu Sans",Tahoma,sans-serif;
-  font-weight:700;letter-spacing:-.015em}
+h1,h2{font-family:Georgia,"Palatino Linotype",Palatino,serif}
 
 /* ---------- layout ---------- */
 .layout{display:flex;min-height:100vh}
@@ -82,20 +77,21 @@ h1,h2{font-family:Verdana,Geneva,"DejaVu Sans",Tahoma,sans-serif;
   box-shadow:var(--shadow-sm)}
 .main{flex:1;min-width:0;padding:24px 32px 70px;max-width:1060px}
 
-.side-title{font-family:Verdana,Geneva,"DejaVu Sans",sans-serif;font-size:15px;font-weight:700;letter-spacing:-.01em;
+.side-title{font-family:Georgia,serif;font-size:16px;font-weight:700;
   padding:2px 4px;display:flex;align-items:center;gap:8px}
 .side-title .theme-toggle{margin-left:auto}
 
 /* view switch */
-.viewswitch{display:flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;
+.viewswitch{display:flex;border:1px solid var(--line);border-radius:11px;overflow:hidden;
   background:var(--panel2)}
 .viewbtn{flex:1;border:none;background:transparent;color:var(--muted);
   padding:8px 6px;font-size:12.5px;font-weight:700;cursor:pointer;transition:all .15s}
-.viewbtn.active{background:var(--gold);color:#fff}
+.viewbtn.active{background:linear-gradient(135deg,var(--gold-bright),var(--gold));
+  color:#1d1a12}
 .viewbtn:not(.active):hover{color:var(--gold)}
 
 .search{position:relative}
-.search input{width:100%;padding:8px 13px 8px 33px;border-radius:999px;
+.search input{width:100%;padding:8px 11px 8px 33px;border-radius:10px;
   border:1px solid var(--line);background:var(--panel2);color:var(--text);
   font-size:13.5px;outline:none;transition:border-color .15s,box-shadow .15s}
 .search input:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-soft)}
@@ -136,15 +132,15 @@ html[data-view="tracker"] .main{max-width:1460px;padding-left:22px;padding-right
 /* ---------- page head ---------- */
 .pagehead h1{margin:0;font-size:23px;letter-spacing:.2px}
 .pagehead h1::after{content:"";display:block;width:60px;height:3px;border-radius:99px;
-  margin-top:8px;background:var(--gold)}
+  margin-top:8px;background:linear-gradient(90deg,var(--gold-bright),var(--gold))}
 .pagehead .sub{color:var(--muted);font-size:13px;margin-top:8px}
 .pagehead .meta{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;font-size:11.5px;color:var(--muted)}
 .pagehead .meta .chip{background:var(--panel);border:1px solid var(--line);
   border-radius:999px;padding:3px 10px;box-shadow:var(--shadow-sm)}
 .pagehead .meta .chip.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent;font-weight:700}
 .toolbar{margin:14px 0 2px;display:flex;gap:8px;flex-wrap:wrap}
-.btn{background:var(--card);border:1px solid var(--line);color:var(--text);
-  padding:7px 14px;border-radius:999px;font-size:12.5px;cursor:pointer;
+.btn{background:var(--panel);border:1px solid var(--line);color:var(--text);
+  padding:7px 12px;border-radius:10px;font-size:12.5px;cursor:pointer;
   box-shadow:var(--shadow-sm);transition:all .15s}
 .btn:hover{border-color:var(--gold);color:var(--gold)}
 
@@ -193,7 +189,7 @@ ol.steps li:not(:last-child)::after{content:"";position:absolute;left:11px;top:2
   width:1px;background:var(--line)}
 
 .progress{height:6px;background:var(--panel2);border-radius:99px;overflow:hidden;margin-bottom:10px}
-.progress .bar{height:100%;width:0;background:var(--good);
+.progress .bar{height:100%;width:0;background:linear-gradient(90deg,var(--gold-bright),var(--good));
   transition:width .3s}
 ul.checks{margin:0;padding:0;list-style:none}
 ul.checks li{padding:1px 0}
@@ -233,7 +229,7 @@ details.examples .ex-text{white-space:pre-wrap}
 .ex-copy.copied .i-check{display:block}
 details.examples .ex-block + .ex-block{border-top:1px dashed var(--line)}
 
-mark{background:#ffdf6b;color:#1d1a12;border-radius:4px;padding:0 2px}
+mark{background:var(--gold-bright);color:#1d1a12;border-radius:3px;padding:0 2px}
 .noresults{display:none;text-align:center;color:var(--muted);padding:50px 0;font-size:14px}
 .noresults.show{display:block}
 
@@ -299,7 +295,7 @@ table.board{border-collapse:collapse;font-size:13.5px}
 .scount.over{background:var(--bad-soft);color:var(--bad)}
 .tbar{width:44px;height:6px;border-radius:99px;background:var(--panel2);
   overflow:hidden;display:inline-block;vertical-align:middle}
-.tbar i{display:block;height:100%;background:var(--good)}
+.tbar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-bright),var(--good))}
 .tpct{font-size:11.5px;color:var(--muted);display:block;margin-top:3px}
 .texp{color:var(--muted);font-size:11px;transition:transform .18s;display:inline-block}
 .trow.open .texp{transform:rotate(180deg);color:var(--gold)}
@@ -389,7 +385,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
     </nav>
     <div class="tracker-side"><b>10</b> clients in settlement<br>Click a row on the board for full details.</div>
     <div class="side-foot">
-      5 procedures · 10 in settlement<br>Updated 18 Jul 2026, 08:38 PM AEST
+      5 procedures · 10 in settlement<br>Updated 18 Jul 2026, 09:00 PM AEST
     </div>
   </aside>
 
@@ -401,7 +397,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
       <div class="sub">Operating procedures</div>
       <div class="meta">
         <span class="chip">5 procedures</span>
-        <span class="chip">Updated 18 Jul 2026, 08:38 PM AEST</span>
+        <span class="chip">Updated 18 Jul 2026, 09:00 PM AEST</span>
       </div>
     </header>
     <div class="toolbar" id="wi-tools">
@@ -775,7 +771,7 @@ Kind regards,
         <span class="chip">10 clients in settlement</span>
         <span class="chip bad" id="alert-chip" style="display:none"></span>
         <span class="chip warn" id="soon-chip" style="display:none"></span>
-        <span class="chip">Updated 18 Jul 2026, 08:38 PM AEST</span>
+        <span class="chip">Updated 18 Jul 2026, 09:00 PM AEST</span>
       </div>
     </header>
     
