@@ -55,6 +55,30 @@ summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var
 .comp{border:1px solid var(--line);border-radius:11px;padding:9px 10px;margin:7px 0;background:var(--panel2)}.comp b{color:var(--text)}.sources{display:flex;flex-wrap:wrap;gap:6px}.source{border:1px solid var(--line);background:var(--panel2);border-radius:8px;padding:4px 7px;font-size:11px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .footer{color:var(--muted);font-size:11px;margin:20px 4px;text-align:center}.empty{background:var(--panel);border:1px dashed var(--line);border-radius:var(--radius);padding:40px;text-align:center;color:var(--muted)}
 .errorbox{background:var(--red-soft);color:var(--red);border-radius:10px;padding:10px}.warningbox{background:var(--amber-soft);color:var(--amber);border:1px solid var(--amber);border-radius:10px;padding:10px;margin-bottom:12px}.cachetag{color:var(--muted);font-size:10px;margin-left:6px}
+.card-head.with-thumb{grid-template-columns:64px 58px 1fr auto}
+.thumb{width:64px;height:64px;border-radius:12px;overflow:hidden;background:var(--panel2);border:1px solid var(--line)}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.delta{display:inline-block;font-size:10px;font-weight:900;border-radius:999px;padding:2px 7px;margin-top:4px}
+.delta.up{background:var(--brand-soft);color:var(--brand)}.delta.down{background:var(--red-soft);color:var(--red)}
+.delta.new{background:var(--blue-soft);color:var(--blue)}
+.dealstrip{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 15px 12px;background:var(--panel2)}
+.dealstat{border:1px dashed var(--line);border-radius:11px;padding:8px 10px;background:var(--panel)}
+.dealstat .k{font-size:10px;color:var(--muted);text-transform:uppercase}.dealstat .v{font-weight:850;margin-top:2px}
+.dealstat .v.pos{color:var(--brand)}.dealstat .v.neg{color:var(--red)}
+.breakdown{display:flex;height:14px;border-radius:999px;overflow:hidden;border:1px solid var(--line);margin:8px 0 4px;background:var(--panel2)}
+.breakdown span{display:block;height:100%}
+.seg-margin{background:var(--brand)}.seg-land{background:var(--brand2)}.seg-reno{background:var(--blue)}
+.seg-market{background:#8a6fd1}.seg-risk{background:var(--amber)}
+.breakdown-legend{font-size:11px;color:var(--muted);margin-bottom:8px}
+.breakdown-legend b{color:var(--text)}
+#tablewrap{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);overflow:auto}
+#tbl{width:100%;border-collapse:collapse;font-size:12px}
+#tbl th{position:sticky;top:0;background:var(--panel2);text-align:left;padding:10px 10px;border-bottom:1px solid var(--line);cursor:pointer;user-select:none;white-space:nowrap}
+#tbl th:after{content:" ↕";color:var(--muted);font-size:10px}
+#tbl th[data-dir="asc"]:after{content:" ↑"}#tbl th[data-dir="desc"]:after{content:" ↓"}
+#tbl td{padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+#tbl tr:hover td{background:var(--panel2)}
+#tbl td.addr{white-space:normal;min-width:220px;font-weight:700}
 @media(max-width:1000px){.summary{grid-template-columns:repeat(3,1fr)}.grid{grid-template-columns:1fr}}
 @media(max-width:650px){.shell{padding:10px}.hero{padding:20px 17px}.hero h1{font-size:23px}.top-actions{position:static;margin-top:14px}.summary{grid-template-columns:repeat(2,1fr)}
   .metric:last-child{grid-column:1/-1}.card-head{grid-template-columns:50px 1fr}.score{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;text-align:left}.facts{grid-template-columns:repeat(2,1fr)}
@@ -66,302 +90,367 @@ summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var
   <header class="hero">
     <h1>Renovation Opportunity Review</h1>
     <p>Ranked acquisition review combining listing evidence, land fundamentals, renovation scope, comparable renovated sales, indicative margin and suburb market metrics.</p>
-    <div class="hero-meta"><span class="hchip">Updated 19 July 2026, 19:53 AEST</span><span class="hchip">5 candidates</span><span class="hchip">2 reused from valid cache</span><span class="hchip">Research is preliminary, not a B&amp;P or valuation</span></div>
+    <div class="hero-meta"><span class="hchip">Updated 19 July 2026, 20:19 AEST</span><span class="hchip">5 candidates</span><span class="hchip">0 reused from valid cache</span><span class="hchip">Research is preliminary, not a B&amp;P or valuation</span></div>
     <div class="top-actions"><a href="renovation_ranked.csv">Download CSV</a><button id="theme">Light / Dark</button></div>
   </header>
   <section class="summary">
     <div class="metric"><div class="n">5</div><div class="l">Total reviewed</div></div>
     <div class="metric"><div class="n">0</div><div class="l">High priority / consider</div></div>
-    <div class="metric"><div class="n">2</div><div class="l">Needs review</div></div>
-    <div class="metric"><div class="n">3</div><div class="l">Pass / error</div></div>
-    <div class="metric"><div class="n">56</div><div class="l">Highest rank score</div></div>
+    <div class="metric"><div class="n">0</div><div class="l">Needs review</div></div>
+    <div class="metric"><div class="n">5</div><div class="l">Pass / error</div></div>
+    <div class="metric"><div class="n">38</div><div class="l">Highest rank score</div></div>
   </section>
   <div class="controls">
     <div class="search"><span>⌕</span><input id="search" placeholder="Search address, reason, risk or renovation level"></div>
-    <div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="consider">Consider</button><button class="filter" data-filter="review">Review</button><button class="filter" data-filter="pass">Pass</button></div>
+    <div class="filters"><button class="filter active" data-filter="all">All</button><button class="filter" data-filter="consider">Consider</button><button class="filter" data-filter="review">Review</button><button class="filter" data-filter="pass">Pass</button><button id="viewtoggle" class="filter">Table view</button></div>
     <div class="countline" id="visible-count">5 shown</div>
   </div>
   <main class="grid">
-    <article class="card" data-group="review" data-search="62 leighton road, halls head, wa 6210 review moderate strong market demand in halls head good land size for the area entry price allows for value-add potential heritage overlay restrictions could significantly increase renovation costs or limit design scope">
+    <article class="card" data-group="pass" data-search="16 dibbler drive, brabham, wa 6055 pass already_renovated strong market demand in brabham property is priced below recent comparable sales modern build requires no capital expenditure">
       <div class="card-head">
+        
         <div class="rank"><small>RANK</small><b>1</b></div>
         <div>
-          <div class="address">62 Leighton Road, Halls Head, WA 6210</div>
-          <div class="subline"><span>$699,000</span><span><a href="https://www.realestate.com.au/property/62-leighton-rd-halls-head-wa-6210/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 19:52</span><span>Evidence Pipeline</span></div>
-        </div>
-        <div class="score"><span class="badge review">REVIEW</span><b>56</b><small>rank score / 100</small></div>
-      </div>
-      <div class="facts">
-        <div class="fact"><div class="v">3 / 1 / 3</div><div class="k">Bed / Bath / Car</div></div>
-        <div class="fact"><div class="v">634 m²</div><div class="k">Land size</div></div>
-        <div class="fact"><div class="v">MODERATE</div><div class="k">Renovation level</div></div>
-        <div class="fact"><div class="v">MEDIUM</div><div class="k">Confidence · Sheet score 87.4 · Diff +49.8%</div></div>
-      </div>
-      <div class="financials">
-        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$80,000 – $150,000</div></div>
-        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$850,000 – $900,000</div></div>
-        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$1,000 – $121,000</div></div>
-      </div>
-      <div class="card-body">
-        
-        <p class="lead">Original 1976 condition with retro styling, requiring significant updates to kitchen, flooring, and general layout.</p>
-        <details open><summary>Why it ranks here</summary><div class="detail">
-          <ul class="clean"><li>Strong market demand in Halls Head</li><li>Good land size for the area</li><li>Entry price allows for value-add potential</li></ul>
-          <strong>Potential deal-breakers</strong><ul class="clean"><li>Heritage overlay restrictions could significantly increase renovation costs or limit design scope</li></ul>
-        </div></details>
-        <details><summary>Land assessment</summary><div class="detail">
-          <strong>Size and comparable context:</strong> At 634 sqm, the block is larger than the 480 sqm comparable but smaller than the 772 sqm comparable, placing it in a mid-range for the area.<br>
-          <strong>Shape, frontage and access:</strong> The property features side access and is positioned towards the rear of the block, providing a generous fully enclosed backyard.<br>
-          <strong>Slope, drainage and usability:</strong> The site appears generally level and usable, though specific drainage and slope details require on-site verification.<br>
-          <strong>Extension/development:</strong> The generous block size and rear positioning suggest potential for extension or outdoor improvements, subject to heritage overlay constraints.<br>
-          <strong>Constraints to verify:</strong><ul class="clean"><li>Heritage overlay impact on renovations</li><li>Asbestos presence in 1976 construction</li><li>Structural integrity of original foundations</li></ul>
-        </div></details>
-        <details><summary>Renovation facts and scope</summary><div class="detail">
-          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Retro kitchen cabinetry</li><li>Original flooring</li><li>Vintage layout</li></ul>
-          <strong>Require inspection</strong><ul class="clean"><li>Roof and gutter condition</li><li>Electrical and plumbing systems</li><li>Asbestos-era materials</li><li>Structural cracking or foundation issues</li><li>Termite history</li></ul>
-          <strong>Already improved</strong><div class="detail">No specific items reported.</div>
-          <strong>Cost scope:</strong> Covers full interior cosmetic refresh, kitchen and bathroom replacement, and potential electrical/plumbing upgrades. Excludes major structural extensions or heritage-related compliance costs.
-        </div></details>
-        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev high">HIGH</span><div><strong>Heritage Overlay</strong><br>Potential restrictions on external modifications or facade changes. <small>(CONFIRMED)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Asbestos</strong><br>High probability of asbestos-containing materials given the 1976 build date. <small>(GENERAL_CHECK)</small></div></div></div></details>
-        <details><summary>Renovated CMA</summary><div class="detail">
-          <strong>CMA quality:</strong> ADEQUATE<br>
-          <strong>Land adjustment:</strong> Adjusted for the subject property&#x27;s original condition compared to the modernized state of recent sales.<br>
-          <strong>Summary:</strong> The market shows a range of $700k to $900k for 3-bedroom homes depending on renovation quality. A fully renovated 62 Leighton Road should sit comfortably in the mid-$800k range.
-          <div class="comp"><b>43 Glencoe Parade, Halls Head, WA 6210</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $888,000 in April 2026; represents a well-presented home on a similar block size.</div><div class="comp"><b>10 Honeysuckle Ramble, Halls Head, WA 6210</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $700,900 in Oct 2025; lower price point reflects a less renovated or smaller-scale finish.</div>
-        </div></details>
-        <details><summary>Market and next actions</summary><div class="detail">
-          <strong>Market:</strong> Halls Head shows strong demand with a DSR of 54 and very low vacancy rates, indicating a tight rental market and solid capital growth potential.<br>
-          <strong>DSR:</strong> Days on market: 38days · Demand to Supply Ratio: 54 · Online search interest: 36 · Percent renters in market: 20.90% · Percent stock on market: 0.96% · Statistical reliability: 76 · Vacancy rate: 0.98% · Typical value: $1,089,300 · Auction clearance rate: 0.00% · Yield: 3.45%<br>
-          <strong>Next actions</strong><ul class="clean"><li>Verify heritage overlay restrictions with local council</li><li>Conduct professional building and pest inspection</li><li>Obtain quotes for kitchen and bathroom renovation</li></ul>
-        </div></details>
-        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/62-leighton-rd-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/wa/halls-head-6210/62-leighton-road-18056706/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://view.com.au/property/wa/halls-head-6210/62-leighton-road/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://propertymate.com.au/62-leighton-road-halls-head-wa-6210-house-019f6ea5-a4ba-705e-a963-0ebc31e369d0" target="_blank" rel="noopener">propertymate.com.au</a><a class="source" href="https://www.realestate.com.au/sold/in-halls+head,+wa+6210/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/halls-head-wa-6210/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-halls+head,+wa+6210/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://reiwa.com.au/sold/halls-head/" target="_blank" rel="noopener">reiwa.com.au</a><a class="source" href="https://view.com.au/property/wa/halls-head-6210/60a-halls-head-parade-16593982/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://reiwa.com.au/60a-halls-head-parade-halls-head-4906383/" target="_blank" rel="noopener">reiwa.com.au</a><a class="source" href="https://coastrealty.century21.com.au/property/residential/buy/wa/6210/halls-head/602306" target="_blank" rel="noopener">coastrealty.century21.com.au</a><a class="source" href="https://harcourts.net/au/office/mandurah/listing/l37164901-10-honeysuckle-ramble-halls-head-wa-6210/" target="_blank" rel="noopener">harcourts.net</a><a class="source" href="https://www.realestate.com.au/property/43-glencoe-parade-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/6-oversby-st-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
-        </div>
-    </article>
-    
-    <article class="card" data-group="review" data-search="24-26 andersen street, apple tree creek, qld 4660 review moderate large corner block provides excellent land value tight rental market supports long-term holding recent floor updates reduce immediate cosmetic spend significant structural issues with timber cladding lack of council approval for the shed or other structures">
-      <div class="card-head">
-        <div class="rank"><small>RANK</small><b>2</b></div>
-        <div>
-          <div class="address">24-26 Andersen Street, Apple Tree Creek, QLD 4660</div>
-          <div class="subline"><span>$465,000</span><span><a href="https://www.realestate.com.au/property/24-26-andersen-st-apple-tree-creek-qld-4660/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 19:53</span><span>Evidence Pipeline</span></div>
-        </div>
-        <div class="score"><span class="badge review">REVIEW</span><b>51</b><small>rank score / 100</small></div>
-      </div>
-      <div class="facts">
-        <div class="fact"><div class="v">2 / 1 / 2</div><div class="k">Bed / Bath / Car</div></div>
-        <div class="fact"><div class="v">2,709 m²</div><div class="k">Land size</div></div>
-        <div class="fact"><div class="v">MODERATE</div><div class="k">Renovation level</div></div>
-        <div class="fact"><div class="v">MEDIUM</div><div class="k">Confidence · Sheet score 86.0 · Diff +51.9%</div></div>
-      </div>
-      <div class="financials">
-        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$30,000 – $70,000</div></div>
-        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$500,000 – $550,000</div></div>
-        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-35,000 – $55,000</div></div>
-      </div>
-      <div class="card-body">
-        
-        <p class="lead">The property is described as a charming Redcedar home with recent updates to floor coverings in the bedrooms and living areas.</p>
-        <details open><summary>Why it ranks here</summary><div class="detail">
-          <ul class="clean"><li>Large corner block provides excellent land value</li><li>Tight rental market supports long-term holding</li><li>Recent floor updates reduce immediate cosmetic spend</li></ul>
-          <strong>Potential deal-breakers</strong><ul class="clean"><li>Significant structural issues with timber cladding</li><li>Lack of council approval for the shed or other structures</li></ul>
-        </div></details>
-        <details><summary>Land assessment</summary><div class="detail">
-          <strong>Size and comparable context:</strong> At 2,709 sqm, the land is significantly larger than the comparable sales in the area, which range from 1,011 sqm to 2,005 sqm.<br>
-          <strong>Shape, frontage and access:</strong> The property is situated on a corner block, which typically offers superior access and potential for dual street frontage.<br>
-          <strong>Slope, drainage and usability:</strong> The land is described as having room to move, but specific slope and drainage characteristics remain unverified.<br>
-          <strong>Extension/development:</strong> The large land size provides significant potential for extensions or additional structures, subject to local council planning regulations.<br>
-          <strong>Constraints to verify:</strong><ul class="clean"><li>Local council zoning and development overlays</li><li>Easements or building envelopes</li><li>Bushfire or flood risk mapping</li></ul>
-        </div></details>
-        <details><summary>Renovation facts and scope</summary><div class="detail">
-          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>New floor coverings in bedrooms and living room</li></ul>
-          <strong>Require inspection</strong><ul class="clean"><li>Structural integrity of Redcedar timber cladding</li><li>Roof and gutter condition</li><li>Foundation/stump stability</li><li>Electrical and plumbing systems</li><li>Presence of asbestos or pests</li><li>Condition of the 6m x 6m shed</li></ul>
-          <strong>Already improved</strong><ul class="clean"><li>Recent floor coverings</li></ul>
-          <strong>Cost scope:</strong> Costs cover potential cosmetic updates, kitchen/bathroom refresh, and general maintenance. Excludes major structural repairs or council fees for development.
-        </div></details>
-        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev high">HIGH</span><div><strong>Structural integrity of timber construction</strong><br>Redcedar homes require specific maintenance to prevent rot and pest infestation. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Unapproved works</strong><br>The 6m x 6m shed and any internal modifications require verification of council approval. <small>(GENERAL_CHECK)</small></div></div></div></details>
-        <details><summary>Renovated CMA</summary><div class="detail">
-          <strong>CMA quality:</strong> ADEQUATE<br>
-          <strong>Land adjustment:</strong> The subject property has a significantly larger land parcel than the comparables, which adds value but may not be fully reflected in the immediate sale price of smaller lots.<br>
-          <strong>Summary:</strong> The market for 2-bedroom homes in Apple Tree Creek appears to be in the $470k-$550k range depending on finish and land utility.
-          <div class="comp"><b>21 Redgwell Close, Apple Tree Creek</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $470,000 in July 2026; similar 2-bed configuration with shed, providing a strong baseline for current market value.</div><div class="comp"><b>19 McGibbon Street, Apple Tree Creek</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $558,000 in Sept 2025; represents the upper end for a fully renovated home, though it has 4 bedrooms.</div>
-        </div></details>
-        <details><summary>Market and next actions</summary><div class="detail">
-          <strong>Market:</strong> The market shows strong demand with a DSR of 61 and a very low vacancy rate of 0.20%, indicating a tight rental market.<br>
-          <strong>DSR:</strong> Days on market: 75days · Demand to Supply Ratio: 61 · Online search interest: 27 · Percent renters in market: 15.00% · Percent stock on market: 2.59% · Statistical reliability: 37 · Vacancy rate: 0.20% · Typical value: $636,114 · Auction clearance rate: 0.00% · Yield: 5.16%<br>
-          <strong>Next actions</strong><ul class="clean"><li>Conduct a professional building and pest inspection</li><li>Verify council records for all structures on the land</li><li>Obtain quotes for potential kitchen and bathroom upgrades</li></ul>
-        </div></details>
-        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/24-26-andersen-st-apple-tree-creek-qld-4660/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://harcourts.net/au/office/ignite/listing/l41534720-24-26-andersen-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">harcourts.net</a><a class="source" href="https://www.realestate.com.au/property-house-qld-apple+tree+creek-151797416" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.onthehouse.com.au/property-for-sale/qld/apple-tree-creek-4660/24--26-andersen-st-apple-tree-creek-qld-4660-18744897" target="_blank" rel="noopener">onthehouse.com.au</a><a class="source" href="https://view.com.au/property/qld/apple-tree-creek-4660/24-26-andersen-street-18056264/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://harcourts.net/au/office/ignite/listing/l26558479-24-26-andersen-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">harcourts.net</a><a class="source" href="https://propertymate.com.au/24-26-andersen-street-apple-tree-creek-qld-4660-house-019f7013-2439-78ec-9a4d-cf13db92bd7f" target="_blank" rel="noopener">propertymate.com.au</a><a class="source" href="https://www.realestate.com.au/sold/in-apple+tree+creek,+qld+4660/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://nutrien.harcourts.net/au/office/ignite/listing/l22249173-19-mcgibbon-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">nutrien.harcourts.net</a><a class="source" href="https://harcourts.net/au/office/ignite/listing/l22249173-19-mcgibbon-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">harcourts.net</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-apple+tree+creek,+qld+4660/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.property.com.au/qld/apple-tree-creek-4660/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.property.com.au/qld/apple-tree-creek-4660/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/apple-tree-creek-qld-4660/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.onthehouse.com.au/property/qld/apple-tree-creek-4660" target="_blank" rel="noopener">onthehouse.com.au</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGZig-pAt756Hwss1Pi_7Ruq8PHlEwJ_9Cqq41VUG7xSI85-j2JXEfaaXvOn_jS_owI_o94jlIEJhXMa8pAVWc8pDdOciqsLKJn1t1XTAAanXQKeLM8geEFVsbuJJvQupwkpIx8dZtXMM5zAhDmsyIjKeutFY_RD3nb3y1FTrwybAJe17sVTxnvoYaNtNquGophb3cETZXFnEBV6s1nxA==" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEIBq82UnT76rXLZ_H_sXag7_ajxqAjVCumqrmlIdvgICKqHNFL2uw1W7X-ffp9Chq-9wCdxO0nL91ZxX_Xa9Xs78_nvLAavc73F8U2OLTPAdm8WBEE8hDP9VJxjh5YCuPQBCAFnQR09WjThN-2d6M4UEqzhEbB_R51jjBcvVMmF7x6QHlPkuVaCjzo9reCXOhLnkBT4uUAzvoiCGvA-kKi9Yfc" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQGOXW42-9hIzi2CCA0NbAsrnhyxqWKK-prDnuetqPQkk9dZsZNOJ1fVBNN1Tk34vUF-hQtz4m7OxxXew-9bYikgbV_Ilq2yKiY7nxiWa3ppFmyOsxmiIXutYyp1eB3pUDGHIxEeYVS0q_1uTY8RWedf_o9pQUK9v2C-ZTF0HSMBzK3qt8tLKw==" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQENVHVEh2s6M1RaEBcscwgVr56ezbBG48zj0ZdHJ0SIftAsoXfJq8Y2ipBxWDuHT2-hrwbreFMc3A75bgRkFKq2dS0DNbrNDPgw9v1Qd_yMijJ60wG6wWhkLJ-TkjDRJtS2HPl9j3hRxq1Rwebzsh353SaPJ3Ec6ZcBmUE7wiKbvtzXs4jmSHA=" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQG0ALtM1juWGc3H5RlinRE1DmgO7v51K87WYPuA5-6nG6KYoRr6rdil_F8uvgL0_zxUWm_osJ9PP89vlT1Hm_y-AfsvxON3sCa3tV7k89TKunaCXmL4pse_Xfhw1PW4uVdd13pohWidAFSQ8_XyfKgOdm6dCW2qffeO0c3NIK5aNhJE4iOEfuJycYX1" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a></div></div></details>
-        </div>
-    </article>
-    
-    <article class="card" data-group="pass" data-search="16 dibbler drive, brabham, wa 6055 pass already_renovated modern, low-maintenance property with no immediate capital expenditure required strong market metrics in brabham attractive entry price relative to recent comparable sales none identified; property is in good condition">
-      <div class="card-head">
-        <div class="rank"><small>RANK</small><b>3</b></div>
-        <div>
           <div class="address">16 Dibbler Drive, Brabham, WA 6055</div>
-          <div class="subline"><span>$730,000</span><span><a href="https://www.realestate.com.au/property/16-dibbler-dr-brabham-wa-6055/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 19:41<span class="cachetag">cached</span></span><span>Evidence Pipeline</span></div>
+          <div class="subline"><span>$730,000</span><span><a href="https://www.realestate.com.au/property/16-dibbler-dr-brabham-wa-6055/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 20:17</span><span>Evidence Pipeline</span></div>
         </div>
         <div class="score"><span class="badge pass">PASS</span><b>38</b><small>rank score / 100</small></div>
+      </div>
+      
+      <div class="dealstrip">
+        <div class="dealstat"><div class="k">Gross margin (mid)</div><span class="v pos">18.5%</span></div>
+        <div class="dealstat"><div class="k">Reno cost vs price</div><span class="v">n/a</span></div>
+        <div class="dealstat"><div class="k">Price vs suburb median</div><span class="v">0.87x</span></div>
       </div>
       <div class="facts">
         <div class="fact"><div class="v">3 / 2 / 3</div><div class="k">Bed / Bath / Car</div></div>
         <div class="fact"><div class="v">284 m²</div><div class="k">Land size</div></div>
         <div class="fact"><div class="v">ALREADY_RENOVATED</div><div class="k">Renovation level</div></div>
-        <div class="fact"><div class="v">HIGH</div><div class="k">Confidence · Sheet score 73.4 · Diff +30.7%</div></div>
+        <div class="fact"><div class="v">HIGH</div><div class="k">Confidence · Sheet score 73.4 · Diff —</div></div>
       </div>
       <div class="financials">
-        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">Not available – Not available</div></div>
-        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$780,000 – $870,000</div></div>
-        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">Not available – Not available</div></div>
+        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$0 – $0</div></div>
+        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$850,000 – $880,000</div></div>
+        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$120,000 – $150,000</div></div>
       </div>
       <div class="card-body">
         
-        <p class="lead">Modern 2022 build in excellent condition with no apparent defects or need for renovation.</p>
+        <p class="lead">Modern 2022 build in excellent condition with no evidence of required repairs.</p>
         <details open><summary>Why it ranks here</summary><div class="detail">
-          <ul class="clean"><li>Modern, low-maintenance property with no immediate capital expenditure required</li><li>Strong market metrics in Brabham</li><li>Attractive entry price relative to recent comparable sales</li></ul>
-          <strong>Potential deal-breakers</strong><ul class="clean"><li>None identified; property is in good condition</li></ul>
+          <div class="breakdown"><span class="seg-margin" style="width:23.4%" title="Margin: 23.4 pts"></span><span class="seg-land" style="width:6.4%" title="Land: 6.4 pts"></span><span class="seg-reno" style="width:1.8%" title="Reno: 1.8 pts"></span><span class="seg-market" style="width:8.0%" title="Market: 8.0 pts"></span><span class="seg-risk" style="width:12.6%" title="Risk: 12.6 pts"></span></div><div class="breakdown-legend"><b>Margin</b> 23 · <b>Land</b> 6 · <b>Reno</b> 2 · <b>Market</b> 8 · <b>Risk</b> 13 · <b>Penalties</b> -14 · <b>Capped:</b> Already renovated</div>
+          <ul class="clean"><li>Strong market demand in Brabham</li><li>Property is priced below recent comparable sales</li><li>Modern build requires no capital expenditure</li></ul>
+          <strong>Potential deal-breakers</strong><div class="detail">None identified from available evidence.</div>
         </div></details>
         <details><summary>Land assessment</summary><div class="detail">
-          <strong>Size and comparable context:</strong> At 284 sqm, the land is smaller than some local comparables like 24 Corbel Way (319 sqm) and 74 Baluran Avenue (375 sqm), but typical for modern Brabham estates.<br>
-          <strong>Shape, frontage and access:</strong> Corner block location provides potential for improved street access and additional parking.<br>
-          <strong>Slope, drainage and usability:</strong> The site appears level and fully utilized with low-maintenance artificial turf in front and rear gardens.<br>
-          <strong>Extension/development:</strong> Limited potential for significant extension due to the existing building footprint and land size constraints.<br>
-          <strong>Constraints to verify:</strong><ul class="clean"><li>Verify corner block setbacks and easements</li><li>Confirm side street parking legality</li></ul>
+          <strong>Size and comparable context:</strong> The 284 sqm block is identical in size to the primary comparable sales in the immediate area.<br>
+          <strong>Shape, frontage and access:</strong> Corner block providing dual access potential, including side street parking.<br>
+          <strong>Slope, drainage and usability:</strong> Flat block with an elevation of 25m; no evidence of drainage issues.<br>
+          <strong>Extension/development:</strong> Limited development potential due to the small lot size and recent construction of the existing dwelling.<br>
+          <strong>Constraints to verify:</strong><ul class="clean"><li>Verify local council zoning and setback requirements for any future structures</li><li>Confirm easement locations on the corner block</li></ul>
         </div></details>
         <details><summary>Renovation facts and scope</summary><div class="detail">
-          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Stone benchtop</li><li>900mm electric oven</li><li>5-burner gas cooktop</li><li>Dishwasher</li><li>Ducted reverse-cycle air conditioning</li><li>Solar panels</li><li>Artificial turf</li></ul>
-          <strong>Require inspection</strong><ul class="clean"><li>General building and pest inspection</li><li>Condition of solar system</li><li>Functionality of HVAC system</li></ul>
-          <strong>Already improved</strong><ul class="clean"><li>Kitchen</li><li>Landscaping</li><li>Climate control</li></ul>
-          <strong>Cost scope:</strong> No renovation required; costs are limited to potential minor maintenance or personal preference upgrades.
+          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Modern kitchen with stone countertops</li><li>Ducted air conditioning</li><li>Solar panels</li><li>Open-plan living</li></ul>
+          <strong>Require inspection</strong><ul class="clean"><li>General building and pest inspection for any latent defects</li><li>Verification of solar panel system condition</li><li>Check for any unapproved modifications</li></ul>
+          <strong>Already improved</strong><ul class="clean"><li>Modern kitchen</li><li>Modern bathrooms</li><li>Contemporary flooring</li><li>Solar power system</li></ul>
+          <strong>Cost scope:</strong> Property is a 2022 build in excellent condition; no renovation scope identified. Costs are zero as no improvements are required.
         </div></details>
-        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Market price volatility</strong><br>Recent sales show a wide range of values depending on land size and build quality. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev low">LOW</span><div><strong>Building defects</strong><br>Property is only 4 years old, but professional inspection is required to rule out latent construction issues. <small>(GENERAL_CHECK)</small></div></div></div></details>
+        
+        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev low">LOW</span><div><strong>Building condition</strong><br>Standard pre-purchase building and pest inspection required despite modern age. <small>(GENERAL_CHECK)</small></div></div></div></details>
         <details><summary>Renovated CMA</summary><div class="detail">
           <strong>CMA quality:</strong> STRONG<br>
-          <strong>Land adjustment:</strong> Adjusted for land size differences; the subject property sits between the $780k and $870k benchmarks.<br>
-          <strong>Summary:</strong> The property is priced competitively at $730k+ relative to recent sales of similar modern homes in the area.
-          <div class="comp"><b>12 Mayfield Drive, Brabham</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold May 2026 for $780k; smaller land (246sqm) but similar modern 3-bed configuration.</div><div class="comp"><b>14 Charades Way, Brabham</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold May 2026 for $780k; very similar modern build with compact footprint.</div><div class="comp"><b>24 Corbel Way, Brabham</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold July 2026 for $870k; slightly larger land (319sqm) justifying a higher price point.</div>
+          <strong>Land adjustment:</strong> No adjustment required as comparables are identical in land size and build quality.<br>
+          <strong>Summary:</strong> The property is priced competitively against recent sales of identical modern homes in the same suburb.
+          <div class="comp"><b>24 Corbel Way, Brabham, WA 6055</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Identical land size, same year of build, sold for $881,000 in July 2026.</div><div class="comp"><b>66 Tammar Circuit, Brabham, WA 6055</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Highly comparable modern build, identical land size, sold for $881,000 in June 2026.</div>
         </div></details>
         <details><summary>Market and next actions</summary><div class="detail">
-          <strong>Market:</strong> Brabham shows a healthy DSR of 57 with low vacancy rates (1.14%), indicating strong rental demand.<br>
+          <strong>Market:</strong> Brabham shows strong demand with a DSR of 57 and low vacancy rates, indicating a healthy market for residential property.<br>
           <strong>DSR:</strong> Days on market: 25days · Demand to Supply Ratio: 57 · Online search interest: 17 · Percent renters in market: 12.40% · Percent stock on market: 2.35% · Statistical reliability: 76 · Vacancy rate: 1.14% · Typical value: $835,000 · Auction clearance rate: 0.00% · Yield: 4.70%<br>
-          <strong>Next actions</strong><ul class="clean"><li>Conduct professional building and pest inspection</li><li>Review local council records for any unapproved structures</li><li>Confirm solar panel and HVAC system performance</li></ul>
+          <strong>Next actions</strong><ul class="clean"><li>Conduct standard building and pest inspection</li><li>Verify title and easement details</li><li>Submit offer based on comparable sales data</li></ul>
         </div></details>
-        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/16-dibbler-dr-brabham-wa-6055/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-wa-brabham-151807436" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/wa/brabham-6055/16-dibbler-drive-17951869/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.realtor.com/international/au/16-dibbler-drive-brabham-wa-151375448/" target="_blank" rel="noopener">realtor.com</a><a class="source" href="https://buymyplace.com.au/properties-residental-house-wa-brabham_4e3759ac-bc70-4cf0-bd1e-272bbdabe5c1" target="_blank" rel="noopener">buymyplace.com.au</a><a class="source" href="https://www.realestate.com.au/sold/in-brabham,+wa+6055/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.property.com.au/wa/brabham-6055/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.property.com.au/wa/brabham-6055/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-brabham,+wa+6055/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://reiwa.com.au/sold/brabham/" target="_blank" rel="noopener">reiwa.com.au</a><a class="source" href="https://www.allhomes.com.au/sold/brabham-wa-6055/house/" target="_blank" rel="noopener">allhomes.com.au</a><a class="source" href="https://raywhitearmadalecity.com.au/properties/sold-residential/wa/brabham-6055/house/3235877" target="_blank" rel="noopener">raywhitearmadalecity.com.au</a><a class="source" href="https://view.com.au/sold-properties/wa/in-brabham-6055/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.realestate.com.au/property/12-mayfield-dr-brabham-wa-6055/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/14-charades-way-brabham-wa-6055/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/24-corbel-way-brabham-wa-6055/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/74-baluran-ave-brabham-wa-6055/" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
+        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/16-dibbler-dr-brabham-wa-6055/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-wa-brabham-151807436" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/wa/brabham-6055/16-dibbler-drive-17951869/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.realtor.com/international/au/16-dibbler-drive-brabham-wa-151375448/" target="_blank" rel="noopener">realtor.com</a><a class="source" href="https://www.realestate.com.au/sold/in-brabham,+wa+6055/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.property.com.au/wa/brabham-6055/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.property.com.au/wa/brabham-6055/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-brabham,+wa+6055/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://reiwa.com.au/sold/brabham/" target="_blank" rel="noopener">reiwa.com.au</a><a class="source" href="https://www.allhomes.com.au/sold/brabham-wa-6055/house/" target="_blank" rel="noopener">allhomes.com.au</a><a class="source" href="https://raywhitearmadalecity.com.au/properties/sold-residential/wa/brabham-6055/house/3235877" target="_blank" rel="noopener">raywhitearmadalecity.com.au</a><a class="source" href="https://view.com.au/sold-properties/wa/in-brabham-6055/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHkuH4vgc5i6-YT3PHx9Du1lfi14JVF9-cVPwfVxRlER587pP9gKbny29ftWg2hifSPpEhY9dn-QANhyORTeouFe105OKemwLzcwfyX0GFceY5El8M7oYzJErNG1GdGVDbChXzFAfec66heON3soLTSo4ixtG50ZA==" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHtq3kAvk5e4Z2TUgxv4K6BrelDMfWexGcefPOkCD59TFmkSJ6SgDjfu-W_hDFLOpm-364niQFJ6BRSwSdcsbro49luP0VW4GMeVy9kWfspAwsxyCY2WtJ7Qm_H7kqqpin7x8nlgId9FuSjaigJzS5xkqVyFszBo0S_hKI=" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHUeqJ4ayxs6oAU7MSzxVZL3_8PxoaKERj2rhYcdRPIqE7US_JZGi966HibO74RW5d0pfeu1I9oOLOmkssrzYZXT2lGrxJHJuz0IYHSATHWXpaZRcrD72pmLbh2T3P2RoOdnWhmgk4pSsFQj2tFZtKYNaJz06E2L9t8iESYug==" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQHzJgerOpi3jakbh0EzB5km-Bs5X7MUl3Lb0BvXjE-Ceus3TZRUDR2dho4NMf9dy3iaQEr-GsuI4rCkBsm69_uARpSr2GZiGXtWDCY51IpgcrPWCg6aijT3LmI8wHf0ZwMv1kBvglww0Xp3Lm45nKoxamClcVlSKjIbv6MA" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFPbcq658LDTPSkn0dvrZBnxOcKOH4bUHm2glIQSe79DY7pgeOyZ5ndMCcGUXtreRu3CR9JW2vtUNCtoI9_Rw1lvwa7PG5iU82MkNP4Ynqtp-NSHB_zL9Al06yCS0EKqomBToZdDrYHOeAV5VaaozW8U2-hJW97HMhvehhK" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQEtalBeMXyfbJbCyIc1_jgxkJxkywveEcd7zQL61iKCW8RcOhhOpANyphnvw0POsZ93yvoOLIhQgS1U7TiCWmkcJ4ZI5EgIwCnASI6nHs0_4gzeSkPdyMNS1W_adWemPA==" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFpUrpiyI8nfhd2rUFsJE49jGDIbhnQMrl2X_c4k8Pktfykp0MuXiGdckg80pOdHdC1H3ws6YG5I74C-2C1O_AjwEz8xxfD7OfwUnSCG5EpreHBhPTf_09mLpjenmZsdHbYpLRAt2ApY2bi7H84otWUi8ovS6Y1DQtexQ38" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a><a class="source" href="https://vertexaisearch.cloud.google.com/grounding-api-redirect/AUZIYQFid3taECRNehRkwBqItSTg3XNoUhOEU43KJkXXdcP0ZXOIKAxO6DMAJa77a2kH3KMuETKAaFDQrifi2iJE5MrVFslqKR1Uxg5ThNs5AMd2kFWq7js3bdzA13aEAKyffndeuKJF0lBz4byR6_nvUMrlWUAExgKUrjmELJwz" target="_blank" rel="noopener">vertexaisearch.cloud.google.com</a></div></div></details>
         </div>
     </article>
     
-    <article class="card" data-group="pass" data-search="24b kurrajong road, casula, nsw 2170 pass unknown strong local market demand good location near amenities potential to add value through cosmetic renovation if the property is strata titled with restrictive by-laws significant structural issues with the shared wall">
+    <article class="card" data-group="pass" data-search="62 leighton road, halls head, wa 6210 pass major large block size provides good land value strong local market demand significant renovation potential to add value heritage overlay restrictions could make renovation unviable">
       <div class="card-head">
-        <div class="rank"><small>RANK</small><b>4</b></div>
+        
+        <div class="rank"><small>RANK</small><b>2</b></div>
+        <div>
+          <div class="address">62 Leighton Road, Halls Head, WA 6210</div>
+          <div class="subline"><span>$699,000</span><span><a href="https://www.realestate.com.au/property/62-leighton-rd-halls-head-wa-6210/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 20:18</span><span>Evidence Pipeline</span></div>
+        </div>
+        <div class="score"><span class="badge pass">PASS</span><b>36</b><small>rank score / 100</small><span class="delta down">▼ -20</span></div>
+      </div>
+      
+      <div class="dealstrip">
+        <div class="dealstat"><div class="k">Gross margin (mid)</div><span class="v ">5.1%</span></div>
+        <div class="dealstat"><div class="k">Reno cost vs price</div><span class="v">26%</span></div>
+        <div class="dealstat"><div class="k">Price vs suburb median</div><span class="v">0.64x</span></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><div class="v">3 / 1 / 3</div><div class="k">Bed / Bath / Car</div></div>
+        <div class="fact"><div class="v">634 m²</div><div class="k">Land size</div></div>
+        <div class="fact"><div class="v">MAJOR</div><div class="k">Renovation level</div></div>
+        <div class="fact"><div class="v">MEDIUM</div><div class="k">Confidence · Sheet score 87.4 · Diff -20</div></div>
+      </div>
+      <div class="financials">
+        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$115,000 – $185,000</div></div>
+        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$850,000 – $920,000</div></div>
+        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-34,000 – $106,000</div></div>
+      </div>
+      <div class="card-body">
+        
+        <p class="lead">Original 1976 condition with retro features, requiring significant cosmetic and functional updates.</p>
+        <details open><summary>Why it ranks here</summary><div class="detail">
+          <div class="breakdown"><span class="seg-margin" style="width:6.5%" title="Margin: 6.5 pts"></span><span class="seg-land" style="width:12.8%" title="Land: 12.8 pts"></span><span class="seg-reno" style="width:12.6%" title="Reno: 12.6 pts"></span><span class="seg-market" style="width:9.1%" title="Market: 9.1 pts"></span><span class="seg-risk" style="width:8.4%" title="Risk: 8.4 pts"></span></div><div class="breakdown-legend"><b>Margin</b> 6 · <b>Land</b> 13 · <b>Reno</b> 13 · <b>Market</b> 9 · <b>Risk</b> 8 · <b>Penalties</b> -13</div>
+          <ul class="clean"><li>Large block size provides good land value</li><li>Strong local market demand</li><li>Significant renovation potential to add value</li></ul>
+          <strong>Potential deal-breakers</strong><ul class="clean"><li>Heritage overlay restrictions could make renovation unviable</li></ul>
+        </div></details>
+        <details><summary>Land assessment</summary><div class="detail">
+          <strong>Size and comparable context:</strong> At 634 sqm, the block is larger than several recent comparable sales in the area (e.g., 480 sqm, 459 sqm, 225 sqm), offering superior space.<br>
+          <strong>Shape, frontage and access:</strong> The property features side access and is set towards the rear of the block, providing privacy and potential for improved vehicle access.<br>
+          <strong>Slope, drainage and usability:</strong> The block includes an expansive fully enclosed backyard, suggesting a relatively flat and usable site.<br>
+          <strong>Extension/development:</strong> The generous land size provides potential for extensions or outdoor improvements, subject to local council approval.<br>
+          <strong>Constraints to verify:</strong><ul class="clean"><li>Heritage overlay</li><li>Council zoning restrictions</li><li>Easements or sewer lines affecting extension</li></ul>
+        </div></details>
+        <details><summary>Renovation facts and scope</summary><div class="detail">
+          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Retro kitchen cabinetry</li><li>Original kitchen layout</li><li>Classic flooring</li></ul>
+          <strong>Require inspection</strong><ul class="clean"><li>Roof and gutter condition</li><li>Electrical wiring (1976 build)</li><li>Plumbing and drainage</li><li>Asbestos presence</li><li>Foundation integrity</li><li>Termite protection</li></ul>
+          <strong>Already improved</strong><div class="detail">No specific items reported.</div>
+          <strong>Cost scope:</strong> Scope includes full internal cosmetic refresh, new kitchen, new bathroom, flooring, painting, and 15% contingency. Excludes structural extensions or major roof replacement.
+        </div></details>
+        
+        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev high">HIGH</span><div><strong>Heritage Overlay</strong><br>Heritage constraints may significantly limit renovation scope, design choices, and costs. <small>(AD_INDICATED)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Age-related infrastructure</strong><br>1976 build suggests potential for outdated electrical, plumbing, and asbestos materials. <small>(GENERAL_CHECK)</small></div></div></div></details>
+        <details><summary>Renovated CMA</summary><div class="detail">
+          <strong>CMA quality:</strong> ADEQUATE<br>
+          <strong>Land adjustment:</strong> Subject property has a larger land size (634 sqm) than comparables, which adds value, though location and finish quality of comparables are superior.<br>
+          <strong>Summary:</strong> The market for renovated 3x1 homes in Halls Head sits between $820k and $950k depending on location and finish quality.
+          <div class="comp"><b>60A Halls Head Parade, Halls Head, WA 6210</b> — $950,000<br><small>16 Jul 2025 · 3 bed · 1 bath · 480 m² land</small><br>Premium beachside location with modern renovation; superior finish to subject property.</div><div class="comp"><b>3 Parkwater Cove, Halls Head, WA 6210</b> — $827,000<br><small>20 Nov 2025 · 3 bed · 1 bath · 459 m² land</small><br>Well-presented home in sought-after area; provides a realistic benchmark for a renovated 3x1.</div>
+        </div></details>
+        <details><summary>Market and next actions</summary><div class="detail">
+          <strong>Market:</strong> Halls Head shows strong demand with a DSR of 54 and low vacancy rates, indicating a healthy market for residential property.<br>
+          <strong>DSR:</strong> Days on market: 38days · Demand to Supply Ratio: 54 · Online search interest: 36 · Percent renters in market: 20.90% · Percent stock on market: 0.96% · Statistical reliability: 76 · Vacancy rate: 0.98% · Typical value: $1,089,300 · Auction clearance rate: 0.00% · Yield: 3.45%<br>
+          <strong>Next actions</strong><ul class="clean"><li>Verify heritage overlay impact with local council</li><li>Conduct professional building and pest inspection</li><li>Obtain quotes for electrical and plumbing upgrades</li></ul>
+        </div></details>
+        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/62-leighton-rd-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/wa/halls-head-6210/62-leighton-road-18056706/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://propertymate.com.au/62-leighton-road-halls-head-wa-6210-house-019f6ea5-a4ba-705e-a963-0ebc31e369d0" target="_blank" rel="noopener">propertymate.com.au</a><a class="source" href="https://view.com.au/property/wa/halls-head-6210/62-leighton-road/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.realestate.com.au/sold/in-halls+head,+wa+6210/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/halls-head-wa-6210/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-halls+head,+wa+6210/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/wa/halls-head-6210/60a-halls-head-parade-16593982/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://reiwa.com.au/sold/halls-head/" target="_blank" rel="noopener">reiwa.com.au</a><a class="source" href="https://reiwa.com.au/60a-halls-head-parade-halls-head-4906383/" target="_blank" rel="noopener">reiwa.com.au</a><a class="source" href="https://www.property.com.au/wa/halls-head-6210/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://coastrealty.century21.com.au/property/residential/buy/wa/6210/halls-head/602306" target="_blank" rel="noopener">coastrealty.century21.com.au</a><a class="source" href="https://www.realestate.com.au/property/3-parkwater-cove-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/6-rufa-lane-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/2a-leeton-cl-halls-head-wa-6210/" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
+        </div>
+    </article>
+    
+    <article class="card" data-group="pass" data-search="24b kurrajong road, casula, nsw 2170 pass moderate strong market demand in casula comparable sales support potential value uplift land size is consistent with local norms significant structural defects identified in inspection unapproved building works">
+      <div class="card-head">
+        
+        <div class="rank"><small>RANK</small><b>3</b></div>
         <div>
           <div class="address">24b Kurrajong Road, Casula, NSW 2170</div>
-          <div class="subline"><span>$850,000</span><span>Listing link not verified · <a href="https://www.google.com/search?q=%2224b+Kurrajong+Road%2C+Casula%2C+NSW+2170%22+%28site%3Arealestate.com.au+OR+site%3Adomain.com.au%29" target="_blank" rel="noopener">Search exact address</a></span><span>Analysed 19 Jul 2026 19:52</span><span>Evidence Pipeline</span></div>
+          <div class="subline"><span>$850,000</span><span>Listing link not verified · <a href="https://www.google.com/search?q=%2224b+Kurrajong+Road%2C+Casula%2C+NSW+2170%22+%28site%3Arealestate.com.au+OR+site%3Adomain.com.au%29" target="_blank" rel="noopener">Search exact address</a></span><span>Analysed 19 Jul 2026 20:18</span><span>Evidence Pipeline</span></div>
         </div>
-        <div class="score"><span class="badge pass">PASS</span><b>35</b><small>rank score / 100</small></div>
+        <div class="score"><span class="badge pass">PASS</span><b>33</b><small>rank score / 100</small><span class="delta down">▼ -2</span></div>
+      </div>
+      
+      <div class="dealstrip">
+        <div class="dealstat"><div class="k">Gross margin (mid)</div><span class="v ">4.7%</span></div>
+        <div class="dealstat"><div class="k">Reno cost vs price</div><span class="v">16%</span></div>
+        <div class="dealstat"><div class="k">Price vs suburb median</div><span class="v">0.75x</span></div>
       </div>
       <div class="facts">
         <div class="fact"><div class="v">3 / 1 / 2</div><div class="k">Bed / Bath / Car</div></div>
         <div class="fact"><div class="v">331 m²</div><div class="k">Land size</div></div>
-        <div class="fact"><div class="v">UNKNOWN</div><div class="k">Renovation level</div></div>
-        <div class="fact"><div class="v">MEDIUM</div><div class="k">Confidence · Sheet score 89.5 · Diff +58.8%</div></div>
+        <div class="fact"><div class="v">MODERATE</div><div class="k">Renovation level</div></div>
+        <div class="fact"><div class="v">MEDIUM</div><div class="k">Confidence · Sheet score 89.5 · Diff -2</div></div>
       </div>
       <div class="financials">
-        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$50,000 – $120,000</div></div>
+        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$80,000 – $140,000</div></div>
         <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$950,000 – $1,050,000</div></div>
-        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-20,000 – $150,000</div></div>
+        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-40,000 – $120,000</div></div>
       </div>
       <div class="card-body">
         <div class="warningbox"><strong>Listing link:</strong> The returned URL could not be independently matched to this exact address, so it was suppressed.</div>
-        <p class="lead">The property is advertised with a focus on the backyard and location, with no specific details provided regarding the interior condition or age of the structure.</p>
+        <p class="lead">Described as beautifully maintained and well-appointed, though specific age and structural condition remain unverified.</p>
         <details open><summary>Why it ranks here</summary><div class="detail">
-          <ul class="clean"><li>Strong local market demand</li><li>Good location near amenities</li><li>Potential to add value through cosmetic renovation</li></ul>
-          <strong>Potential deal-breakers</strong><ul class="clean"><li>If the property is Strata titled with restrictive by-laws</li><li>Significant structural issues with the shared wall</li></ul>
+          <div class="breakdown"><span class="seg-margin" style="width:6.0%" title="Margin: 6.0 pts"></span><span class="seg-land" style="width:9.6%" title="Land: 9.6 pts"></span><span class="seg-reno" style="width:9.0%" title="Reno: 9.0 pts"></span><span class="seg-market" style="width:8.3%" title="Market: 8.3 pts"></span><span class="seg-risk" style="width:9.8%" title="Risk: 9.8 pts"></span></div><div class="breakdown-legend"><b>Margin</b> 6 · <b>Land</b> 10 · <b>Reno</b> 9 · <b>Market</b> 8 · <b>Risk</b> 10 · <b>Penalties</b> -10</div>
+          <ul class="clean"><li>Strong market demand in Casula</li><li>Comparable sales support potential value uplift</li><li>Land size is consistent with local norms</li></ul>
+          <strong>Potential deal-breakers</strong><ul class="clean"><li>Significant structural defects identified in inspection</li><li>Unapproved building works</li></ul>
         </div></details>
         <details><summary>Land assessment</summary><div class="detail">
-          <strong>Size and comparable context:</strong> At 331 sqm, the land size is comparable to other local properties like 10 Gilmore Road (334 sqm), providing a standard footprint for a duplex in this area.<br>
-          <strong>Shape, frontage and access:</strong> The property is a duplex/semi-detached, implying shared boundaries; specific frontage and access details are not provided in the listing.<br>
-          <strong>Slope, drainage and usability:</strong> The listing highlights a large, private family backyard, suggesting a usable and relatively flat area, though site inspection is required to confirm drainage.<br>
-          <strong>Extension/development:</strong> The site appears to be an established duplex, which typically limits major development potential compared to a standalone block; any extension would be subject to council approval.<br>
-          <strong>Constraints to verify:</strong><ul class="clean"><li>Easements</li><li>Shared wall/strata implications</li><li>Council zoning restrictions</li><li>Stormwater drainage</li></ul>
+          <strong>Size and comparable context:</strong> At 331 sqm, the land size is highly comparable to nearby sales like 10 Gilmore Road (334 sqm) and 4B Kylie Way (330 sqm).<br>
+          <strong>Shape, frontage and access:</strong> The listing highlights an expansive private backyard, though specific frontage and access details are not provided.<br>
+          <strong>Slope, drainage and usability:</strong> The backyard is described as expansive and usable, but site-specific slope and drainage conditions require professional assessment.<br>
+          <strong>Extension/development:</strong> The land size is typical for the area, but no specific evidence supports major development potential beyond standard residential use.<br>
+          <strong>Constraints to verify:</strong><ul class="clean"><li>Easements</li><li>Sewer lines</li><li>Stormwater drainage</li><li>Boundary alignment</li></ul>
         </div></details>
         <details><summary>Renovation facts and scope</summary><div class="detail">
-          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Large private backyard</li></ul>
-          <strong>Require inspection</strong><ul class="clean"><li>Internal condition of kitchen and bathroom</li><li>Roof and gutter integrity</li><li>Electrical and plumbing systems</li><li>Presence of asbestos-era materials</li><li>Structural integrity of the shared wall</li><li>Flooring and wall finishes</li></ul>
-          <strong>Already improved</strong><div class="detail">No specific items reported.</div>
-          <strong>Cost scope:</strong> Estimated costs cover a potential cosmetic to moderate renovation including kitchen and bathroom updates, flooring, and painting. Excludes structural repairs or major extensions.
+          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Built-in wardrobes</li><li>Internal laundry</li></ul>
+          <strong>Require inspection</strong><ul class="clean"><li>Roof and gutter condition</li><li>Electrical wiring</li><li>Plumbing and drainage</li><li>Foundation integrity</li><li>Asbestos-era materials</li><li>Bathroom waterproofing</li><li>Kitchen functionality</li></ul>
+          <strong>Already improved</strong><ul class="clean"><li>General maintenance</li><li>Interior presentation</li></ul>
+          <strong>Cost scope:</strong> Estimate covers full internal cosmetic refresh, new kitchen, new bathroom, and 20% contingency. Excludes structural modifications or major plumbing/electrical overhauls.
         </div></details>
-        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev high">HIGH</span><div><strong>Shared wall/Strata status</strong><br>Must verify if the property is Torrens title or Strata title, as this significantly impacts renovation control and costs. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Internal condition</strong><br>The lack of interior photos or descriptions suggests potential for significant wear or outdated finishes. <small>(AD_INDICATED)</small></div></div></div></details>
+        
+        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev high">HIGH</span><div><strong>Structural integrity</strong><br>Age and construction type are unknown; requires building and pest inspection. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Bathroom and kitchen condition</strong><br>Ad describes as maintained, but actual age of fixtures is unconfirmed. <small>(AD_INDICATED)</small></div></div></div></details>
         <details><summary>Renovated CMA</summary><div class="detail">
-          <strong>CMA quality:</strong> ADEQUATE<br>
-          <strong>Land adjustment:</strong> Adjustments made for the duplex nature of the subject property compared to the standalone houses used as high-end benchmarks.<br>
-          <strong>Summary:</strong> The market for 3-bedroom homes in Casula is strong, with renovated properties achieving over $1M. The subject property&#x27;s value is likely constrained by its duplex status compared to standalone houses.
-          <div class="comp"><b>1/2 Kurrajong Road, Casula, NSW 2170</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Directly on the same street, sold for $750,000 in April 2026. Represents a baseline for similar property types in the immediate vicinity.</div><div class="comp"><b>10 Gilmore Road, Casula, NSW 2170</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $1,030,000 in July 2026. A renovated single-storey home of similar land size, providing a benchmark for a high-quality finish.</div>
+          <strong>CMA quality:</strong> STRONG<br>
+          <strong>Land adjustment:</strong> Adjustments made for the duplex nature of the subject property compared to detached houses in the area.<br>
+          <strong>Summary:</strong> The subject property is priced competitively against recent sales of similar 3-bedroom homes in Casula.
+          <div class="comp"><b>10 Gilmore Road, Casula</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Modern 1998-built house, highly comparable land size, sold for $1,030,000.</div><div class="comp"><b>4B Kylie Way, Casula</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Well-kept 3-bed, 1-bath home, similar land size, sold for $1,000,000.</div>
         </div></details>
         <details><summary>Market and next actions</summary><div class="detail">
-          <strong>Market:</strong> Casula shows a healthy demand-to-supply ratio of 52 and a solid auction clearance rate of 75%, indicating a competitive market environment.<br>
+          <strong>Market:</strong> Casula shows strong demand with a 52 DSR and a 75% auction clearance rate, indicating a seller-favorable market.<br>
           <strong>DSR:</strong> Days on market: 45days · Demand to Supply Ratio: 52 · Online search interest: 66 · Percent renters in market: 33.20% · Percent stock on market: 0.89% · Statistical reliability: 76 · Vacancy rate: 1.44% · Typical value: $1,130,100 · Auction clearance rate: 75.00% · Yield: 3.23%<br>
-          <strong>Next actions</strong><ul class="clean"><li>Confirm title type (Torrens vs Strata)</li><li>Request contract of sale and check for easements</li><li>Conduct a professional building and pest inspection</li><li>Verify if the property is a duplex or semi-detached</li></ul>
+          <strong>Next actions</strong><ul class="clean"><li>Conduct building and pest inspection</li><li>Verify council records for unapproved works</li><li>Confirm exact building age and construction type</li></ul>
         </div></details>
-        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/sold/in-casula,+nsw+2170/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-casula,+nsw+2170/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/nsw/casula-2170/2-rudd-close-17560347/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/casula-nsw-2170/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.property.com.au/nsw/casula-2170/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.property.com.au/nsw/casula-2170/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://view.com.au/sold-properties/nsw/in-casula-2170/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://raywhitegreenvalley.com.au/properties/sold-residential/nsw/casula-2170/house/3153272" target="_blank" rel="noopener">raywhitegreenvalley.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-nsw-casula-145417560" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-nsw-casula-145417919" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-nsw-casula-145417500" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-unit-nsw-casula-145417700" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
+        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/sold/in-casula,+nsw+2170/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-casula,+nsw+2170/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://view.com.au/property/nsw/casula-2170/2-rudd-close-17560347/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/casula-nsw-2170/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.property.com.au/nsw/casula-2170/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.property.com.au/nsw/casula-2170/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://raywhitegreenvalley.com.au/properties/sold-residential/nsw/casula-2170/house/3153272" target="_blank" rel="noopener">raywhitegreenvalley.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/casula-nsw-2170/house/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.domain.com.au/property-profile/2-rudd-close-casula-nsw-2170" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.domain.com.au/property-profile/10-gilmore-road-casula-nsw-2170" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.domain.com.au/property-profile/4b-kylie-way-casula-nsw-2170" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.domain.com.au/property-profile/4-1-3-myall-road-casula-nsw-2170" target="_blank" rel="noopener">domain.com.au</a></div></div></details>
         </div>
     </article>
     
-    <article class="card" data-group="pass" data-search="49 emerald circuit, virginia, sa 5120 pass already_renovated property is already renovated and modern (2023 build). no significant value-add opportunity through renovation. small land size limits capital growth potential compared to larger local lots. lack of renovation potential for a professional renovation strategy.">
+    <article class="card" data-group="pass" data-search="24-26 andersen street, apple tree creek, qld 4660 pass moderate large land parcel offers long-term value strong rental market metrics entry price is reasonable for the land size limited upside potential due to 2-bedroom configuration high renovation costs relative to potential arv">
+      <div class="card-head with-thumb">
+        <div class="thumb"><img src="https://assets.cloudhi.io/system/team-members/f16443a8-f40b-4448-921d-fc4921248d15.jpg.webp" alt="Listing photo" loading="lazy"></div>
+        <div class="rank"><small>RANK</small><b>4</b></div>
+        <div>
+          <div class="address">24-26 Andersen Street, Apple Tree Creek, QLD 4660</div>
+          <div class="subline"><span>$465,000</span><span><a href="https://harcourts.net/au/office/ignite/listing/l41534720-24-26-andersen-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 20:19</span><span>Evidence Pipeline</span></div>
+        </div>
+        <div class="score"><span class="badge pass">PASS</span><b>29</b><small>rank score / 100</small><span class="delta down">▼ -22</span></div>
+      </div>
+      
+      <div class="dealstrip">
+        <div class="dealstat"><div class="k">Gross margin (mid)</div><span class="v neg">-2.1%</span></div>
+        <div class="dealstat"><div class="k">Reno cost vs price</div><span class="v">24%</span></div>
+        <div class="dealstat"><div class="k">Price vs suburb median</div><span class="v">0.73x</span></div>
+      </div>
+      <div class="facts">
+        <div class="fact"><div class="v">2 / 1 / 2</div><div class="k">Bed / Bath / Car</div></div>
+        <div class="fact"><div class="v">2,709 m²</div><div class="k">Land size</div></div>
+        <div class="fact"><div class="v">MODERATE</div><div class="k">Renovation level</div></div>
+        <div class="fact"><div class="v">MEDIUM</div><div class="k">Confidence · Sheet score 86.0 · Diff -22</div></div>
+      </div>
+      <div class="financials">
+        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$60,000 – $110,000</div></div>
+        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$520,000 – $560,000</div></div>
+        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-55,000 – $35,000</div></div>
+      </div>
+      <div class="card-body">
+        
+        <p class="lead">Described as a charming Redcedar home with recent flooring updates; however, actual interior condition is unverified due to lack of descriptive photos.</p>
+        <details open><summary>Why it ranks here</summary><div class="detail">
+          <div class="breakdown"><span class="seg-margin" style="width:0.0%" title="Margin: 0.0 pts"></span><span class="seg-land" style="width:12.8%" title="Land: 12.8 pts"></span><span class="seg-reno" style="width:10.8%" title="Reno: 10.8 pts"></span><span class="seg-market" style="width:7.0%" title="Market: 7.0 pts"></span><span class="seg-risk" style="width:8.4%" title="Risk: 8.4 pts"></span></div><div class="breakdown-legend"><b>Margin</b> 0 · <b>Land</b> 13 · <b>Reno</b> 11 · <b>Market</b> 7 · <b>Risk</b> 8 · <b>Penalties</b> -10</div>
+          <ul class="clean"><li>Large land parcel offers long-term value</li><li>Strong rental market metrics</li><li>Entry price is reasonable for the land size</li></ul>
+          <strong>Potential deal-breakers</strong><ul class="clean"><li>Limited upside potential due to 2-bedroom configuration</li><li>High renovation costs relative to potential ARV</li></ul>
+        </div></details>
+        <details><summary>Land assessment</summary><div class="detail">
+          <strong>Size and comparable context:</strong> At 2,709 sqm, the land is significantly larger than the comparable sales in the area, which range from 1,011 sqm to 1,564 sqm.<br>
+          <strong>Shape, frontage and access:</strong> The property is situated on a corner block, which typically offers superior access and potential for secondary street entry.<br>
+          <strong>Slope, drainage and usability:</strong> The land is described as having room to move, but specific slope and drainage characteristics remain unverified.<br>
+          <strong>Extension/development:</strong> The large land size suggests potential for further development or expansion, subject to local council zoning and planning regulations.<br>
+          <strong>Constraints to verify:</strong><ul class="clean"><li>Council zoning and development overlays</li><li>Easements or building envelopes</li><li>Flood or bushfire risk mapping</li></ul>
+        </div></details>
+        <details><summary>Renovation facts and scope</summary><div class="detail">
+          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>New floor coverings in bedrooms and living room</li></ul>
+          <strong>Require inspection</strong><ul class="clean"><li>Redcedar cladding maintenance</li><li>Roof and gutter integrity</li><li>Stump/foundation condition</li><li>Electrical and plumbing systems</li><li>Kitchen and bathroom functionality</li><li>Asbestos presence</li></ul>
+          <strong>Already improved</strong><ul class="clean"><li>Bedroom flooring</li><li>Living room flooring</li></ul>
+          <strong>Cost scope:</strong> Scope includes full kitchen and bathroom renovation, exterior painting/cladding maintenance, and general interior refresh. Excludes structural extensions or major landscaping.
+        </div></details>
+        
+        <details><summary>Photo condition analysis (3 photos)</summary><div class="detail">
+          <strong>Overall:</strong> UNCLEAR · photo reno level UNKNOWN · confidence LOW<br>
+          <strong>Kitchen:</strong> NOT_VISIBLE<br>
+          <strong>Bathroom:</strong> NOT_VISIBLE<br>
+          <strong>Flooring:</strong> Large format grey floor tiles are visible in the interior shot.<br>
+          <strong>Facade:</strong> NOT_VISIBLE<br>
+          <strong>Roof:</strong> NOT_VISIBLE<br>
+          <strong>Visible flags</strong><div class="detail">No clearly visible structural or moisture issues in the photographs.</div>
+          <strong>Summary:</strong> The provided images are stock photos of people and branding logos, offering no information about the actual property. No assessment of the home&#x27;s condition or renovation potential can be made from these files.
+        </div></details>
+        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Redcedar construction maintenance</strong><br>Timber homes require regular maintenance to prevent rot and pest infestation. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev low">LOW</span><div><strong>Tenancy status</strong><br>Property is currently tenanted, requiring 48 hours notice for inspections. <small>(AD_INDICATED)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Lack of visual evidence</strong><br>Listing photos do not show the actual interior or exterior condition of the dwelling. <small>(GENERAL_CHECK)</small></div></div></div></details>
+        <details><summary>Renovated CMA</summary><div class="detail">
+          <strong>CMA quality:</strong> ADEQUATE<br>
+          <strong>Land adjustment:</strong> The subject property has a significantly larger land parcel than comparables, which adds value but may not be fully reflected in the sale price of smaller, more modern homes.<br>
+          <strong>Summary:</strong> The market for renovated homes in Apple Tree Creek is between $520k and $645k. The subject property is a 2-bed, which limits its ceiling compared to 3-4 bed comparables.
+          <div class="comp"><b>11 Cockatoo Court, Apple Tree Creek</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $645,000; superior modern finish and larger shed, but smaller land size.</div><div class="comp"><b>6 Andersen Street, Apple Tree Creek</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $520,000; 3-bed modern home, smaller land size.</div><div class="comp"><b>19 McGibbon Street, Apple Tree Creek</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $558,000; 4-bed renovated home, smaller land size.</div>
+        </div></details>
+        <details><summary>Market and next actions</summary><div class="detail">
+          <strong>Market:</strong> The market shows a healthy demand-to-supply ratio of 61 and a very low vacancy rate of 0.20%, indicating strong rental demand.<br>
+          <strong>DSR:</strong> Days on market: 75days · Demand to Supply Ratio: 61 · Online search interest: 27 · Percent renters in market: 15.00% · Percent stock on market: 2.59% · Statistical reliability: 37 · Vacancy rate: 0.20% · Typical value: $636,114 · Auction clearance rate: 0.00% · Yield: 5.16%<br>
+          <strong>Next actions</strong><ul class="clean"><li>Conduct physical inspection to assess Redcedar condition and interior</li><li>Verify council zoning for potential subdivision or secondary dwelling</li><li>Request building and pest report</li></ul>
+        </div></details>
+        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://harcourts.net/au/office/ignite/listing/l41534720-24-26-andersen-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">harcourts.net</a><a class="source" href="https://www.realestate.com.au/property-house-qld-apple+tree+creek-151797416" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/24-26-andersen-st-apple-tree-creek-qld-4660/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.onthehouse.com.au/property-for-sale/qld/apple-tree-creek-4660/24--26-andersen-st-apple-tree-creek-qld-4660-18744897" target="_blank" rel="noopener">onthehouse.com.au</a><a class="source" href="https://propertymate.com.au/24-26-andersen-street-apple-tree-creek-qld-4660-house-019f7013-2439-78ec-9a4d-cf13db92bd7f" target="_blank" rel="noopener">propertymate.com.au</a><a class="source" href="https://view.com.au/property/qld/apple-tree-creek-4660/24-26-andersen-street-18056264/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.realtor.com/international/au/24-26-andersen-street-apple-tree-creek-qld-151797416/" target="_blank" rel="noopener">realtor.com</a><a class="source" href="https://www.realestate.com.au/sold/in-apple+tree+creek,+qld+4660/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://nutrien.harcourts.net/au/office/ignite/listing/l22249173-19-mcgibbon-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">nutrien.harcourts.net</a><a class="source" href="https://harcourts.net/au/office/ignite/listing/l22249173-19-mcgibbon-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">harcourts.net</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-apple+tree+creek,+qld+4660/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.property.com.au/qld/apple-tree-creek-4660/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://goregional.com.au/19-mcgibbon-street-apple-tree-creek-qld-4660-408298" target="_blank" rel="noopener">goregional.com.au</a><a class="source" href="https://www.property.com.au/qld/apple-tree-creek-4660/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/apple-tree-creek-qld-4660/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-qld-apple+tree+creek-144093404" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-qld-apple+tree+creek-144018384" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-qld-apple+tree+creek-140093404" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-qld-apple+tree+creek-141093404" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
+        </div>
+    </article>
+    
+    <article class="card" data-group="pass" data-search="49 emerald circuit, virginia, sa 5120 pass already_renovated property is near-new and offers no scope for value-add renovation. small land size limits capital growth potential compared to larger blocks in the area. current market price is consistent with recent comparable sales. lack of renovation potential for a professional investor. flood and bushfire overlays require additional due diligence.">
       <div class="card-head">
+        
         <div class="rank"><small>RANK</small><b>5</b></div>
         <div>
           <div class="address">49 Emerald Circuit, Virginia, SA 5120</div>
-          <div class="subline"><span>$689,000</span><span><a href="https://www.realestate.com.au/property/49-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 19:42<span class="cachetag">cached</span></span><span>Evidence Pipeline</span></div>
+          <div class="subline"><span>$689,000</span><span><a href="https://www.realestate.com.au/property/49-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">Open verified listing</a></span><span>Analysed 19 Jul 2026 20:18</span><span>Evidence Pipeline</span></div>
         </div>
-        <div class="score"><span class="badge pass">PASS</span><b>16</b><small>rank score / 100</small></div>
+        <div class="score"><span class="badge pass">PASS</span><b>3</b><small>rank score / 100</small><span class="delta down">▼ -13</span></div>
+      </div>
+      
+      <div class="dealstrip">
+        <div class="dealstat"><div class="k">Gross margin (mid)</div><span class="v neg">-2.0%</span></div>
+        <div class="dealstat"><div class="k">Reno cost vs price</div><span class="v">n/a</span></div>
+        <div class="dealstat"><div class="k">Price vs suburb median</div><span class="v">0.75x</span></div>
       </div>
       <div class="facts">
         <div class="fact"><div class="v">3 / 2 / 2</div><div class="k">Bed / Bath / Car</div></div>
         <div class="fact"><div class="v">192 m²</div><div class="k">Land size</div></div>
         <div class="fact"><div class="v">ALREADY_RENOVATED</div><div class="k">Renovation level</div></div>
-        <div class="fact"><div class="v">HIGH</div><div class="k">Confidence · Sheet score 52.0 · Diff +40.2%</div></div>
+        <div class="fact"><div class="v">HIGH</div><div class="k">Confidence · Sheet score 52.0 · Diff -13</div></div>
       </div>
       <div class="financials">
-        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$0 – $5,000</div></div>
-        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$680,000 – $720,000</div></div>
-        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-14,000 – $26,000</div></div>
+        <div class="moneybox"><div class="k">Renovation allowance</div><div class="v">$0 – $0</div></div>
+        <div class="moneybox"><div class="k">After-renovation value</div><div class="v">$650,000 – $700,000</div></div>
+        <div class="moneybox"><div class="k">Indicative gross margin</div><div class="v">$-39,000 – $11,000</div></div>
       </div>
       <div class="card-body">
         
-        <p class="lead">The property is a near-new 2023-built contemporary home in excellent, original condition with no apparent defects or need for renovation.</p>
+        <p class="lead">Near-new, contemporary home in excellent condition with modern finishes throughout.</p>
         <details open><summary>Why it ranks here</summary><div class="detail">
-          <ul class="clean"><li>Property is already renovated and modern (2023 build).</li><li>No significant value-add opportunity through renovation.</li><li>Small land size limits capital growth potential compared to larger local lots.</li></ul>
-          <strong>Potential deal-breakers</strong><ul class="clean"><li>Lack of renovation potential for a professional renovation strategy.</li></ul>
+          <div class="breakdown"><span class="seg-margin" style="width:0.0%" title="Margin: 0.0 pts"></span><span class="seg-land" style="width:3.2%" title="Land: 3.2 pts"></span><span class="seg-reno" style="width:1.8%" title="Reno: 1.8 pts"></span><span class="seg-market" style="width:8.0%" title="Market: 8.0 pts"></span><span class="seg-risk" style="width:9.8%" title="Risk: 9.8 pts"></span></div><div class="breakdown-legend"><b>Margin</b> 0 · <b>Land</b> 3 · <b>Reno</b> 2 · <b>Market</b> 8 · <b>Risk</b> 10 · <b>Penalties</b> -20</div>
+          <ul class="clean"><li>Property is near-new and offers no scope for value-add renovation.</li><li>Small land size limits capital growth potential compared to larger blocks in the area.</li><li>Current market price is consistent with recent comparable sales.</li></ul>
+          <strong>Potential deal-breakers</strong><ul class="clean"><li>Lack of renovation potential for a professional investor.</li><li>Flood and bushfire overlays require additional due diligence.</li></ul>
         </div></details>
         <details><summary>Land assessment</summary><div class="detail">
-          <strong>Size and comparable context:</strong> At 192 sqm, the land size is on the smaller end for the area, with comparable sales often featuring larger allotments (e.g., 288 sqm to 330 sqm).<br>
-          <strong>Shape, frontage and access:</strong> Standard residential allotment within a modern estate; no specific issues regarding frontage or access noted.<br>
-          <strong>Slope, drainage and usability:</strong> The site is generally level and highly usable, though it is subject to a flood overlay which requires professional verification.<br>
-          <strong>Extension/development:</strong> Minimal potential for extension or development due to the small land footprint and the recent construction of the existing dwelling.<br>
-          <strong>Constraints to verify:</strong><ul class="clean"><li>Bushfire Urban Interface hazard overlay</li><li>Flooding General hazard overlay</li></ul>
+          <strong>Size and comparable context:</strong> At 192 sqm, the block is significantly smaller than the local average for houses, aligning with modern compact estate developments.<br>
+          <strong>Shape, frontage and access:</strong> Standard rectangular allotment within a residential estate with typical street frontage and access.<br>
+          <strong>Slope, drainage and usability:</strong> Flat block with low-maintenance landscaping; however, the property is subject to a flood overlay requiring professional assessment.<br>
+          <strong>Extension/development:</strong> Minimal potential for extension or development due to the small land footprint and recent construction.<br>
+          <strong>Constraints to verify:</strong><ul class="clean"><li>Flood overlay</li><li>Bushfire overlay</li></ul>
         </div></details>
         <details><summary>Renovation facts and scope</summary><div class="detail">
-          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Modern kitchen with quality appliances</li><li>Stylish ensuite</li><li>Built-in robes</li><li>Open-plan living</li></ul>
-          <strong>Require inspection</strong><ul class="clean"><li>Verification of flood and bushfire mitigation compliance</li><li>General building and pest inspection for any latent defects</li></ul>
-          <strong>Already improved</strong><ul class="clean"><li>Kitchen</li><li>Bathrooms</li><li>Flooring</li><li>Internal finishes</li></ul>
-          <strong>Cost scope:</strong> No structural or cosmetic renovation required. Costs are limited to minor maintenance or potential compliance checks.
+          <strong>Confirmed or ad-indicated</strong><ul class="clean"><li>Modern kitchen with contemporary finishes</li><li>Modern bathrooms</li><li>Contemporary interior styling</li></ul>
+          <strong>Require inspection</strong><ul class="clean"><li>Slab integrity</li><li>Stormwater drainage efficiency</li><li>Bushfire protection compliance</li></ul>
+          <strong>Already improved</strong><ul class="clean"><li>Full modern fit-out</li><li>Landscaping</li></ul>
+          <strong>Cost scope:</strong> Property is near-new (2023 build); no renovation required. Costs excluded as the property is already at a high standard.
         </div></details>
-        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Flood Overlay</strong><br>Property is subject to a flood overlay which may impact insurance and future development. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Bushfire Overlay</strong><br>Property is located in a Bushfire Urban Interface zone. <small>(GENERAL_CHECK)</small></div></div></div></details>
+        
+        <details><summary>Due-diligence risks</summary><div class="detail"><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Flood overlay</strong><br>Property is located within a designated flood overlay zone. <small>(GENERAL_CHECK)</small></div></div><div class="risk"><span class="sev medium">MEDIUM</span><div><strong>Bushfire overlay</strong><br>Property is located within a designated bushfire overlay zone. <small>(GENERAL_CHECK)</small></div></div></div></details>
         <details><summary>Renovated CMA</summary><div class="detail">
-          <strong>CMA quality:</strong> ADEQUATE<br>
-          <strong>Land adjustment:</strong> The subject property is smaller than many local comparables, which limits its ceiling price compared to larger-block modern homes.<br>
-          <strong>Summary:</strong> The property is priced in line with recent sales of similar modern homes in the Virginia area. There is limited upside for value-add through renovation.
-          <div class="comp"><b>53 Gerardis Avenue, Virginia, SA 5120</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $772,000 in March 2026; features larger land size (288 sqm) and similar modern condition.</div><div class="comp"><b>30 Alexandra Way, Virginia, SA 5120</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Sold for $628,000 in March 2025; similar modern build quality and configuration.</div>
+          <strong>CMA quality:</strong> STRONG<br>
+          <strong>Land adjustment:</strong> Values are heavily influenced by land size; the subject property&#x27;s small 192 sqm block limits its value compared to larger local lots.<br>
+          <strong>Summary:</strong> The property is priced in line with recent sales of similar modern compact homes in the immediate vicinity.
+          <div class="comp"><b>47 Emerald Circuit, Virginia, SA 5120</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Identical modern townhouse layout on the same street, sold Nov 2025 for $627,000.</div><div class="comp"><b>6 Emerald Circuit, Virginia, SA 5120</b> — Not available<br><small>Date unavailable · ? bed · ? bath · ? m² land</small><br>Modern house on same street, sold Oct 2025 for $825,000, but features significantly larger land (413 sqm).</div>
         </div></details>
         <details><summary>Market and next actions</summary><div class="detail">
-          <strong>Market:</strong> The Virginia market shows moderate demand with a DSR of 53 and a low vacancy rate of 1.82%, indicating a stable rental environment.<br>
+          <strong>Market:</strong> Virginia shows moderate demand with a DSR of 53 and a low vacancy rate of 1.82%, indicating a stable rental market.<br>
           <strong>DSR:</strong> Days on market: 34days · Demand to Supply Ratio: 53 · Online search interest: 48 · Percent renters in market: 12.10% · Percent stock on market: 2.53% · Statistical reliability: 58 · Vacancy rate: 1.82% · Typical value: $924,700 · Auction clearance rate: 33.30% · Yield: 3.80%<br>
-          <strong>Next actions</strong><ul class="clean"><li>Monitor market for properties with genuine renovation potential.</li><li>Do not proceed with this property for a renovation-focused investment strategy.</li></ul>
+          <strong>Next actions</strong><ul class="clean"><li>Verify flood and bushfire overlay implications with Playford Council.</li><li>Review building contract and warranty status for the 2023 build.</li></ul>
         </div></details>
-        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/49-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-sa-virginia-151801812" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.onthehouse.com.au/property/sa/virginia-5120/49-emerald-cct-virginia-sa-5120-39875708" target="_blank" rel="noopener">onthehouse.com.au</a><a class="source" href="https://www.realestate.com.au/sold/in-virginia,+sa+5120/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-virginia,+sa+5120/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/virginia-sa-5120/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://raywhitehenleybeach.com.au/properties/sold-residential/sa/virginia-5120/house/3455829" target="_blank" rel="noopener">raywhitehenleybeach.com.au</a><a class="source" href="https://www.property.com.au/sa/virginia-5120/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://view.com.au/property/sa/virginia-5120/45-joseph-street-17051383/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.eldersrealestate.com.au/residential/sale/34-alexandra-way-virginia-sa-5120-80P4703/" target="_blank" rel="noopener">eldersrealestate.com.au</a><a class="source" href="https://www.harrisre.com.au/property/house-sa-virginia-100p132876/" target="_blank" rel="noopener">harrisre.com.au</a><a class="source" href="https://www.domain.com.au/property-profile/53-gerardis-avenue-virginia-sa-5120" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.onthehouse.com.au/property/sa/virginia-5120/18-ava-cl-virginia-sa-5120-41549443" target="_blank" rel="noopener">onthehouse.com.au</a><a class="source" href="https://raywhitebarossavalley.com.au/properties/sold-residential/sa/virginia-5120/house/3218529" target="_blank" rel="noopener">raywhitebarossavalley.com.au</a><a class="source" href="https://www.realestate.com.au/property/30-alexandra-way-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
+        <details><summary>Research sources</summary><div class="detail"><div class="sources"><a class="source" href="https://www.realestate.com.au/property/49-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property-house-sa-virginia-151801812" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.onthehouse.com.au/property/sa/virginia-5120/49-emerald-cct-virginia-sa-5120-39875708" target="_blank" rel="noopener">onthehouse.com.au</a><a class="source" href="https://www.realestate.com.au/sold/in-virginia,+sa+5120/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/sold/property-house-in-virginia,+sa+5120/list-1" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.property.com.au/sa/virginia-5120/house/sold/" target="_blank" rel="noopener">property.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/virginia-sa-5120/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://raywhitehenleybeach.com.au/properties/sold-residential/sa/virginia-5120/house/3455829" target="_blank" rel="noopener">raywhitehenleybeach.com.au</a><a class="source" href="https://view.com.au/property/sa/virginia-5120/45-joseph-street-17051383/" target="_blank" rel="noopener">view.com.au</a><a class="source" href="https://www.domain.com.au/sold-listings/virginia-sa-5120/house/" target="_blank" rel="noopener">domain.com.au</a><a class="source" href="https://www.harrisre.com.au/property/house-sa-virginia-100p132876/" target="_blank" rel="noopener">harrisre.com.au</a><a class="source" href="https://www.realestate.com.au/property/47-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/53-gerardis-ave-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/3-lauren-cl-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a><a class="source" href="https://www.realestate.com.au/property/6-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">realestate.com.au</a></div></div></details>
         </div>
     </article>
     </main>
+  <div id="tablewrap" style="display:none">
+    <table id="tbl">
+      <thead><tr>
+        <th data-k="0">#</th><th data-k="1">Score</th><th data-k="2">Δ</th><th data-k="3">Verdict</th>
+        <th data-k="4">Address</th><th data-k="5">Price</th><th data-k="6">Margin %</th>
+        <th data-k="7">Land</th><th data-k="8">Land score</th><th data-k="9">Reno level</th><th data-k="10">Confidence</th>
+      </tr></thead>
+      <tbody><tr class="pass"><td data-v="1">1</td><td data-v="38"><strong>38</strong></td><td data-v="0"><span class="delta ">0</span></td><td data-v="PASS"><span class="badge pass">PASS</span></td><td class="addr" data-v="16 dibbler drive, brabham, wa 6055"><a href="https://www.realestate.com.au/property/16-dibbler-dr-brabham-wa-6055/" target="_blank" rel="noopener">16 Dibbler Drive, Brabham, WA 6055</a></td><td data-v="730000">$730,000</td><td data-v="18.5">18.5%</td><td data-v="284">284 m²</td><td data-v="4">4</td><td data-v="ALREADY_RENOVATED">ALREADY_RENOVATED</td><td data-v="HIGH">HIGH</td></tr><tr class="pass"><td data-v="2">2</td><td data-v="36"><strong>36</strong></td><td data-v="-20"><span class="delta down">-20</span></td><td data-v="PASS"><span class="badge pass">PASS</span></td><td class="addr" data-v="62 leighton road, halls head, wa 6210"><a href="https://www.realestate.com.au/property/62-leighton-rd-halls-head-wa-6210/" target="_blank" rel="noopener">62 Leighton Road, Halls Head, WA 6210</a></td><td data-v="699000">$699,000</td><td data-v="5.1">5.1%</td><td data-v="634">634 m²</td><td data-v="8">8</td><td data-v="MAJOR">MAJOR</td><td data-v="MEDIUM">MEDIUM</td></tr><tr class="pass"><td data-v="3">3</td><td data-v="33"><strong>33</strong></td><td data-v="-2"><span class="delta down">-2</span></td><td data-v="PASS"><span class="badge pass">PASS</span></td><td class="addr" data-v="24b kurrajong road, casula, nsw 2170">24b Kurrajong Road, Casula, NSW 2170</td><td data-v="850000">$850,000</td><td data-v="4.7">4.7%</td><td data-v="331">331 m²</td><td data-v="6">6</td><td data-v="MODERATE">MODERATE</td><td data-v="MEDIUM">MEDIUM</td></tr><tr class="pass"><td data-v="4">4</td><td data-v="29"><strong>29</strong></td><td data-v="-22"><span class="delta down">-22</span></td><td data-v="PASS"><span class="badge pass">PASS</span></td><td class="addr" data-v="24-26 andersen street, apple tree creek, qld 4660"><a href="https://harcourts.net/au/office/ignite/listing/l41534720-24-26-andersen-street-apple-tree-creek-qld-4660" target="_blank" rel="noopener">24-26 Andersen Street, Apple Tree Creek, QLD 4660</a></td><td data-v="465000">$465,000</td><td data-v="-2.1">-2.1%</td><td data-v="2709">2709 m²</td><td data-v="8">8</td><td data-v="MODERATE">MODERATE</td><td data-v="MEDIUM">MEDIUM</td></tr><tr class="pass"><td data-v="5">5</td><td data-v="3"><strong>3</strong></td><td data-v="-13"><span class="delta down">-13</span></td><td data-v="PASS"><span class="badge pass">PASS</span></td><td class="addr" data-v="49 emerald circuit, virginia, sa 5120"><a href="https://www.realestate.com.au/property/49-emerald-cct-virginia-sa-5120/" target="_blank" rel="noopener">49 Emerald Circuit, Virginia, SA 5120</a></td><td data-v="689000">$689,000</td><td data-v="-2.0">-2.0%</td><td data-v="192">192 m²</td><td data-v="2">2</td><td data-v="ALREADY_RENOVATED">ALREADY_RENOVATED</td><td data-v="HIGH">HIGH</td></tr></tbody>
+    </table>
+  </div>
   <footer class="footer">Preliminary desktop research only. Confirm price, title, planning controls, land constraints, approvals, rental evidence, valuation, building condition, pest risks and renovation costs with qualified professionals before making an offer.</footer>
 </div>
 <script>
@@ -384,6 +473,34 @@ summary::-webkit-details-marker{display:none}summary:after{content:"+";color:var
     active=b.dataset.filter;filters.forEach(x=>x.classList.toggle('active',x===b));apply();
   }));
   input.addEventListener('input',apply);
+  const viewBtn=document.getElementById('viewtoggle');
+  const grid=document.querySelector('.grid');
+  const tblWrap=document.getElementById('tablewrap');
+  if(viewBtn&&grid&&tblWrap){
+    viewBtn.addEventListener('click',()=>{
+      const showingTable=tblWrap.style.display!=='none';
+      tblWrap.style.display=showingTable?'none':'';
+      grid.style.display=showingTable?'':'none';
+      viewBtn.textContent=showingTable?'Table view':'Card view';
+    });
+  }
+  document.querySelectorAll('#tbl th').forEach((th,i)=>{
+    th.addEventListener('click',()=>{
+      const tbody=th.closest('table').querySelector('tbody');
+      const rows=[...tbody.rows];
+      const dir=th.dataset.dir==='asc'?'desc':'asc';
+      document.querySelectorAll('#tbl th').forEach(x=>{delete x.dataset.dir});
+      th.dataset.dir=dir;
+      rows.sort((a,b)=>{
+        const av=a.cells[i].dataset.v??a.cells[i].textContent;
+        const bv=b.cells[i].dataset.v??b.cells[i].textContent;
+        const an=parseFloat(av),bn=parseFloat(bv);
+        const c=(isNaN(an)||isNaN(bn))?String(av).localeCompare(String(bv)):an-bn;
+        return dir==='asc'?c:-c;
+      });
+      rows.forEach(r=>tbody.appendChild(r));
+    });
+  });
   document.getElementById('theme').addEventListener('click',()=>{
     const root=document.documentElement;const next=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=next;
     try{localStorage.setItem('reno-theme',next)}catch(e){}
