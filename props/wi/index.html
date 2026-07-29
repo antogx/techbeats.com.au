@@ -325,8 +325,10 @@ table.board{border-collapse:collapse;font-size:13.5px}
 .ncount{display:inline-block;margin-right:4px;padding:1px 7px;border-radius:99px;
   background:var(--gold-soft);color:var(--gold);font-size:10.5px;font-weight:800;
   white-space:nowrap;vertical-align:middle}
-.dnotes{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line);
+.dnotes{margin-top:12px;padding:10px 12px;border:1px solid var(--line);
+  border-radius:10px;background:#eef4fa;
   position:sticky;left:12px;max-width:min(560px,calc(100vw - 44px))}
+[data-theme="dark"] .dnotes{background:#1c2430}
 .dnotes .nhead{display:flex;align-items:center;gap:10px;margin-bottom:6px}
 .dnotes .nhead .dl{font-size:10px;font-weight:800;letter-spacing:1px;
   text-transform:uppercase;color:var(--gold)}
@@ -391,7 +393,7 @@ table.board{border-collapse:collapse;font-size:13.5px}
   table.board{font-size:12.5px}
   .tcell-client{max-width:200px}
   .dnotes{left:10px;max-width:calc(100vw - 40px)}
-  .nsave{align-self:stretch;width:100%;padding:9px 13px;font-size:13px}
+  .nsave{align-self:flex-start;width:auto;padding:8px 18px;font-size:13px}
 }
 
 /* ---------- copy deterrent ---------- */
@@ -429,7 +431,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
     </nav>
     <div class="tracker-side"><b>16</b> clients in settlement<br>Click a row on the board for full details.</div>
     <div class="side-foot">
-      5 procedures · 16 in settlement<br>Updated 29 Jul 2026, 07:21 PM AEST
+      5 procedures · 16 in settlement<br>Updated 29 Jul 2026, 07:30 PM AEST
     </div>
   </aside>
 
@@ -441,7 +443,7 @@ body.nocopy input,body.nocopy textarea{-webkit-user-select:text;-moz-user-select
       <div class="sub">Operating procedures</div>
       <div class="meta">
         <span class="chip">5 procedures</span>
-        <span class="chip">Updated 29 Jul 2026, 07:21 PM AEST</span>
+        <span class="chip">Updated 29 Jul 2026, 07:30 PM AEST</span>
       </div>
     </header>
     <div class="toolbar" id="wi-tools">
@@ -807,7 +809,7 @@ Kind regards,
         <span class="chip">16 clients in settlement</span>
         <span class="chip bad" id="alert-chip" style="display:none"></span>
         <span class="chip warn" id="soon-chip" style="display:none"></span>
-        <span class="chip">Updated 29 Jul 2026, 07:21 PM AEST</span>
+        <span class="chip">Updated 29 Jul 2026, 07:30 PM AEST</span>
       </div>
     </header>
     
