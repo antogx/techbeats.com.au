@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Build Feasibility · Techbeats</title><style>
+:root{--paper:#eef1f4;--panel:#fff;--ink:#1c2733;--dim:#5b6b7a;--line:#d7dde3;
+--line-soft:#e6eaee;--pos:#1e7f4f;--neg:#b3372b;--consider:#2a6fb0;--pass:#8a94a0;
+--mono:ui-monospace,'Cascadia Code','JetBrains Mono',Consolas,monospace;
+--sans:-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0}html,body{height:100%}
+body{background:var(--paper);color:var(--ink);font:15px/1.5 var(--sans);padding:14px;
+display:flex;flex-direction:column;align-items:center;overflow:hidden}
+header{flex:none;display:flex;flex-wrap:wrap;gap:10px;align-items:baseline;margin-bottom:12px;
+width:100%;max-width:1560px}
+header h1{font-size:22px;letter-spacing:.4px;text-transform:uppercase;font-weight:700}
+header h1 small{color:var(--dim);font-weight:400;text-transform:none;letter-spacing:0;font-size:13px;margin-left:8px}
+#filter{margin-left:auto;padding:8px 12px;border:1px solid var(--line);border-radius:6px;
+font:14px var(--mono);min-width:240px;background:var(--panel);color:var(--ink)}
+.tabs{display:flex;gap:4px;margin-left:12px}
+.tab{font:600 12px var(--sans);letter-spacing:.4px;text-transform:uppercase;padding:6px 12px;
+border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--dim);
+cursor:pointer;text-decoration:none;display:inline-block}
+.tab.on{background:var(--ink);color:#f2f5f8;border-color:var(--ink)}
+.legend{flex-basis:100%;color:var(--dim);font-size:12.5px;line-height:1.45}
+.tblwrap{flex:1 1 auto;min-height:0;width:100%;max-width:1560px;overflow:auto;background:var(--panel);
+border:1px solid var(--line);border-radius:8px}
+table{border-collapse:separate;border-spacing:0;width:100%;font-size:13.5px}
+thead th{position:sticky;top:0;z-index:2;background:#f6f8fa;border-bottom:1px solid var(--line);
+padding:8px 8px;text-align:right;white-space:nowrap;cursor:pointer;user-select:none;
+font:600 11.5px var(--sans);letter-spacing:.3px;text-transform:uppercase;color:var(--dim)}
+thead th.l{text-align:left}thead th .arr{display:inline-block;width:10px;margin-left:3px;font-size:10px}
+thead th.asc .arr:after{content:'\25B2'}thead th.desc .arr:after{content:'\25BC'}
+tbody td{padding:7px 8px;border-bottom:1px solid var(--line-soft);text-align:right;white-space:nowrap;
+font-family:var(--mono);font-size:13px}
+tbody td.l{text-align:left;font-family:var(--sans)}
+tr.prop{cursor:pointer}tr.prop:hover td{background:#f3f6f9}
+tr.prop.yes td{background:#eef7f1}tr.prop.yes:hover td{background:#e3f1e8}
+tr.prop.gone td{transition:opacity .4s;opacity:0}
+tr.detail{display:none}tr.detail.open{display:table-row}
+tr.detail td{background:#fafbfc;text-align:left;white-space:normal;font-family:var(--sans);
+padding:10px 14px 12px 42px;border-bottom:1px solid var(--line)}
+.det{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:10px 22px;font-size:13px}
+.det h4{font:600 11px var(--sans);letter-spacing:.4px;text-transform:uppercase;color:var(--dim);margin-bottom:4px}
+.det .mono{font-family:var(--mono)}
+.pos{color:var(--pos);font-weight:600}.neg{color:var(--neg);font-weight:600}
+.addr{font-weight:600}.addr small{display:block;color:var(--dim);font-weight:400;font-size:11.5px}
+a.ext{color:var(--consider);text-decoration:none}a.ext:hover{text-decoration:underline}
+select.consider{font:600 12.5px var(--sans);color:var(--ink);background:var(--panel);
+border:1px solid var(--line);border-radius:5px;padding:3px 4px;cursor:pointer}
+select.consider:disabled{opacity:.75;cursor:not-allowed;color:var(--pass)}
+select.consider.saving{border-color:#a9761b}
+select.consider.saved-ok{border-color:var(--pos);box-shadow:0 0 0 1px var(--pos)}
+select.consider.saved-err{border-color:var(--neg);box-shadow:0 0 0 1px var(--neg)}
+select.consider option[value="yes"]{color:var(--pos)}select.consider option[value="no"]{color:var(--neg)}
+footer{flex:none;margin-top:10px;color:var(--dim);font-size:12px}
+@media (max-width:900px){body{padding:8px;font-size:14px}tbody td{padding:6px 6px}
+select.consider{min-height:32px;font-size:13px}}
+</style></head>
+<body>
+<header>
+  <h1>Build Feasibility<small>3 land lots · margin ≥ 10% · 0 marked yes</small></h1>
+  <nav class="tabs"><a class="tab" href="./">Ranking</a>
+  <a class="tab" href="./#reno">Reno Cost</a>
+  <a class="tab on" href="build.html">Build Feasibility</a></nav>
+  <input id="filter" type="search" placeholder="Filter address / suburb / council…" aria-label="Filter">
+  <p class="legend"><b>SELL</b> = median of DSR Typical value and OTH house median for the suburb ·
+  <b>Profit</b> = SELL − 3% selling − land × 1.06
+  (acq. 6%) − build $400,000 ·
+  <b>Margin%</b> = Profit ÷ (land cost base + build); only lots ≥ 10% are listed ·
+  <b>LTA%</b> = Homely sold-land median $/sqm × sqm ÷ asking (&gt;100% = asking below recent land sales) ·
+  <b>Appr days</b> = typical calendar days to council approval for a single house
+  (planning + building permit; Gemini, Google-grounded; hover/expand for basis) ·
+  <b>Consider</b> Yes/No saves to Firestore instantly; No removes the lot on the next run ·
+  click a row for the breakdown, a header to sort.</p>
+</header>
+<div class="tblwrap"><table id="feas"><thead><tr><th class="">Consider<span class="arr"></span></th><th class="">#<span class="arr"></span></th><th class="l">Address<span class="arr"></span></th><th class="">Land sqm<span class="arr"></span></th><th class="">Land $<span class="arr"></span></th><th class="">$/sqm<span class="arr"></span></th><th class="">DSR Typ<span class="arr"></span></th><th class="">OTH Med<span class="arr"></span></th><th class="">SELL<span class="arr"></span></th><th class="">Land $/sqm<span class="arr"></span></th><th class="">LTA%<span class="arr"></span></th><th class="">Profit<span class="arr"></span></th><th class="">Margin%<span class="arr"></span></th><th class="l">Council<span class="arr"></span></th><th class="">Appr days<span class="arr"></span></th><th class="l">Listed<span class="arr"></span></th><th class="">REA<span class="arr"></span></th></tr></thead><tbody><tr class="prop" data-f="373 hawkesbury road, anstead, qld 4070 brisbane city council"><td class="conscell" data-s="1"><select class="consider" data-key="373hawkesburyroadansteadqld4070" data-addr="373 Hawkesbury Road, Anstead, QLD 4070"><option value="" selected></option><option value="yes">Yes</option><option value="no">No</option></select></td><td data-s="1">1</td><td class="l" data-s="373 hawkesbury road, anstead, qld 4070"><span class="addr">373 Hawkesbury Road<small>Anstead, QLD 4070</small></span></td><td data-s="800">800</td><td data-s="700000">$700,000</td><td data-s="875">$875</td><td data-s="1478975">$1,478,975</td><td data-s="1786058">$1,786,058</td><td data-s="1632516">$1,632,516</td><td data-s="700">$700</td><td class="pos" data-s="80.0">80%</td><td class="pos" data-s="441541">$441,541</td><td class="pos" data-s="38.7">38.7%</td><td class="l" data-s="brisbane city council">Brisbane City Council</td><td data-s="7">7</td><td class="l">Added 6 hours ago</td><td><a class="ext" href="https://www.realestate.com.au/property-residential+land-qld-anstead-204625104" target="_blank" rel="noopener">open</a></td></tr><tr class="detail"><td colspan="17"><div class="det"><div><h4>Profit</h4><div>SELL $1,632,516 − selling 3% ($48,975) − land $700,000×1.06 ($742,000) − build $400,000 = pre-tax $441,541 = <b>$441,541</b> · margin on outlay ($1,142,000) = <b>38.7%</b></div><div style="color:var(--dim);margin-top:4px">SELL = median of DSR Typical $1,478,975 and OTH house median $1,786,058</div></div><div><h4>Land value (Homely sold vacant land)</h4><div>$700/sqm × 800 sqm = $560,000 · LTA 80.0% · 9/9 comps (suburb, 10y thin ±50%sqm)</div></div><div><h4>Council approval (Gemini, grounded)</h4><div><b>Brisbane City Council</b> · total <b>7 days</b> (planning 0 + permit 7) · range 4-10 · statutory|estimate<br>A standard new house is typically &#x27;accepted development&#x27; under the Brisbane City Plan, requiring no planning approval. Only a building permit from a private certifier is needed.<br><span class='mono'>src: Building Approvals QLD</span></div></div><div><h4>Listing</h4><div>LOTS FROM $700,000 · Residential Land · Added 6 hours ago · <a class="ext" href="https://www.realestate.com.au/property-residential+land-qld-anstead-204625104" target="_blank" rel="noopener">https://www.realestate.com.au/property-residential+land-qld-anstead-204625104</a></div></div></div></td></tr><tr class="prop" data-f="9 senecio way, witchcliffe, wa 6286 shire of augusta-margaret river"><td class="conscell" data-s="1"><select class="consider" data-key="9seneciowaywitchcliffewa6286" data-addr="9 Senecio Way, Witchcliffe, WA 6286"><option value="" selected></option><option value="yes">Yes</option><option value="no">No</option></select></td><td data-s="2">2</td><td class="l" data-s="9 senecio way, witchcliffe, wa 6286"><span class="addr">9 Senecio Way<small>Witchcliffe, WA 6286</small></span></td><td data-s="1230">1230</td><td data-s="499000">$499,000</td><td data-s="406">$406</td><td data-s="1158871">$1,158,871</td><td data-s="1300844">$1,300,844</td><td data-s="1229858">$1,229,858</td><td data-s="362">$362</td><td class="pos" data-s="89.2">89%</td><td class="pos" data-s="264022">$264,022</td><td class="pos" data-s="28.4">28.4%</td><td class="l" data-s="shire of augusta-margaret river">Shire of Augusta-Margaret River</td><td data-s="74">74</td><td class="l">Added 2 hours ago</td><td><a class="ext" href="https://www.realestate.com.au/property-residential+land-wa-witchcliffe-204625472" target="_blank" rel="noopener">open</a></td></tr><tr class="detail"><td colspan="17"><div class="det"><div><h4>Profit</h4><div>SELL $1,229,858 − selling 3% ($36,896) − land $499,000×1.06 ($528,940) − build $400,000 = pre-tax $264,022 = <b>$264,022</b> · margin on outlay ($928,940) = <b>28.4%</b></div><div style="color:var(--dim);margin-top:4px">SELL = median of DSR Typical $1,158,871 and OTH house median $1,300,844</div></div><div><h4>Land value (Homely sold vacant land)</h4><div>$362/sqm × 1,230 sqm = $445,260 · LTA 89.2% · 7/7 comps (suburb, 4y ±50%sqm)</div></div><div><h4>Council approval (Gemini, grounded)</h4><div><b>Shire of Augusta-Margaret River</b> · total <b>74 days</b> (planning 60 + permit 14) · range 74-104 · statutory<br>Assumes no public advertising is required for the planning application (60 days). A certified building permit (BA1) has a statutory timeframe of 10 business days (14 calendar days).<br><span class='mono'>src: amrshire.wa.gov.au</span></div></div><div><h4>Listing</h4><div>Offers from $499,000 · Residential Land · Added 2 hours ago · <a class="ext" href="https://www.realestate.com.au/property-residential+land-wa-witchcliffe-204625472" target="_blank" rel="noopener">https://www.realestate.com.au/property-residential+land-wa-witchcliffe-204625472</a></div></div></div></td></tr><tr class="prop" data-f="undisclosed (id 204625448), nar nar goon, vic 3812 cardinia shire council"><td class="conscell" data-s="1"><select class="consider" data-key="undisclosedid204625448narnargoonvic3812" data-addr="Undisclosed (ID 204625448), Nar Nar Goon, VIC 3812"><option value="" selected></option><option value="yes">Yes</option><option value="no">No</option></select></td><td data-s="3">3</td><td class="l" data-s="undisclosed (id 204625448), nar nar goon, vic 3812"><span class="addr">Undisclosed (ID 204625448)<small>Nar Nar Goon, VIC 3812</small></span></td><td data-s="350">350</td><td data-s="382000">$382,000</td><td data-s="1091">$1,091</td><td data-s="-1">—</td><td data-s="1043095">$1,043,095</td><td data-s="1043095">$1,043,095</td><td data-s="209">$209</td><td data-s="19.1">19%</td><td class="pos" data-s="206882">$206,882</td><td class="pos" data-s="25.7">25.7%</td><td class="l" data-s="cardinia shire council">Cardinia Shire Council</td><td data-s="183">183</td><td class="l">Added 2 hours ago</td><td><a class="ext" href="https://www.realestate.com.au/property-residential+land-vic-nar+nar+goon-204625448" target="_blank" rel="noopener">open</a></td></tr><tr class="detail"><td colspan="17"><div class="det"><div><h4>Profit</h4><div>SELL $1,043,095 − selling 3% ($31,293) − land $382,000×1.06 ($404,920) − build $400,000 = pre-tax $206,882 = <b>$206,882</b> · margin on outlay ($804,920) = <b>25.7%</b></div><div style="color:var(--dim);margin-top:4px">SELL = median of DSR Typical — and OTH house median $1,043,095</div></div><div><h4>Land value (Homely sold vacant land)</h4><div>$209/sqm × 350 sqm = $73,150 · LTA 19.1% · 2/3 comps (suburb, 10y thin) LOW CONF</div></div><div><h4>Council approval (Gemini, grounded)</h4><div><b>Cardinia Shire Council</b> · total <b>183 days</b> (planning 155 + permit 28) · range 84-183 · official · 2024<br>A planning permit is required for a new dwelling. The timeline is driven by the planning permit stage; the state-wide average for a decision is ~5 months. Building permit time is a typical industry estimate of 2-4 weeks.<br><span class='mono'>src: VIC PPARS / Industry Estimate</span></div></div><div><h4>Listing</h4><div>$382,000 · Residential Land · Added 2 hours ago · <a class="ext" href="https://www.realestate.com.au/property-residential+land-vic-nar+nar+goon-204625448" target="_blank" rel="noopener">https://www.realestate.com.au/property-residential+land-vic-nar+nar+goon-204625448</a></div></div></div></td></tr></tbody></table></div>
+<footer>Generated Wed 19 Aug 2026 19:56 AEST · build_feasibility.py · techbeats.com.au internal tool</footer>
+<script>
+(function(){
+  var FB_PROJECT='techbeatsrealty', FB_KEY='AIzaSyB-CmiTrGxfb5McvJJGLmyzHyTob7xejQk', FB_COLL='build_consider';
+  var table=document.getElementById('feas'), tbody=table.tBodies[0];
+  function considerUrl(key){
+    return 'https://firestore.googleapis.com/v1/projects/'+FB_PROJECT+
+      '/databases/(default)/documents/'+FB_COLL+'/'+encodeURIComponent(key)+
+      '?key='+encodeURIComponent(FB_KEY);}
+  function flash(sel,cls){sel.classList.remove('saving','saved-ok','saved-err');sel.classList.add(cls);
+    if(cls!=='saving')setTimeout(function(){sel.classList.remove(cls);},1500);}
+  tbody.addEventListener('click',function(ev){
+    if(ev.target.closest('select.consider')||ev.target.closest('a'))return;
+    var tr=ev.target.closest('tr.prop');if(!tr)return;
+    var det=tr.nextElementSibling;if(det&&det.classList.contains('detail'))det.classList.toggle('open');
+  });
+  tbody.addEventListener('change',function(ev){
+    var sel=ev.target.closest('select.consider');if(!sel||!FB_KEY)return;
+    var key=sel.getAttribute('data-key'),val=sel.value,tr=sel.closest('tr.prop');
+    flash(sel,'saving');
+    var req=(val==='')?fetch(considerUrl(key),{method:'DELETE'}):
+      fetch(considerUrl(key),{method:'PATCH',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({fields:{consider:{stringValue:val},
+          address:{stringValue:sel.getAttribute('data-addr')},
+          updatedAt:{stringValue:new Date().toISOString()}}})});
+    req.then(function(r){
+      if(r.ok||(val===''&&r.status===404)){
+        flash(sel,'saved-ok');
+        tr.classList.toggle('yes',val==='yes');
+        tr.querySelector('td.conscell').setAttribute('data-s',val==='yes'?2:(val==='no'?0:1));
+        if(val==='no'){var det=tr.nextElementSibling;
+          setTimeout(function(){tr.classList.add('gone');setTimeout(function(){tr.style.display='none';
+            if(det&&det.classList.contains('detail'))det.style.display='none';},450);},650);}
+      }else flash(sel,'saved-err');
+    }).catch(function(){flash(sel,'saved-err');});
+  });
+  // sort
+  var ths=table.tHead.rows[0].cells;
+  Array.prototype.forEach.call(ths,function(th,idx){
+    th.addEventListener('click',function(){
+      var dir=th.classList.contains('desc')?'asc':'desc';
+      Array.prototype.forEach.call(ths,function(x){x.classList.remove('asc','desc');});
+      th.classList.add(dir);
+      var rows=[];Array.prototype.forEach.call(tbody.querySelectorAll('tr.prop'),function(tr){
+        rows.push([tr,tr.nextElementSibling]);});
+      rows.sort(function(a,b){
+        var ca=a[0].cells[idx],cb=b[0].cells[idx];
+        var va=ca.getAttribute('data-s'),vb=cb.getAttribute('data-s');
+        var na=parseFloat(va),nb=parseFloat(vb);
+        var r;
+        if(!isNaN(na)&&!isNaN(nb))r=na-nb;
+        else{var ta=(va!==null?va:ca.textContent).trim().toLowerCase(),tb=(vb!==null?vb:cb.textContent).trim().toLowerCase();
+          if(ta===''&&tb!=='')return 1;if(tb===''&&ta!=='')return -1;r=ta<tb?-1:(ta>tb?1:0);}
+        return dir==='asc'?r:-r;});
+      rows.forEach(function(p){tbody.appendChild(p[0]);if(p[1]&&p[1].classList.contains('detail'))tbody.appendChild(p[1]);});
+    });
+  });
+  // filter
+  var f=document.getElementById('filter');
+  f.addEventListener('input',function(){var q=f.value.trim().toLowerCase();
+    Array.prototype.forEach.call(tbody.querySelectorAll('tr.prop'),function(tr){
+      var hit=!q||tr.getAttribute('data-f').indexOf(q)!==-1;
+      if(tr.getAttribute('data-gone')==='1')hit=false;
+      tr.style.display=hit?'':'none';var det=tr.nextElementSibling;
+      if(det&&det.classList.contains('detail')&&!hit)det.classList.remove('open');});});
+})();
+</script></body></html>
